@@ -28,6 +28,10 @@ import postContainer from '@/components/complementarities/PostContainer.vue'
 import HighlightRequest from '../components/complementarities/HighlightRequest.vue'
 import Feedback from '../components/complementarities/Feedback.vue'
 import Course from '../components/complementarities/Course.vue'
+import SimulatorHome from '../components/complementarities/SimulatorHome.vue'
+import SimulatorPlay from '../components/complementarities/SimulatorPlay.vue'
+import Journey from '../components/complementarities/Journey.vue'
+import StoriesModels from '../components/complementarities/StoriesModels.vue'
 
 const routes = [
   {
@@ -186,6 +190,54 @@ const routes = [
       backButtonAvailable: true,
       moduleName: 'course',
       firstPage: true,
+      showTabs: true
+    }
+  },
+  {
+    path: '/stories',
+    name: 'stories',
+    component: StoriesModels,
+    meta: {
+      keepAlive: false,
+      backButtonAvailable: true,
+      moduleName: 'stories',
+      firstPage: true,
+      showTabs: true
+    }
+  },
+  {
+    path: '/journey',
+    name: 'journey',
+    component: Journey,
+    meta: {
+      keepAlive: false,
+      backButtonAvailable: true,
+      moduleName: 'journey',
+      firstPage: true,
+      showTabs: true
+    }
+  },
+  {
+    path: '/simulator',
+    name: 'simulator',
+    component: SimulatorHome,
+    meta: {
+      keepAlive: false,
+      backButtonAvailable: true,
+      moduleName: 'simulator',
+      firstPage: true,
+      showTabs: true
+    }
+  },
+  {
+    path: '/simulator/play',
+    name: 'simulatorplay',
+    component: SimulatorPlay,
+    meta: {
+      keepAlive: false,
+      backButtonAvailable: true,
+      moduleName: 'simulatorplay',
+      firstPage: false,
       showTabs: true
     }
   },

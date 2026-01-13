@@ -188,6 +188,11 @@
                             </div>
                         </template>
 
+
+                    </div>
+                </article>
+            </div>
+        </section>
                         <!-- Bottom navigation -->
                         <div class="nav">
                             <button class="navBtn" :disabled="currentIndex === 0" @click="prev">
@@ -203,11 +208,6 @@
                                 {{ currentIndex === slides.length - 1 ? 'Finish' : 'Next' }}
                             </button>
                         </div>
-
-                    </div>
-                </article>
-            </div>
-        </section>
 
         <footer class="footerHint">
             Swipe left/right or use Next/Prev. This is a presentation mockup.
@@ -1022,5 +1022,67 @@ export default {
 /* If your webview is aggressive with fixed elements, this helps */
 .nav {
   transform: translate3d(-50%, 0, 0);
+}
+
+.course {
+  height: 100vh;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 18px 14px 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Stage scrolls; content never hides behind fixed nav */
+.stage {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 130px; /* space for nav */
+  box-sizing: border-box;
+}
+
+/* Keep slide animation */
+.slides {
+  display: flex;
+  width: 100%;
+  transition: transform 0.18s ease;
+  will-change: transform;
+}
+
+.slide { min-width: 100%; }
+
+/* Nav is now outside the transformed slides, so fixed works everywhere */
+.nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 12px;
+
+  width: min(980px, calc(100% - 28px));
+  z-index: 9999;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+
+  padding: 12px;
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.10);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Safe area for iOS home bar */
+@supports (padding: max(0px)) {
+  .nav { bottom: max(12px, env(safe-area-inset-bottom)); }
+  .stage { padding-bottom: calc(130px + env(safe-area-inset-bottom)); }
 }
 </style>

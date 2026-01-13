@@ -55,6 +55,28 @@ export default {
     arrangeCurrentRoute(route) {
       this.current = route.name
     },
+
+    goPowerCheck() {
+      this.$router.push({ name: 'home' })
+    },
+  
+    goTracks() {
+      // Journey / Tracks page
+      this.$router.push({ name: 'journey' })
+    },
+  
+    goPowerSimulator() {
+      // Simulator list page
+      this.$router.push({ name: 'simulator' })
+    },
+  
+    goStoriesModels() {
+      this.$router.push({ name: 'stories' })
+    },
+  
+    goProfile() {
+      this.$router.push({ name: 'profile' })
+    }
   },
 
   watch: {

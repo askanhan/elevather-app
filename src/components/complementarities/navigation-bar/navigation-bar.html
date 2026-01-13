@@ -13,19 +13,28 @@
     </div>
 </div> -->
 <div id="footer-bar" class="footer-bar-1" v-if="current !== '/' && current !== 'chat' && loggedIn">
-    <a :class="current === 'home' ? 'active-nav' : ''" @click="homeSelected()"><i class="fa fa-home"></i><span>
-            Power Check
-        </span></a>
-    <a :class="current === 'search' ? 'active-nav' : ''" @click="searchSelected()"><i class="fa fa-search"></i><span>
-            Tracks
-        </span></a>
-    <a :class="current === 'add' ? 'active-nav' : ''" @click="addSelected()"><i class="fa fa-plus-circle"></i><span>
-            Power Simulator
-        </span></a>
-    <a  @click="newsSelected()"><i class="fa fa-newspaper"></i><span>
-            Stories & Models
-        </span></a>
-    <a :class="current === 'profile' ? 'active-nav' : ''" @click="profileTo()"><i class="fa fa-user-circle"></i><span>
-            {{ $t('components.navigation.profile') }}
-        </span></a>
+    <a :class="current === 'home' ? 'active-nav' : ''" @click="goPowerCheck()">
+        <i class="fa fa-bolt"></i>
+        <span>Power Check</span>
+      </a>
+    
+      <a :class="current === 'journey' ? 'active-nav' : ''" @click="goTracks()">
+        <i class="fa fa-road"></i>
+        <span>Tracks</span>
+      </a>
+    
+      <a :class="current === 'simulator' ? 'active-nav' : ''" @click="goPowerSimulator()">
+        <i class="fa fa-gamepad"></i>
+        <span>Power Simulator</span>
+      </a>
+    
+      <a :class="current === 'stories' ? 'active-nav' : ''" @click="goStoriesModels()">
+        <i class="fa fa-book-open"></i>
+        <span>Stories &amp; Models</span>
+      </a>
+    
+      <a :class="current === 'profile' ? 'active-nav' : ''" @click="profileTo()">
+        <i class="fa fa-user-circle"></i>
+        <span>Profile</span>
+      </a>
 </div>
