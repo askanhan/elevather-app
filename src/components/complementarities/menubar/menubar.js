@@ -29,6 +29,7 @@ export default {
     },
 
     altyazi() {
+      return "We Rise Together!"
       const firstName = this.$store?.state?.user?.first_name || ''
 
       if (this.$route.name === 'home') {

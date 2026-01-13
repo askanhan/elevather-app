@@ -27,6 +27,7 @@ import postList from '@/components/screens/post-list/post-list.vue'
 import postContainer from '@/components/complementarities/PostContainer.vue'
 import HighlightRequest from '../components/complementarities/HighlightRequest.vue'
 import Feedback from '../components/complementarities/Feedback.vue'
+import Course from '../components/complementarities/Course.vue'
 
 const routes = [
   {
@@ -172,6 +173,18 @@ const routes = [
       keepAlive: false,
       backButtonAvailable: true,
       moduleName: 'feedback',
+      firstPage: true,
+      showTabs: true
+    }
+  },
+  {
+    path: '/course',
+    name: 'course',
+    component: Course,
+    meta: {
+      keepAlive: false,
+      backButtonAvailable: true,
+      moduleName: 'course',
       firstPage: true,
       showTabs: true
     }

@@ -14,16 +14,16 @@
 </div> -->
 <div id="footer-bar" class="footer-bar-1" v-if="current !== '/' && current !== 'chat' && loggedIn">
     <a :class="current === 'home' ? 'active-nav' : ''" @click="homeSelected()"><i class="fa fa-home"></i><span>
-            {{ $t('components.navigation.home') }}
+            Power Check
         </span></a>
     <a :class="current === 'search' ? 'active-nav' : ''" @click="searchSelected()"><i class="fa fa-search"></i><span>
-            {{ $t('components.navigation.search') }}
+            Tracks
         </span></a>
     <a :class="current === 'add' ? 'active-nav' : ''" @click="addSelected()"><i class="fa fa-plus-circle"></i><span>
-            {{ $t('components.navigation.add') }}
+            Power Simulator
         </span></a>
-    <a class="active-nav" @click="newsSelected()"><i class="fa fa-newspaper"></i><span>
-            {{ $t('components.navigation.news') }}
+    <a  @click="newsSelected()"><i class="fa fa-newspaper"></i><span>
+            Stories & Models
         </span></a>
     <a :class="current === 'profile' ? 'active-nav' : ''" @click="profileTo()"><i class="fa fa-user-circle"></i><span>
             {{ $t('components.navigation.profile') }}
