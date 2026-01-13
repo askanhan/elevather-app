@@ -1,0 +1,101 @@
+.change-to-login {
+    display: block;
+    margin-top: 20px;
+    color: #007bff;
+}
+
+.login span.input-group-text {
+    width: 210px;
+}
+
+.login-kabox{
+  height: 100%;
+  background-color: white;
+  padding: 1em;
+  text-align: center;
+  margin: 1em;
+}
+
+
+/* Wrapper tam ekran yapar */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* full height */
+  width: 100vw;  /* full width */
+  background: linear-gradient(135deg, #4ade80, #22d3ee); /* hoş gradient arkaplan */
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Login kutusu */
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 30px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+/* Başlık ve alt başlık */
+.login-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.login-subtitle {
+  font-size: 14px;
+  color: #6b7280; /* gray-500 */
+  margin-bottom: 25px;
+}
+
+/* Sosyal giriş butonları */
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: none;
+  height: 5em;
+}
+
+.social-btn img.social-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.google-btn {
+  background-color: #fff;
+  color: #1f2937;
+  border: 1px solid #d1d5db;
+}
+
+.google-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.apple-btn {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #000;
+}
+
+.apple-btn:hover {
+  background-color: #111;
+}

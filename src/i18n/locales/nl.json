@@ -1,0 +1,569 @@
+{
+    "add": {
+        "warning3": "Let op: Je kunt nog",
+        "warning3_2": "berichten plaatsen in de komende 24 uur.",
+        "category": {
+            "education": "Onderwijs",
+            "event": "Evenement",
+            "general": "Algemeen",
+            "job": "Banen",
+            "title": "Categorie"
+        },
+        "errors": {
+            "postLimitReached": "Je hebt het maximum aantal berichten voor vandaag bereikt. Probeer het later opnieuw.",
+            "emptyPost": "Leeg bericht kan niet.",
+            "generic": "Er ging iets mis. Probeer opnieuw.",
+            "photoTooLarge": "Foto mag niet groter zijn dan {mb}MB.",
+            "photoUploadFailed": "Foto uploaden mislukt",
+            "videoTooLarge": "Video mag niet groter zijn dan {mb}MB.",
+            "videoUploadFailed": "Video uploaden mislukt"
+        },
+        "event": {
+            "dayFrom": "Dag (start)",
+            "dayTo": "Dag (einde)",
+            "location": "Locatie",
+            "locationPlaceholder": "Adres / plaats (optioneel)",
+            "timeFrom": "Tijd (start)",
+            "timeTo": "Tijd (einde)"
+        },
+        "media": {
+            "photo": {
+                "add": "Foto toevoegen",
+                "title": "Foto"
+            },
+            "poll": {
+                "add": "Poll toevoegen",
+                "close": "Poll sluiten",
+                "title": "Poll"
+            },
+            "video": {
+                "add": "Video toevoegen",
+                "title": "Video"
+            }
+        },
+        "poll": {
+            "addOption": "Optie toevoegen",
+            "option": "Optie {n}"
+        },
+        "publisher": {
+            "business": "Je publiceert namens een bedrijf",
+            "meFallback": "Ik",
+            "user": "Je publiceert namens jezelf"
+        },
+        "send": {
+            "fail": "Er is een fout opgetreden tijdens het verzenden.",
+            "send": "Verzenden",
+            "sending": "Bezig met verzenden…",
+            "success": "Bericht geplaatst!"
+        },
+        "text": {
+            "pollPlaceholder": "Stel een vraag",
+            "postPlaceholder": "Wat wil je delen?"
+        }
+    },
+    "auth": {
+        "afterlogin": {
+            "backToLogin": "Terug naar inloggen",
+            "errors": {
+                "badSession": "Sessiedata is ongeldig. Probeer opnieuw.",
+                "cantFetchUser": "Gebruikersgegevens konden niet worden opgehaald.",
+                "noSession": "Geen sessiedata gevonden."
+            },
+            "retry": "Opnieuw proberen",
+            "step": {
+                "stepCompleting": "Profiel wordt geladen…",
+                "stepLoadingProfile": "Profiel wordt geladen…",
+                "stepPreparingApp": "App wordt voorbereid…",
+                "stepRedirecting": "Doorverwijzen…",
+                "stepRefreshing": "Sessie vernieuwen…",
+                "stepRetryProfile": "Profiel opnieuw proberen…",
+                "stepSavingSession": "Sessie opslaan…",
+                "stepStart": "Inloggen wordt voltooid…"
+            },
+            "subtitleError": "Gebruik de knop hieronder om opnieuw te proberen.",
+            "subtitleLoading": "Even geduld, we leiden je door…",
+            "titleError": "Inloggen niet voltooid",
+            "titleLoading": "Bezig met inloggen"
+        }
+    },
+    "common": {
+        "cancel": "Annuleren",
+        "linkCopied": "Link gekopieerd",
+        "loading": "Laden...",
+        "messages": "Berichten",
+        "noResults": "Geen resultaten",
+        "notifications": "Meldingen",
+        "other": "Overig",
+        "send": "Verzenden",
+        "supportAssociation": "Steun de vereniging"
+    },
+    "components": {
+        "chat": {
+            "emptySub": "Schrijf het eerste bericht.",
+            "emptyTitle": "Nog geen berichten",
+            "placeholder": "Schrijf een bericht...",
+            "retry": "Opnieuw proberen",
+            "sending": "Verzenden",
+            "started": "Chat gestart:",
+            "confirmBlockTitle": "Gebruiker blokkeren",
+            "confirmBlockText": "Blokkeren",
+            "confirmCancelText": "Annuleren",
+            "confirmBlockBody": "Weet je zeker dat je deze gebruiker wilt blokkeren?",
+            "confirmDeleteTitle": "Gesprek verwijderen",
+            "confirmDeleteText": "Verwijderen",
+            "confirmDeleteBody": "Dit gesprek wordt permanent verwijderd. Weet je het zeker?"
+        },
+        "conversations": {
+            "emptySub": "Je kunt beginnen door een bericht vanuit een profiel te sturen.",
+            "emptyTitle": "Nog geen gesprekken",
+            "new": "Nieuw",
+            "searchPlaceholder": "Zoek: naam of bericht...",
+            "title": "Berichten",
+            "unread": "{n} ongelezen",
+            "upToDate": "Je bent up-to-date",
+            "you": "Jij:"
+        },
+        "donate": {
+            "copy": "Kopiëren",
+            "copyLink": "Link kopiëren",
+            "optionsTitle": "Steunopties",
+            "pill": "Vrijwillige steun",
+            "receiver": "Ontvanger:",
+            "secureNote": "De donatielink leidt naar je beveiligde betaalpagina.",
+            "shareBtn": "Delen",
+            "shareSub": "Help ons meer mensen te bereiken.",
+            "shareTitle": "Delen",
+            "sub": "Vision Tree is een Brusselse vereniging. Met focus op psychologie en technologie ontwikkelen we trainingen, workshops en sociale impactprojecten voor jongeren, families en verschillende groepen. In de BURADA-app willen we gemeenschappen en bedrijven zichtbaar maken en lokale betrokkenheid versterken met aankondigingen van trainingen en evenementen, informatieve inhoud over publieke instellingen en nieuws.",
+            "title": "Steun ons",
+            "webDonate": "Doneren via web"
+        },
+        "feedback": {
+            "cancel": "Annuleren",
+            "emailLabel": "E-mail (optioneel)",
+            "hint": {
+                "bug": "Voor bugs: stappen + scherm + verwacht resultaat.",
+                "general": "Schrijf kort en duidelijk, wij regelen het.",
+                "suggestion": "Voor suggesties: wat verbeteren en waarom?"
+            },
+            "messageLabel": "Bericht",
+            "messagePlaceholder": "Wat gebeurde er, waar gebeurde het, hoe kunnen we het reproduceren? Voeg indien mogelijk schermafbeeldingen toe.",
+            "pill": "Neem contact op",
+            "send": "Verzenden",
+            "sending": "Bezig met verzenden",
+            "sub": "Probleem, suggestie of gewoon je hart luchten? Schrijf, wij lezen mee.",
+            "subjects": {
+                "bug": "Bugmelding",
+                "business_claim": "Bedrijf claimen",
+                "general": "Algemeen",
+                "label": "Onderwerp",
+                "placeholder": "Kies onderwerp",
+                "profile_delete": "Profiel verwijderen",
+                "suggestion": "Suggestie"
+            },
+            "success": "Je bericht is verzonden. Bedankt.",
+            "tipText": "Als je “Bugmelding” kiest: apparaat, stappen en verwacht resultaat helpen ons sneller.",
+            "tipTitle": "Tip",
+            "title": "Feedback",
+            "writeMessage": "Schrijf je bericht"
+        },
+        "footer": {
+            "slogan": "Het platform dat alles samenbrengt<br>wat je in België wilt vinden."
+        },
+        "highlightRequest": {
+            "btnSend": "Verzoek versturen",
+            "btnSending": "Bezig met verzenden…",
+            "emptySub": "Voeg eerst een bedrijf toe via je profiel, daarna kun je hier een verzoek sturen.",
+            "emptyTitle": "Je hebt nog geen bedrijf",
+            "goToProfile": "Ga naar mijn profiel",
+            "labelBusiness": "Bedrijf",
+            "labelContact": "Contact (optioneel)",
+            "labelDesc": "Korte beschrijving (verplicht)",
+            "note": "Let op: Een verzoek sturen is gratis. Het wordt beoordeeld op geschiktheid en kwaliteit.",
+            "placeholderContact": "E-mail of telefoon",
+            "placeholderDesc": "Bijv.: nieuwe vestiging, evenement, campagne, vrijwilligersoproep…",
+            "select": "Selecteer…",
+            "sub": "Dit is een zichtbaarheidsverzoek. Na controle kan het in de feed worden uitgelicht.",
+            "success": "Je verzoek is ontvangen. We nemen mogelijk contact op na beoordeling.",
+            "title": "Laat je bedrijf opvallen"
+        },
+        "navigation": {
+            "add": "Toevoegen",
+            "home": "Start",
+            "news": "Nieuws",
+            "profile": "Profiel",
+            "search": "Ontdekken"
+        },
+        "newsTicker": {
+            "continue": "Doorgaan",
+            "label": "Actueel",
+            "stop": "Stoppen"
+        },
+        "partnerRail": {
+            "badges": {
+                "apply": "Aanmelden",
+                "event": "Evenement",
+                "webshop": "Webshop"
+            },
+            "defaultLabel": "Partner"
+        },
+        "post": {
+            "comment": "Reactie",
+            "date": {
+                "daysAgo": " dagen geleden",
+                "hoursAgo": " uur geleden",
+                "justNow": "Zojuist",
+                "minutesAgo": " minuten geleden",
+                "monthsAgo": " maanden geleden",
+                "secondsAgo": " seconden geleden",
+                "weeksAgo": " weken geleden",
+                "yearsAgo": " jaar geleden"
+            },
+            "like": "Vind ik leuk",
+            "share": "Delen",
+            "testUser": "Testgebruiker"
+        },
+        "menubar": {
+            "subtitle": {
+                "home": "Welkom {name}",
+                "search": "Vind alles wat je in België zoekt!",
+                "add": "Zoek/vind/verkoop/vraag/deel!",
+                "newslist": "Nieuws uit België en de wereld!",
+                "profile": "Bekijk en bewerk je profiel!",
+                "business": "Bekijk en beheer bedrijven!",
+                "donate": "Draag je steentje bij!",
+                "conversations": "Controleer je berichten!",
+                "default": "Alles is hier {name}"
+            }
+        },
+        "postCard": {
+            "comments": {
+                "placeholder": "Schrijf een reactie...",
+                "send": "Verzenden"
+            },
+            "hideConfirm": "Weet je zeker dat je dit bericht wilt verbergen?\n\nVerborgen berichten verschijnen niet in de feed. Je kunt ze later alleen terughalen door alle verborgen berichten te resetten.",
+            "likes": "{n} vind-ik-leuks",
+            "menu": {
+                "cancel": "Annuleren",
+                "delete": "Bericht verwijderen",
+                "hide": "Dit bericht verbergen",
+                "report": "Melden"
+            },
+            "poll": {
+                "badge": "Poll",
+                "footer": "Tik op een optie en stem.",
+                "votes": "{n} stemmen"
+            },
+            "report": {
+                "cancel": "Annuleren",
+                "reasons": {
+                    "inappropriate": "Ongepaste / storende inhoud",
+                    "misleading": "Misleidende informatie",
+                    "other": "Overig",
+                    "spam": "Spam",
+                    "violence": "Haat of geweld"
+                },
+                "subtitle": "Kies een reden:",
+                "title": "Bericht melden"
+            },
+            "views": "{n} weergaven"
+        }
+    },
+    "pages": {
+        "business": {
+            "actions": {
+                "claim": "Dit bedrijf is van mij",
+                "fixRequest": "Informatie corrigeren",
+                "follow": "Volgen",
+                "followed": "Gevolgd",
+                "sendMessage": "Bericht sturen"
+            },
+            "contact": {
+                "call": "Bellen",
+                "facebook": "Facebook",
+                "instagram": "Instagram",
+                "location": "Locatie",
+                "mail": "Mail",
+                "pinterest": "Pinterest",
+                "twitter": "X",
+                "website": "Website",
+                "whatsapp": "WhatsApp"
+            },
+            "dialogs": {
+                "claim": {
+                    "noteLabel": "Korte uitleg",
+                    "notePlaceholder": "Waarom is dit jouw bedrijf? (bijv. ondernemingsnr / maildomein / korte info)",
+                    "phoneLabel": "Telefoon (optioneel)",
+                    "title": "Claim dit bedrijf"
+                },
+                "fix": {
+                    "btn": "Verzoek versturen",
+                    "detailsLabel": "Welke informatie is onjuist?",
+                    "detailsPlaceholder": "Bijv.: adres verkeerd, telefoon updaten, categorie wijzigen...",
+                    "emailLabel": "Contact e-mail (optioneel)",
+                    "title": "Correctieverzoek"
+                },
+                "report": {
+                    "btn": "Melding versturen",
+                    "emailLabel": "Contact e-mail (optioneel)",
+                    "reasonLabel": "Reden van melding",
+                    "reasonPlaceholder": "Fake bedrijf, onjuiste info, spam, ongepaste inhoud etc.",
+                    "title": "Bedrijf melden"
+                }
+            },
+            "messages": {
+                "failed": "Kon niet verzonden worden. Probeer opnieuw.",
+                "fixRequired": "Je moet aangeven welke info gecorrigeerd moet worden.",
+                "linkCopied": "Link gekopieerd!",
+                "noteRequired": "Je moet een korte uitleg geven.",
+                "reportReasonRequired": "Je moet een reden voor de melding geven.",
+                "sent": "Je verzoek is verzonden.",
+                "shareText": "Bekijk {name} op Burada!",
+                "shareTitle": "Bedrijfsprofiel"
+            },
+            "posts": {
+                "private": "Dit account is privé.",
+                "title": "Laatste berichten"
+            },
+            "sidebar": {
+                "claim": "Dit bedrijf is van mij",
+                "fix": "Informatie corrigeren",
+                "report": "Melden",
+                "request": "Verzoek",
+                "title": "Bedrijfsinstellingen"
+            },
+            "unclaimed": "Dit bedrijf is nog niet gekoppeld aan een profiel. Als je eigenaar bent, kun je het verifiëren via “Dit bedrijf is van mij” of een correctieverzoek sturen.",
+            "views": "Weergaven"
+        },
+        "home": {
+            "loadingMore": "Meer berichten laden...",
+            "noMorePosts": "Dat was het 👌 Tot hier gelezen, proficiat!<br>Neem een schermopname, stuur ons die en wees onze gast bij de volgende activiteit! 🎁",
+            "tabs": {
+                "education": "Onderwijs",
+                "events": "Evenementen",
+                "general": "Algemeen",
+                "job": "Banen"
+            }
+        },
+        "login": {
+            "appleBtn": "Inloggen met Apple",
+            "googleBtn": "Inloggen met Google",
+            "privacyHtml": "Je gegevens worden veilig opgeslagen en niet met derden gedeeld.<br>Wanneer je inlogt, worden je gegevens beschermd volgens onze <a href='https://burada.be/privacy-policy' target='_blank'>Privacyverklaring</a> en <a href='https://burada.be/terms-of-service' target='_blank'>Gebruiksvoorwaarden</a>.",
+            "subtitle": "Kies je account om te beginnen.",
+            "welcome": "Welkom!"
+        },
+        "messages": {
+            "empty": "Je hebt nog geen berichten."
+        },
+        "newsDetails": {
+            "back": "Terug",
+            "notFound": "Nieuwsbericht niet gevonden.",
+            "openOriginal": "Origineel bericht openen",
+            "otherNews": "Andere nieuwsberichten",
+            "share": "Delen",
+            "source": "Bron:"
+        },
+        "newsList": {
+            "defaultSource": "Nieuws",
+            "empty": "Er is momenteel geen nieuws.",
+            "showMore": "Meer tonen"
+        },
+        "notifications": {
+            "empty": "Er zijn momenteel geen meldingen."
+        },
+        "postList": {
+            "backToMain": "Terug",
+            "everywhere": "Overal"
+        },
+        "profile": {
+            "addBusiness": "Voeg je bedrijf of zaak toe",
+            "businessSidebar": {
+                "address": "Adres (optioneel)",
+                "addressPlaceholder": "Bijv.: Ossenstraat 1, Gent",
+                "category": "Categorie",
+                "categoryPlaceholder": "Selecteer een categorie",
+                "descLabel": "Korte beschrijving (optioneel)",
+                "descPlaceholder": "Introduceer je bedrijf kort",
+                "email": "E-mail (optioneel)",
+                "emailPlaceholder": "voorbeeld{'@'}bedrijf.be",
+                "logoLabel": "Logo / Headerafbeelding (optioneel)",
+                "logoText": "Logo kiezen",
+                "name": "Bedrijfsnaam",
+                "namePlaceholder": "Bijv.: Mavzer Consulting",
+                "phone": "Telefoon (optioneel)",
+                "phonePlaceholder": "Bijv.: 0487 246 846",
+                "province": "Provincie (optioneel)",
+                "provincePlaceholder": "Selecteer een provincie",
+                "tag": "Tag (optioneel)",
+                "tagPlaceholder": "Selecteer een tag",
+                "title": "Bedrijf toevoegen",
+                "town": "Gemeente (optioneel)",
+                "townPlaceholder": "Selecteer een gemeente",
+                "visibilitySub": "Als je dit uitzet, is het profiel alleen zichtbaar voor mensen met de link.",
+                "visibilityTitle": "Maak bedrijf openbaar",
+                "website": "Website (optioneel)",
+                "whatsapp": "WhatsApp (optioneel)",
+                "whatsappPlaceholder": "Alleen cijfers (met landcode)"
+            },
+            "deleteDialog": {
+                "cancel": "Annuleren",
+                "confirm": "Ja, verwijderen",
+                "confirmLabel": "Typ \"VERWIJDER\" ter bevestiging",
+                "confirmPlaceholder": "VERWIJDER",
+                "reasonLabel": "Reden voor verwijderen",
+                "reasonPlaceholder": "Kort waarom?",
+                "title": "Verwijder je profiel permanent",
+                "warningText": "Je profiel, berichten en connecties worden verwijderd. Als je wilt doorgaan, typ hieronder je reden en ter bevestiging <b>VERWIJDER</b>.",
+                "warningTitle": "Deze actie kan niet ongedaan worden gemaakt."
+            },
+            "donateSub": "Vrijwillige donatie",
+            "donateTitle": "Steun ons",
+            "edit": "Bewerken",
+            "editProfile": "Profiel bewerken",
+            "empty": {
+                "noBiz": "Geen bedrijven.",
+                "noBookmarks": "Nog geen opgeslagen berichten.",
+                "noPosts": "Nog geen berichten.",
+                "private": "Dit account is privé."
+            },
+            "follow": "Volgen",
+            "followers": "Volgers",
+            "followingState": "Je volgt",
+            "hidden": "Verborgen",
+            "message": "Bericht sturen",
+            "messages": {
+                "bizAdded": "Bedrijf succesvol toegevoegd",
+                "bizFailed": "Bedrijf kon niet worden opgeslagen",
+                "bizNameMin": "Minimaal 2 tekens",
+                "bizNameRequired": "Bedrijfsnaam is verplicht",
+                "bizUpdated": "Bedrijf bijgewerkt",
+                "categoryRequired": "Je moet een categorie kiezen",
+                "deleteFailed": "Verwijderen mislukt. Probeer opnieuw.",
+                "deleteProcessed": "Je verzoek tot verwijderen is verwerkt.",
+                "emailInvalid": "Voer een geldig e-mailadres in",
+                "hiddenUpdated": "Verborgen berichten zijn bijgewerkt. Ze verschijnen na opnieuw inloggen.",
+                "imgError": "Afbeelding kon niet worden geüpload",
+                "nameMin": "Voornaam moet minimaal 2 tekens hebben",
+                "nameRequired": "Voornaam is verplicht",
+                "profileUpdateFailed": "Profiel kon niet worden bijgewerkt",
+                "profileUpdated": "Profiel succesvol bijgewerkt",
+                "reasonRequired": "Schrijf alsjeblieft je reden voor verwijderen.",
+                "typeDelete": "Je moet \"VERWIJDER\" typen om door te gaan.",
+                "urlInvalid": "Voer een geldige URL in"
+            },
+            "myBizSub": "Deze bedrijven zijn aan jou gekoppeld. Tik rechts op het potlood om te bewerken.",
+            "public": "Openbaar",
+            "sidebar": {
+                "bioLabel": "Korte beschrijving over jezelf",
+                "bioPlaceholder": "Bijv.: Wij zijn een vereniging actief in psychologie en technologie...",
+                "cancel": "Annuleren",
+                "deleteProfile": "!Mijn profiel volledig verwijderen!",
+                "lastName": "Achternaam",
+                "logout": "Uitloggen",
+                "name": "Voornaam",
+                "province": "Provincie (optioneel)",
+                "provincePlaceholder": "Kies een provincie",
+                "resetHiddenPosts": "Verborgen berichten resetten",
+                "other": "Overig",
+                "save": "Opslaan",
+                "title": "Profiel bewerken",
+                "username": "Gebruikersnaam (openbaar)",
+                "visibilitySub": "Als je dit uitzet, is je profiel alleen zichtbaar voor mensen met de link.",
+                "visibilityTitle": "Maak profiel openbaar"
+            },
+            "tabs": {
+                "bookmarks": "Opgeslagen",
+                "myBiz": "Mijn bedrijven",
+                "myPosts": "Mijn berichten",
+                "otherBiz": "Bedrijven",
+                "posts": "Berichten"
+            },
+            "viewProfile": "Profiel bekijken",
+            "views": "Weergaven"
+        },
+        "question": {
+            "location": "Locatie",
+            "message": "Je bericht"
+        },
+        "selectTag": {
+            "done": "Klaar",
+            "select": "Selecteer minstens één tag"
+        },
+        "settings": {
+            "language": "Taalinstellingen",
+            "logout": "Uitloggen",
+            "privateAccount": "Account verbergen",
+            "privateInfo": "Je account is privé gezet, je berichten zijn verborgen.",
+            "title": "Instellingen"
+        },
+        "splash": {
+            "join": "DOE OOK MEE",
+            "languageSettings": "Taalinstellingen",
+            "next": "Volgende",
+            "prev": "Vorige",
+            "selectLanguage": "Kies je gewenste taal",
+            "slides": {
+                "1": {
+                    "sub": "Het ontmoetingspunt van Turken in België",
+                    "text": "Ons doel is dat alle Belgisch-Turken elkaar kunnen bereiken en volgen. Verbind, vind wat je zoekt, deel en volg het nieuws. Alles in één app!",
+                    "title": "Welkom bij BURADA"
+                },
+                "2": {
+                    "sub": "Vind wat je zoekt op dit platform",
+                    "text": "Turkse arts, advocaat, restaurant, supermarkt, psycholoog, moskee, kapper, transport, boekhouder… alles en meer op BURADA!",
+                    "title": "Alles is HIER!"
+                },
+                "3": {
+                    "sub": "Maak binnen enkele minuten gratis je profiel.",
+                    "text": "Voeg je foto toe, vul je gegevens aan; bereik meer mensen met je posts.",
+                    "title": "Maak jezelf en je bedrijf bekend!"
+                }
+            }
+        },
+        "updateProfile": {
+            "address": "Adres",
+            "addressText": "Je kunt je adresgegevens bijwerken.",
+            "basicInfo": "Basisinformatie",
+            "basicInfoText": "Deze informatie is zichtbaar op je profiel.",
+            "bio": "Bio",
+            "bus": "Bus / Appartement",
+            "companyInfo": "Bedrijfsinformatie",
+            "companyInfoText": "Kies hier in welke categorieën en tags je bedrijf zichtbaar is.",
+            "contact": "Contact",
+            "contactText": "Voer contactgegevens in zodat mensen je kunnen bereiken.",
+            "gsm": "Mobiel / WhatsApp",
+            "lastname": "Achternaam",
+            "name": "Voornaam",
+            "number": "Nummer",
+            "phone": "Telefoon",
+            "save": "Wijzigingen opslaan",
+            "showMail": "Mijn e-mail op mijn profiel tonen",
+            "social": {
+                "facebook": "Facebook-url",
+                "instagram": "Instagram-url",
+                "pinterest": "Pinterest-url",
+                "twitter": "X (Twitter)-url"
+            },
+            "street": "Straat",
+            "tagsPlaceholder": "Selecteer tags en categorieën",
+            "uploadPhoto": "Profielfoto uploaden",
+            "username": "Gebruikersnaam",
+            "website": "Website"
+        }
+    },
+    "search": {
+        "chooseCategory": "Kies een categorie",
+        "subcategories": "Subcategorieën",
+        "showAllInThisCategory": "Alles",
+        "chooseLocation": "Kies een locatie",
+        "resetFilters": "Filters resetten",
+        "foundProfiles": "Gevonden profielen",
+        "goToBusinessDetails": "Details bekijken",
+        "empty": {
+            "noBusinessMatch": "Geen bedrijf gevonden dat voldoet aan je criteria.",
+            "haveBusinessHint": "Als je een bedrijf hebt, kun je het toevoegen via je profiel om zichtbaar te worden.",
+            "noBusinessHint": "Voeg je bedrijf toe om hier zichtbaar te zijn.",
+            "goToMyProfile": "Ga naar mijn profiel",
+            "addBusiness": "Bedrijf toevoegen"
+        }
+    }
+}

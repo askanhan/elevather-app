@@ -1,0 +1,6 @@
+<input v-bind:id="kalenderId" type="text" name="daterange" v-model="dezeDatum" @change="updateKalender($event)" v-on:keyup="updateKalender($event)" />
+
+<!--
+    volledig zichtbaar in scherm (verder uitwerken indien nodig)
+    <input id="kalender" type="text" name="daterange" value="01/01/2015 - 01/31/2015" style="display:none"/>
+  <div id="hierin"  v-on:click="datumGewijzigd"></div>-->

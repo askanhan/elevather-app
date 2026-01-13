@@ -1,0 +1,22 @@
+.tag-item {
+    opacity: 0.4;
+}
+
+.tag-item.selected {
+    opacity: 1;
+}
+
+.select-action-button {
+    background-color: green;
+    color: white;
+    position: fixed;
+    bottom: 70px;
+    padding: 15px;
+    right: 10px;
+    border-radius: 430px;
+    opacity: 0.5;
+}
+
+.select-action-button.active {
+    opacity: 1;
+}

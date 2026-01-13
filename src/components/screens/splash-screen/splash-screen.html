@@ -1,0 +1,105 @@
+<div class="page">
+  <LanguageSwitcher />
+
+  <!-- Resmi Swiper-Vue eventi: @swiper ile instance'ı yakalıyoruz -->
+  <swiper class="swiper" ref="mySwiper" @swiper="onSwiper" @slideChange="handleClickSlide" :slides-per-view="1"
+    :speed="300" :pagination="{ clickable: true }">
+    <swiper-slide>
+      <div class="card-bottom">
+        <div class="sl-content">
+          <h1 class="font-700 font-32 mb-3 splash">
+            {{ $t('pages.splash.slides.1.title') }}
+          </h1>
+          <h6 class="font-400 font-15 mb-3 pb-1 color-blue-dark">{{ $t('pages.splash.slides.1.sub') }}</h6>
+          <p class="color-theme boxed-text-xl opacity-80 pb-5 mb-5">
+            {{ $t('pages.splash.slides.1.text') }}
+          </p>
+        </div>
+      </div>
+      <div class="bg-img-container">
+        <div class="bg-img-class">
+          <video autoplay muted loop playsinline class="bg-video">
+            <source src="../../../../static/img/splashscreen/1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="card-overlay bg-gradient-fade"></div>
+      </div>
+    </swiper-slide>
+
+    <swiper-slide>
+      <div class="card-bottom">
+        <div class="sl-content">
+          <h1 class="font-700 font-32 mb-3 splash">
+            {{ $t('pages.splash.slides.2.title') }}
+          </h1>
+          <h6 class="font-400 font-15 mb-3 pb-1 color-blue-dark">{{ $t('pages.splash.slides.2.sub') }}</h6>
+          <p class="color-theme boxed-text-xl opacity-80 pb-5 mb-5">
+            {{ $t('pages.splash.slides.2.text') }}
+          </p>
+        </div>
+      </div>
+      <div class="bg-img-container">
+        <div class="bg-img-class">
+          <video autoplay muted loop playsinline class="bg-video">
+            <source src="../../../../static/img/splashscreen/2.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="card-overlay bg-gradient-fade"></div>
+      </div>
+    </swiper-slide>
+
+    <swiper-slide>
+      <div class="card-bottom">
+        <div class="sl-content">
+          <h1 class="font-700 font-32 mb-3 splash">
+            {{ $t('pages.splash.slides.3.title') }}
+          </h1>
+          <h6 class="font-400 font-15 mb-3 pb-1 color-blue-dark">{{ $t('pages.splash.slides.3.sub') }}</h6>
+          <p class="color-theme boxed-text-xl opacity-80 pb-5 mb-5">
+            {{ $t('pages.splash.slides.3.text') }}
+          </p>
+        </div>
+      </div>
+      <div class="bg-img-container">
+        <div class="bg-img-class">
+          <video autoplay muted loop playsinline class="bg-video">
+            <source src="../../../../static/img/splashscreen/3.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="card-overlay bg-gradient-fade"></div>
+      </div>
+    </swiper-slide>
+  </swiper>
+
+  <!-- Kendi nokta navigasyonun: artık goTo(i) çağırıyor -->
+  <ul class="splide__pagination">
+    <li>
+      <button class="splide__pagination__page" :class="activeIdx === 0 ? 'is-active' : ''" type="button"
+        @click="goTo(0)" aria-controls="walkthrough-slider-slide01" aria-label="Go to slide 1">
+      </button>
+    </li>
+    <li>
+      <button class="splide__pagination__page" :class="activeIdx === 1 ? 'is-active' : ''" type="button"
+        @click="goTo(1)" aria-controls="walkthrough-slider-slide02" aria-label="Go to slide 2" aria-current="true">
+      </button>
+    </li>
+    <li>
+      <button class="splide__pagination__page" :class="activeIdx === 2 ? 'is-active' : ''" type="button"
+        @click="goTo(2)" aria-controls="walkthrough-slider-slide03" aria-label="Go to slide 3">
+      </button>
+    </li>
+  </ul>
+
+  <div class="cover-button-bottom">
+    <a @click="goToRegister" class="btn btn-m rounded-l shadow-xl btn-full bg-primary font-900 text button-m scale-box">
+      {{ $t('pages.splash.join') }}
+    </a>
+  </div>
+
+  <a @click.prevent="slidePrev" class="cover-prev slider-prev color-gray-dark">
+    <i class="fa fa-angle-left me-2 ms-3"></i>{{ $t('pages.splash.prev') }}
+  </a>
+  <a @click.prevent="slideNext" class="cover-next slider-next color-gray-dark">
+    {{ $t('pages.splash.next') }}<i class="fa fa-angle-right me-3 ms-2"></i>
+  </a>
+</div>

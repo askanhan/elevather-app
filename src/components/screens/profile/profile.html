@@ -1,0 +1,544 @@
+<div class="page pt-2" id="profile-page">
+  <LanguageSwitcher/>
+  <div class="donate-strip" v-if="profileDetails && profileDetails.id" @click="goToDonate()" role="button">
+    <div class="donate-strip__left">
+      <i class="fas fa-hand-holding-heart"></i>
+      <div class="donate-strip__texts">
+        <div class="donate-strip__title">
+          <div class="donate-strip__title">
+            {{ $t('pages.profile.donateTitle') }}
+          </div>
+          <div class="donate-strip__sub">
+            {{ $t('pages.profile.donateSub') }}
+          </div>
+        </div>
+      </div>
+
+      <i class="fas fa-chevron-right donate-strip__chev"></i>
+    </div>
+    </div>
+    <!-- Profil Kartı -->
+    <div class="card card-style shadow-sm" v-if="profileDetails && profileDetails.id">
+      <button class="sidebar-toggle" @click="toggleSidebar">
+        <i class="fa fa-ellipsis-v"></i>
+      </button>
+
+      <div class="profile-header">
+        <!-- Profil Fotoğrafı -->
+        <ProfileAvatar :name="profileDetails.username" :photo-url="profileDetails.p_photo_link" :clickable="false"
+          size="100" />
+
+        <div class="profile-info" v-if="profileDetails">
+          <h1 class="profile-name">
+            {{ profileDetails.username }}
+          </h1>
+
+          <p v-if="profileDetails.bio" class="profile-bio">
+            {{ profileDetails.bio }}
+          </p>
+
+          <p v-if="profileDetails.fk_province" class="profile-location">
+            <i class="fas fa-map-marker-alt profile-location__icon"></i>
+            <span>{{ provinceIDToLabel(profileDetails.fk_province) }}</span>
+          </p>
+
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <div class="profile-stat__value">{{ profileDetails.follower_count || 0 }}</div>
+              <div class="profile-stat__label">{{ $t('pages.profile.followers') }}</div>
+            </div>
+
+            <div class="profile-stat">
+              <div class="profile-stat__value">{{ profileDetails.nofviews || 0 }}</div>
+              <div class="profile-stat__label">{{ $t('pages.profile.views') }}</div>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <!-- OTHER PROFILE -->
+            <button v-if="!isMyProfile" type="button" class="profile-actions__btn profile-actions__btn--primary"
+              :class="{ 'is-following': isFollowed }" @click="toggleFollow">
+              <span>{{ isFollowed ? $t('pages.profile.followingState') : $t('pages.profile.follow') }}</span>
+            </button>
+
+            <button v-if="!isMyProfile" type="button" class="profile-actions__btn profile-actions__btn--outline"
+              @click="sendMessage">
+              {{ $t('pages.profile.message') }}
+            </button>
+
+            <!-- MY PROFILE -->
+            <button v-if="isMyProfile" type="button" class="profile-actions__btn profile-actions__btn--primary"
+              @click="openBusinessSidebar">
+              {{ $t('pages.profile.addBusiness') }}
+            </button>
+
+            <button v-if="isMyProfile" type="button" class="profile-actions__btn profile-actions__btn--outline"
+              @click="toggleSidebar">
+              {{ $t('pages.profile.editProfile') }}
+            </button>
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+    <!-- PROFILE TABS (single el-tabs for both my & other profiles) -->
+    <section v-if="profileDetails && profileDetails.id" class="profile-tabs card card-style shadow-sm">
+      <el-tabs :key="`profile-tabs-${profileDetails.id}-${isMyProfile}`" v-model="activeTab" class="profile-tabs__tabs"
+        stretch :lazy="true">
+        <!-- MY PROFILE: İşletmelerim (sadece varsa) -->
+        <el-tab-pane v-if="isMyProfile && myBusinesses && myBusinesses.length" name="biz">
+          <template #label>
+            <span class="tab-label">
+              {{ $t('pages.profile.tabs.myBiz') }} <span class="tab-count">({{ myBusinesses.length }})</span>
+            </span>
+          </template>
+
+          <div class="mybiz-section">
+            <div class="mybiz-section__sub">
+              {{ $t('pages.profile.myBizSub') }}
+            </div>
+
+            <div v-for="business in myBusinesses" :key="business.id"
+              class="card card-style shadow-sm mb-3 profile-card profile-card--biz">
+              <div class="biz-row">
+                <ProfileAvatar class="biz-row__avatar" :name="business.name"
+                  :photo-url="businessPhotoUrl(business.p_photo_link)" :clickable="true" size="72"
+                  @click="openBusinessSidebarForEdit(business)" />
+
+                <div class="biz-row__content">
+                  <div class="biz-row__top">
+                    <h2 class="biz-title">{{ business.name }}</h2>
+
+                    <button class="biz-edit-btn" @click="openBusinessSidebarForEdit(business)">
+                      <i class="fas fa-pen"></i>
+                    </button>
+                  </div>
+
+                  <p v-if="business.description" class="biz-desc">
+                    {{ business.description }}
+                  </p>
+
+                  <div class="biz-meta">
+                    <span v-if="business.fk_category_id" class="biz-chip">
+                      <i class="fas fa-layer-group"></i>
+                      {{ categoryIDToLabel(business.fk_category_id) }}
+                    </span>
+
+                    <span v-if="business.fk_tag_id" class="biz-chip">
+                      <i class="fas fa-tag"></i>
+                      {{ tagIDToLabel(business.fk_tag_id) }}
+                    </span>
+
+                    <span v-if="business.fk_province_id || business.fk_town_id" class="biz-chip">
+                      <i class="fas fa-map-marker-alt"></i>
+                      {{ locationLabel(business.fk_province_id, business.fk_town_id) }}
+                    </span>
+                  </div>
+
+                  <div class="biz-bottom">
+                    <div class="biz-stats">
+                      <span class="biz-views">
+                        {{ business.nofviews || 0 }} görüntülenme
+                      </span>
+                      <span class="biz-visibility" :class="{ off: !business.is_visible }">
+                        {{ business.is_visible ? 'Herkese açık' : 'Gizli' }}
+                      </span>
+                    </div>
+
+                    <div class="biz-actions">
+                      <button class="biz-action biz-action--primary" @click="openBusinessSidebarForEdit(business)">
+                        {{ $t('pages.profile.edit') }}
+                      </button>
+                      <button class="biz-action biz-action--outline" @click="goToBusinessDetailPage(business.id)">
+                        {{ $t('pages.profile.viewProfile') }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </el-tab-pane>
+
+        <!-- OTHER PROFILE: İşletmeler (sadece varsa) -->
+        <el-tab-pane v-if="!isMyProfile && otherBusinessesCount" name="otherBiz">
+          <template #label>
+            <span class="tab-label">
+              {{ $t('pages.profile.tabs.otherBiz') }} <span class="tab-count">({{ otherBusinessesCount }})</span>
+            </span>
+          </template>
+
+          <div class="mybiz-section">
+            <div v-for="business in otherBusinesses" :key="business.id"
+              class="card card-style shadow-sm mb-3 profile-card profile-card--biz">
+              <div class="biz-row">
+                <ProfileAvatar class="biz-row__avatar" :name="business.name"
+                  :photo-url="businessPhotoUrl(business.p_photo_link)" :clickable="true" size="72"
+                  @click="goToBusinessDetailPage(business.id)" />
+
+                <div class="biz-row__content">
+                  <div class="biz-row__top">
+                    <h2 class="biz-title">{{ business.name }}</h2>
+                  </div>
+
+                  <p v-if="business.description" class="biz-desc">
+                    {{ business.description }}
+                  </p>
+
+                  <div class="biz-meta">
+                    <span v-if="business.fk_category_id" class="biz-chip">
+                      <i class="fas fa-layer-group"></i>
+                      {{ categoryIDToLabel(business.fk_category_id) }}
+                    </span>
+
+                    <span v-if="business.fk_tag_id" class="biz-chip">
+                      <i class="fas fa-tag"></i>
+                      {{ tagIDToLabel(business.fk_tag_id) }}
+                    </span>
+
+                    <span v-if="business.fk_province_id || business.fk_town_id" class="biz-chip">
+                      <i class="fas fa-map-marker-alt"></i>
+                      {{ locationLabel(business.fk_province_id, business.fk_town_id) }}
+                    </span>
+                  </div>
+
+                  <div class="biz-bottom">
+                    <div class="biz-stats">
+                      <span class="biz-views">
+                        {{ business.nofviews || 0 }} görüntülenme
+                      </span>
+                      <span class="biz-visibility" :class="{ off: !business.is_visible }">
+                        {{ business.is_visible ? 'Herkese açık' : 'Gizli' }}
+                      </span>
+                    </div>
+
+                    <div class="biz-actions">
+                      <button class="biz-action biz-action--outline" @click="goToBusinessDetailPage(business.id)">
+                        {{ $t('pages.profile.viewProfile') }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="!otherBusinessesCount" class="profile-empty">
+              İşletme yok.
+            </div>
+          </div>
+        </el-tab-pane>
+
+        <!-- POSTS (her zaman var, default tab) -->
+        <el-tab-pane name="posts">
+          <template #label>
+            <span class="tab-label">
+              {{ isMyProfile ? $t('pages.profile.tabs.myPosts') : $t('pages.profile.tabs.posts') }}
+              <span class="tab-count">({{ isMyProfile ? myPostsCount : otherPostsCount }})</span>
+            </span>
+          </template>
+
+          <div v-if="isMyProfile && isAccountPrivate" class="private-msg">
+            {{ $t('pages.profile.empty.private') }}
+          </div>
+
+          <div v-else class="posts-list">
+            <PostCard v-for="post in (isMyProfile ? myPosts : otherPosts)" :key="post.id" :post="post" />
+          </div>
+
+          <div v-if="isMyProfile
+          ? (!isAccountPrivate && !myPostsCount)
+          : (!otherPostsCount)" class="profile-empty">
+            {{ $t('pages.profile.empty.noPosts') }}
+          </div>
+        </el-tab-pane>
+
+        <!-- MY PROFILE: Bookmarks -->
+        <el-tab-pane v-if="isMyProfile" name="bookmarks">
+          <template #label>
+            <span class="tab-label">
+              {{ $t('pages.profile.tabs.bookmarks') }} <span class="tab-count">({{ myBookmarksCount }})</span>
+            </span>
+          </template>
+
+          <div class="posts-list">
+            <PostCard v-for="post in myBookmarks" :key="post.id" :post="post" />
+          </div>
+
+          <div v-if="!myBookmarksCount" class="profile-empty">
+            {{ $t('pages.profile.empty.noBookmarks') }}
+          </div>
+        </el-tab-pane>
+
+      </el-tabs>
+    </section>
+
+
+    <!-- Profil Foto Modal -->
+    <div id="profile-modal" :class="{ active: isModalActive }" @click="closeModal"
+      v-if="profileDetails && profileDetails.id">
+      <div class="modal-content">
+        <img id="modal-photo" :src="profileDetails.p_photo" alt="Profil Foto" @click.stop />
+      </div>
+    </div>
+
+    <!-- Post Lightbox Modal -->
+    <div id="post-modal" :class="{ active: isPostModalActive }" @click="closePostModal">
+      <div class="modal-content">
+        <img :src="currentPostImage" alt="Post Foto" @click.stop />
+      </div>
+    </div>
+
+    <!-- SAĞ SIDEBAR OVERLAY -->
+    <div class="profile-sidebar-overlay" v-if="isSidebarOpen" @click="closeSidebar"></div>
+
+    <!-- SAĞ SIDEBAR PANEL -->
+    <div class="profile-sidebar" :class="{ open: isSidebarOpen }">
+      <div class="profile-sidebar-header">
+        <span>{{ $t('pages.profile.sidebar.title') }}</span>
+        <button type="button" class="sidebar-close-btn" @click="closeSidebar">
+          &times;
+        </button>
+      </div>
+
+      <div class="profile-sidebar-content">
+        <el-form ref="profileFormRef" :model="profileForm" :rules="profileRules" label-position="top"
+          class="profile-sidebar-form">
+          <!-- Kullanici Adi -->
+          <el-form-item :label="$t('pages.profile.sidebar.username')" prop="username">
+            <el-input v-model="profileForm.username" :placeholder="$t('pages.profile.sidebar.username')" clearable />
+          </el-form-item>
+
+          <!-- Ad -->
+          <el-form-item :label="$t('pages.profile.sidebar.name')" prop="name">
+            <el-input v-model="profileForm.name" :placeholder="$t('pages.profile.sidebar.name')" clearable />
+          </el-form-item>
+
+          <!-- Soyad (opsiyonel) -->
+          <el-form-item :label="$t('pages.profile.sidebar.lastName')" prop="lastName">
+            <el-input v-model="profileForm.lastName" :placeholder="$t('pages.profile.sidebar.lastName')" clearable />
+          </el-form-item>
+
+          <!-- Bio -->
+          <el-form-item :label="$t('pages.profile.sidebar.bioLabel')" prop="bio">
+            <el-input v-model="profileForm.bio" type="textarea" :rows="3"
+              :placeholder="$t('pages.profile.sidebar.bioPlaceholder')" maxlength="280" show-word-limit />
+          </el-form-item>
+
+          <!-- İl seçimi -->
+          <el-form-item :label="$t('pages.profile.sidebar.province')" prop="provinceId">
+            <el-select v-model="profileForm.provinceId" filterable clearable
+              :placeholder="$t('pages.profile.sidebar.provincePlaceholder')" class="w-100">
+              <el-option v-for="prov in provinceOptions" :key="prov.value" :label="prov.label" :value="prov.value" />
+            </el-select>
+          </el-form-item>
+
+          <!-- Görünürlük -->
+          <el-form-item>
+            <div class="visibility-row">
+              <el-switch v-model="profileForm.is_visible" active-color="#16a34a" inactive-color="#d4d4d8" />
+              <div class="visibility-text">
+                <div class="visibility-title">
+                  {{ $t('pages.profile.sidebar.visibilityTitle') }}
+                </div>
+                <div class="visibility-sub">
+                  {{ $t('pages.profile.sidebar.visibilitySub') }}
+                </div>
+              </div>
+            </div>
+          </el-form-item>
+
+          <!-- Gizlenmiş Postları Sıfırla -->
+          <el-form-item>
+            <el-button type="danger" size="small" class="reset-hidden-posts-btn" @click="resetHiddenPosts">
+              {{ $t('pages.profile.sidebar.resetHiddenPosts') }}
+            </el-button>
+          </el-form-item>
+
+          <!-- Aksiyonlar -->
+          <el-form-item class="mt-3 sidebar-actions">
+            <el-button type="primary" size="large" class="sidebar-save-btn" @click="submitProfile">
+              {{ $t('pages.profile.sidebar.save') }}
+            </el-button>
+            <el-button size="large" class="sidebar-cancel-btn" @click="resetProfileForm">
+              {{ $t('pages.profile.sidebar.cancel') }}
+            </el-button>
+          </el-form-item>
+        </el-form>
+
+        <el-collapse>
+          <el-collapse-item :title="$t('pages.profile.sidebar.other')" name="other">
+            <el-form-item>
+              <el-button type="danger" size="small" class="reset-hidden-posts-btn" @click="openDeleteProfile">
+                {{ $t('pages.profile.sidebar.deleteProfile') }}
+              </el-button>
+            </el-form-item>
+          </el-collapse-item>
+        </el-collapse>
+        <!-- Çıkış Yap Butonu -->
+        <el-form-item class="logout-action" >
+          <el-button type="danger" size="large" class="logout-btn" @click="logout">
+            {{ $t('pages.profile.sidebar.logout') }}
+          </el-button>
+        </el-form-item>
+      </div>
+
+    </div>
+
+
+    <!-- SAĞ BUSINESS SIDEBAR OVERLAY -->
+    <div class="profile-sidebar-overlay" v-if="isBusinessSidebarOpen" @click="closeBusinessSidebar"></div>
+
+    <!-- SAĞ BUSINESS SIDEBAR PANEL -->
+    <div class="profile-sidebar" :class="{ open: isBusinessSidebarOpen }">
+      <div class="profile-sidebar-header">
+        <span>{{ $t('pages.profile.businessSidebar.title') }}</span>
+        <button type="button" class="sidebar-close-btn" @click="closeBusinessSidebar">
+          &times;
+        </button>
+      </div>
+
+      <div class="profile-sidebar-content">
+        <el-form ref="businessFormRef" :model="businessForm" :rules="businessRules" label-position="top"
+          class="profile-sidebar-form">
+          <!-- İşletme adı -->
+          <el-form-item :label="$t('pages.profile.businessSidebar.name')" prop="name">
+            <el-input v-model="businessForm.name" :placeholder="$t('pages.profile.businessSidebar.namePlaceholder')"
+              clearable />
+          </el-form-item>
+
+          <!-- Logo / Kapak görseli -->
+          <el-form-item :label="$t('pages.profile.businessSidebar.logoLabel')">
+            <el-upload class="business-logo-upload" :auto-upload="false" :limit="1" list-type="picture-card"
+              :file-list="logoFileList" accept="image/*" @change="handleLogoChange">
+              <div class="business-logo-upload__picker">
+                <el-icon>
+                  <Camera />
+                </el-icon>
+                <div class="business-logo-upload__text">{{ $t('pages.profile.businessSidebar.logoText') }}</div>
+              </div>
+            </el-upload>
+          </el-form-item>
+
+          <!-- Açıklama -->
+          <el-form-item :label="$t('pages.profile.businessSidebar.descLabel')" prop="description">
+            <el-input v-model="businessForm.description" type="textarea" :rows="3"
+              :placeholder="$t('pages.profile.businessSidebar.descPlaceholder')" maxlength="320" show-word-limit />
+          </el-form-item>
+
+          <!-- Kategori -->
+          <el-form-item :label="$t('pages.profile.businessSidebar.category')" prop="fk_category">
+            <el-select v-model="businessForm.fk_category" filterable clearable
+              :placeholder="$t('pages.profile.businessSidebar.categoryPlaceholder')" class="w-100">
+              <el-option v-for="cat in categoryOptions" :key="cat.value" :label="cat.label" :value="cat.value" />
+            </el-select>
+          </el-form-item>
+
+          <!-- Etiket -->
+          <el-form-item :label="$t('pages.profile.businessSidebar.tag')" prop="fk_tag">
+            <el-select v-model="businessForm.fk_tag" filterable clearable
+              :placeholder="$t('pages.profile.businessSidebar.tagPlaceholder')" class="w-100">
+              <el-option v-for="tag in tagOptions" :key="tag.value" :label="tag.label" :value="tag.value" />
+            </el-select>
+          </el-form-item>
+
+          <!-- İl -->
+          <el-form-item :label="$t('pages.profile.businessSidebar.province')" prop="fk_province">
+            <el-select v-model="businessForm.fk_province" filterable clearable
+              :placeholder="$t('pages.profile.businessSidebar.provincePlaceholder')" class="w-100">
+              <el-option v-for="prov in provinceOptions" :key="prov.value" :label="prov.label" :value="prov.value" />
+            </el-select>
+          </el-form-item>
+
+          <!-- İlçe -->
+          <el-form-item :label="$t('pages.profile.businessSidebar.town')" prop="fk_town">
+            <el-select v-model="businessForm.fk_town" filterable clearable
+              :placeholder="$t('pages.profile.businessSidebar.townPlaceholder')" class="w-100">
+              <el-option v-for="town in townOptions" :key="town.value" :label="town.label" :value="town.value" />
+            </el-select>
+          </el-form-item>
+
+          <!-- Adres satırı -->
+          <el-form-item :label="$t('pages.profile.businessSidebar.address')" prop="adres">
+            <el-input v-model="businessForm.adres" :placeholder="$t('pages.profile.businessSidebar.addressPlaceholder')"
+              clearable />
+          </el-form-item>
+
+          <!-- İletişim alanları -->
+          <el-form-item :label="$t('pages.profile.businessSidebar.phone')" prop="phone">
+            <el-input v-model="businessForm.phone" :placeholder="$t('pages.profile.businessSidebar.phonePlaceholder')"
+              clearable />
+          </el-form-item>
+
+          <el-form-item :label="$t('pages.profile.businessSidebar.whatsapp')" prop="whatsapp">
+            <el-input v-model="businessForm.whatsapp"
+              :placeholder="$t('pages.profile.businessSidebar.whatsappPlaceholder')" clearable />
+          </el-form-item>
+
+          <el-form-item :label="$t('pages.profile.businessSidebar.website')" prop="website">
+            <el-input v-model="businessForm.website" placeholder="https://..." clearable />
+          </el-form-item>
+
+          <el-form-item :label="$t('pages.profile.businessSidebar.email')" prop="email">
+            <el-input v-model="businessForm.email" :placeholder="$t('pages.profile.businessSidebar.emailPlaceholder')"
+              clearable />
+          </el-form-item>
+
+          <!-- Görünürlük -->
+          <el-form-item>
+            <div class="visibility-row">
+              <el-switch v-model="businessForm.is_visible" active-color="#16a34a" inactive-color="#d4d4d8" />
+              <div class="visibility-text">
+                <div class="visibility-title">
+                  {{ $t('pages.profile.businessSidebar.visibilityTitle') }}
+                </div>
+                <div class="visibility-sub">
+                  {{ $t('pages.profile.businessSidebar.visibilitySub') }}
+                </div>
+              </div>
+            </div>
+          </el-form-item>
+
+          <!-- Aksiyonlar -->
+          <el-form-item class="mt-3 sidebar-actions">
+            <el-button type="primary" size="large" class="sidebar-save-btn" @click="submitBusiness">
+              {{ $t('pages.profile.sidebar.save') }}
+            </el-button>
+            <el-button size="large" class="sidebar-cancel-btn" @click="closeBusinessSidebar">
+              {{ $t('pages.profile.sidebar.cancel') }}
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+
+
+    <ConfirmDialog v-model="deleteOpen" :title="$t('pages.profile.deleteDialog.title')"
+      :confirm-text="$t('pages.profile.deleteDialog.confirm')" :cancel-text="$t('pages.profile.deleteDialog.cancel')"
+      :loading="deleteLoading" @confirm="submitDeleteProfile">
+      <div class="delete-warning">
+        <p class="delete-warning__title">{{ $t('pages.profile.deleteDialog.warningTitle') }}</p>
+        <p class="delete-warning__text" v-html="$t('pages.profile.deleteDialog.warningText')"></p>
+      </div>
+
+      <el-form :model="deleteForm" label-position="top">
+        <el-form-item :label="$t('pages.profile.deleteDialog.reasonLabel')">
+          <el-input v-model="deleteForm.reason" type="textarea" :rows="4"
+            :placeholder="$t('pages.profile.deleteDialog.reasonPlaceholder')" maxlength="400" show-word-limit />
+        </el-form-item>
+
+        <el-form-item :label="$t('pages.profile.deleteDialog.confirmLabel')">
+          <el-input v-model="deleteForm.confirmText" :placeholder="$t('pages.profile.deleteDialog.confirmPlaceholder')"
+            maxlength="10" />
+        </el-form-item>
+      </el-form>
+    </ConfirmDialog>
+
+  </div>

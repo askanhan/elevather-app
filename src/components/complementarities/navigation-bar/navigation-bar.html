@@ -1,0 +1,31 @@
+<!-- <div id="navigation-bar">
+    <div class="icon-container" :class="current === 'home' ? 'selected' : ''" @click="homeSelected()">
+        <i class="fa-home" :class="current === 'home' ? 'fa' : 'fal'"></i>
+    </div>
+    <div class="icon-container" :class="current === 'search' ? 'selected' : ''" @click="searchSelected()">
+        <i class="fa-search" style="color: #a0d2f2;" :class="current === 'search' ? 'fa' : 'fal'"></i>
+    </div>
+    <div class="icon-container" :class="current === 'add' ? 'selected' : ''" @click="addSelected()">
+        <i class="fa-plus-circle" :class="current === 'add' ? 'fa' : 'fal'"></i>
+    </div>
+    <div class="icon-container" :class="current === 'profile' ? 'selected' : ''" @click="profileSelected()">
+        <i class="fa-user-circle" :class="current === 'profile' ? 'fa' : 'fal'"></i>
+    </div>
+</div> -->
+<div id="footer-bar" class="footer-bar-1" v-if="current !== '/' && current !== 'chat' && loggedIn">
+    <a :class="current === 'home' ? 'active-nav' : ''" @click="homeSelected()"><i class="fa fa-home"></i><span>
+            {{ $t('components.navigation.home') }}
+        </span></a>
+    <a :class="current === 'search' ? 'active-nav' : ''" @click="searchSelected()"><i class="fa fa-search"></i><span>
+            {{ $t('components.navigation.search') }}
+        </span></a>
+    <a :class="current === 'add' ? 'active-nav' : ''" @click="addSelected()"><i class="fa fa-plus-circle"></i><span>
+            {{ $t('components.navigation.add') }}
+        </span></a>
+    <a class="active-nav" @click="newsSelected()"><i class="fa fa-newspaper"></i><span>
+            {{ $t('components.navigation.news') }}
+        </span></a>
+    <a :class="current === 'profile' ? 'active-nav' : ''" @click="profileTo()"><i class="fa fa-user-circle"></i><span>
+            {{ $t('components.navigation.profile') }}
+        </span></a>
+</div>

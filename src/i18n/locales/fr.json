@@ -1,0 +1,566 @@
+{
+    "add": {
+        "warning3": "Attention : Vous pouvez encore",
+        "warning3_2": "publications dans les prochaines 24 heures.",
+        "category": {
+            "education": "Éducation",
+            "event": "Événement",
+            "general": "Général",
+            "job": "Emploi",
+            "title": "Catégorie"
+        },
+        "errors": {
+            "postLimitReached": "Vous avez atteint le nombre maximum de posts pour aujourd’hui. Veuillez réessayer plus tard.",
+            "emptyPost": "Le post ne peut pas être vide.",
+            "generic": "Quelque chose a mal tourné. Réessayez.",
+            "photoTooLarge": "La photo ne peut pas dépasser {mb} Mo.",
+            "photoUploadFailed": "Échec du téléversement de la photo",
+            "videoTooLarge": "La vidéo ne peut pas dépasser {mb} Mo.",
+            "videoUploadFailed": "Échec du téléversement de la vidéo"
+        },
+        "event": {
+            "dayFrom": "Jour (début)",
+            "dayTo": "Jour (fin)",
+            "location": "Lieu",
+            "locationPlaceholder": "Adresse / lieu (optionnel)",
+            "timeFrom": "Heure (début)",
+            "timeTo": "Heure (fin)"
+        },
+        "media": {
+            "photo": {
+                "add": "Ajouter une photo",
+                "title": "Photo"
+            },
+            "poll": {
+                "add": "Ajouter un sondage",
+                "close": "Fermer le sondage",
+                "title": "Sondage"
+            },
+            "video": {
+                "add": "Ajouter une vidéo",
+                "title": "Vidéo"
+            }
+        },
+        "poll": {
+            "addOption": "Ajouter une option",
+            "option": "Option {n}"
+        },
+        "publisher": {
+            "business": "Vous publiez au nom d’une entreprise",
+            "meFallback": "Moi",
+            "user": "Vous publiez en votre nom"
+        },
+        "send": {
+            "fail": "Erreur lors de l’envoi du post.",
+            "send": "Envoyer",
+            "sending": "Envoi…",
+            "success": "Post publié !"
+        },
+        "text": {
+            "pollPlaceholder": "Posez une question",
+            "postPlaceholder": "Que voulez-vous partager ?"
+        }
+    },
+    "auth": {
+        "afterlogin": {
+            "backToLogin": "Retour à la connexion",
+            "errors": {
+                "badSession": "Données de session corrompues. Réessayez.",
+                "cantFetchUser": "Impossible de récupérer les informations utilisateur.",
+                "noSession": "Aucune donnée de session trouvée."
+            },
+            "retry": "Réessayer",
+            "step": {
+                "stepCompleting": "Chargement du profil…",
+                "stepLoadingProfile": "Chargement du profil…",
+                "stepPreparingApp": "Préparation de l’application…",
+                "stepRedirecting": "Redirection…",
+                "stepRefreshing": "Actualisation de la session…",
+                "stepRetryProfile": "Nouvelle tentative du profil…",
+                "stepSavingSession": "Enregistrement de la session…",
+                "stepStart": "Finalisation de la connexion…"
+            },
+            "subtitleError": "Utilisez le bouton ci-dessous pour réessayer.",
+            "subtitleLoading": "Veuillez patienter, redirection…",
+            "titleError": "La connexion n’a pas pu être finalisée",
+            "titleLoading": "Connexion en cours"
+        }
+    },
+    "common": {
+        "cancel": "Annuler",
+        "linkCopied": "Lien copié",
+        "loading": "Chargement...",
+        "messages": "Messages",
+        "noResults": "Aucun résultat",
+        "notifications": "Notifications",
+        "other": "Autre",
+        "send": "Envoyer",
+        "supportAssociation": "Soutenir l’association"
+    },
+    "components": {
+        "chat": {
+            "emptySub": "Écrivez le premier message.",
+            "emptyTitle": "Aucun message pour l’instant",
+            "placeholder": "Écrire un message...",
+            "retry": "Réessayer",
+            "sending": "Envoi",
+            "started": "Conversation démarrée :",
+            "confirmBlockTitle": "Bloquer l’utilisateur",
+            "confirmBlockText": "Bloquer",
+            "confirmCancelText": "Annuler",
+            "confirmBlockBody": "Êtes-vous sûr de vouloir bloquer cet utilisateur ?",
+            "confirmDeleteTitle": "Supprimer la conversation",
+            "confirmDeleteText": "Supprimer",
+            "confirmDeleteBody": "Cette conversation sera supprimée définitivement. Êtes-vous sûr ?"
+        },
+        "conversations": {
+            "emptySub": "Démarrez en envoyant un message depuis un profil.",
+            "emptyTitle": "Aucune conversation pour l’instant",
+            "new": "Nouveau",
+            "searchPlaceholder": "Rechercher : nom ou message...",
+            "title": "Messages",
+            "unread": "{n} non lus",
+            "upToDate": "À jour",
+            "you": "Vous :"
+        },
+        "donate": {
+            "copy": "Copier",
+            "copyLink": "Copier le lien",
+            "optionsTitle": "Options de soutien",
+            "pill": "Soutien volontaire",
+            "receiver": "Bénéficiaire :",
+            "secureNote": "Le lien de don vous redirige vers votre page de paiement sécurisée.",
+            "shareBtn": "Partager",
+            "shareSub": "Aidez-nous à atteindre plus de personnes.",
+            "shareTitle": "Partager",
+            "sub": "Vision Tree est une association basée à Bruxelles. Elle mène des travaux axés sur la psychologie et la technologie; développe des formations, des ateliers et des projets d’impact social pour les jeunes, les familles et différents groupes de besoins. Sur l’application BURADA, elle vise à rendre visibles les communautés et les entreprises; à renforcer l’interaction locale par des annonces de formations et d’événements, ainsi que par des contenus informatifs sur les institutions publiques et des actualités.",
+            "title": "Soutenir",
+            "webDonate": "Don via le web"
+        },
+        "feedback": {
+            "cancel": "Annuler",
+            "emailLabel": "E-mail (optionnel)",
+            "hint": {
+                "bug": "Pour un bug : étapes + écran + résultat attendu.",
+                "general": "Soyez bref et clair, nous nous en chargeons.",
+                "suggestion": "Pour une suggestion : quoi améliorer et pourquoi ?"
+            },
+            "messageLabel": "Message",
+            "messagePlaceholder": "Que s’est-il passé, où, et comment reproduire ? Ajoutez une capture si possible.",
+            "pill": "Nous contacter",
+            "send": "Envoyer",
+            "sending": "Envoi",
+            "sub": "Un problème, une suggestion, ou juste envie de parler ? Écrivez-nous.",
+            "subjects": {
+                "bug": "Signalement de bug",
+                "business_claim": "Revendication d’entreprise",
+                "general": "Général",
+                "label": "Sujet",
+                "placeholder": "Choisir un sujet",
+                "profile_delete": "Suppression de profil",
+                "suggestion": "Suggestion"
+            },
+            "success": "Votre message a été envoyé. Merci.",
+            "tipText": "Si vous choisissez « Signalement de bug » : indiquez l’appareil, les étapes et le résultat attendu, et nous pleurerons moins.",
+            "tipTitle": "Astuce",
+            "title": "Retour d’expérience",
+            "writeMessage": "Écrivez votre message"
+        },
+        "footer": {
+            "slogan": "La plateforme qui réunit<br>tout ce que vous souhaitez trouver en Belgique."
+        },
+        "highlightRequest": {
+            "btnSend": "Envoyer la demande",
+            "btnSending": "Envoi…",
+            "emptySub": "Ajoutez d’abord votre entreprise depuis votre profil, puis envoyez une demande ici.",
+            "emptyTitle": "Vous n’avez pas encore d’entreprise",
+            "goToProfile": "Aller à mon profil",
+            "labelBusiness": "Entreprise",
+            "labelContact": "Contact (optionnel)",
+            "labelDesc": "Brève description (obligatoire)",
+            "note": "Note : Envoyer une demande est gratuit. Le contenu est évalué selon la pertinence et les critères de qualité.",
+            "placeholderContact": "E-mail ou téléphone",
+            "placeholderDesc": "Ex : nouvelle ouverture, événement, campagne, appel aux bénévoles…",
+            "select": "Sélectionner…",
+            "sub": "Ceci est une demande de mise en avant. Après vérification de la pertinence, le contenu peut être mis en avant dans le fil.",
+            "success": "Votre demande a été reçue. Un retour pourra être fait après examen.",
+            "title": "Mettre votre entreprise en avant"
+        },
+        "navigation": {
+            "add": "Ajouter",
+            "home": "Accueil",
+            "news": "Actualités",
+            "profile": "Profil",
+            "search": "Découvrir"
+        },
+        "newsTicker": {
+            "continue": "Continuer",
+            "label": "À la une",
+            "stop": "Arrêter"
+        },
+        "partnerRail": {
+            "badges": {
+                "apply": "Postuler",
+                "event": "Événement",
+                "webshop": "Boutique en ligne"
+            },
+            "defaultLabel": "Partenaire"
+        },
+        "post": {
+            "comment": "Commentaire",
+            "date": {
+                "daysAgo": " jours plus tôt",
+                "hoursAgo": " heures plus tôt",
+                "justNow": "À l’instant",
+                "minutesAgo": " minutes plus tôt",
+                "monthsAgo": " mois plus tôt",
+                "secondsAgo": " secondes plus tôt",
+                "weeksAgo": " semaines plus tôt",
+                "yearsAgo": " années plus tôt"
+            },
+            "like": "J’aime",
+            "share": "Partager",
+            "testUser": "Utilisateur test"
+        },
+        "menubar": {
+            "subtitle": {
+                "home": "Bienvenue {name}",
+                "search": "Trouvez tout ce que vous voulez en Belgique !",
+                "add": "Chercher/trouver/vendre/demander/partager !",
+                "newslist": "Actualités de Belgique et du monde !",
+                "profile": "Affichez et modifiez votre profil !",
+                "business": "Affichez et gérez les entreprises !",
+                "donate": "Ajoutez votre pierre à l’édifice !",
+                "conversations": "Vérifiez vos messages !",
+                "default": "Tout est ici {name}"
+            }
+        },
+        "postCard": {
+            "comments": {
+                "placeholder": "Écrire un commentaire...",
+                "send": "Envoyer"
+            },
+            "hideConfirm": "Êtes-vous sûr de vouloir masquer ce post ?\n\nLes posts masqués ne s’affichent pas dans le fil. Vous ne pourrez les récupérer qu’en réinitialisant tous les posts masqués.",
+            "likes": "{n} j’aime",
+            "menu": {
+                "cancel": "Annuler",
+                "delete": "Supprimer le post",
+                "hide": "Masquer ce post",
+                "report": "Signaler"
+            },
+            "poll": {
+                "badge": "Sondage",
+                "footer": "Touchez une option pour voter.",
+                "votes": "{n} votes"
+            },
+            "report": {
+                "cancel": "Annuler",
+                "reasons": {
+                    "inappropriate": "Contenu inapproprié / dérangeant",
+                    "misleading": "Information trompeuse",
+                    "other": "Autre",
+                    "spam": "Spam",
+                    "violence": "Discours de haine ou violence"
+                },
+                "subtitle": "Choisissez une raison :",
+                "title": "Signaler le post"
+            },
+            "views": "{n} vues"
+        }
+    },
+    "pages": {
+        "business": {
+            "actions": {
+                "claim": "Cette entreprise est à moi",
+                "fixRequest": "Corriger l’information",
+                "follow": "Suivre",
+                "followed": "Suivi",
+                "sendMessage": "Envoyer un message"
+            },
+            "contact": {
+                "call": "Appeler",
+                "facebook": "Facebook",
+                "instagram": "Instagram",
+                "location": "Lieu",
+                "mail": "Mail",
+                "pinterest": "Pinterest",
+                "twitter": "X",
+                "website": "Site web",
+                "whatsapp": "WhatsApp"
+            },
+            "dialogs": {
+                "claim": {
+                    "noteLabel": "Brève explication",
+                    "notePlaceholder": "Pourquoi cette entreprise vous appartient ? (p. ex. numéro d’entreprise / domaine mail / courte info)",
+                    "phoneLabel": "Téléphone (optionnel)",
+                    "title": "Revendiquer cette entreprise"
+                },
+                "fix": {
+                    "btn": "Envoyer la demande",
+                    "detailsLabel": "Quelle information est incorrecte ?",
+                    "detailsPlaceholder": "Ex : adresse erronée, téléphone à mettre à jour, catégorie à changer...",
+                    "emailLabel": "E-mail de contact (optionnel)",
+                    "title": "Demande de correction d’information"
+                },
+                "report": {
+                    "btn": "Envoyer le signalement",
+                    "emailLabel": "E-mail de contact (optionnel)",
+                    "reasonLabel": "Raison du signalement",
+                    "reasonPlaceholder": "Fausse entreprise, info incorrecte, spam, contenu inapproprié, etc.",
+                    "title": "Signaler l’entreprise"
+                }
+            },
+            "messages": {
+                "failed": "Échec de l’envoi. Réessayez.",
+                "fixRequired": "Vous devez indiquer l’information à corriger.",
+                "linkCopied": "Lien copié !",
+                "noteRequired": "Vous devez écrire une brève explication.",
+                "reportReasonRequired": "Vous devez indiquer la raison du signalement.",
+                "sent": "Votre demande a été envoyée.",
+                "shareText": "Découvrez {name} sur Burada !",
+                "shareTitle": "Profil d’entreprise"
+            },
+            "posts": {
+                "private": "Ce compte est privé.",
+                "title": "Derniers posts"
+            },
+            "sidebar": {
+                "claim": "Cette entreprise est à moi",
+                "fix": "Corriger l’info",
+                "report": "Signaler",
+                "request": "Demande",
+                "title": "Paramètres de l’entreprise"
+            },
+            "unclaimed": "Cette entreprise n’est pas encore liée à un profil. Si vous en êtes propriétaire, vous pouvez la vérifier via « Cette entreprise est à moi » ou envoyer une demande de correction.",
+            "views": "Vues"
+        },
+        "home": {
+            "loadingMore": "Chargement de plus de posts...",
+            "noMorePosts": "C’est tout 👌 Bravo d’être allé jusque-là !<br>Faites une capture et envoyez-la nous, soyez notre invité lors de la prochaine activité ! 🎁",
+            "tabs": {
+                "education": "Éducation",
+                "events": "Événements",
+                "general": "Général",
+                "job": "Emploi"
+            }
+        },
+        "login": {
+            "appleBtn": "Se connecter avec Apple",
+            "googleBtn": "Se connecter avec Google",
+            "privacyHtml": "Vos données sont stockées en toute sécurité et ne sont pas partagées avec des tiers.<br>En vous connectant, vos données sont protégées selon la <a href='https://burada.be/privacy-policy' target='_blank'>Politique de Confidentialité</a> et les <a href='https://burada.be/terms-of-service' target='_blank'>Conditions d’Utilisation</a>.",
+            "subtitle": "Pour commencer, choisissez votre compte.",
+            "welcome": "Bienvenue !"
+        },
+        "messages": {
+            "empty": "Vous n’avez pas encore de messages."
+        },
+        "newsDetails": {
+            "back": "Retour",
+            "notFound": "Actualité introuvable.",
+            "openOriginal": "Ouvrir l’article original",
+            "otherNews": "Autres actualités",
+            "share": "Partager",
+            "source": "Source :"
+        },
+        "newsList": {
+            "defaultSource": "Actualité",
+            "empty": "Pas d’actualités pour le moment.",
+            "showMore": "Afficher plus"
+        },
+        "notifications": {
+            "empty": "Aucune notification à afficher pour le moment."
+        },
+        "postList": {
+            "backToMain": "Retour",
+            "everywhere": "Partout"
+        },
+        "profile": {
+            "addBusiness": "Ajoutez votre entreprise",
+            "businessSidebar": {
+                "address": "Adresse (optionnel)",
+                "addressPlaceholder": "Ex : Ossenstraat 1, Gand",
+                "category": "Catégorie",
+                "categoryPlaceholder": "Sélectionnez une catégorie",
+                "descLabel": "Brève description (optionnel)",
+                "descPlaceholder": "Présentez brièvement votre entreprise",
+                "email": "E-mail (optionnel)",
+                "emailPlaceholder": "exemple{'@'}entreprise.be",
+                "logoLabel": "Logo / Image de couverture (optionnel)",
+                "logoText": "Choisir un logo",
+                "name": "Nom de l’entreprise",
+                "namePlaceholder": "Ex : Mavzer Consulting",
+                "phone": "Téléphone (optionnel)",
+                "phonePlaceholder": "Ex : 0487 246 846",
+                "province": "Province (optionnel)",
+                "provincePlaceholder": "Sélectionnez une province",
+                "tag": "Étiquette (optionnel)",
+                "tagPlaceholder": "Sélectionnez une étiquette",
+                "title": "Ajouter une entreprise",
+                "town": "Commune (optionnel)",
+                "townPlaceholder": "Sélectionnez une commune",
+                "visibilitySub": "Si vous désactivez, le profil n’est visible que via le lien direct.",
+                "visibilityTitle": "Rendre l’entreprise publique"
+            },
+            "deleteDialog": {
+                "cancel": "Annuler",
+                "confirm": "Oui, supprimer",
+                "confirmLabel": "Écrivez « SUPPRIMER » pour confirmer",
+                "confirmPlaceholder": "SUPPRIMER",
+                "reasonLabel": "Votre raison de suppression",
+                "reasonPlaceholder": "Pourquoi, brièvement ?",
+                "title": "Supprimez définitivement votre profil",
+                "warningText": "Votre profil, vos posts et vos connexions seront supprimés. Si vous souhaitez continuer, écrivez ci-dessous votre raison et saisissez <b>SUPPRIMER</b> pour confirmer.",
+                "warningTitle": "Cette action est irréversible."
+            },
+            "donateSub": "Don volontaire",
+            "donateTitle": "Soutenez-nous",
+            "edit": "Modifier",
+            "editProfile": "Modifier votre profil",
+            "empty": {
+                "noBiz": "Pas d’entreprise.",
+                "noBookmarks": "Aucun post enregistré.",
+                "noPosts": "Pas de posts.",
+                "private": "Ce compte est privé."
+            },
+            "follow": "Suivre",
+            "followers": "Abonnés",
+            "followingState": "Vous suivez",
+            "hidden": "Masqué",
+            "message": "Envoyer un message",
+            "messages": {
+                "bizAdded": "Entreprise ajoutée avec succès",
+                "bizFailed": "Échec de l’enregistrement de l’entreprise",
+                "bizNameMin": "Au moins 2 caractères",
+                "bizNameRequired": "Nom de l’entreprise requis",
+                "bizUpdated": "Entreprise mise à jour",
+                "categoryRequired": "Vous devez choisir une catégorie",
+                "deleteFailed": "Échec de la suppression. Réessayez.",
+                "deleteProcessed": "Votre demande de suppression de profil a été traitée.",
+                "emailInvalid": "Entrez un e-mail valide",
+                "hiddenUpdated": "Posts masqués mis à jour. Ils réapparaîtront après reconnexion.",
+                "imgError": "Échec du téléversement de l’image",
+                "nameMin": "Le prénom doit comporter au moins 2 caractères",
+                "nameRequired": "Prénom requis",
+                "profileUpdateFailed": "Échec de la mise à jour du profil",
+                "profileUpdated": "Profil mis à jour avec succès",
+                "reasonRequired": "Veuillez écrire votre raison de suppression.",
+                "typeDelete": "Vous devez écrire « SUPPRIMER » pour continuer.",
+                "urlInvalid": "Entrez une URL valide"
+            },
+            "myBizSub": "Ces entreprises vous appartiennent. Touchez le crayon à droite pour modifier.",
+            "public": "Public",
+            "sidebar": {
+                "bioLabel": "Brève description de vous",
+                "bioPlaceholder": "Par exemple : Nous sommes une association active en psychologie et technologie...",
+                "cancel": "Annuler",
+                "deleteProfile": "!Supprimer totalement mon profil!",
+                "lastName": "Nom de famille",
+                "logout": "Se déconnecter",
+                "name": "Prénom",
+                "province": "Province (optionnel)",
+                "provincePlaceholder": "Choisissez une province",
+                "resetHiddenPosts": "Réinitialiser les posts masqués",
+                "other": "Autre",
+                "save": "Enregistrer",
+                "title": "Modifier le profil",
+                "username": "Nom d’utilisateur (public)",
+                "visibilitySub": "Si vous désactivez, votre profil ne sera visible que via le lien direct.",
+                "visibilityTitle": "Rendre le profil public"
+            },
+            "tabs": {
+                "bookmarks": "Mes favoris",
+                "myBiz": "Mes entreprises",
+                "myPosts": "Mes posts",
+                "otherBiz": "Entreprises",
+                "posts": "Posts"
+            },
+            "viewProfile": "Voir le profil",
+            "views": "Vues"
+        },
+        "question": {
+            "location": "Lieu",
+            "message": "Votre message"
+        },
+        "selectTag": {
+            "done": "Terminer",
+            "select": "Sélectionnez au moins une étiquette"
+        },
+        "settings": {
+            "language": "Paramètres de langue",
+            "logout": "Déconnexion",
+            "privateAccount": "Rendre le compte privé",
+            "privateInfo": "Votre compte est passé en privé, vos posts ont été masqués.",
+            "title": "Paramètres"
+        },
+        "splash": {
+            "join": "REJOIGNEZ-NOUS",
+            "languageSettings": "Paramètres de langue",
+            "next": "Suivant",
+            "prev": "Précédent",
+            "selectLanguage": "Sélectionnez votre langue",
+            "slides": {
+                "1": {
+                    "sub": "Le point de rencontre des Turcs en Belgique",
+                    "text": "Notre objectif : une plateforme où tous les Turcs de Belgique peuvent se connecter et se suivre. Connectez-vous, trouvez, partagez, suivez l’actualité. Tout dans une seule app !",
+                    "title": "Bienvenue sur BURADA"
+                },
+                "2": {
+                    "sub": "Trouvez ce que vous cherchez sur cette plateforme",
+                    "text": "Médecins turcs en Belgique, avocats, restaurants, marchés, psychologues, mosquées, coiffeurs, transport, comptables… tout cela et plus encore sur BURADA !",
+                    "title": "Tout est sur BURADA !"
+                },
+                "3": {
+                    "sub": "Créez votre profil gratuitement en quelques minutes.",
+                    "text": "Ajoutez votre photo, complétez vos informations ; atteignez plus de personnes avec vos publications.",
+                    "title": "Faites connaître vous et votre entreprise !"
+                }
+            }
+        },
+        "updateProfile": {
+            "address": "Adresse",
+            "addressText": "Vous pouvez mettre à jour votre adresse.",
+            "basicInfo": "Informations de base",
+            "basicInfoText": "Ces informations sont visibles sur votre profil.",
+            "bio": "Bio",
+            "bus": "Boîte / Appartement",
+            "companyInfo": "Informations sur l’entreprise",
+            "companyInfoText": "Choisissez ici les catégories et étiquettes où votre entreprise apparaîtra.",
+            "contact": "Contact",
+            "contactText": "Renseignez vos coordonnées pour être contacté.",
+            "gsm": "Téléphone portable / WhatsApp",
+            "lastname": "Nom de famille",
+            "name": "Prénom",
+            "number": "Numéro",
+            "phone": "Téléphone",
+            "save": "Enregistrer les modifications",
+            "showMail": "Afficher mon e-mail sur mon profil",
+            "social": {
+                "facebook": "URL Facebook",
+                "instagram": "URL Instagram",
+                "pinterest": "URL Pinterest",
+                "twitter": "URL X (Twitter)"
+            },
+            "street": "Rue",
+            "tagsPlaceholder": "Sélectionnez les étiquettes et les catégories",
+            "uploadPhoto": "Téléverser une photo de profil",
+            "username": "Nom d’utilisateur",
+            "website": "Site web"
+        }
+    },
+    "search": {
+        "chooseCategory": "Sélectionnez une catégorie",
+        "subcategories": "Sous-catégories",
+        "showAllInThisCategory": "Tout",
+        "chooseLocation": "Choisissez un lieu",
+        "resetFilters": "Réinitialiser les filtres",
+        "foundProfiles": "Profils trouvés",
+        "goToBusinessDetails": "Voir les informations",
+        "empty": {
+            "noBusinessMatch": "Aucune entreprise ne correspond à vos critères.",
+            "haveBusinessHint": "Si vous avez une entreprise, ajoutez-la depuis votre profil pour être visible.",
+            "noBusinessHint": "Ajoutez votre entreprise pour être visible ici.",
+            "goToMyProfile": "Aller à mon profil",
+            "addBusiness": "Ajouter une entreprise"
+        }
+    }
+}

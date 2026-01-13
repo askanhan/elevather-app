@@ -1,0 +1,1177 @@
+.fa-disabled,
+.fa-disabled:hover {
+    opacity: 0.2;
+}
+
+.fa-active,
+fa-active:hover {
+    color: #FFFFFF;
+    opacity: 1 !important;
+}
+
+.fa-not-active,
+fa-not-active:hover {
+    color: #FFFFFF;
+    opacity: 0.5 !important;
+}
+
+
+.modal-label-child {
+    padding-top: 5px;
+}
+
+.span-url {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+
+.disabled {
+    background-color: lightgray;
+}
+
+.input-group-popup {
+    display: -webkit-inline-box;
+}
+
+.input-group-text {
+    background-color: #FFFFFF;
+}
+
+.fixedFlags200 {
+    max-width: 200px;
+    min-width: 200px;
+    margin-right: 10px;
+    display: inline-flex;
+}
+
+.fixedFlagsLabel120 {
+    min-width: 120px !important;
+    max-width: 120px !important;
+}
+
+
+.fixedFlags150 {
+    max-width: 150px;
+    min-width: 150px;
+    margin-right: 10px;
+    display: inline-flex;
+}
+
+.fixedFlagsLabel80 {
+    min-width: 80px !important;
+    max-width: 80px !important;
+}
+
+.begeleiding {
+    color: #338BCE;
+}
+
+.prive {
+    color: #5DCB37
+}
+
+.appschoolware-vselect-parent {
+    padding-top: 5px;
+    padding-right: 40px;
+}
+
+
+.puntenboekje-vselect-parent {
+    padding-top: 5px !important;
+    padding-right: 40px !important;
+}
+
+.puntenboekje-action-button {
+    margin-left: 5px;
+    height: 45px;
+}
+
+.showedInfoHighlight {
+    background-color: yellow !important;
+    color: blue !important;
+    font-weight: 1000 !important;
+    font-size: 55 !important;
+}
+
+.modal-label {
+    padding-top: 10px;
+}
+
+/* radio buttons styling */
+label.radio {
+    cursor: pointer;
+}
+
+label.radio input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+label.radio span {
+    padding: 7px 14px;
+    border: 2px solid #EEE;
+    display: inline-block;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+label.radio input:checked+span {
+    border-color: #8ce196 !important;
+}
+
+/* accorion styling */
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    /*padding: 18px;*/
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    margin-top: 10px;
+}
+
+.active,
+.accordion:hover {
+    background-color: #ccc;
+}
+
+.vasteLabelWidth1 {
+    min-width: 120px;
+    max-width: 120px;
+    margin: 0px;
+    padding: 0px;
+}
+
+/*
+.modal-footer > :not(:last-child) {
+  margin-right: 0px !important;
+}
+*/
+
+.rowWisa {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.bovenMarge {
+    margin-top: 10px;
+}
+
+.onderMarge {
+    margin-bottom: 5px;
+}
+
+.alternatingRow {
+    background-color: #F0F5FA;
+}
+
+/*
+.hoofdwrapperPuntenboekje{
+  padding-left:55px;
+  height: calc(100vh - 80px);
+}
+
+@media screen and (max-width: 500px) {
+ .hoofdwrapperPuntenboekje{
+     padding-left:21px;
+  }
+}
+*/
+.fix-column {
+    float: left;
+    height: calc(100vh - 360px);
+}
+
+.fix-column-administratie {
+    float: left;
+    height: calc(100vh - 455px);
+}
+
+.rest-columns {
+    height: calc(100vh - 360px);
+    width: calc(100vw - 85px);
+}
+
+
+
+.rest-columns-administratie {
+    height: calc(100vh - 455px);
+    width: calc(100vw - 85px);
+}
+
+@media screen and (max-width: 500px) {
+    .rest-columns {
+        width: calc(100vw - 45px);
+    }
+
+    .leerlingInfo {
+        max-width: 130px !important;
+    }
+}
+
+.margeHoofdwrapper {
+    padding-left: 45px;
+    padding-right: 50px;
+}
+
+@media screen and (max-width: 500px) {
+    .margeHoofdwrapper {
+        padding-left: 30px;
+    }
+}
+
+.hoofdwrapperPuntenboekje.maximized,
+.hoofdwrapperPuntenboekje.maximized>.hoofdwrapperPuntenboekje,
+.hoofdwrapperPuntenboekje.maximized>.hoofdwrapperPuntenboekje>.total-wrapper,
+.hoofdwrapperPuntenboekje.maximized>.hoofdwrapperPuntenboekje>div>.rest-columns {
+    padding: 0px !important;
+    margin: 0px !important;
+    width: calc(100vw - 85px) !important;
+    height: calc(100vh - 110px) !important;
+    padding-left: 15px !important;
+}
+
+@media screen and (max-width: 500px) {
+
+    .hoofdwrapperPuntenboekje.maximized,
+    .hoofdwrapperPuntenboekje.maximized>.hoofdwrapperPuntenboekje,
+    .hoofdwrapperPuntenboekje.maximized>.hoofdwrapperPuntenboekje>.total-wrapper,
+    .hoofdwrapperPuntenboekje.maximized>.hoofdwrapperPuntenboekje>div>.rest-columns {
+        width: calc(100vw - 60px) !important;
+        padding-left: 10px !important;
+    }
+}
+
+.hoofdwrapperPuntenboekje.maximized>.hoofdwrapperPuntenboekje>div>.fix-column {
+    height: calc(100vh - 110px) !important;
+}
+
+.tbody.horiScrollSpace,
+.thead.vertiScrollSpace,
+.tbody.vertiScrollSpace {
+    -webkit-transform: translateZ(0) !important;
+    -webkit-backface-visibility: hidden !important;
+    -webkit-perspective: 1000 !important;
+}
+
+.total-wrapper {
+    float: left;
+    width: calc(100vw - 110px);
+}
+
+@media screen and (max-width: 500px) {
+    .total-wrapper {
+        width: calc(100vw - 55px);
+    }
+}
+
+.thead,
+.leerlingInfo {
+    height: 40px;
+    white-space: nowrap;
+}
+
+.thead>span>span {
+    display: inline-block;
+    width: 51px;
+    /*line-height: 38px;*/
+    text-align: center;
+    overflow: hidden;
+}
+
+/*span.rechtseBorder.bovenBorder.onderBorder.opmerkingKolom {
+  display: inline-block !important;
+}*/
+div#topGridHeader_puntenboekje {
+    display: flex !important;
+}
+
+.trow {
+    white-space: nowrap;
+}
+
+.trow>span>span,
+.nieuweBeoordeling {
+    display: inline-block;
+    width: 51px;
+    line-height: 40px;
+    height: 40px;
+    text-align: center;
+    border-right: 1px solid #F3F3F3;
+    border-top: 1px solid #F3F3F3;
+}
+
+.rechtseBorder {
+    border-right: 1px solid #F3F3F3;
+}
+
+.linkseBorder {
+    border-left: 1px solid #F3F3F3;
+}
+
+.bovenBorder {
+    border-top: 1px solid #F3F3F3;
+}
+
+.onderBorder {
+    border-bottom: 1px solid #F3F3F3;
+}
+
+.trowKlasnummer>span {
+    text-align: left;
+    max-width: 15px !important;
+    min-width: 15px !important;
+}
+
+.trowNaam>span {
+    text-align: left;
+    width: 110px;
+}
+
+.tbody {
+    height: 100%;
+    overflow: auto;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.fix-column>.tbody {
+    overflow-Y: scroll;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+.fix-column>.tbody::-webkit-scrollbar {
+    display: none;
+}
+
+.leerlingGegevens {
+    display: inline-block !important;
+    margin-top: 13px;
+    padding-left: 2px;
+}
+
+.leerlingInfo {
+    overflow: hidden;
+}
+
+.rest-columns>.thead {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+.verticaleScrollspacing {
+    padding-right: 17px !important;
+}
+
+.rest-columns>.thead::-webkit-scrollbar {
+    display: none;
+}
+
+.horiScrollSpace {
+    margin-bottom: 17px;
+    /*max-height:calc(100vh - 270px);*/
+}
+
+.horiScrollSpaceZonderScroll {
+    padding-bottom: 17px !important;
+}
+
+@media screen and (max-width: 500px) {}
+
+.vertiScrollSpace {
+    padding-right: 17px;
+    border-right: solid 1px #F3F3F3
+}
+
+.toets-heeft-publicatiedatum {
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* remove   display:none; visibility: hidden; for debugging */
+.toets-invisible-used-in {
+    color: red;
+    font-weight: normal;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    filter: brightness(100%);
+}
+
+.toets-invisible-used-in>span>span>i,
+.toets-invisible-used-in>div>div>i {
+    color: red !important;
+}
+
+.toets-invisible {
+    /* moet na toets-invisible-used-in komen */
+    font-weight: normal;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    filter: brightness(20%);
+}
+
+.toets-invisible-detail-view {
+    color: blue !important;
+    background-color: blue
+}
+
+.form__field {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ccc;
+}
+
+/*
+.dg-btn--ok {
+  border-color: green;
+}
+*/
+
+.main-footer {
+    padding-left: 0px;
+    padding-right: 0px;
+    display: inline-block;
+    width: 100%;
+    min-height: 65px;
+    padding-right: 10px;
+    margin-top: 10px;
+}
+
+.modal-footer {
+    padding-left: 0px;
+    padding-right: 0px;
+    display: inline-block;
+    width: 100%;
+    min-height: 65px;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.floatRight {
+    float: right;
+}
+
+/* .v-select .dropdown-toggle .clear { visibility: hidden; } */
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+
+.gridFotoSpan {
+    min-height: 45px;
+    max-height: 45px;
+    max-width: 28px;
+    min-width: 28px;
+    display: inline-block;
+    float: left;
+    margin-right: 5px;
+}
+
+.gridFoto {
+    min-height: 45px;
+    max-height: 45px;
+    max-width: 28px;
+    min-width: 28px;
+    overflow: hidden;
+}
+
+.popupFotoSmall {
+    min-height: 33px;
+    max-height: 33px;
+    min-width: 25px;
+    max-width: 25px;
+    float: left;
+}
+
+.popupFoto {
+    min-height: 97px;
+    max-height: 97px;
+    min-width: 70px;
+    max-width: 70px;
+    float: left;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+.opmerkingKolom {
+    min-width: calc(100vw - 385px) !important;
+    max-width: calc(100vw - 385px) !important;
+    text-align: left !important;
+    padding-left: 10px !important;
+    display: inline-flex !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    position: relative;
+}
+
+@media screen and (max-width: 500px) {
+    .opmerkingKolom {
+        min-width: calc(100vw - 260px) !important;
+        max-width: calc(100vw - 260px) !important;
+    }
+}
+
+.thead,
+.thead>span>span {
+    height: 57px;
+}
+
+.subTitelBeoordeling {
+    display: block;
+    line-height: 19px;
+}
+
+/*.horizontal-highlight > span > object{
+  filter: brightness(75%) !important;
+} */
+.horizontal-highlight {
+    background-color: rgba(175, 13, 60, 0.08);
+    font-size: 12px;
+    border-top: 1px solid rgba(175, 13, 60, 0.6) !important;
+    border-bottom: 1px solid rgba(175, 13, 60, 0.6) !important;
+    opacity: 0.8;
+}
+
+.trow>span>span:last-child.horizontal-highlight {
+    border-right: 1px solid rgba(175, 13, 60, 0.6) !important;
+}
+
+.trow.horizontal-highlight {
+    border-left: 1px solid rgba(175, 13, 60, 0.6) !important;
+}
+
+.beoordelingsCodes {
+    border-top: 3px solid #FFFFFF;
+}
+
+/*.vertical-flou-highlight {
+  opacity: 0.3
+}*/
+.beoordelingsCodes.vertical-hover-item {
+    border-top: 3px solid grey;
+}
+
+.trow:last-child>span>span.vertical-hover-item {
+    border-bottom: 1px solid grey !important;
+}
+
+.vertical-hover-item {
+    border-left: 1px solid grey !important;
+    border-right: 1px solid grey !important;
+    /*transform: translate(0px, -5px); beetje naar boven verschuiven test*/
+}
+
+.beoordelingsCodes.vertical-formula-items {
+    border-top: 3px solid grey !important;
+}
+
+.trow:last-child>span>span.vertical-formula-items {
+    border-bottom: 1px solid grey !important;
+}
+
+.vertical-formula-items {
+    /* 2px border width fix wanneer 2 kolommen langs elkaar gehighlight worden */
+    box-shadow: -1px 0px 0px 0px black;
+    border-right: 1px solid grey !important;
+}
+
+/*
+TOP
+box-shadow: 0 -5px 5px -5px #333;
+
+RIGHT
+box-shadow: 5px 0 5px -5px #333;
+
+BOTTOM
+box-shadow: 0 5px 5px -5px #333;
+
+LEFT
+box-shadow: -5px 0 5px -5px #333;
+
+ALL
+box-shadow: 0 0 5px #333;
+*/
+.vertical-formula-items {
+    opacity: 1 !important;
+    /*border-left: 1px solid grey !important;
+  border-right: 1px solid grey !important;*/
+    /* transform: translate(0px, -5px); beetje naar boven verschuiven test*/
+}
+
+.beoordelingsCodes.vertical-highlight {
+    border-top: 1px solid rgba(175, 13, 60, 0.6) !important;
+}
+
+.trow:last-child>span>span.vertical-highlight {
+    border-bottom: 1px solid rgba(175, 13, 60, 0.6) !important;
+}
+
+.vertical-highlight {
+    background-color: rgba(175, 13, 60, 0.08);
+    font-size: 12px;
+    border-left: 1px solid rgba(175, 13, 60, 0.6) !important;
+    border-right: 1px solid rgba(175, 13, 60, 0.6) !important;
+    /*filter: brightness(130%);*/
+    opacity: 0.8;
+}
+
+.formula-columns-highlight-tooltip,
+.used-in-columns-highlight-tooltip {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.formula-columns-highlight {
+    /* filter: brightness(150%); */
+    background-color: rgba(242, 196, 40, 0.7) !important;
+}
+
+.used-in-columns-highlight {
+    /* filter: brightness(150%); */
+    background-color: #B90D3F !important;
+}
+
+.opmerkingKolom.horizontal-highlight {
+    border-left: 1px solid rgba(175, 13, 60, 0.6) !important;
+}
+
+.trow:last-child>span>span {
+    border-bottom: 1px solid #F3F3F3;
+}
+
+.fa-WISA-default-grootte {
+    font-size: 11px !important;
+}
+
+.fa-WISA-pijl-cursor {
+    cursor: default !important;
+}
+
+.fa-WISA-hand-cursor {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.wisaListPadding>div {
+    padding: .5rem !important;
+}
+
+.wisaPaddingTopBottom {
+    padding-top: .5rem !important;
+    padding-bottom: .5rem !important;
+}
+
+.fa-WISA-hand-cursor>.wisaListPadding {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.fa-WISA-klein {
+    font-size: 6px;
+    font-weight: 400;
+}
+
+.fa-WISA-fontSize25 {
+    font-size: 19px;
+}
+
+.fa-WISA-fontSize19 {
+    font-size: 19px;
+}
+
+.berekendTotaalBackground {
+    font-size: 12px;
+    display: table;
+    margin-left: 28px;
+    color: #AF0D3C;
+    font-weight: 800;
+}
+
+.cellParent {
+    position: relative;
+}
+
+.afwezigheidscodeBackground {
+    font-size: 12px;
+    opacity: 0.2;
+    position: absolute;
+    top: 0px;
+    right: -20px;
+    color: #AF0D3C;
+    font-weight: 800;
+}
+
+.fa-WISA-icon-achtergrond {
+    font-size: 19px;
+    opacity: 0.2 !important;
+    display: table;
+    margin-left: 28px;
+    margin-top: 20px;
+}
+
+.fa-WISA-icon-grootte {
+    font-size: 15px;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.fa-WISA-icon-groot {
+    font-size: 25px !important;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.fa-WISA-fontSize16 {
+    font-size: 16px;
+}
+
+.fa-WISA-red {
+    color: #B80D41;
+}
+
+.fa-WISA-green {
+    color: #428B30;
+}
+
+.fa-WISA-default-color {
+    color: grey;
+}
+
+.fa-WISA-default-color-lighter {
+    color: #b3b3b3
+}
+
+.fa-WISA-default-color-darker {
+    color: #787878
+}
+
+.fa-WISA-achtergrond-wit {
+    background-color: #FFFFFF;
+}
+
+.fa-WISA-wit {
+    color: #FFFFFF;
+}
+
+.fa-WISA-midden {
+    display: flex;
+    align-items: center;
+}
+
+.divBuitenkant {
+    /*	display:inline;*/
+}
+
+.divBinnen1 {
+    float: left;
+}
+
+.divBinnen2,
+.divBinnen3,
+.divBinnen4 {
+    float: right;
+}
+
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+.fix20 {
+    min-width: 20px !important;
+    max-width: 20px !important;
+}
+
+.right {
+    text-align: right;
+}
+
+.fix20right {
+    min-width: 20px !important;
+    max-width: 20px !important;
+    text-align: right;
+}
+
+.fix40right {
+    min-width: 40px !important;
+    max-width: 40px !important;
+    text-align: right;
+}
+
+.fix50 {
+    min-width: 50px !important;
+    max-width: 50px !important;
+}
+
+.fix60right {
+    min-width: 60px !important;
+    max-width: 60px !important;
+    text-align: right;
+}
+
+.fix70 {
+    min-width: 70px !important;
+    max-width: 70px !important;
+}
+
+.fix75 {
+    min-width: 75px !important;
+    max-width: 75px !important;
+}
+
+.fix90 {
+    min-width: 90px !important;
+    max-width: 90px !important;
+}
+
+.fix100 {
+    min-width: 100px !important;
+    max-width: 100px !important;
+}
+
+.fix50span {
+    min-width: 50px !important;
+    max-width: 50px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+.fix75span {
+    min-width: 75px !important;
+    max-width: 75px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+.fix100span {
+    min-width: 100px !important;
+    max-width: 100px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+.fix125span {
+    min-width: 125px !important;
+    max-width: 125px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+.fix150span {
+    min-width: 150px !important;
+    max-width: 150px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+
+.fix200span {
+    min-width: 200px !important;
+    max-width: 200px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+.fix250span {
+    min-width: 150px !important;
+    max-width: 150px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+.fix275span {
+    min-width: 275px !important;
+    max-width: 275px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+.fix300span {
+    min-width: 300px !important;
+    max-width: 300px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+.fix350span {
+    min-width: 350px !important;
+    max-width: 350px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+.fix400span {
+    min-width: 400px !important;
+    max-width: 400px !important;
+    display: block;
+    float: left;
+    margin-top: 10px;
+}
+
+
+
+.fix125 {
+    min-width: 125px !important;
+    max-width: 125px !important;
+}
+
+.fix130 {
+    min-width: 130px !important;
+    max-width: 130px !important;
+}
+
+.fix150 {
+    min-width: 150px !important;
+    max-width: 150px !important;
+}
+
+.fixOmschrijving {
+    min-width: 230px !important;
+    max-width: 230px !important;
+}
+
+@media screen and (max-width: 500px) {
+    .fixOmschrijving {
+        min-width: 150px !important;
+        max-width: 150px !important;
+    }
+}
+
+.fix200 {
+    min-width: 200px !important;
+    max-width: 200px !important;
+}
+
+.fix240 {
+    min-width: 240px !important;
+    max-width: 240px !important;
+}
+
+.fix300 {
+    min-width: 300px !important;
+    max-width: 300px !important;
+}
+
+.wisaBottom {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.infoHelp {
+    float: right;
+    width: 20px;
+    color: grey;
+    font-size: 20px;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.sluiten {
+    color: grey;
+    font-size: 25px;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.wisaBtnNoBorder {
+    border-radius: 5px;
+    border: 0px solid #FFFFFF;
+    padding: 5px;
+    cursor: pointer;
+    cursor: hand;
+    color: grey;
+    font-size: 15px;
+}
+
+.wisaBtn {
+    border-radius: 5px;
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+    cursor: pointer;
+    cursor: hand;
+    color: grey;
+    font-size: 15px;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.wisaBtnFlou {
+    border-color: rgb(233, 232, 232);
+}
+
+.wisaBtnFlou>i {
+    color: rgb(233, 232, 232);
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show>.btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #AF0D3C;
+    border-color: #AF0D3C;
+}
+
+.btn-primary.btnChanged {
+    background-color: #AF0D3C;
+    border-color: #AF0D3C;
+    color: #FFFFFF;
+}
+
+.btn-primary.btnChanged:hover {
+    background-color: #AF0D3C;
+    border-color: #AF0D3C;
+    color: #FFFFFF;
+    opacity: 0.7;
+}
+
+.btn-primary.btnChanged:focus {
+    -webkit-box-shadow: 0 0 0 2px rgba(175, 13, 60, 0.5);
+    box-shadow: 0 0 0 2px rgba(175, 13, 60, 0.5);
+}
+
+.btn-primary {
+    background-color: #FFFFFF;
+    border-color: #CCCCCC;
+    color: grey;
+}
+
+.btn-primary:hover {
+    background-color: #FFFFFF;
+    background-color: #FFFFFF;
+    border-color: #CCCCCC;
+    opacity: 0.7;
+}
+
+.btn-primary:focus {
+    -webkit-box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.leerling-veld {
+    text-align: left;
+    font-size: 12px;
+    height: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 0px;
+    border-top: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+}
+
+.leerling-kolom {
+    width: 125px;
+    float: left;
+}
+
+.draaien {
+    /*  -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);*/
+}
+
+.hoofdcontainer {
+    width: 100%;
+    height: 100%;
+    background: gold;
+    overflow-y: hidden;
+}
+
+.boven {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    height: 40px;
+    padding-top: 5px;
+    padding-left: 10px;
+    background-color: #af0d3c;
+    -webkit-box-shadow: 0px 0px 5px black !important;
+    -moz-box-shadow: 0px 0px 5px black !important;
+    -ms-box-shadow: 0px 0px 5px black !important;
+    box-shadow: 0px 0px 5px black !important;
+    z-index: 9;
+}
+
+.titels {
+    max-height: calc(100vh - 120px);
+    position: fixed;
+    top: 70px;
+    right: 40px;
+    left: 40px;
+}
+
+.midden {
+    max-width: calc(100vw - 80px);
+    max-height: calc(100vh - 120px);
+    position: fixed;
+    top: 110px;
+    overflow-y: overlay;
+    margin-right: 0px;
+}
+
+.midden2 {
+    max-width: calc(100vw - 200px);
+    max-height: calc(100vh - 200px);
+    position: fixed;
+    overflow-y: overlay;
+    left: 165px;
+}
+
+.onder {
+    width: 100%;
+    height: 20px;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+}
+
+
+.toets-daadwerkelijke-rapportcijfers,
+.toets-daadwerkelijke-rapportcijfers>span>span>i,
+.toets-daadwerkelijke-rapportcijfers>div>div>i {
+    filter: brightness(90%);
+    /*opacity: 0.85;*/
+}

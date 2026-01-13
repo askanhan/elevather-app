@@ -1,0 +1,67 @@
+<div class="header header-demo" v-if="current !== '/' && current !== 'chat' && $store.state.flags.loggedIn">
+  <!-- Sol: Back + Logo + Metinler -->
+  <div class="header-left">
+    <a v-if="backButtonAvailable" @click="goBack()" class="header-icon header-icon-back">
+      <i class="fas fa-chevron-left"></i>
+    </a>
+
+    <div class="header-brand">
+      <img id="logo" :src="'./static/img/logo.png'" alt="Burada logo" />
+
+      <div class="header-texts">
+        <!-- Home sayfası: BURADA -->
+        <span v-if="!showHeaderTitle" id="logo-text">
+          BURADA
+        </span>
+
+        <!-- Diğer sayfalar: dinamik başlık -->
+        <span v-if="showHeaderTitle" id="logo-text">
+          {{ getHeaderTitle() }}
+        </span>
+
+        <!-- Hoş geldin – sadece user varsa -->
+        <span id="welcome-message" v-if="$store.state.user">
+          {{altyazi}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sağ: Aksiyon ikonları -->
+  <div class="header-right" v-if="backButtonAvailable">
+    <button class="header-icon-btn" @click="openFeedback" style="font-size: 2em;">
+      <el-icon>
+        <ChatDotRound />
+      </el-icon>
+    </button>
+  </div>
+  <div class="header-right" v-if="!backButtonAvailable && !specialButtonAvailable">
+
+
+    <a @click="goToDonate()" class="header-icon header-icon--donate" :aria-label="$t('common.supportAssociation')"
+      :title="$t('common.supportAssociation')">
+      <i class="fas fa-hand-holding-heart"></i>
+    </a>
+
+    <a @click="goToMessages()" class="header-icon header-icon--dm" :aria-label="$t('common.messages')">
+      <!-- FontAwesome 5: -->
+      <i class="far fa-paper-plane"></i>
+      <!-- FontAwesome 6 kullanıyorsan üstteki yerine: <i class="fa-regular fa-paper-plane"></i> -->
+      <span v-if="numberOfUnredMessages > 0" class="header-badge">
+        {{ numberOfUnredMessages }}
+      </span>
+    </a>
+    <a @click="goToNotifications()" class="header-icon header-icon--notif" :aria-label="$t('common.notifications')">
+      <!-- FontAwesome 5: -->
+      <i class="far fa-heart"></i>
+      <!-- FontAwesome 6: <i class="fa-regular fa-heart"></i> -->
+      <span v-if="numberOfUnviewedNotifications > 0" class="header-badge">
+        {{ numberOfUnviewedNotifications }}
+      </span>
+    </a>
+
+    <!-- <a @click="refresh()" class="header-icon header-icon-3 color-green-dark">
+      <i class="fas fa-sync-alt"></i>
+    </a> -->
+  </div>
+</div>

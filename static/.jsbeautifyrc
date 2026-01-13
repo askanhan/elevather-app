@@ -1,0 +1,8 @@
+{
+  "html": {
+    "wrap_line_length": 120
+  },
+  "js": {
+    "indent_size": 2
+  }
+}

@@ -1,0 +1,44 @@
+<div class="page notifications-page">
+  <div class="card card-style noti-card">
+    <div v-if="notifications && notifications.length" class="noti-list">
+      <div v-for="n in notifications" :key="n.id" class="noti-item" :class="{ 'noti-item--unseen': !n.is_seen }"
+        @click="handleClick(n)">
+        <!-- Avatar (sadece profile gider) -->
+        <div class="noti-avatar" @click.stop="goToProfile(n.fk_by_profile)">
+          <ProfileAvatar :name="senderDisplayName(n)" :photo-url="senderPhoto(n)" :clickable="false" size="40" />
+
+          <!-- küçük “tip” rozet -->
+          <span class="noti-type-badge" :class="typeBadgeClass(n)">
+            <i :class="typeIcon(n)"></i>
+          </span>
+        </div>
+
+        <!-- Metin -->
+        <div class="noti-content">
+          <div class="noti-line">
+            <span class="noti-name" @click.stop="goToProfile(n.fk_by_profile)">
+              {{ senderDisplayName(n) }}
+            </span>
+            <span class="noti-text">
+              {{ textFor(n) }}
+            </span>
+          </div>
+
+          <div class="noti-time">
+            {{ getFromNow(n.created_on) }}
+          </div>
+        </div>
+
+        <!-- okunmadı noktası -->
+        <span v-if="!n.is_seen" class="noti-dot"></span>
+
+        <i class="fas fa-angle-right noti-arrow"></i>
+      </div>
+    </div>
+
+    <!-- BOŞ DURUM -->
+    <div class="content text-center" v-else>
+      <p>{{ $t('pages.notifications.empty') }}</p>
+    </div>
+  </div>
+</div>

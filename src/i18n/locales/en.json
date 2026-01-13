@@ -1,0 +1,569 @@
+{
+  "add": {
+    "warning3": "Caution: You can still post",
+    "warning3_2": "posts in the next 24 hours.",
+    "category": {
+      "education": "Education",
+      "event": "Event",
+      "general": "General",
+      "job": "Job",
+      "title": "Category"
+    },
+    "errors": {
+      "postLimitReached": "You have reached the maximum number of posts for today. Please try again later.",
+      "emptyPost": "Post cannot be empty.",
+      "generic": "Something went wrong. Please try again.",
+      "photoTooLarge": "Photo cannot be larger than {mb}MB.",
+      "photoUploadFailed": "Photo upload failed",
+      "videoTooLarge": "Video cannot be larger than {mb}MB.",
+      "videoUploadFailed": "Video upload failed"
+    },
+    "event": {
+      "dayFrom": "Day (start)",
+      "dayTo": "Day (end)",
+      "location": "Location",
+      "locationPlaceholder": "Address / place (optional)",
+      "timeFrom": "Time (start)",
+      "timeTo": "Time (end)"
+    },
+    "media": {
+      "photo": {
+        "add": "Add photo",
+        "title": "Photo"
+      },
+      "poll": {
+        "add": "Add poll",
+        "close": "Close poll",
+        "title": "Poll"
+      },
+      "video": {
+        "add": "Add video",
+        "title": "Video"
+      }
+    },
+    "poll": {
+      "addOption": "Add option",
+      "option": "Option {n}"
+    },
+    "publisher": {
+      "business": "Posting as a business",
+      "meFallback": "Me",
+      "user": "Posting as yourself"
+    },
+    "send": {
+      "fail": "An error occurred while sending.",
+      "send": "Send",
+      "sending": "Sending…",
+      "success": "Post shared!"
+    },
+    "text": {
+      "pollPlaceholder": "Ask a question",
+      "postPlaceholder": "What do you want to share?"
+    }
+  },
+  "auth": {
+    "afterlogin": {
+      "backToLogin": "Back to login",
+      "errors": {
+        "badSession": "Login data is corrupted. Please try again.",
+        "cantFetchUser": "User info could not be fetched.",
+        "noSession": "No login data found."
+      },
+      "retry": "Retry",
+      "step": {
+        "stepCompleting": "Loading profile…",
+        "stepLoadingProfile": "Loading profile…",
+        "stepPreparingApp": "Preparing app…",
+        "stepRedirecting": "Redirecting…",
+        "stepRefreshing": "Refreshing session…",
+        "stepRetryProfile": "Retrying profile…",
+        "stepSavingSession": "Saving session…",
+        "stepStart": "Finishing login…"
+      },
+      "subtitleError": "Use the button below to try again.",
+      "subtitleLoading": "Please wait, redirecting…",
+      "titleError": "Login could not be completed",
+      "titleLoading": "Signing in"
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "linkCopied": "Link copied",
+    "loading": "Loading...",
+    "messages": "Messages",
+    "noResults": "No results",
+    "notifications": "Notifications",
+    "other": "Other",
+    "send": "Send",
+    "supportAssociation": "Support the association"
+  },
+  "components": {
+    "chat": {
+      "emptySub": "Write the first message.",
+      "emptyTitle": "No messages yet",
+      "placeholder": "Write a message...",
+      "retry": "Retry",
+      "sending": "Sending",
+      "started": "Chat started:",
+      "confirmBlockTitle": "Block user",
+      "confirmBlockText": "Block",
+      "confirmCancelText": "Cancel",
+      "confirmBlockBody": "Are you sure you want to block this user?",
+      "confirmDeleteTitle": "Delete conversation",
+      "confirmDeleteText": "Delete",
+      "confirmDeleteBody": "This conversation will be permanently deleted. Are you sure?"
+    },
+    "conversations": {
+      "emptySub": "Start by messaging a profile.",
+      "emptyTitle": "No conversations yet",
+      "new": "New",
+      "searchPlaceholder": "Search: name or message...",
+      "title": "Messages",
+      "unread": "{n} unread",
+      "upToDate": "You’re up to date",
+      "you": "You:"
+    },
+    "donate": {
+      "copy": "Copy",
+      "copyLink": "Copy link",
+      "optionsTitle": "Support options",
+      "pill": "Volunteer support",
+      "receiver": "Recipient:",
+      "secureNote": "The donation link redirects to your secure payment page.",
+      "shareBtn": "Share",
+      "shareSub": "Help us reach more people.",
+      "shareTitle": "Share",
+      "sub": "Vision Tree is a Brussels-based association. It focuses on psychology and technology; develops trainings, workshops and social impact projects for youth, families and different groups. In the BURADA app, it acts as a stakeholder aiming to increase local engagement by making communities and businesses visible, sharing education and event announcements, informative content about public institutions, and news.",
+      "title": "Support Us",
+      "webDonate": "Donate on the web"
+    },
+    "feedback": {
+      "cancel": "Cancel",
+      "emailLabel": "Email (optional)",
+      "hint": {
+        "bug": "For bugs: steps + screen + expected result.",
+        "general": "Keep it short and clear. We’ll handle it.",
+        "suggestion": "For suggestions: what to improve and why?"
+      },
+      "messageLabel": "Message",
+      "messagePlaceholder": "What happened, where, how can we reproduce? Add a screenshot if possible.",
+      "pill": "Contact us",
+      "send": "Send",
+      "sending": "Sending",
+      "sub": "Got a problem, suggestion, or just want to vent? Write it, we’ll read.",
+      "subjects": {
+        "bug": "Bug report",
+        "business_claim": "Business claim",
+        "general": "General",
+        "label": "Subject",
+        "placeholder": "Select a subject",
+        "profile_delete": "Delete profile",
+        "suggestion": "Suggestion"
+      },
+      "success": "Your message was sent. Thank you.",
+      "tipText": "If you choose “Bug report”: device, steps, and expected result help us cry less.",
+      "tipTitle": "Tip",
+      "title": "Feedback",
+      "writeMessage": "Write your message"
+    },
+    "footer": {
+      "slogan": "A platform that brings together everything you might want to find in Belgium."
+    },
+    "highlightRequest": {
+      "btnSend": "Send request",
+      "btnSending": "Sending…",
+      "emptySub": "First add a business from your profile, then you can send a request here.",
+      "emptyTitle": "No business yet",
+      "goToProfile": "Go to my profile",
+      "labelBusiness": "Business",
+      "labelContact": "Contact (optional)",
+      "labelDesc": "Short description (required)",
+      "note": "Note: Sending a request is free. It will be evaluated based on content suitability and quality criteria.",
+      "placeholderContact": "Email or phone",
+      "placeholderDesc": "Eg: New branch opening, event, campaign, volunteer call…",
+      "select": "Select…",
+      "sub": "This is a visibility request. After content suitability check, it may be highlighted in the feed.",
+      "success": "Your request was received. You may be contacted after review.",
+      "title": "Highlight your business"
+    },
+    "navigation": {
+      "add": "Add",
+      "home": "Home",
+      "news": "News",
+      "profile": "Profile",
+      "search": "Explore"
+    },
+    "newsTicker": {
+      "continue": "Continue",
+      "label": "Agenda",
+      "stop": "Stop"
+    },
+    "partnerRail": {
+      "badges": {
+        "apply": "Apply",
+        "event": "Event",
+        "webshop": "Webshop"
+      },
+      "defaultLabel": "Partner"
+    },
+    "post": {
+      "comment": "Comment",
+      "date": {
+        "daysAgo": " days ago",
+        "hoursAgo": " hours ago",
+        "justNow": "Just now",
+        "minutesAgo": " minutes ago",
+        "monthsAgo": " months ago",
+        "secondsAgo": " seconds ago",
+        "weeksAgo": " weeks ago",
+        "yearsAgo": " years ago"
+      },
+      "like": "Like",
+      "share": "Share",
+      "testUser": "Test User"
+    },
+    "menubar": {
+      "subtitle": {
+        "home": "Welcome {name}",
+        "search": "Find everything you want in Belgium!",
+        "add": "Search/find/sell/ask/share!",
+        "newslist": "Belgium and world agenda!",
+        "profile": "View and edit your profile!",
+        "business": "View and manage businesses!",
+        "donate": "Add your pinch of salt to the soup!",
+        "conversations": "Check your messages!",
+        "default": "Everything is Here {name}"
+      }
+    },
+    "postCard": {
+      "comments": {
+        "placeholder": "Write a comment...",
+        "send": "Send"
+      },
+      "hideConfirm": "Are you sure you want to hide this post?\n\nHidden posts won’t appear in the feed. You can only bring them back by resetting all hidden posts.",
+      "likes": "{n} likes",
+      "menu": {
+        "cancel": "Cancel",
+        "delete": "Delete post",
+        "hide": "Hide this post",
+        "report": "Report"
+      },
+      "poll": {
+        "badge": "Poll",
+        "footer": "Tap an option to vote.",
+        "votes": "{n} votes"
+      },
+      "report": {
+        "cancel": "Cancel",
+        "reasons": {
+          "inappropriate": "Inappropriate / disturbing content",
+          "misleading": "Misleading information",
+          "other": "Other",
+          "spam": "Spam",
+          "violence": "Hate speech or violence"
+        },
+        "subtitle": "Choose a reason:",
+        "title": "Report post"
+      },
+      "views": "{n} views"
+    }
+  },
+  "pages": {
+    "business": {
+      "actions": {
+        "claim": "This company is mine",
+        "fixRequest": "Fix info",
+        "follow": "Follow",
+        "followed": "Followed",
+        "sendMessage": "Send Message"
+      },
+      "contact": {
+        "call": "Call",
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "location": "Location",
+        "mail": "Email",
+        "pinterest": "Pinterest",
+        "twitter": "X",
+        "website": "Website",
+        "whatsapp": "WhatsApp"
+      },
+      "dialogs": {
+        "claim": {
+          "noteLabel": "Short description",
+          "notePlaceholder": "Why does this business belong to you? (e.g., company number / mail domain / short info)",
+          "phoneLabel": "Phone (optional)",
+          "title": "Claim this business"
+        },
+        "fix": {
+          "btn": "Send request",
+          "detailsLabel": "Which information is wrong?",
+          "detailsPlaceholder": "E.g.: wrong address, phone will be updated, category will change...",
+          "emailLabel": "Contact email (optional)",
+          "title": "Information correction request"
+        },
+        "report": {
+          "btn": "Send complaint",
+          "emailLabel": "Contact email (optional)",
+          "reasonLabel": "Reason for complaint",
+          "reasonPlaceholder": "Fake business, wrong info, spam, inappropriate content, etc.",
+          "title": "Report business"
+        }
+      },
+      "messages": {
+        "failed": "Could not send. Try again.",
+        "fixRequired": "You can’t send without writing which info to fix.",
+        "linkCopied": "Link copied!",
+        "noteRequired": "You can’t send without a short description.",
+        "reportReasonRequired": "You can’t send without writing a complaint reason.",
+        "sent": "Your request was sent.",
+        "shareText": "Check out the business {name} on Burada!",
+        "shareTitle": "Business Profile"
+      },
+      "posts": {
+        "private": "This account is private.",
+        "title": "Latest Posts"
+      },
+      "sidebar": {
+        "claim": "This company is mine",
+        "fix": "Fix Info",
+        "report": "Report",
+        "request": "Request",
+        "title": "Business settings"
+      },
+      "unclaimed": "This business is not linked to a profile yet. If you are the owner, you can verify with “This company is mine” or send an info correction request.",
+      "views": "Views"
+    },
+    "home": {
+      "loadingMore": "Loading more posts...",
+      "noMorePosts": "That’s all 👌 You read this far, congrats!<br>Take a screen recording, send it to us, be our guest at the next activity! 🎁",
+      "tabs": {
+        "education": "Education",
+        "events": "Events",
+        "general": "General",
+        "job": "Job"
+      }
+    },
+    "login": {
+      "appleBtn": "Sign in with Apple",
+      "googleBtn": "Sign in with Google",
+      "privacyHtml": "Your data is stored securely and not shared with third parties.<br>When you sign in, your data is protected under our <a href='https://burada.be/privacy-policy' target='_blank'>Privacy Policy</a> and <a href='https://burada.be/terms-of-service' target='_blank'>Terms of Service</a>.",
+      "subtitle": "To start, just choose your account.",
+      "welcome": "Welcome!"
+    },
+    "messages": {
+      "empty": "You have no messages yet."
+    },
+    "newsDetails": {
+      "back": "Back",
+      "notFound": "News not found.",
+      "openOriginal": "Open original news",
+      "otherNews": "Other News",
+      "share": "Share",
+      "source": "Source:"
+    },
+    "newsList": {
+      "defaultSource": "News",
+      "empty": "No news at the moment.",
+      "showMore": "Show more"
+    },
+    "notifications": {
+      "empty": "No notifications to show right now."
+    },
+    "postList": {
+      "backToMain": "Go back",
+      "everywhere": "Everywhere"
+    },
+    "profile": {
+      "addBusiness": "Add your company or workplace",
+      "businessSidebar": {
+        "address": "Address (optional)",
+        "addressPlaceholder": "E.g.: Ossenstraat 1, Ghent",
+        "category": "Category",
+        "categoryPlaceholder": "Select a category",
+        "descLabel": "Short description (optional)",
+        "descPlaceholder": "Briefly introduce your business",
+        "email": "Email (optional)",
+        "emailPlaceholder": "example{'@'}company.be",
+        "logoLabel": "Logo / Cover image (optional)",
+        "logoText": "Choose logo",
+        "name": "Business name",
+        "namePlaceholder": "E.g.: Mavzer Consulting",
+        "phone": "Phone (optional)",
+        "phonePlaceholder": "E.g.: 0487 246 846",
+        "province": "Province (optional)",
+        "provincePlaceholder": "Select a province",
+        "tag": "Tag (optional)",
+        "tagPlaceholder": "Select a tag",
+        "title": "Add business",
+        "town": "Town (optional)",
+        "townPlaceholder": "Select a town",
+        "visibilitySub": "If you turn it off, the profile is shown only to people with the link.",
+        "visibilityTitle": "Make the business public",
+        "website": "Website (optional)",
+        "whatsapp": "WhatsApp (optional)",
+        "whatsappPlaceholder": "Numbers only (with country code)"
+      },
+      "deleteDialog": {
+        "cancel": "Cancel",
+        "confirm": "Yes, delete",
+        "confirmLabel": "Type \"DELETE\" to confirm",
+        "confirmPlaceholder": "DELETE",
+        "reasonLabel": "Your reason for deletion",
+        "reasonPlaceholder": "Briefly why?",
+        "title": "Permanently delete your profile",
+        "warningText": "Your profile, posts and connections will be removed. If you want to continue, write your reason below and type <b>DELETE</b> to confirm.",
+        "warningTitle": "This action cannot be undone."
+      },
+      "donateSub": "Volunteer donation",
+      "donateTitle": "Support us",
+      "edit": "Edit",
+      "editProfile": "Edit your profile",
+      "empty": {
+        "noBiz": "No business.",
+        "noBookmarks": "No saved posts yet.",
+        "noPosts": "No posts yet.",
+        "private": "This account is private."
+      },
+      "follow": "Follow",
+      "followers": "Followers",
+      "followingState": "Following",
+      "hidden": "Hidden",
+      "message": "Send message",
+      "messages": {
+        "bizAdded": "Business added successfully",
+        "bizFailed": "Business could not be saved",
+        "bizNameMin": "Must be at least 2 characters",
+        "bizNameRequired": "Business name is required",
+        "bizUpdated": "Business updated",
+        "categoryRequired": "You must select a category",
+        "deleteFailed": "Delete failed. Try again.",
+        "deleteProcessed": "Your profile deletion request has been processed.",
+        "emailInvalid": "Enter a valid email",
+        "hiddenUpdated": "Hidden posts updated. They will appear after you log in again.",
+        "imgError": "Image could not be uploaded",
+        "nameMin": "Name must be at least 2 characters",
+        "nameRequired": "Name is required",
+        "profileUpdateFailed": "Profile could not be updated",
+        "profileUpdated": "Profile updated successfully",
+        "reasonRequired": "Please write your reason for deletion.",
+        "typeDelete": "You must type \"DELETE\" to continue.",
+        "urlInvalid": "Enter a valid URL"
+      },
+      "myBizSub": "These businesses are linked to you. Tap the pen on the right to edit.",
+      "public": "Public",
+      "sidebar": {
+        "bioLabel": "A short description about yourself",
+        "bioPlaceholder": "For example: We are an association working in psychology and technology...",
+        "cancel": "Cancel",
+        "deleteProfile": "!Delete my profile completely!",
+        "lastName": "Your last name",
+        "logout": "Log Out",
+        "name": "Your name",
+        "province": "Province (optional)",
+        "provincePlaceholder": "Select a province",
+        "resetHiddenPosts": "Reset Hidden Posts",
+        "other": "Other",
+        "save": "Save",
+        "title": "Edit profile",
+        "username": "Your username (public)",
+        "visibilitySub": "If you turn it off, your profile can only be seen by people with the link.",
+        "visibilityTitle": "Make profile public"
+      },
+      "tabs": {
+        "bookmarks": "Saved",
+        "myBiz": "My Businesses",
+        "myPosts": "My Posts",
+        "otherBiz": "Businesses",
+        "posts": "Posts"
+      },
+      "viewProfile": "View profile",
+      "views": "Views"
+    },
+    "question": {
+      "location": "Location",
+      "message": "Your message"
+    },
+    "selectTag": {
+      "done": "Done",
+      "select": "Select at least one tag"
+    },
+    "settings": {
+      "language": "Language Settings",
+      "logout": "Log Out",
+      "privateAccount": "Hide Account",
+      "privateInfo": "Your account has been made private, your posts are hidden.",
+      "title": "Settings"
+    },
+    "splash": {
+      "join": "JOIN US",
+      "languageSettings": "Language Settings",
+      "next": "Next",
+      "prev": "Back",
+      "selectLanguage": "Select your preferred language",
+      "slides": {
+        "1": {
+          "sub": "Meeting point of Turks in Belgium",
+          "text": "Our goal is for all Turkish Belgians to have a medium where they can reach and follow each other. Connect, find what you’re looking for, share, catch the agenda. Everything in one app!",
+          "title": "Welcome to BURADA"
+        },
+        "2": {
+          "sub": "Find what you’re looking for on this platform",
+          "text": "Turkish doctors, lawyers, restaurants, markets, psychologists, mosques, hairdressers, transport, accountants in Belgium… all and more on BURADA!",
+          "title": "Everything is HERE!"
+        },
+        "3": {
+          "sub": "Create your profile for free in minutes.",
+          "text": "Add your photo, complete your info; reach more people with your posts.",
+          "title": "Promote yourself and your business!"
+        }
+      }
+    },
+    "updateProfile": {
+      "address": "Address",
+      "addressText": "You can update your address information.",
+      "basicInfo": "Basic Information",
+      "basicInfoText": "These details are visible on your profile.",
+      "bio": "Bio",
+      "bus": "Bus / Apartment",
+      "companyInfo": "Business Information",
+      "companyInfoText": "You can select which categories and tags your business appears in here.",
+      "contact": "Contact",
+      "contactText": "Enter contact information so people can reach you.",
+      "gsm": "Mobile Phone / WhatsApp",
+      "lastname": "Last name",
+      "name": "Name",
+      "number": "Number",
+      "phone": "Phone",
+      "save": "Save Changes",
+      "showMail": "Show my email on my profile",
+      "social": {
+        "facebook": "Facebook URL",
+        "instagram": "Instagram URL",
+        "pinterest": "Pinterest URL",
+        "twitter": "X (Twitter) URL"
+      },
+      "street": "Street",
+      "tagsPlaceholder": "Select tags and categories",
+      "uploadPhoto": "Upload profile photo",
+      "username": "Username",
+      "website": "Website"
+    }
+  },
+  "search": {
+    "chooseCategory": "Select a category",
+    "subcategories": "Subcategories",
+    "showAllInThisCategory": "All",
+    "chooseLocation": "Select location",
+    "resetFilters": "Reset filters",
+    "foundProfiles": "Profiles found",
+    "goToBusinessDetails": "View details",
+    "empty": {
+      "noBusinessMatch": "No businesses matched your selected criteria.",
+      "haveBusinessHint": "If you have a business, you can add it from your profile to become visible.",
+      "noBusinessHint": "You can become visible here by adding your business.",
+      "goToMyProfile": "Go to my profile",
+      "addBusiness": "Add business"
+    }
+  }
+}

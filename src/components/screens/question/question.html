@@ -1,0 +1,33 @@
+<div class="page">
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">{{ $t('pages.question.location') }}</span>
+        </div>
+
+        <div class="form-group">
+            <select class="form-control" id="exampleFormControlSelect1" v-model="selectedLocation">
+                <option :value="subject" v-for="subject in subjects">{{subject['name_' + lang] || subject.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">{{ $t('pages.question.message') }}</span>
+        </div>
+        <textarea class="form-control" aria-label="With textarea"></textarea>
+    </div>
+
+    <!--  <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">{{UIText.myProfile.lastname[lang]}}</span>
+        </div>
+        <input type="text" class="form-control" placeholder="" aria-label="Lastname"
+            aria-describedby="basic-addon1">
+    </div>
+ -->
+
+    <sidebar-menu :menu="menu" :collapsed="true" :rtl="true" :hide-toggle="true" />
+</div>

@@ -1,0 +1,569 @@
+{
+  "add": {
+    "warning3": "Dikkat: önümüzdeki 24 saat içinde",
+    "warning3_2": "gönderi daha paylaşabilirsin.",
+    "category": {
+      "education": "Eğitim",
+      "event": "Etkinlik",
+      "general": "Genel",
+      "job": "İş",
+      "title": "Kategori"
+    },
+    "errors": {
+      "postLimitReached": "Bugün için maksimum gönderi sayısına ulaştınız. Lütfen daha sonra tekrar deneyin.",
+      "emptyPost": "Boş gönderi olmaz.",
+      "generic": "Bir şeyler ters gitti. Tekrar dene.",
+      "photoTooLarge": "Fotoğraf {mb}MB'den büyük olamaz.",
+      "photoUploadFailed": "Foto yüklenemedi",
+      "videoTooLarge": "Video {mb}MB'den büyük olamaz.",
+      "videoUploadFailed": "Video yüklenemedi"
+    },
+    "event": {
+      "dayFrom": "Gün (başlangıç)",
+      "dayTo": "Gün (bitiş)",
+      "location": "Konum",
+      "locationPlaceholder": "Adres / yer (opsiyonel)",
+      "timeFrom": "Saat (başlangıç)",
+      "timeTo": "Saat (bitiş)"
+    },
+    "media": {
+      "photo": {
+        "add": "Fotoğraf ekle",
+        "title": "Fotoğraf"
+      },
+      "poll": {
+        "add": "Anket ekle",
+        "close": "Anketi kapat",
+        "title": "Anket"
+      },
+      "video": {
+        "add": "Video ekle",
+        "title": "Video"
+      }
+    },
+    "poll": {
+      "addOption": "Seçenek ekle",
+      "option": "Seçenek {n}"
+    },
+    "publisher": {
+      "business": "İşletme adına paylaşıyorsun",
+      "meFallback": "Ben",
+      "user": "Kendi adına paylaşıyorsun"
+    },
+    "send": {
+      "fail": "Gönderi sırasında hata oluştu.",
+      "send": "Gönder",
+      "sending": "Gönderiliyor…",
+      "success": "Gönderi paylaşıldı!"
+    },
+    "text": {
+      "pollPlaceholder": "Bir soru sor",
+      "postPlaceholder": "Ne paylaşmak istiyorsunuz?"
+    }
+  },
+  "auth": {
+    "afterlogin": {
+      "backToLogin": "Giriş ekranına dön",
+      "errors": {
+        "badSession": "Giriş verisi bozuk. Tekrar deneyin.",
+        "cantFetchUser": "Kullanıcı bilgisi alınamadı.",
+        "noSession": "Giriş verisi bulunamadı."
+      },
+      "retry": "Tekrar dene",
+      "step": {
+        "stepCompleting": "Profil yükleniyor…",
+        "stepLoadingProfile": "Profil yükleniyor…",
+        "stepPreparingApp": "Uygulama hazırlanıyor…",
+        "stepRedirecting": "Yönlendiriliyor…",
+        "stepRefreshing": "Oturum yenileniyor…",
+        "stepRetryProfile": "Profil yeniden deneniyor…",
+        "stepSavingSession": "Oturum kaydediliyor…",
+        "stepStart": "Giriş tamamlanıyor…"
+      },
+      "subtitleError": "Tekrar denemek için aşağıdaki butonu kullanabilirsin.",
+      "subtitleLoading": "Lütfen bekleyin, yönlendiriyoruz…",
+      "titleError": "Giriş tamamlanamadı",
+      "titleLoading": "Giriş yapılıyor"
+    }
+  },
+  "common": {
+    "cancel": "İptal",
+    "linkCopied": "Link kopyalandı",
+    "loading": "Yükleniyor...",
+    "messages": "Mesajlar",
+    "noResults": "Sonuç yok",
+    "notifications": "Bildirimler",
+    "other": "Diğer",
+    "send": "Gönder",
+    "supportAssociation": "Derneği destekle"
+  },
+  "components": {
+    "chat": {
+      "emptySub": "İlk mesajı sen yaz.",
+      "emptyTitle": "Henüz mesaj yok",
+      "placeholder": "Mesaj yaz...",
+      "retry": "Tekrar dene",
+      "sending": "Gönderiliyor",
+      "started": "Sohbet başladı:",
+      "confirmBlockTitle": "Kullanıcıyı engelle",
+      "confirmBlockText": "Engelle",
+      "confirmCancelText": "İptal",
+      "confirmBlockBody": "Bu kullanıcıyı engellemek istediğine emin misin?",
+      "confirmDeleteTitle": "Konuşmayı sil",
+      "confirmDeleteText": "Sil",
+      "confirmDeleteBody": "Bu konuşma kalıcı olarak silinecek. Emin misin?"
+    },
+    "conversations": {
+      "emptySub": "Bir profilden mesaj atarak başlatabilirsin.",
+      "emptyTitle": "Henüz konuşma yok",
+      "new": "Yeni",
+      "searchPlaceholder": "Ara: isim veya mesaj...",
+      "title": "Mesajlar",
+      "unread": "{n} okunmamış",
+      "upToDate": "Güncelsin",
+      "you": "Sen:"
+    },
+    "donate": {
+      "copy": "Kopyala",
+      "copyLink": "Linki kopyala",
+      "optionsTitle": "Destek seçenekleri",
+      "pill": "Gönüllü destek",
+      "receiver": "Alıcı:",
+      "secureNote": "Bağış bağlantısı güvenli ödeme sayfanıza yönlendirir.",
+      "shareBtn": "Paylaş",
+      "shareSub": "Daha çok kişiye ulaşmamıza yardım et.",
+      "shareTitle": "Paylaş",
+      "sub": "Vision Tree, Brüksel merkezli bir dernektir. Psikoloji ve teknoloji odağında çalışmalar yürütür; gençler, aileler ve farklı ihtiyaç grupları için eğitimler, atölyeler ve sosyal etki projeleri geliştirir. BURADA uygulamasında ise toplulukları ve işletmeleri görünür kılmayı; eğitim ve etkinlik duyurularıyla, ayrıca kamu kurumlarına dair bilgilendirici içeriklerle ve haberlerle yerel etkileşimi güçlendirmeyi amaçlayan bir paydaş olarak yer alır.",
+      "title": "Destek Ol",
+      "webDonate": "Web üzerinden bağış"
+    },
+    "feedback": {
+      "cancel": "Vazgeç",
+      "emailLabel": "E-posta (opsiyonel)",
+      "hint": {
+        "bug": "Hata için: adımlar + ekran + beklenen sonuç.",
+        "general": "Kısa ve net yaz, biz çözeriz.",
+        "suggestion": "Öneri için: neyi iyileştirelim, neden?"
+      },
+      "messageLabel": "Mesaj",
+      "messagePlaceholder": "Ne oldu, nerede oldu, nasıl tekrar edebiliriz? Varsa ekran görüntüsü de anlat.",
+      "pill": "Bize ulaşın",
+      "send": "Gönder",
+      "sending": "Gönderiliyor",
+      "sub": "Bir sorun mu var, önerin mi var, yoksa sadece içini mi dökmek istiyorsun? Yaz, biz okuyalım.",
+      "subjects": {
+        "bug": "Hata bildirimi",
+        "business_claim": "İşletme sahiplenme",
+        "general": "Genel",
+        "label": "Konu",
+        "placeholder": "Konu seç",
+        "profile_delete": "Profil silme",
+        "suggestion": "Öneri"
+      },
+      "success": "Mesajın iletildi. Teşekkürler.",
+      "tipText": "“Hata bildirimi” seçersen: cihaz, adımlar ve beklenen sonuç yazarsan biz de daha az ağlarız.",
+      "tipTitle": "İpucu",
+      "title": "Geri Bildirim",
+      "writeMessage": "Mesajını yaz"
+    },
+    "footer": {
+      "slogan": "Belçika'da bulmak isteyeceğiniz<br>her şeyi bir araya getiren platform."
+    },
+    "highlightRequest": {
+      "btnSend": "Talep gönder",
+      "btnSending": "Gönderiliyor…",
+      "emptySub": "Önce profilinden işletme ekle, sonra buradan talep gönderebilirsin.",
+      "emptyTitle": "Henüz işletmen yok",
+      "goToProfile": "Profilime git",
+      "labelBusiness": "İşletme",
+      "labelContact": "İletişim (opsiyonel)",
+      "labelDesc": "Kısa açıklama (zorunlu)",
+      "note": "Not: Talep göndermek ücretsizdir. İçerik uygunluğu ve kalite kriterlerine göre değerlendirilir.",
+      "placeholderContact": "E-posta veya telefon",
+      "placeholderDesc": "Örn: Yeni şube açılışı, etkinlik, kampanya, gönüllü çağrısı…",
+      "select": "Seç…",
+      "sub": "Bu bir görünürlük talebidir. İçerik uygunluğu kontrolünden sonra yayın akışında öne çıkarılabilir.",
+      "success": "Talebin alındı. İncelendikten sonra dönüş yapılabilir.",
+      "title": "İşletmeni öne çıkar"
+    },
+    "navigation": {
+      "add": "Ekle",
+      "home": "Anasayfa",
+      "news": "Haberler",
+      "profile": "Profil",
+      "search": "Keşfet"
+    },
+    "newsTicker": {
+      "continue": "Devam et",
+      "label": "Gündem",
+      "stop": "Durdur"
+    },
+    "partnerRail": {
+      "badges": {
+        "apply": "Başvur",
+        "event": "Etkinlik",
+        "webshop": "Webshop"
+      },
+      "defaultLabel": "Partner"
+    },
+    "post": {
+      "comment": "Yorum",
+      "date": {
+        "daysAgo": " gün önce",
+        "hoursAgo": " saat önce",
+        "justNow": "Az önce",
+        "minutesAgo": " dakika önce",
+        "monthsAgo": " ay önce",
+        "secondsAgo": " saniye önce",
+        "weeksAgo": " hafta önce",
+        "yearsAgo": " yıl önce"
+      },
+      "like": "Beğen",
+      "share": "Paylaş",
+      "testUser": "Test Kullanıcı"
+    },
+    "menubar": {
+      "subtitle": {
+        "home": "Welcome {name}",
+        "search": "Belçika'da istediğiniz her şeyi bulun!",
+        "add": "Ara/bul/sat/sor/paylaş!",
+        "newslist": "Belçika ve dünya gündemi!",
+        "profile": "Profili görüntüleyin ve düzenleyin!",
+        "business": "İşletmeleri görüntüleyin ve yönetin!",
+        "donate": "Corbada tuzun olsun!",
+        "conversations": "Mesajlarınızı kontrol edin!",
+        "default": "Her sey Burada {name}"
+      }
+    },
+    "postCard": {
+      "comments": {
+        "placeholder": "Yorum yaz...",
+        "send": "Gönder"
+      },
+      "hideConfirm": "Bu gönderiyi gizlemek istediğine emin misin?\n\nGizlediğin gönderiler akışta görünmez. Daha sonra sadece tüm gizli gönderileri sıfırlayarak geri getirebilirsin.",
+      "likes": "{n} beğeni",
+      "menu": {
+        "cancel": "Vazgeç",
+        "delete": "Gönderiyi sil",
+        "hide": "Bu gönderiyi gizle",
+        "report": "Şikayet et"
+      },
+      "poll": {
+        "badge": "Anket",
+        "footer": "Bir seçeneğe dokun ve oy ver.",
+        "votes": "{n} oy"
+      },
+      "report": {
+        "cancel": "İptal",
+        "reasons": {
+          "inappropriate": "Uygunsuz / rahatsız edici içerik",
+          "misleading": "Yanıltıcı bilgi",
+          "other": "Diğer",
+          "spam": "Spam",
+          "violence": "Nefret söylemi veya şiddet"
+        },
+        "subtitle": "Sebep seç:",
+        "title": "Gönderiyi şikayet et"
+      },
+      "views": "{n} görüntüleme"
+    }
+  },
+  "pages": {
+    "business": {
+      "actions": {
+        "claim": "Bu şirket benim",
+        "fixRequest": "Bilgi düzelt",
+        "follow": "Takip Et",
+        "followed": "Takip Edildi",
+        "sendMessage": "Mesaj Gönder"
+      },
+      "contact": {
+        "call": "Ara",
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "location": "Konum",
+        "mail": "Mail",
+        "pinterest": "Pinterest",
+        "twitter": "X",
+        "website": "Website",
+        "whatsapp": "Whatsapp"
+      },
+      "dialogs": {
+        "claim": {
+          "noteLabel": "Kısa açıklama",
+          "notePlaceholder": "Neden bu işletme size ait? (örn. şirket numarası / mail domain / kısa bilgi)",
+          "phoneLabel": "Telefon (opsiyonel)",
+          "title": "Bu işletmeyi sahiplen"
+        },
+        "fix": {
+          "btn": "Talebi gönder",
+          "detailsLabel": "Hangi bilgi yanlış?",
+          "detailsPlaceholder": "Örn: adres yanlış, telefon güncellenecek, kategori değişecek...",
+          "emailLabel": "İletişim e-postası (opsiyonel)",
+          "title": "Bilgi düzeltme talebi"
+        },
+        "report": {
+          "btn": "Şikayeti gönder",
+          "emailLabel": "İletişim e-postası (opsiyonel)",
+          "reasonLabel": "Şikayet nedeni",
+          "reasonPlaceholder": "Sahte işletme, yanlış bilgi, spam, uygunsuz içerik vb.",
+          "title": "İşletmeyi şikayet et"
+        }
+      },
+      "messages": {
+        "failed": "Gönderilemedi. Bir daha dene.",
+        "fixRequired": "Düzeltilecek bilgiyi yazmadan gönderemezsin.",
+        "linkCopied": "Bağlantı kopyalandı!",
+        "noteRequired": "Kısa açıklama yazmadan gönderemezsin.",
+        "reportReasonRequired": "Şikayet nedenini yazmadan gönderemezsin.",
+        "sent": "Talebin gönderildi.",
+        "shareText": "Burada'da {name} işletmesine göz at!",
+        "shareTitle": "İşletme Profili"
+      },
+      "posts": {
+        "private": "Bu hesap gizlidir.",
+        "title": "Son Gönderiler"
+      },
+      "sidebar": {
+        "claim": "Bu şirket benim",
+        "fix": "Bilgi Düzelt",
+        "report": "Şikayet et",
+        "request": "Talep",
+        "title": "İş yeri ayarları"
+      },
+      "unclaimed": "Bu işletme henüz bir profile bağlı değil. Sahibiysen “Bu şirket benim” ile doğrulayabilir ya da bilgi düzeltme talebi gönderebilirsin.",
+      "views": "Görüntülenme"
+    },
+    "home": {
+      "loadingMore": "Loading more posts...",
+      "noMorePosts": "Hepsi bu kadar 👌 Buraya kadar okudun, tebrikler!<br>Ekran kaydi al, bize at, bir sonraki aktivitemizde misafirimiz ol! 🎁",
+      "tabs": {
+        "education": "Eğitim",
+        "events": "Etkinlikler",
+        "general": "Genel",
+        "job": "İş"
+      }
+    },
+    "login": {
+      "appleBtn": "Apple ile Giriş Yap",
+      "googleBtn": "Google ile Giriş Yap",
+      "privacyHtml": "Verilerin güvenle saklanır, üçüncü kişilerle paylaşılmaz.<br>Giriş yaptığında, verilerin <a href='https://burada.be/privacy-policy' target='_blank'>Gizlilik Politikası</a> ve <a href='https://burada.be/terms-of-service' target='_blank'>Kullanım Koşulları</a> kapsamında korunur.",
+      "subtitle": "Başlamak için hesabını seçmen yeterli.",
+      "welcome": "Hoş geldin!"
+    },
+    "messages": {
+      "empty": "Henüz hiç mesajınız yok."
+    },
+    "newsDetails": {
+      "back": "Geri",
+      "notFound": "Haber bulunamadı.",
+      "openOriginal": "Orijinal haberi aç",
+      "otherNews": "Diğer Haberler",
+      "share": "Paylaş",
+      "source": "Kaynak:"
+    },
+    "newsList": {
+      "defaultSource": "Haber",
+      "empty": "Şu an haber yok.",
+      "showMore": "Daha fazla göster"
+    },
+    "notifications": {
+      "empty": "Şu an gösterilecek bildirimin yok."
+    },
+    "postList": {
+      "backToMain": "Geri dön",
+      "everywhere": "Her yer"
+    },
+    "profile": {
+      "addBusiness": "Şirketini ya da işyerini ekle",
+      "businessSidebar": {
+        "address": "Adres (opsiyonel)",
+        "addressPlaceholder": "Örn: Ossenstraat 1, Gent",
+        "category": "Kategori",
+        "categoryPlaceholder": "Bir kategori seçin",
+        "descLabel": "Kısa açıklama (opsiyonel)",
+        "descPlaceholder": "İşletmenizi kısaca tanıtın",
+        "email": "E-mail (opsiyonel)",
+        "emailPlaceholder": "ornek{'@'}firma.be",
+        "logoLabel": "Logo / Kapak görseli (opsiyonel)",
+        "logoText": "Logo seç",
+        "name": "İşletme adı",
+        "namePlaceholder": "Örn: Mavzer Consulting",
+        "phone": "Telefon (opsiyonel)",
+        "phonePlaceholder": "Örn: 0487 246 846",
+        "province": "İl (opsiyonel)",
+        "provincePlaceholder": "İl seçin",
+        "tag": "Etiket (opsiyonel)",
+        "tagPlaceholder": "Bir etiket seçin",
+        "title": "İşletme ekle",
+        "town": "İlçe (opsiyonel)",
+        "townPlaceholder": "İlçe seçin",
+        "visibilitySub": "Kapatırsanız profil sadece bağlantıya sahip kişilere gösterilir.",
+        "visibilityTitle": "İşletme herkese açık olsun",
+        "website": "Website (opsiyonel)",
+        "whatsapp": "Whatsapp (opsiyonel)",
+        "whatsappPlaceholder": "Sadece rakam (ülke koduyla)"
+      },
+      "deleteDialog": {
+        "cancel": "Vazgeç",
+        "confirm": "Evet, sil",
+        "confirmLabel": "Onay için \"SİL\" yaz",
+        "confirmPlaceholder": "SİL",
+        "reasonLabel": "Silme gerekçen",
+        "reasonPlaceholder": "Kısaca neden?",
+        "title": "Profilini kalıcı olarak sil",
+        "warningText": "Profilin, gönderilerin ve bağlantıların kaldırılır. Devam etmek istiyorsan aşağıya gerekçeni yaz ve onay için <b>SİL</b> yaz.",
+        "warningTitle": "Bu işlem geri alınamaz."
+      },
+      "donateSub": "Gönüllü bağış",
+      "donateTitle": "Bizleri destekle",
+      "edit": "Düzenle",
+      "editProfile": "Profilini düzenle",
+      "empty": {
+        "noBiz": "İşletme yok.",
+        "noBookmarks": "Henüz kayıtlı post yok.",
+        "noPosts": "Henüz post yok.",
+        "private": "Bu hesap gizlidir."
+      },
+      "follow": "Takip et",
+      "followers": "Takipçi",
+      "followingState": "Takiptesin",
+      "hidden": "Gizli",
+      "message": "Mesaj at",
+      "messages": {
+        "bizAdded": "İşletme başarıyla eklendi",
+        "bizFailed": "İşletme kaydedilemedi",
+        "bizNameMin": "En az 2 karakter olmalı",
+        "bizNameRequired": "İşletme adı zorunlu",
+        "bizUpdated": "İşletme güncellendi",
+        "categoryRequired": "Kategori seçmelisiniz",
+        "deleteFailed": "Silme işlemi başarısız. Tekrar dene.",
+        "deleteProcessed": "Profil silme talebin işlendi.",
+        "emailInvalid": "Geçerli bir e-mail girin",
+        "hiddenUpdated": "Gizlenmiş postlar güncellendi. Yeniden giriş yaptığınızda görünecektir.",
+        "imgError": "Görsel yüklenemedi",
+        "nameMin": "Ad en az 2 karakter olmalı",
+        "nameRequired": "Ad zorunlu",
+        "profileUpdateFailed": "Profil güncellenemedi",
+        "profileUpdated": "Profil başarıyla güncellendi",
+        "reasonRequired": "Lütfen silme gerekçeni yaz.",
+        "typeDelete": "Devam etmek için \"SİL\" yazmalısın.",
+        "urlInvalid": "Geçerli bir URL girin"
+      },
+      "myBizSub": "Bu işletmeler sana bağlı. Düzenlemek için sağdan kaleme dokun.",
+      "public": "Herkese açık",
+      "sidebar": {
+        "bioLabel": "Kendiniz hakkında kısa bir açıklama",
+        "bioPlaceholder": "Örneğin: Psikoloji ve teknoloji alanında çalışan bir derneğiz...",
+        "cancel": "Vazgeç",
+        "deleteProfile": "!Profilimi tamamen sil!",
+        "lastName": "Soyadınız",
+        "logout": "Çıkış Yap",
+        "name": "Adınız",
+        "province": "İl (opsiyonel)",
+        "provincePlaceholder": "Bir il seçin",
+        "resetHiddenPosts": "Gizlenmiş Postları Sıfırla",
+        "other": "Diğer",
+        "save": "Kaydet",
+        "title": "Profil düzenle",
+        "username": "Kullanıcı adınız (herkese açık)",
+        "visibilitySub": "Kapatırsanız profiliniz sadece bağlantıya sahip kişiler tarafından görülebilir.",
+        "visibilityTitle": "Profil herkese açık olsun"
+      },
+      "tabs": {
+        "bookmarks": "Kaydettiklerim",
+        "myBiz": "İşletmelerim",
+        "myPosts": "Postlarım",
+        "otherBiz": "İşletmeler",
+        "posts": "Postlar"
+      },
+      "viewProfile": "Profili gör",
+      "views": "Görüntülenme"
+    },
+    "question": {
+      "location": "Konum",
+      "message": "Mesajınız"
+    },
+    "selectTag": {
+      "done": "Tamam",
+      "select": "En az bir etiket seçin"
+    },
+    "settings": {
+      "language": "Dil Ayarları",
+      "logout": "Hesaptan Çıkış",
+      "privateAccount": "Hesabı Gizle",
+      "privateInfo": "Hesabın gizliye alındı, gönderilerin gizlendi.",
+      "title": "Ayarlar"
+    },
+    "splash": {
+      "join": "SİZ DE KATILIN",
+      "languageSettings": "Dil Ayarları",
+      "next": "İleri",
+      "prev": "Geri",
+      "selectLanguage": "İstediğiniz dili seçiniz",
+      "slides": {
+        "1": {
+          "sub": "Belçika’daki Türklerin buluşma noktası",
+          "text": "Amacımız, tüm Belçikalı Türklerin birbirine ulaşabileceği, takip edeceği bir mecraya sahip olması. Bağlan, aradığını bul, paylaş, gündemi yakala. Her şey tek uygulamada!",
+          "title": "BURADA’ya hoş geldiniz"
+        },
+        "2": {
+          "sub": "Aradıklarını bu platformda bul",
+          "text": "Belçika'daki Türk Doktor, avukat, restoran, market, psikolog, cami, kuaför, nakliye, muhasebeci… hepsi ve daha fazlası BURADA’da!",
+          "title": "Her şey BURADA!"
+        },
+        "3": {
+          "sub": "Dakikalar içinde profilini ücretsiz oluştur.",
+          "text": "Fotoğrafını ekle, bilgilerini tamamla; paylaşımlarınla daha çok kişiye ulaş.",
+          "title": "Kendini ve işletmeni duyur!"
+        }
+      }
+    },
+    "updateProfile": {
+      "address": "Adres",
+      "addressText": "Adres bilgilerinizi güncelleyebilirsiniz.",
+      "basicInfo": "Temel Bilgiler",
+      "basicInfoText": "Bu bilgiler profilinizde görünür.",
+      "bio": "Bio",
+      "bus": "Bus / Daire",
+      "companyInfo": "İşletme Bilgileri",
+      "companyInfoText": "İşletmenizin hangi kategorilerde ve etiketlerde görüneceğini buradan seçebilirsiniz.",
+      "contact": "İletişim",
+      "contactText": "İletişim bilgilerini girerek insanların size ulaşmasını sağlayın.",
+      "gsm": "Cep Telefonu / WhatsApp",
+      "lastname": "Soyad",
+      "name": "Ad",
+      "number": "Numara",
+      "phone": "Telefon",
+      "save": "Değişiklikleri Kaydet",
+      "showMail": "E-postamı profilimde göster",
+      "social": {
+        "facebook": "Facebook url",
+        "instagram": "Instagram url",
+        "pinterest": "Pinterest url",
+        "twitter": "X (Twitter) url"
+      },
+      "street": "Cadde / Sokak",
+      "tagsPlaceholder": "Etiketleri ve kategorileri seçin",
+      "uploadPhoto": "Profil fotosu yükle",
+      "username": "Kullanıcı adı",
+      "website": "Website"
+    }
+  },
+  "search": {
+    "chooseCategory": "Bir kategori seçin",
+    "subcategories": "Alt Kategoriler",
+    "showAllInThisCategory": "Tümü",
+    "chooseLocation": "Konum seçin",
+    "resetFilters": "Filtreleri sıfırla",
+    "foundProfiles": "Bulunan profiller",
+    "goToBusinessDetails": "Bilgileri gör",
+    "empty": {
+      "noBusinessMatch": "Seçtiğin kriterlerle eşleşen işletme bulunamadı.",
+      "haveBusinessHint": "İşletmen varsa, profilinden ekleyip görünür hale getirebilirsin.",
+      "noBusinessHint": "İşletmeni ekleyerek burada görünür olabilirsin.",
+      "goToMyProfile": "Profilime git",
+      "addBusiness": "İşletme ekle"
+    }
+  }
+}

@@ -1,0 +1,87 @@
+.page {
+    height: 100vh;
+    overflow-y: auto;
+    padding-bottom: 70px;
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0px;
+}
+
+.bg-img-container {
+    position: relative;
+    height: 100vh;
+}
+
+h1.splash {
+    margin-bottom: 3em;
+}
+
+.page{
+    margin: 0px !important;
+}
+
+
+.bg-img-class {
+    /* opacity: 0.3; */
+    width: 100%;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    position: absolute;
+    z-index: 1;
+    background-position: center center;
+    background-size: cover !important;
+}
+
+.bg-gradient-fade {
+    background: linear-gradient(to bottom, rgba(240, 240, 240, 0) 0%, rgba(240, 240, 240, 0.99) 75%, #f0f0f0 100%)
+}
+
+.swiper-slide {
+    height: 100vh;
+}
+
+.card-bottom {
+    z-index: 2;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 10vh;
+    text-align: center;
+}
+
+.cover-button-bottom {
+    position: absolute;
+    left: 50px;
+    right: 50px;
+    bottom: calc(5em + (env(safe-area-inset-bottom))*1.1);
+    z-index: 99;
+    font-size: 12px;
+}
+
+.splide__pagination {
+    bottom: calc(20px + (env(safe-area-inset-bottom))*1.1);
+}
+
+.lang-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+
+.lang-modal {
+  width: min(520px, 92vw);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+  max-height: 80vh;
+  overflow: auto;
+  padding: 16px 18px;
+}

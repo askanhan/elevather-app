@@ -1,0 +1,153 @@
+<div @click="thumbnailClicked">
+    <!-- :class="currentView === 'thumbnail' ? 'thumbnail col-4 text-center action-container' : ''" -->
+    <div class="post" v-observe-visibility="{
+    once: true,
+    callback: visibilityChanged,
+    intersection:{
+        threshold: 0.5
+    },
+    throttle: 300,            
+    }" v-on:dblclick="increaseLike">
+
+        <div class="content" v-if="isVisible">
+
+            <div class="pt-3 pb-3 position-relative" v-if="!$attrs.specialbutton">
+                <div @click="goToProfile(profile.p_id)" class="rounded-xl me-0 pp-img pp-img-post" alt="img"
+                    v-bind:style="{backgroundImage: 'url(' + _pPhotoUrl(profile.p_photo) + ')'}">
+                </div>
+                <span class="partner-page-name username"
+                    @click="goToProfile(profile.p_id)">{{profile.p_username}}</span>
+                <div class="post-date position-absolute">
+                    <!-- {{_getDayStringAsCurrentLang(post.post_date) + ' ' +new moment(post.post_date).format('YYYY/MM/DD')}} -->
+                    {{getFromNow()}}
+                </div>
+                <div class="number-of-views" v-if="!$attrs.specialbutton">
+                    <i class="far fa-eye"></i>
+                    <animated-number :number="post.ViewedProfiles"></animated-number>
+                </div>
+                <i class="fas fa-ellipsis-v p-detail" @click="detailsClicked"></i>
+            </div>
+            <!-- <div class="details-up px-2 d-flex justify-content-between" v-if="!$attrs.specialbutton">
+                <div class="number-of-views">
+                    <i class="far fa-eye"></i>
+                    <animated-number :number="post.post_nofviews"></animated-number>
+                </div>
+            </div> -->
+            <div class="body" v-if="post.post_type == 1">
+                <p class="post-text" :class="post.post_classes"
+                    v-if="post.post_description && post.post_description.length > 0">
+                    <span @click="openLinkIfAny()">
+                        <div v-html="linkify(post.post_description)"></div>
+                    </span>
+                </p>
+            </div>
+
+            <div v-if="post.post_type === 2">
+                <div class="under-description p-2" v-if="post.post_description && post.post_description.length > 0">
+
+                    <div @click="openLinkIfAny()" v-html="linkify(post.post_description)"></div>
+                </div>
+                <img :src="post.post_photo_link" alt="" width="100%">
+            </div>
+
+            <div v-if="isVisible && post.post_type === 3">
+                <div class="under-description p-2" v-if="post.post_description && post.post_description.length > 0">
+
+                    <div @click="openLinkIfAny()" v-html="linkify(post.post_description)"></div>
+                </div>
+                <VideoPlayer :source="post.post_video_link"></VideoPlayer>
+            </div>
+
+            <div v-if="post.post_type === 4">
+                <div class="under-description p-2" v-if="post.post_description && post.post_description.length > 0">
+
+                    <div @click="openLinkIfAny()" v-html="linkify(post.post_description)"></div>
+                </div>
+                <div class="choices-container">
+                    <div v-for="(choice, choiceIdx) in choices" class="choice option position-relative"
+                        @click="makeChoice(choice.pcho_id, choiceIdx)">
+                        <span :class="choiceIdx === myAnswerIdx ? 'my-answer' : '' ">{{choice.pcho_answer}}</span>
+                        <div class="choice-bar" :class="post.post_id + 'cbar' + choice.pcho_id"
+                            :ref="post.post_id + 'cbar' + choice.pcho_id">
+                        </div>
+                        <div class="oran" v-if="answeredByLoggedInUser">
+                            {{choiceScores[choiceIdx]}}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span v-if="isMyPost">
+                <i class="far fa-trash color-red-dark delete-my-post" @click="deleteYourPostClicked"></i>
+            </span>
+
+            <div class="tags-container" v-if="!$attrs.specialbutton">
+                <div class="btn btn-primary tag" :class="tag.tag_classname" v-for="tag in tags"
+                    @click="goToTagPosts(tag)">
+                    <i :class="tag.tag_icon" class="me-2 tag-icon"></i>
+                    <span>{{tag['tag_name_' + lang]}}</span>
+                </div>
+            </div>
+            <div class="divider mb-3 mt-3"></div>
+            <div class="row pb-0 m-0">
+                <div class="col-4 text-center action-container" @click="increaseLike()">
+                    <i class="fa-2x fa-fw"
+                        :class="likedByLoggedInUser ? 'fas fa-heart color-red-light' : 'fal fa-heart'"></i>
+                    <animated-number :number="number_of_likes"></animated-number>
+                    <span>{{ $t('components.post.like') }}</span>
+                </div>
+                <div class="col-4 text-center action-container" @click="toggleComment()">
+                    <i class="fal fa-comment fa-2x fa-fw"></i>
+                    <animated-number :number="number_of_comments"></animated-number>
+                    <span>{{ $t('components.post.comment') }}</span>
+                </div>
+                <div class="col-4 text-center action-container" @click="share()">
+                    <i class="fal fa-share fa-2x fa-fw"></i>
+                    <span>{{ $t('components.post.share') }}</span>
+                </div>
+            </div>
+            <div class="comments-container" v-if="showComment && post.comments.length>0">
+                <div class="m-1 p-2 a-comment d-flex" v-for="comment in post.comments">
+                    <div class="p-photo-comment">
+                        <div class="pp-img pp-img-comment" @click="goToProfile(comment.fk_profile)"
+                            v-bind:style="{backgroundImage: 'url(' + _pPhotoUrl(getProfile(comment.fk_profile).p_photo) + ')'}">
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <div @click="goToProfile(comment.fk_profile)" class="comment-profile">
+                            <span>{{getProfile(comment.fk_profile).p_username}}</span>
+                        </div>
+                        <div class="">{{comment.comment}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex text-center pb-3" v-show="showComment">
+                <div class="me-2 ms-1 mt-2 speach-icon">
+                    <div class="pp-img pp-img-post"
+                        v-bind:style="{backgroundImage: 'url(' + _pPhotoUrl(myProfile.p_photo) + ')'}">
+                    </div>
+                </div>
+                <div class="flex-fill speach-input">
+                    <input ref="postsRef" type="text" class="form-control"
+                        :placeholder="$t('components.postCard.comments.placeholder')" v-on:keyup.enter="postComment"
+                        v-model="newComment" maxlength="2040">
+                </div>
+                <div class="ms-2 ms-1 speach-icon" @click="postComment">
+                    <a class="bg-blue-dark me-2"><i class="fa fa-arrow-up font-12 pt-2"></i></a>
+                </div>
+            </div>
+            <!-- <div class="input-group mb-3 px-3" v-show="showComment">
+            <div class="input-group-prepend">
+                <span class="input-group-text">{{UIText.main.comment[lang]}}</span>
+            </div>
+            <textarea ref="postsRef" class="form-control" aria-label="With textarea" v-model="newComment"
+                v-on:keyup.enter="postComment"></textarea>
+        </div> -->
+        </div>
+
+    </div>
+    <!-- <div v-if="currentView === 'thumbnail'" class="thumbnail-post">
+        <div v-if="post.post_photo_link">
+            <img :src="post.post_photo_link" alt="" width="100%">
+        </div>
+    </div> -->
+</div>

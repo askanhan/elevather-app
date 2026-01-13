@@ -1,0 +1,53 @@
+<div id="app" :class="[lockedScreenClassIfApplied, { 'dark-mode': isDarkMode }]">
+  <!-- Toast Message Box -->
+  <div
+    id="TOAST-MESSAGE-BOX"
+    class="container-fluid justify-content-center btn btn-light shadow-lg"
+    style="display:none">
+  </div>
+
+  <!-- Ekran Kilit Durumları -->
+  <div v-if="isScreenLocked" class="screen-lock">
+    <i :class="icons.MAIN_SPINNER"></i>
+  </div>
+  <div v-if="isScreenDisabled" class="screen-disabled"></div>
+
+  <!-- Üst Menü -->
+  <Menubar :class="{ 'dark-menubar': isDarkMode }"></Menubar>
+
+  <!-- Navigation Bar -->
+  <NavigationBar :class="{ 'dark-navigation-bar': isDarkMode }"></NavigationBar>
+
+  <div id="SCROLLER" class="app-scroller">
+    <router-view v-slot="{ Component, route }">
+      <transition name="slide">
+        <keep-alive :include="['Home','Search','Add','Notificaties','NewsList','AfterLoginPage']">
+          <component :is="Component" :key="route.fullPath" class="view" />
+        </keep-alive>
+      </transition>
+    </router-view>
+  </div>
+
+  <!-- ALT SEKMELER -->
+  <!-- <footer v-if="showTabs" :class="['bottom-tabs', { 'dark-bottom-tabs': isDarkMode }]">
+    <router-link :to="{ name: 'home' }" class="tab" exact-active-class="active">
+      <i class="fa fa-home"></i><span>Home</span>
+    </router-link>
+
+    <router-link :to="{ name: 'search' }" class="tab" exact-active-class="active">
+      <i class="fa fa-search"></i><span>Search</span>
+    </router-link>
+
+    <router-link :to="{ name: 'add' }" class="tab" exact-active-class="active">
+      <i class="fas fa-plus-square"></i><span>Add</span>
+    </router-link>
+
+    <router-link :to="{ name: 'adtabform' }" class="tab" exact-active-class="active">
+      <i class="fas fa-envelope"></i><span>News</span>
+    </router-link>
+
+    <router-link :to="profileTo" class="tab" exact-active-class="active">
+      <i class="fas fa-user"></i><span>Profile</span>
+    </router-link>
+  </footer> -->
+</div>

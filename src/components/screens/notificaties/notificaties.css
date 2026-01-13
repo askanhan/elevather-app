@@ -1,0 +1,194 @@
+/* ===== Notifications Page (modern, insta-like) ===== */
+
+/* fixed header varsa yukarıdan nefes */
+.notifications-page{
+  padding-top: 0.5em;
+}
+
+/* kart */
+.noti-card{
+  border-radius: 18px;
+  overflow: hidden;
+  padding: 6px 0;
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+/* liste */
+.noti-list{
+  display: flex;
+  flex-direction: column;
+}
+
+/* satır */
+.noti-item{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #fff;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color .15s ease;
+}
+
+.noti-item + .noti-item{
+  border-top: 1px solid rgba(15,23,42,0.06);
+}
+
+.noti-item:active{
+  background: rgba(15,23,42,0.04);
+}
+
+.noti-item--unseen{
+  background: rgba(59,130,246,0.035); /* hafif mavi */
+}
+
+.noti-item--unseen .noti-name,
+.noti-item--unseen .noti-text{
+  font-weight: 800;
+}
+
+/* avatar alanı */
+.noti-avatar{
+  position: relative;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* avatar üstü aksiyon rozeti */
+.noti-type-badge{
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 2px solid #fff;
+  font-size: 10px;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.15);
+}
+
+/* renkler */
+.noti-type-badge.is-like{ background:#ff2d55; }
+.noti-type-badge.is-comment{ background:#22c55e; }
+.noti-type-badge.is-follow{ background:#3b82f6; }
+.noti-type-badge.is-post{ background:#a855f7; }
+.noti-type-badge.is-bookmark{ background:#f59e0b; }
+.noti-type-badge.is-default{ background:#64748b; }
+
+/* içerik */
+.noti-content{
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.noti-line{
+  display: block;
+  font-size: 14px;
+  color:#0f172a;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* tek satır istiyorsan */
+}
+
+/* 2 satır istersen bunu aç:
+.noti-line{
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: normal;
+}
+*/
+
+.noti-name{
+  font-weight: 900;
+  margin-right: 6px;
+}
+
+.noti-text{
+  font-weight: 600;
+  color:#0f172a;
+}
+
+.noti-time{
+  font-size: 12px;
+  color:#94a3b8;
+}
+
+/* okunmadı dot */
+.noti-dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background:#3b82f6;
+  margin-right: 6px;
+  flex: 0 0 auto;
+  box-shadow: 0 6px 14px rgba(59,130,246,0.25);
+}
+
+/* ok */
+.noti-arrow{
+  color:#cbd5e1;
+  font-size: 16px;
+  flex: 0 0 auto;
+}
+
+/* ===== Dark mode ===== */
+:global(body.dark-mode) .noti-card{
+  background: #0b1220;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.45);
+}
+
+:global(body.dark-mode) .noti-item{
+  background:#0b1220;
+}
+
+:global(body.dark-mode) .noti-item--unseen{
+  background: rgba(59,130,246,0.09);
+}
+
+:global(body.dark-mode) .noti-item + .noti-item{
+  border-top-color: rgba(148,163,184,0.12);
+}
+
+:global(body.dark-mode) .noti-line,
+:global(body.dark-mode) .noti-text,
+:global(body.dark-mode) .noti-name{
+  color:#e5e7eb;
+}
+
+:global(body.dark-mode) .noti-time{
+  color:#9ca3af;
+}
+
+:global(body.dark-mode) .noti-type-badge{
+  border-color:#0b1220;
+}
+
+:global(body.dark-mode) .noti-arrow{
+  color:#64748b;
+}
+
+/* ===== Small screens ===== */
+@media (max-width: 360px){
+  .notifications-page{ padding-top: 82px; }
+  .noti-item{ padding: 11px 12px; }
+  .noti-avatar{ width: 42px; min-width: 42px; height: 42px; }
+  .noti-line{ font-size: 13px; }
+  .noti-time{ font-size: 11px; }
+}

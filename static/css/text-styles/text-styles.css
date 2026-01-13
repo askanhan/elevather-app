@@ -1,0 +1,143 @@
+@font-face {
+    font-family: 'vregsansreg';
+    src: url("VioletSans-Regular.ttf")
+}
+
+@font-face {
+    font-family: 'logofont';
+    src: url("logofont.otf")
+}
+
+
+@font-face {
+    font-family: 'font_vreg';
+    src: url("VioletSans-Regular.ttf")
+}
+
+@font-face {
+    font-family: 'font_madien';
+    src: url("MaidenOrange.ttf")
+}
+
+@font-face {
+    font-family: 'font_pompeire';
+    src: url("Pompiere-Regular.ttf")
+}
+
+@font-face {
+    font-family: 'font_asapcon';
+    src: url("AsapCondensed-Regular.ttf")
+}
+
+@font-face {
+    font-family: 'font_fic';
+    src: url("falliscoming.ttf")
+}
+
+@font-face {
+    font-family: 'font_quitegood';
+    src: url("quitegood.ttf")
+}
+
+@font-face {
+    font-family: 'font_radjani';
+    src: url("Rajdhani-Medium.ttf")
+}
+
+@font-face {
+    font-family: 'font_violentsans';
+    src: url("VioletSans-Regular.ttf")
+}
+
+.font_vreg {
+    font-family: font_vreg;
+}
+
+.font_madien {
+    font-family: font_madien;
+}
+
+.font_pompeire {
+    font-family: font_pompeire;
+}
+
+
+.font_asapcon {
+    font-family: font_asapcon;
+}
+
+.font_fic {
+    font-family: font_fic;
+}
+
+.font_quitegood {
+    font-family: font_quitegood;
+}
+
+.font_radjani {
+    font-family: font_radjani;
+}
+
+.font_violentsans {
+    font-family: font_violentsans;
+}
+
+.bg_a {
+    background-image: url("a.jpg")
+}
+
+.bg_b {
+    background-image: url("b.jpg")
+}
+
+.bg_c {
+    background-image: url("c.jpg")
+}
+
+.bg_d {
+    background-image: url("d.jpg")
+}
+
+.bg_e {
+    background-image: url("e.jpg")
+}
+
+.bg_f {
+    background-image: url("f.jpg")
+}
+
+.bg_g {
+    background: url("g.png")
+}
+
+.bg_h {
+    background-image: url("h.png")
+}
+
+.bg_i {
+    background-image: url("i.jpg")
+}
+
+.bg_j {
+    background-image: url("j.png")
+}
+
+.bg_k {
+    background-image: url("k.jpg")
+}
+
+.bg_l {
+    background-image: url("l.jpg")
+}
+
+.bg_m {
+    background-image: url("m.png")
+}
+
+.bg_n {
+    background-image: url("n.jpg")
+}
+
+.bg_o {
+    background-image: url("rrr.png")
+}

@@ -1,0 +1,51 @@
+#build'i duzelt ve web uret:
+npm run build
+npx cap sync android
+
+
+cd android
+./gradlew clean
+./gradlew assembleDebug
+cd ..
+
+#versiyon falan degisince hatta:
+
+npm i -D @capacitor/assets
+npx capacitor-assets generate
+npx cap sync android
+
+npm run build
+npx cap sync android
+cd android
+./gradlew --stop
+./gradlew clean assembleDebug
+cd..
+
+
+adb install -r /Users/muhammetturk/Documents/github-projects/burada-v3/android/app/build/outputs/apk/debug/app-debug.apk
+
+
+#adb'de hata olursa:
+adb kill-server
+adb start-server
+adb devices
+
+
+
+#ANDROID build
+
+npm run build                                                                                                                  
+npx cap sync android                          
+cd android
+./gradlew clean bundleRelease
+
+
+#IOS build
+npm run build
+npx cap sync ios
+
+  bundletool build-apks \
+  --bundle android/app/build/outputs/bundle/release/app-release.aab \
+  --output /tmp/burada.apks \
+  --mode=universal
+unzip -p /tmp/burada.apks universal.apk > android/app/build/outputs/bundle/release/burada.apk

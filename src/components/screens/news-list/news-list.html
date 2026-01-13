@@ -1,0 +1,40 @@
+<div class="news-page page">
+
+  <NewsTicker style="margin-bottom: 2em;" />
+
+  <div v-if="!news.length" class="news-empty">
+    {{ $t('pages.newsList.empty') }}
+  </div>
+
+  <div class="news-list">
+    <article v-for="(item, itemIdx) in news" :key="item.id" class="news-card" @click="openNews(itemIdx)">
+      <div class="news-card__img" v-if="item.image">
+        <img :src="item.image" :alt="item.title" loading="lazy" />
+      </div>
+
+      <div class="news-card__body">
+        <div class="news-card__meta">
+          <span class="news-card__source">
+            {{ item.source_id ? sourceLabel(item.source_id) : $t('pages.newsList.defaultSource') }}
+          </span>
+          <span class="news-card__dot">•</span>
+          <time class="news-card__date">
+            {{ formatDate(item.published_at) }}
+          </time>
+        </div>
+
+        <h3 class="news-card__headline">
+          {{ item.title }}
+        </h3>
+
+        <p class="news-card__summary" v-if="item.summary">
+          {{ item.summary }}
+        </p>
+      </div>
+    </article>
+  </div>
+
+  <button class="news-showmore" type="button" @click="showMore">
+    {{ $t('pages.newsList.showMore') }}
+  </button>
+</div>

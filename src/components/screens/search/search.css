@@ -1,0 +1,371 @@
+span.found-results {
+    display: block;
+    width: 100%;
+    text-align: center;
+    opacity: 0.7;
+    padding: 0.5em 0em;
+}
+
+.vue-treeselect {
+    /* boş, projende lazım olursa doldurursun */
+}
+
+.search-page {
+    background-color: #fefefe;
+    padding: 3em 1em 10em 1em;
+}
+
+.pp-img-profile {
+    margin: auto;
+    margin-bottom: 1em;
+}
+
+/* =========================
+   DARK MODE İYİLEŞTİRMELER
+   ========================= */
+
+/* Sayfa arka planı */
+:global(body.dark-mode .search-page) {
+    background: #050816 !important;
+}
+
+/* Select kutuları */
+:global(body.dark-mode .search-page .form-control) {
+    background-color: #111827 !important;
+    color: #e5e7eb !important;
+    border-color: #374151 !important;
+}
+
+/* Select içi placeholder / option metinleri */
+:global(body.dark-mode .search-page .form-control option) {
+    background-color: #111827;
+    color: #e5e7eb;
+}
+
+/* "Bulunan profiller" yazısı */
+:global(body.dark-mode .search-page .found-results),
+:global(body.dark-mode .search-page .or-text),
+:global(body.dark-mode .search-page p),
+:global(body.dark-mode .search-page h1),
+:global(body.dark-mode .search-page span) {
+    color: #e5e7eb !important;
+}
+
+/* Sonuç kartları */
+:global(body.dark-mode .search-page .card-style) {
+    background: #111827 !important;
+    color: #e5e7eb !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Boş içerik kartı */
+:global(body.dark-mode .search-page .card-style-with-radius) {
+    background: #111827 !important;
+    color: #e5e7eb !important;
+}
+
+/* Tag butonları */
+:global(body.dark-mode .search-page .tags-container .tag) {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+    color: #bfdbfe !important;
+}
+
+/* "Profile bak" butonu zaten mavi, sadece yazıyı netleştir */
+:global(body.dark-mode .search-page .bg-blue-dark) {
+    color: #f9fafb !important;
+}
+
+.my-autocomplete li {
+    line-height: normal;
+    padding: 7px;
+}
+
+.my-autocomplete li .name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.my-autocomplete li .addr {
+    font-size: 12px;
+    color: #b4b4b4;
+}
+
+.my-autocomplete li .highlighted .addr {
+    color: #ddd;
+}
+
+
+
+
+/* global veya component-scope */
+.tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem
+}
+
+.chip {
+    border: 0;
+    border-radius: 9999px;
+    padding: .35rem .75rem;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0 !important;
+}
+
+.chip-outline {
+    /* background: transparent;
+    border: 1px solid #dcdfe6 */
+}
+
+.chip-selected {
+    background: #4a89dc;
+    color: #fff;
+    border-color: #4a89dc
+}
+
+.business-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 3em 1em 2em 1em;
+}
+
+.business-title {
+    min-height: 3.2rem;
+    /* isim uzun olsa da hizalı kalsın */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+.business-card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.tags-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: absolute;
+    top: -7px;
+    right: 0px;
+}
+
+.biz-tags {
+    background: #eef4ff;
+    color: #2c5cff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.biz-description {
+    color: #555;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-top: 8px;
+    min-height: 2.5em;
+}
+
+.biz-address {
+    color: #888;
+    font-size: 12px;
+    margin-top: 4px;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+/* 
+.pp-img.pp-img-profile {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+.pp-img-profile .initials {
+    position: absolute;
+    z-index: 5;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ffffff;
+  
+    text-shadow:
+      0 0 3px rgba(0, 0, 0, 0.65),
+      0 2px 4px rgba(0, 0, 0, 0.55),
+      0 0 10px rgba(0, 0, 0, 0.4);
+  } */
+
+
+.sa {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+.sa-input {
+    position: relative;
+}
+
+.sa-input input {
+    width: 100%;
+    padding: 10px 36px 10px 12px;
+    border: 1px solid #dcdfe6;
+    border-radius: 10px;
+    outline: none;
+    background: #fff;
+}
+
+.sa-input input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, .15);
+}
+
+.sa-clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, .06);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 26px;
+}
+
+.sa-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    max-height: 280px;
+    overflow: auto;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, .12);
+    z-index: 9999;
+}
+
+.sa-item {
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.sa-item:hover,
+.sa-item.active {
+    background: #f3f4f6;
+}
+
+.sa-empty {
+    padding: 12px;
+    opacity: .6;
+}
+
+/* Dark mode varsa (senin projeye uyum) */
+:global(body.dark-mode .sa-input input) {
+    background: #111827 !important;
+    color: #e5e7eb !important;
+    border-color: #374151 !important;
+}
+
+:global(body.dark-mode .sa-panel) {
+    background: #111827 !important;
+    border-color: #374151 !important;
+}
+
+:global(body.dark-mode .sa-item) {
+    color: #e5e7eb !important;
+}
+
+:global(body.dark-mode .sa-item:hover),
+:global(body.dark-mode .sa-item.active) {
+    background: #1f2937 !important;
+}
+
+.biz-sentinel {
+    width: 100%;
+    height: 40px;
+}
+
+.biz-loader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    opacity: 0.8;
+    font-weight: 600;
+}
+
+.empty-state {
+    margin-top: 14px;
+    padding: 10px 0;
+}
+
+.empty-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(37, 99, 235, 0.10);
+    color: #2563eb;
+    font-size: 20px;
+    margin: 0 auto 10px auto;
+}
+
+.empty-title {
+    text-align: center;
+    font-weight: 800;
+    font-size: 16px;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.empty-subtitle {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #64748b;
+    max-width: 320px;
+    margin: 0 auto 12px auto;
+}
+
+.empty-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.businesses-container{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 12px;
+  }
+  
+  .businesses-container .card{
+    margin: 0 !important;
+    flex: 0 0 calc(50% - 6px); /* gap’in yarısı kadar düş */
+    max-width: calc(50% - 6px);
+    box-sizing: border-box;
+  }

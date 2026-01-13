@@ -1,0 +1,8 @@
+Chrome debugging:
+
+remotedebug_ios_webkit_adapter --port=9000 
+
+
+Chrome skip security:
+
+open -a Google\ Chrome --args --disable-web-security --user-data-dir="" 

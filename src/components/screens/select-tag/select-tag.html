@@ -1,0 +1,19 @@
+<div class="page">
+    <!-- {{UIText.search}} -->
+    <div v-for="category of allCategories" class="search-item">
+        <!-- <i :class="category.icon"></i> -->
+        <span class="category-name">{{category['ca_name_' + lang]}}</span>
+        <div class="tag-items-container">
+            <div class="tag-item" :class="[category.ca_classname, isTagSelected(tag.tag_id) ? 'selected' : '']"
+                v-for="tag in category.tags" @click="selectTag(category.ca_id, tag.tag_id)">
+                <i :class="tag.tag_icon"></i>
+                <span>{{tag['tag_name_' + lang]}}</span>
+            </div>
+        </div>
+    </div>
+    <div @click="goBack()" class="select-action-button" :class="selectedTags.length > 0 ? 'active' : ''">
+        <i class="far fa-check"></i>
+        <span v-if="selectedTags.length > 0">{{ $t('pages.selectTag.done') }}</span>
+        <span v-if="selectedTags.length === 0">{{ $t('pages.selectTag.select') }}</span>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="page news-detail-page">
+
+  <div class="news-detail-header">
+    <button class="back-btn" @click="goBack">
+      <i class="fa fa-arrow-left"></i>
+      {{ $t('pages.newsDetails.back') }}
+    </button>
+
+    <div class="source-chip" v-if="newsItem?.source_id">
+      {{ $t('pages.newsDetails.source') }} {{ sourceLabel(newsItem.source_id) }}
+    </div>
+  </div>
+
+  <div v-if="!newsItem" class="news-detail-empty card card-style">
+    {{ $t('pages.newsDetails.notFound') }}
+  </div>
+
+  <div v-else class="news-detail-card card card-style shadow-sm">
+
+    <div class="news-detail-image" v-if="newsItem.image">
+      <img :src="newsItem.image" alt="news cover">
+    </div>
+
+    <div class="news-detail-content">
+      <h1 class="news-title">
+        {{ newsItem.title }}
+      </h1>
+
+      <div class="news-meta">
+        <span class="news-date" v-if="newsItem.published_at">
+          {{ formatDate(newsItem.published_at) }}
+        </span>
+        <span class="news-lang" v-if="newsItem.language">
+          {{ newsItem.language.toUpperCase() }}
+        </span>
+      </div>
+
+      <div class="news-summary" v-if="newsItem.content_html" v-html="sanitizeHtml(newsItem.content_html)">
+      </div>
+
+      <div class="news-actions">
+        <button class="action-btn primary" @click="openOriginal">
+          {{ $t('pages.newsDetails.openOriginal') }}
+          <i class="fa fa-external-link-alt ms-2"></i>
+        </button>
+
+        <button class="action-btn outline" @click="shareNews">
+          {{ $t('pages.newsDetails.share') }}
+          <i class="fa fa-share-alt ms-2"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="news-detail-more card card-style" v-if="otherNews.length">
+    <div class="more-title">{{ $t('pages.newsDetails.otherNews') }}</div>
+
+    <div class="more-list">
+      <div v-for="(n, i) in otherNews" :key="n.id || i" class="more-item" @click="goToNews(i)">
+        <div class="more-item-title">{{ n.title }}</div>
+        <div class="more-item-date" v-if="n.published_at">
+          {{ formatDate(n.published_at) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,13 @@
+.change-to-login {
+    display: block;
+    margin-top: 20px;
+    color: #007bff;
+}
+
+.login span.input-group-text {
+    width: 210px;
+}
+
+.page {
+    height: calc(100vh - 10px + calc((env(safe-area-inset-bottom))*1.1));
+}

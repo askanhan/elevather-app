@@ -1,0 +1,119 @@
+<div class="chat-page page">
+  <!-- Header -->
+  <div class="chat-topbar">
+    <button class="chat-topbar__back" @click="$router.back()">
+      <i class="fa fa-arrow-left"></i>
+    </button>
+
+    <div class="chat-topbar__title">
+      <div class="chat-topbar__name">{{ otherProfileName }}</div>
+      <div class="chat-topbar__sub">
+        <span v-if="messages.length">
+          <span>{{ $t('components.chat.started') }} </span>
+          {{ getFromNow(messages[0]) }}
+        </span>
+      </div>
+    </div>
+
+    <div class="chat-topbar__right" @click="goToProfile(otherProfileId)">
+      <ProfileAvatar :name="otherProfileName" :photo-url="otherProfilePhoto" :clickable="false" size="34" />
+    </div>
+
+    <!-- Chat Topbar Actions -->
+    <div class="chat-topbar__actions">
+      <button class="icon-btn chat-btn" @click="confirmBlock">
+        <i class="fa fa-ban"></i>
+      </button>
+
+      <button class="icon-btn chat-btn danger" @click="confirmDeleteConversation">
+        <i class="fa fa-trash"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Messages -->
+  <div class="chat-body" ref="chatBody">
+    <div v-if="!messages.length && !isLoading" class="chat-empty">
+      <div class="chat-empty__title">
+        {{ $t('components.chat.emptyTitle') }}
+      </div>
+      <div class="chat-empty__sub">
+        {{ $t('components.chat.emptySub') }}
+      </div>
+    </div>
+
+    <div v-if="isLoading" class="chat-loading">
+      <div class="chat-loading__dot"></div>
+      <div class="chat-loading__dot"></div>
+      <div class="chat-loading__dot"></div>
+    </div>
+
+    <div v-for="(message, idx) in messages" :key="message._local_id || message.id || idx" class="chat-row"
+      :class="{ 'is-mine': myMessage(message) }">
+      <!-- Avatar (other) -->
+      <div class="chat-row__avatar" v-if="!myMessage(message)" @click="goToProfile(message.from_profile)">
+        <ProfileAvatar :name="otherProfileName" :photo-url="otherProfilePhoto" :clickable="false" size="34" />
+      </div>
+
+      <!-- Bubble -->
+      <div class="chat-row__bubbleWrap">
+        <div class="chat-bubble" :class="{ 'is-pending': !!message._pending, 'is-failed': !!message._failed }">
+          <div class="chat-bubble__text">{{ message.content }}</div>
+
+          <div class="chat-bubble__meta">
+            <span class="chat-bubble__time">{{ getFromNow(message) }}</span>
+
+            <span v-if="myMessage(message) && message._pending" class="chat-bubble__status">
+              {{ $t('components.chat.sending') }}
+            </span>
+
+            <button v-if="myMessage(message) && message._failed" class="chat-bubble__retry" @click="retrySend(message)"
+              type="button">
+              {{ $t('components.chat.retry') }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Avatar (me) -->
+      <div class="chat-row__avatar" v-if="myMessage(message)" @click="goToProfile(myProfileId)">
+        <ProfileAvatar :name="myProfileName" :photo-url="myProfilePhoto" :clickable="false" size="34" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Composer -->
+  <div class="chat-composer">
+    <input class="chat-composer__input" type="text" :placeholder="$t('components.chat.placeholder')"
+      v-model="toBeSentMessage" maxlength="2040" @keydown.enter.prevent="sendMessage" />
+
+    <button class="chat-composer__send" :class="{ disabled: !canSend || isSending }" :disabled="!canSend || isSending"
+      @click="sendMessage" type="button">
+      <i class="fa fa-arrow-up"></i>
+    </button>
+  </div>
+
+
+<!-- BLOCK USER -->
+<ConfirmDialog
+  v-model="showBlockConfirm"
+  :title="$t('components.chat.confirmBlockTitle')"
+  :confirm-text="$t('components.chat.confirmBlockText')"
+  :cancel-text="$t('components.chat.confirmCancelText')"
+  @confirm="blockUser"
+>
+<p>{{ $t('components.chat.confirmBlockBody') }}</p>
+</ConfirmDialog>
+
+<!-- DELETE CONVERSATION -->
+<ConfirmDialog
+  v-model="showDeleteConfirm"
+  :title="$t('components.chat.confirmDeleteTitle')"
+  :confirm-text="$t('components.chat.confirmDeleteText')"
+  :cancel-text="$t('components.chat.confirmCancelText')"
+  @confirm="deleteConversation"
+>
+<p>{{ $t('components.chat.confirmDeleteBody') }}</p>
+</ConfirmDialog>
+</div>

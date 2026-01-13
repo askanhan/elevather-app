@@ -1,0 +1,223 @@
+<div class="page search-page" id="search-top">
+  <!-- ✅ CATEGORY SIMPLE AUTOCOMPLETE -->
+  <div class="sa" ref="catWrap">
+    <div class="sa-input">
+      <input
+        ref="catInput"
+        v-model="state"
+        :placeholder="$t('search.chooseCategory')"
+        @focus="openCat()"
+        @input="onCatInput()"
+        @keydown.down.prevent="catMove(1)"
+        @keydown.up.prevent="catMove(-1)"
+        @keydown.enter.prevent="catEnter()"
+        @keydown.esc.prevent="closeCat()"
+        autocomplete="off"
+      />
+      <button
+        v-if="state"
+        class="sa-clear"
+        type="button"
+        @pointerdown.prevent
+        @click="clearCat()"
+      >
+        ×
+      </button>
+    </div>
+
+    <div v-show="showCat" class="sa-panel">
+      <div
+        v-for="(item, i) in catFiltered"
+        :key="item.id"
+        class="sa-item"
+        :class="{ active: i === catIndex }"
+        @pointerdown.prevent
+        @click="selectCat(item)"
+      >
+        <i v-if="item.icon" :class="item.icon" class="me-2 tag-icon"></i>
+        <span>{{ item.value }}</span>
+      </div>
+      <div v-if="!catFiltered.length" class="sa-empty">
+        {{ $t('common.noResults') }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Seçilen kategori: alt etiketler -->
+  <div v-if="selectedCategory" class="mt-3">
+    <div class="subtitle">{{ $t('search.subcategories') }}</div>
+
+    <div class="tags-wrap mb-2">
+      <button
+        class="el-check-tag el-check-tag--primary"
+        :class="{ 'chip-outline': !showAll, 'is-checked ': showAll }"
+        @click="activateShowAll()"
+      >
+        {{ $t('search.showAllInThisCategory') }}
+      </button>
+    </div>
+
+    <div class="tags-wrap">
+      <button
+        v-for="t in filteredTags"
+        :key="t.id"
+        class="el-check-tag el-check-tag--primary"
+        :class="{ 'is-checked ': isTagSelected(t.id), 'chip-outline': !isTagSelected(t.id) }"
+        @click="toggleTag(t.id)"
+        :title="tagName(t)"
+      >
+        <i v-if="t.icon" :class="t.icon" class="me-2"></i>
+        {{ tagName(t) }}
+      </button>
+    </div>
+  </div>
+
+  <div class="divider mt-4 mb-0"></div>
+
+  <!-- ✅ PROVINCE SIMPLE AUTOCOMPLETE -->
+  <div class="sa" ref="provWrap">
+    <div class="sa-input">
+      <input
+        ref="provInput"
+        v-model="provinceState"
+        :placeholder="$t('search.chooseLocation')"
+        @focus="openProv()"
+        @input="onProvInput()"
+        @keydown.down.prevent="provMove(1)"
+        @keydown.up.prevent="provMove(-1)"
+        @keydown.enter.prevent="provEnter()"
+        @keydown.esc.prevent="closeProv()"
+        autocomplete="off"
+      />
+      <button
+        v-if="provinceState"
+        class="sa-clear"
+        type="button"
+        @pointerdown.prevent
+        @click="clearProv()"
+      >
+        ×
+      </button>
+    </div>
+
+    <div v-show="showProv" class="sa-panel">
+      <div
+        v-for="(item, i) in provFiltered"
+        :key="item.value"
+        class="sa-item"
+        :class="{ active: i === provIndex }"
+        @pointerdown.prevent
+        @click="selectProv(item)"
+      >
+        <span>{{ item.label }}</span>
+      </div>
+      <div v-if="!provFiltered.length" class="sa-empty">
+        {{ $t('common.noResults') }}
+      </div>
+    </div>
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div
+    v-if="allBusinesses.length === 0"
+    class="card card-style card-style-with-radius center-in-screen empty-state"
+  >
+    <div class="content">
+      <div class="empty-icon">
+        <i class="fas fa-search"></i>
+      </div>
+
+      <div class="empty-title">
+        {{ $t('common.noResults') }}
+      </div>
+
+      <div class="empty-subtitle">
+        {{ $t('search.empty.noBusinessMatch') }}
+        <span v-if="myBusinesses && myBusinesses.length">
+          {{ $t('search.empty.haveBusinessHint') }}
+        </span>
+        <span v-else>
+          {{ $t('search.empty.noBusinessHint') }}
+        </span>
+      </div>
+
+      <div class="empty-actions">
+        <a
+          v-if="myBusinesses && myBusinesses.length"
+          class="btn btn-m rounded-sm text-uppercase font-700 shadow-s bg-blue-dark"
+          @click.prevent="goToMyProfile()"
+        >
+          {{ $t('search.empty.goToMyProfile') }}
+        </a>
+
+        <a
+          v-else
+          class="btn btn-m rounded-sm text-uppercase font-700 shadow-s bg-blue-dark"
+          @click.prevent="goToMyProfile()"
+        >
+          {{ $t('search.empty.addBusiness') }}
+        </a>
+
+        <a
+          class="btn btn-m rounded-sm text-uppercase font-700 shadow-s bg-gray-light"
+          @click.prevent="resetSearch()"
+        >
+          {{ $t('search.resetFilters') }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <span class="found-results" v-if="allBusinesses.length > 0">
+    {{ $t('search.foundProfiles') }}
+  </span>
+
+  <div
+    class="businesses-container mt-2 d-flex justify-content-center flex-wrap"
+    v-if="allBusinesses.length > 0"
+  >
+    <div
+      class="card card-style m-2"
+      style="width: 47%;"
+      v-for="business in visibleBusinesses"
+      :key="business.id"
+    >
+      <div class="text-center business-card-content">
+        <ProfileAvatar
+          :name="business.name"
+          :photo-url="business.p_photo_link"
+          :clickable="true"
+          @click="goToBusinessDetailPage(business.id)"
+          responsive
+        />
+
+        <div @click="goToBusinessDetailPage(business.id)" class="business-title">
+          {{ business.name }}
+        </div>
+
+        <div class="tags-container mt-2 mb-3">
+          <button class="el-check-tag el-check-tag--primary">
+            <i :class="tagIdToIcon(business.fk_tag_id)" class="me-2"></i>
+            {{ tagIdToName(business.fk_tag_id) }}
+          </button>
+        </div>
+
+        <div class="business-card-footer">
+          <a
+            @click="goToBusinessDetailPage(business.id)"
+            class="btn btn-xs rounded-sm text-uppercase font-600 shadow-s bg-blue-dark"
+          >
+            {{ $t('search.goToBusinessDetails') }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ sentinel: en sona -->
+  <div v-show="loadingMore" class="biz-loader">
+    <i class="fas fa-spinner fa-spin me-2"></i>
+    {{ $t('common.loading') }}
+  </div>
+  <div ref="bizSentinel" class="biz-sentinel"></div>
+</div>

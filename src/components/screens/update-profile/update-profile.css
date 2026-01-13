@@ -1,0 +1,15 @@
+.input-style select {
+    color: inherit;
+    background-color: white;
+}
+
+.kaydet{
+    position: fixed;
+    bottom: 50px;
+    width: 100%;
+    bottom: calc(50px + (env(safe-area-inset-bottom))*1.1);
+}
+
+.file-uploads {
+    width: 100%;
+}

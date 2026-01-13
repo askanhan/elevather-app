@@ -1,0 +1,70 @@
+<div class="home-feed page" id="home-head" style="padding-bottom: 5em;">
+
+  <PartnerRail />
+
+
+  <NewsTicker />
+
+
+
+  <el-tabs v-model="activeTab" class="post-tabs row">
+    <!-- Genel -->
+    <el-tab-pane name="general">
+      <template #label>
+        <span class="tab-label">
+          <i class="fas fa-home tab-icon me-2"></i>
+          <span>{{ $t('pages.home.tabs.general') }}</span>
+        </span>
+      </template>
+    </el-tab-pane>
+
+    <!-- Etkinlikler -->
+    <el-tab-pane name="activity">
+      <template #label>
+        <span class="tab-label">
+          <i class="fas fa-calendar-alt tab-icon me-2"></i>
+          <span>{{ $t('pages.home.tabs.events') }}</span>
+        </span>
+      </template>
+    </el-tab-pane>
+
+    <!-- İş -->
+    <el-tab-pane name="job">
+      <template #label>
+        <span class="tab-label">
+          <i class="fas fa-briefcase tab-icon me-2"></i>
+          <span>{{ $t('pages.home.tabs.job') }}</span>
+        </span>
+      </template>
+    </el-tab-pane>
+
+    <!-- Eğitim -->
+    <el-tab-pane name="education">
+      <template #label>
+        <span class="tab-label">
+          <i class="fas fa-graduation-cap tab-icon me-2"></i>
+          <span>{{ $t('pages.home.tabs.education') }}</span>
+        </span>
+      </template>
+    </el-tab-pane>
+  </el-tabs>
+
+  <div class="posts-container">
+    <div class="posts-list">
+
+      <PostCard v-for="post in visiblePosts" :key="post.id" :post="post" />
+
+      <!-- sentinel -->
+      <div ref="feedSentinel" style="height: 1px;"></div>
+    </div>
+
+
+    <div v-if="loadingMore" class="loading-text">
+      {{ $t('pages.home.loadingMore') }}
+    </div>
+
+    <div v-if="noMorePosts" class="loading-text" style="opacity:.7;" v-html="$t('pages.home.noMorePosts')"></div>
+
+  </div>
+
+</div>

@@ -1,0 +1,6 @@
+**/*.vue
+build/*
+node_modules/*
+/config/
+/dist/
+/test/unit/coverage/

@@ -1,0 +1,37 @@
+<div class="page">
+    <div v-if="meta.screen === 'search'">
+        <div class="post-list-navigator">
+            <div class="btn btn-secondary" @click="$router.go(-1)">
+                <i class="far fa-backspace"></i>
+                <span>{{ $t('pages.postList.backToMain') }}</span>
+            </div>
+            <div class="d-block selected-tag tag-item shopping my-3 mx-0 w-100" :class="tag.tag_classname"
+                style="width: 100%;">
+                <i :class="tag.tag_icon"></i>
+                <span>{{tag['tag_name_' + lang]}}</span>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" id="exampleFormControlSelect1" v-model="selectedLocation">
+                    <option value="0">{{ $t('pages.postList.everywhere') }}</option>
+                    <option :value="location.lo_id" v-for="location in locations">{{location.lo_name}}</option>
+                </select>
+            </div>
+
+            <hr v-if="tagsPosts.length>0">
+
+            <div v-for="post in tagsPosts" :id="post.post_id">
+                <Post :id="post.post_id" v-on:tag-clicked="selectTag">
+                </Post>
+            </div>
+        </div>
+    </div>
+    <!-- <Post :id="1">
+    </Post>
+    <Post :id="2">
+    </Post>
+    <Post :id="3">
+    </Post>
+    <Post :id="4">
+    </Post> -->
+</div>

@@ -1,0 +1,232 @@
+/* ==== APP HEADER ==== */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* height: 70px !important;                 🔥 56 -> 70 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.08);
+    z-index: 1000;
+    box-sizing: border-box;
+    padding-top: calc(var(--android-status-bar, 24px) + 16px);
+    height: 95px !important;
+    padding-bottom: 16px;
+    padding-left:16px;
+    padding-right:16px;
+  }
+  
+  body.dark-mode .header {
+    background-color: #020617;
+    box-shadow: 0 3px 18px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Sol blok: back + logo + yazılar */
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  
+  #logo {
+    width: 40px;                  /* 34 -> 40 */
+    height: 40px;
+    object-fit: contain;
+  }
+  
+  /* BURADA + title + welcome stack */
+  .header-texts {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    min-width: 0;
+  }
+  
+  /* “BURADA” yazısı */
+  #logo-text {
+    font-family: logofont, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font-size: 20px;              /* 18 -> 20 */
+    letter-spacing: 0.05em;
+    color: #2563eb;
+    white-space: nowrap;
+  }
+  
+  /* Sayfa başlığı */
+  .header-title {
+    margin: 0;
+    font-size: 17px;              /* 16 -> 17 */
+    font-weight: 600;
+    color: #111827;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  body.dark-mode .header-title {
+    color: #e5e7eb;
+  }
+  
+  /* Welcome text – daha hafif, ikincil */
+  #welcome-message {
+    margin-top: 3px;
+    font-size: 13px;              /* 12 -> 13 */
+    font-weight: 400;
+    color: #6b7280;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  body.dark-mode #welcome-message {
+    color: #9ca3af;
+  }
+  
+  /* Sağ blok: ikonlar */
+/* Sağ blok: ikonlar */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* İkon butonları: modern, insta gibi tap alanı */
+.header-icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #111827;
+  font-size: 21px;
+  line-height: 1;
+  cursor: pointer;
+
+  transition: background-color .15s ease, transform .05s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header-icon:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+.header-icon:active {
+  transform: scale(0.96);
+}
+
+body.dark-mode .header-icon {
+  color: #e5e7eb;
+}
+
+body.dark-mode .header-icon:hover {
+  background: rgba(148, 163, 184, 0.22);
+}
+
+/* Badge: küçük kırmızı bubble + beyaz ring */
+.header-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  transform: translate(35%, -35%);
+
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+
+  color: #fff;
+  background: #ff2d55; /* insta vibe */
+  border: 2px solid #ffffff; /* ring */
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+
+  pointer-events: none;
+}
+
+/* Dark mode'da ring header rengine uyusun */
+body.dark-mode .header-badge {
+  border-color: #020617;
+}
+
+/* Çok basık sayılarda ortalama daha iyi dursun */
+.header-badge:empty {
+  display: none;
+}
+
+/* Küçük ekran */
+@media (max-width: 360px) {
+  .header-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+  }
+  .header-badge {
+    min-width: 17px;
+    height: 17px;
+    font-size: 10px;
+    top: 6px;
+    right: 6px;
+  }
+}
+
+.noti-row {
+  border-radius: 12px;
+}
+.noti-row--unseen {
+  background: rgba(37, 99, 235, 0.06);
+}
+.noti-dot {
+  position: absolute;
+  right: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #2563eb;
+}
+
+.header-icon--donate{
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-left: 6px;
+  color: rgba(0,0,0,.55);
+  background: rgba(0,0,0,.04);
+  transition: transform .12s ease, background .12s ease, color .12s ease;
+}
+
+.header-icon--donate i{
+  /* font-size: 15px; */
+}
+
+.header-icon--donate:hover{
+  transform: translateY(-1px);
+  background: rgba(0,0,0,.07);
+  color: rgba(0,0,0,.75);
+}

@@ -1,0 +1,17 @@
+<div class="dropdown-in-place-container">
+    <div class="block-full-screen" @click="closeList()" v-if="showDDList">
+    </div>
+
+    <div class="dd-item-container" v-if="showDDList">
+        <div v-for="(item, index) in listOfItems" @click="itemClicked(item)" class="dd-item"
+            :class="{'last-dd-item' : index === (listOfItems.length-1), 'selected' : item._selected}">
+            <div class="dd-name" :class="item.isFont ? item.value : ''">
+                {{item._name}}
+            </div>
+            <div class="dd-check" v-if="item._selected">
+                <i :class="icons.CHECKED_CIRCLE"></i>
+            </div>
+        </div>
+    </div>
+
+</div>

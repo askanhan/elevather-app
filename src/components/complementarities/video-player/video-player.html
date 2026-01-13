@@ -1,0 +1,21 @@
+<div style="position: relative;" :class="thumbnailvideo ? 'thumbnail-video' : ''"
+v-observe-visibility="visibilityChanged">
+
+    <i v-if="!thumbnailvideo" @click="fullScreen = !fullScreen" class="far fa-compress-alt let-full-screen"></i>
+    <video ref="myDiv" :id="id" class="video-player" :autoplay="playNow" webkit-playsinline playsinline :muted="isMuted"
+        :class="{'full-screen' : fullScreen, 'fixed-height': !fullScreen, 'paused': videoPaused}" 
+        loop preload="none">
+        <source :src="source" :type="'video/' + getExtension(source)">
+        Your browser does not support the video tag.
+    </video>
+    <i @click.stop="isMuted = !isMuted" v-if="isMuted" class="sesayar fal fa-volume-mute"></i>
+    <i @click.stop="isMuted = !isMuted" v-if="!isMuted" class="sesayar fal fa-volume"></i>
+    <div class="video-cover" @click="playVideo()">
+        <i class="far fa-play paused-icon" v-if="videoPaused" style="margin-right: 10px;"></i>
+    </div>
+</div>
+<!-- 
+<video width="320" height="240" controls>
+    <source :src="source" :type="'video/' + getExtension(source)">
+    Your browser does not support the video tag.
+  </video> -->

@@ -1,0 +1,894 @@
+/* ===== GENEL SAYFA ===== */
+#business-page {
+    background: linear-gradient(135deg, #f5f6fa 0%, #e0e8f8 100%);
+    min-height: 100vh;
+    padding: 20px 0px;
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* ===== PROFİL KARTI ===== */
+  .card.card-style {
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 700px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+  .card.card-style:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+  }
+  
+  /* ===== SAĞ ÜST ÜÇ NOKTA ===== */
+  .sidebar-toggle {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: none;
+    background: #f3f4f6;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+  }
+  .sidebar-toggle i {
+    font-size: 16px;
+  }
+  
+  /* ===== PROFİL HEADER ===== */
+  .business-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  .business-info {
+    text-align: center;
+    width: 100%;
+  }
+  
+  /* ===== PROFİL FOTO ===== */
+  #business-photo-container {
+    width: 50%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 4px solid #4A89DC;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  #business-photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.4s ease;
+  }
+  #business-photo-container:hover img {
+    transform: scale(1.05);
+  }
+  
+  /* ===== KULLANICI ADI & BIO ===== */
+  #business-username {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+  }
+  #business-bio {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  
+  /* ===== TAGLAR ===== */
+  .tags {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .tags .tag-btn {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    background: #f0f0f0;
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3 ease;
+  }
+  .tags .tag-btn i {
+    margin-right: 5px;
+  }
+  .tags .tag-btn:hover {
+    background: #4A89DC;
+    color: white;
+  }
+  
+  /* ===== BUTONLAR ===== */
+  .actions {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .actions a {
+    flex: 1 1 48%;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .actions a#follow-btn {
+    background: #4A89DC;
+    color: white;
+  }
+  .actions a#follow-btn.followed {
+    background: #aaa;
+  }
+  .actions a#message-btn {
+    border: 2px solid #4A89DC;
+    color: #4A89DC;
+  }
+  
+  /* ===== POST GRID ===== */
+  .posts {
+    margin-top: 0;
+    width: 100%;
+    max-width: 700px;
+  }
+  .posts .post-header {
+    font-weight: 700;
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #1a1a1a;
+  }
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+  .post-item {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .post-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  .post-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+  
+  /* Gizli hesap mesajı */
+  .private-msg {
+    text-align: center;
+    padding: 20px 12px;
+    border-radius: 16px;
+    background: #f9fafb;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    font-weight: 500;
+  }
+  
+  /* ===== MODAL ===== */
+  #business-modal,
+  #post-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  #business-modal.active,
+  #post-modal.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  #business-modal .modal-content,
+  #post-modal .modal-content {
+    border-radius: 50%;
+    overflow: hidden;
+    width: auto;
+    height: auto;
+    max-width: 250px;
+    max-height: 250px;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+  }
+  #business-modal.active .modal-content,
+  #post-modal.active .modal-content {
+    transform: scale(1);
+  }
+  #business-modal .modal-content img,
+  #post-modal .modal-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  /* ===== PROFİL BULUNAMADI ===== */
+  #business-not-found {
+    font-size: 1.2rem;
+    color: #777;
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  /* ===== SAĞ SIDEBAR & OVERLAY ===== */
+  .business-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.3);
+    z-index: 998;
+  }
+  .business-sidebar {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 280px;
+    max-width: 80%;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: -2px 0 15px rgba(0,0,0,.15);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    transition: right .25s ease;
+    font-family: Arial, sans-serif;
+  }
+  .business-sidebar.open {
+    right: 0;
+  }
+  .business-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+  }
+  .sidebar-close-btn {
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .business-sidebar-content {
+    padding: 12px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .95rem;
+  }
+  .sidebar-link-btn {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid #4A89DC;
+    background: #fff;
+    color: #4A89DC;
+    font-size: .8rem;
+    cursor: pointer;
+  }
+  
+  /* ===== SWITCH ===== */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+  }
+  .switch input {
+    display: none;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #ccc;
+    transition: .2s;
+    border-radius: 24px;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    transition: .2s;
+    border-radius: 50%;
+  }
+  .switch input:checked + .slider {
+    background: #4A89DC;
+  }
+  .switch input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+  
+  /* ===== ACCOUNT SWITCHER ===== */
+  .accounts-section {
+    padding: 16px 18px 24px;
+    border-top: 1px solid rgba(148, 163, 184, 0.25);
+    margin-top: 8px;
+  }
+  .accounts-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .accounts-subtitle {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-bottom: 14px;
+  }
+  .account-card {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border-radius: 16px;
+    background: #f3f4f6;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .account-card.active {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.4);
+    background: #e0edff;
+  }
+  .account-card.add {
+    background: #eef2ff;
+    border-style: dashed;
+    border-color: rgba(148, 163, 184, 0.8);
+  }
+  .account-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+  .account-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .add-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1f2937;
+    color: #e5e7eb;
+  }
+  .add-avatar i {
+    font-size: 18px;
+  }
+  .account-info h4 {
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 600;
+  }
+  .account-info h5 {
+    font-size: 0.75rem;
+    margin: 2px 0 0;
+    opacity: 0.7;
+  }
+  .account-check {
+    margin-left: auto;
+  }
+  .account-check i {
+    font-size: 18px;
+    color: #2563eb;
+  }
+  
+  /* ===== DARK MODE ===== */
+  :global(body.dark-mode #business-page) {
+    background: #050816 !important;
+    color: #f9fafb !important;
+  }
+  
+  /* metin renkleri */
+  :global(body.dark-mode #business-page h1),
+  :global(body.dark-mode #business-page p),
+  :global(body.dark-mode #business-page span),
+  :global(body.dark-mode #business-page strong) {
+    color: #f9fafb !important;
+  }
+  
+  :global(body.dark-mode #business-page .card-style),
+  :global(body.dark-mode #business-page .posts),
+  :global(body.dark-mode #business-page .post-item),
+  :global(body.dark-mode #business-page .post-header) {
+    background: #111827 !important;
+  }
+  :global(body.dark-mode #business-page .tag-btn) {
+    background: #1f2937 !important;
+  }
+  :global(body.dark-mode #business-page .business-sidebar) {
+    background: #020617 !important;
+  }
+  :global(body.dark-mode #business-page .business-sidebar-header),
+  :global(body.dark-mode #business-page .accounts-title),
+  :global(body.dark-mode #business-page .accounts-subtitle) {
+    color: #f9fafb !important;
+  }
+  :global(body.dark-mode #business-page .sidebar-link-btn) {
+    background: #1f2937 !important;
+    border-color: #4A89DC !important;
+    color: #e5e7eb !important;
+  }
+  :global(body.dark-mode #business-page .account-card) {
+    background: rgba(15, 23, 42, 0.85) !important;
+    border-color: transparent;
+  }
+  :global(body.dark-mode #business-page .account-card.add) {
+    background: rgba(30, 64, 175, 0.3) !important;
+  }
+  :global(body.dark-mode #business-page .account-card.active) {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.7);
+  }
+  
+  /* ===== RESPONSIVE ===== */
+  @media (min-width: 600px) {
+    .business-header {
+      flex-direction: row;
+      align-items: flex-start;
+      text-align: left;
+      gap: 20px;
+    }
+    .business-info {
+      flex: 1;
+    }
+    .actions a {
+      flex: 1;
+    }
+    .post-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+  }
+  @media (min-width: 900px) {
+    .posts {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .post-header {
+      width: 80%;
+      text-align: center;
+    }
+    .post-grid {
+      width: 80%;
+      max-width: 700px;
+      margin: 0 auto;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+  }
+
+
+
+
+  /* İLETİŞİM BUTONLARI */
+/* Genel contact pill */
+.contact-pill {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  padding: 0.55rem 0.75rem;
+  border-radius: 9999px;
+
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;    /* biraz düşürdüm */
+  color: #111;
+}
+
+.pill-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: large;
+  margin-right: 10px;
+}
+
+/* ICON’UN KENDİSİNE ÖZEL AYARLAR */
+.pill-icon i {
+  font-size: 1rem;        /* biraz büyüt */
+  font-weight: 400;       /* fake-bold iptal */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+/* Yazı hizası eşit */
+.pill-label {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* Hover hissi */
+.contact-pill:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+  transform: translateY(-1px);
+  transition: 0.15s;
+}
+
+/* Renk Seti (sadece baloncuk) */
+.contact-pill--whatsapp .pill-icon   { background: #25D366; }
+.contact-pill--instagram .pill-icon  { background: #E1306C; }
+.contact-pill--facebook .pill-icon   { background: #1877F2; }
+.contact-pill--phone .pill-icon      { background: #22c55e; }
+.contact-pill--location .pill-icon   { background: #2563eb; }
+.contact-pill--website .pill-icon    { background: #f59e0b; }
+.contact-pill--twitter .pill-icon    { background: #1DA1F2; }
+.contact-pill--pinterest .pill-icon  { background: #E60023; }
+.contact-pill--email .pill-icon      { background: #6366f1; }
+
+.profile-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.profile-actions__btn {
+  min-width: 130px;
+  padding: 0.65rem 1.3rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  border: 1px solid transparent;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.08s ease;
+}
+
+/* Birincil buton (Takip) */
+.profile-actions__btn--primary {
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+}
+
+.profile-actions__btn--primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* Takip edildi state’i: daha soft renk */
+.profile-actions__btn--primary--active {
+  background: #e0ecff;
+  color: #1d4ed8;
+  box-shadow: none;
+}
+
+/* İkincil buton (Mesaj) */
+.profile-actions__btn--outline {
+  background: #ffffff;
+  color: #2563eb;
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+  :global(body.dark-mode #business-page span),
+  :global(body.dark-mode #business-page strong) {
+    color: #f9fafb !important;
+  }
+  
+  :global(body.dark-mode #business-page .card-style),
+  :global(body.dark-mode #business-page .posts),
+  :global(body.dark-mode #business-page .post-item),
+  :global(body.dark-mode #business-page .post-header) {
+    background: #111827 !important;
+  }
+  :global(body.dark-mode #business-page .tag-btn) {
+    background: #1f2937 !important;
+  }
+  :global(body.dark-mode #business-page .business-sidebar) {
+    background: #020617 !important;
+  }
+  :global(body.dark-mode #business-page .business-sidebar-header),
+  :global(body.dark-mode #business-page .accounts-title),
+  :global(body.dark-mode #business-page .accounts-subtitle) {
+    color: #f9fafb !important;
+  }
+  :global(body.dark-mode #business-page .sidebar-link-btn) {
+    background: #1f2937 !important;
+    border-color: #4A89DC !important;
+    color: #e5e7eb !important;
+  }
+  :global(body.dark-mode #business-page .account-card) {
+    background: rgba(15, 23, 42, 0.85) !important;
+    border-color: transparent;
+  }
+  :global(body.dark-mode #business-page .account-card.add) {
+    background: rgba(30, 64, 175, 0.3) !important;
+  }
+  :global(body.dark-mode #business-page .account-card.active) {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.7);
+  }
+  
+  /* ===== RESPONSIVE ===== */
+  @media (min-width: 600px) {
+    .business-header {
+      flex-direction: row;
+      align-items: flex-start;
+      text-align: left;
+      gap: 20px;
+    }
+    .business-info {
+      flex: 1;
+    }
+    .actions a {
+      flex: 1;
+    }
+    .post-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+  }
+  @media (min-width: 900px) {
+    .posts {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .post-header {
+      width: 80%;
+      text-align: center;
+    }
+    .post-grid {
+      width: 80%;
+      max-width: 700px;
+      margin: 0 auto;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+  }
+
+
+
+
+  /* İLETİŞİM BUTONLARI */
+/* Genel contact pill */
+.contact-pill {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  padding: 0.55rem 0.75rem;
+  border-radius: 9999px;
+
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;    /* biraz düşürdüm */
+  color: #111;
+}
+
+.pill-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: large;
+  margin-right: 10px;
+}
+
+/* ICON’UN KENDİSİNE ÖZEL AYARLAR */
+.pill-icon i {
+  font-size: 1rem;        /* biraz büyüt */
+  font-weight: 400;       /* fake-bold iptal */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+/* Yazı hizası eşit */
+.pill-label {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* Hover hissi */
+.contact-pill:hover {
+  box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+  transform: translateY(-1px);
+  transition: 0.15s;
+}
+
+/* Renk Seti (sadece baloncuk) */
+.contact-pill--whatsapp .pill-icon   { background: #25D366; }
+.contact-pill--instagram .pill-icon  { background: #E1306C; }
+.contact-pill--facebook .pill-icon   { background: #1877F2; }
+.contact-pill--phone .pill-icon      { background: #22c55e; }
+.contact-pill--location .pill-icon   { background: #2563eb; }
+.contact-pill--website .pill-icon    { background: #f59e0b; }
+.contact-pill--twitter .pill-icon    { background: #1DA1F2; }
+.contact-pill--pinterest .pill-icon  { background: #E60023; }
+.contact-pill--email .pill-icon      { background: #6366f1; }
+
+.profile-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.profile-actions__btn {
+  min-width: 130px;
+  padding: 0.65rem 1.3rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  border: 1px solid transparent;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.08s ease;
+}
+
+/* Birincil buton (Takip) */
+.profile-actions__btn--primary {
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+}
+
+.profile-actions__btn--primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* Takip edildi state’i: daha soft renk */
+.profile-actions__btn--primary--active {
+  background: #e0ecff;
+  color: #1d4ed8;
+  box-shadow: none;
+}
+
+/* İkincil buton (Mesaj) */
+.profile-actions__btn--outline {
+  background: #ffffff;
+  color: #2563eb;
+  border-color: rgba(37, 99, 235, 0.5);
+}
+
+.profile-actions__btn--outline:hover {
+  background: #eff6ff;
+  transform: translateY(-1px);
+}
+
+.two-column-grid {
+  margin-bottom: 0.8em;
+}
+
+/* ===== ALT AKSİYON BUTONLARI (PAYLAŞ & MESAJ) ===== */
+.bottom-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.bottom-action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.bottom-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.share-btn {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.share-btn:hover {
+  background-color: #e5e7eb;
+}
+
+.message-btn {
+  background-color: #4A89DC;
+  color: white;
+}
+
+.message-btn:hover {
+  background-color: #3b82f6;
+}
+
+/* Dark mode desteği */
+:global(body.dark-mode #business-page .share-btn) {
+  background-color: #1f2937;
+  color: #e5e7eb;
+}
+
+:global(body.dark-mode #business-page .share-btn:hover) {
+  background-color: #374151;
+}
