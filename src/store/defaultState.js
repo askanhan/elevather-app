@@ -2,7 +2,7 @@
 import AppConfig from '@/config/app.config.js'
 export default function getDefaultState() {
     return {
-        lang: 'nl',
+        lang: 'en',
         receivedLastPostsOn: '',
         connectedProvince: -1,
         allCatched: false,

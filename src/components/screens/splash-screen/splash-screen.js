@@ -23,7 +23,7 @@ export default {
   mixins: [basicOperations, icons, UIText],
   data() {
     return {
-      selectedLanguage: 'nl',
+      selectedLanguage: 'en',
       swiperReady: false,
       activeIdx: 0,
       isLangOpen: false

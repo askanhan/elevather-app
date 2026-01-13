@@ -345,6 +345,7 @@
       }
     },
     "login": {
+      "mailBtn": "Sign in with Email",
       "appleBtn": "Sign in with Apple",
       "googleBtn": "Sign in with Google",
       "privacyHtml": "Your data is stored securely and not shared with third parties.<br>When you sign in, your data is protected under our <a href='https://burada.be/privacy-policy' target='_blank'>Privacy Policy</a> and <a href='https://burada.be/terms-of-service' target='_blank'>Terms of Service</a>.",
@@ -503,9 +504,9 @@
       "selectLanguage": "Select your preferred language",
       "slides": {
         "1": {
-          "sub": "Meeting point of Turks in Belgium",
-          "text": "Our goal is for all Turkish Belgians to have a medium where they can reach and follow each other. Connect, find what you’re looking for, share, catch the agenda. Everything in one app!",
-          "title": "Welcome to BURADA"
+          "sub": "We rise together!",
+          "text": "Our goal is to empower women by providing a platform that connects, supports, and uplifts them in all aspects of life.",
+          "title": "Welcome to ELEVATE HER"
         },
         "2": {
           "sub": "Find what you’re looking for on this platform",
