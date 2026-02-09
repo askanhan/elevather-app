@@ -38,19 +38,17 @@
   <div class="header-right" v-if="!backButtonAvailable && !specialButtonAvailable">
 
 
-    <a @click="goToDonate()" class="header-icon header-icon--donate" :aria-label="$t('common.supportAssociation')"
+    <!-- <a @click="goToDonate()" class="header-icon header-icon--donate" :aria-label="$t('common.supportAssociation')"
       :title="$t('common.supportAssociation')">
       <i class="fas fa-hand-holding-heart"></i>
     </a>
 
     <a @click="goToMessages()" class="header-icon header-icon--dm" :aria-label="$t('common.messages')">
-      <!-- FontAwesome 5: -->
       <i class="far fa-paper-plane"></i>
-      <!-- FontAwesome 6 kullanıyorsan üstteki yerine: <i class="fa-regular fa-paper-plane"></i> -->
       <span v-if="numberOfUnredMessages > 0" class="header-badge">
         {{ numberOfUnredMessages }}
       </span>
-    </a>
+    </a> -->
     <a @click="goToNotifications()" class="header-icon header-icon--notif" :aria-label="$t('common.notifications')">
       <!-- FontAwesome 5: -->
       <i class="far fa-heart"></i>
