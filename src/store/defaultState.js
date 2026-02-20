@@ -61,5 +61,6 @@ export default function getDefaultState() {
         allDropdownMenus: {},
         closeDialog: false,
         lastActiveDialog: '',
+        selectedStory: null,
     }
 }

@@ -19,9 +19,9 @@ import UpdateProfile from '@/components/screens/update-profile/update-profile.vu
 import selectTag from '@/components/screens/select-tag/select-tag.vue'
 
 import postContainer from '@/components/complementarities/PostContainer.vue'
-import HighlightRequest from '../components/complementarities/HighlightRequest.vue'
 import Feedback from '../components/complementarities/Feedback.vue'
 import Course from '../components/complementarities/Course.vue'
+import Story from '../components/complementarities/Story.vue'
 import SimulatorHome from '../components/complementarities/SimulatorHome.vue'
 import SimulatorPlay from '../components/complementarities/SimulatorPlay.vue'
 import Journey from '../components/complementarities/Journey.vue'
@@ -155,6 +155,18 @@ const routes = [
     }
   },
   {
+    path: '/story',
+    name: 'story',
+    component: Story,
+    meta: {
+      keepAlive: false,
+      backButtonAvailable: true,
+      moduleName: 'story',
+      firstPage: true,
+      showTabs: true
+    }
+  },
+  {
     path: '/stories',
     name: 'stories',
     component: StoriesModels,
@@ -199,18 +211,6 @@ const routes = [
       backButtonAvailable: true,
       moduleName: 'simulatorplay',
       firstPage: false,
-      showTabs: true
-    }
-  },
-  {
-    path: '/highlightrequest',
-    name: 'highlightrequest',
-    component: HighlightRequest,
-    meta: {
-      keepAlive: false,
-      backButtonAvailable: true,
-      moduleName: 'highlightrequest',
-      firstPage: true,
       showTabs: true
     }
   },

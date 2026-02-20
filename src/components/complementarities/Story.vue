@@ -1,19 +1,19 @@
-<!-- src/views/CourseMock.vue -->
+<!-- src/components/complementarities/Story.vue -->
 <template>
-    <div class="course">
+    <div class="story">
         <!-- Top bar -->
         <header class="topbar">
             <button class="back" @click="goBack">←</button>
 
             <div class="titleWrap">
-                <div class="courseTitle">{{ course.title }}</div>
-                <div class="courseMeta">
-                    <span class="chip">{{ course.track }}</span>
+                <div class="storyTitle">{{ story.title }}</div>
+                <div class="storyMeta">
+                    <span class="chip">{{ story.type }}</span>
                     <span class="chip">{{ currentIndex + 1 }}/{{ slides.length }}</span>
                 </div>
             </div>
 
-            <button class="ghost" @click="restart">Restart</button>
+            <button class="ghost" @click="restart">Reset</button>
         </header>
 
         <!-- Playbar -->
@@ -44,74 +44,73 @@
                 <article v-for="(slide, i) in slides" :key="slide.id" class="slide">
                     <div class="slideInner">
 
-                        <!-- Intro -->
+                        <!-- Intro / Header -->
                         <template v-if="slide.type === 'intro'">
                             <div class="heroIcon">{{ slide.icon }}</div>
                             <h2 class="h2">{{ slide.title }}</h2>
                             <p class="p">{{ slide.text }}</p>
 
                             <div class="panel">
-                                <div class="panelTitle">You will learn</div>
+                                <div class="panelTitle">About this content</div>
                                 <ul class="ul">
                                     <li v-for="(b, idx) in slide.bullets" :key="idx">{{ b }}</li>
                                 </ul>
                             </div>
                         </template>
 
-                        <!-- Text -->
+                        <!-- Text Content -->
                         <template v-else-if="slide.type === 'text'">
                             <h2 class="h2">{{ slide.title }}</h2>
                             <p class="p">{{ slide.text }}</p>
 
                             <div class="panel">
-                                <div class="panelTitle">Quick practice</div>
-                                <div class="miniTask">
-                                    <div class="miniLabel">Try this line:</div>
-                                    <div class="quote">“{{ slide.practiceLine }}”</div>
-                                </div>
+                                <div class="panelTitle">Key Points</div>
+                                <ul class="ul">
+                                    <li v-for="(point, idx) in slide.points" :key="idx">{{ point }}</li>
+                                </ul>
                             </div>
                         </template>
 
-                        <!-- Image Placeholder -->
+                        <!-- Image -->
                         <template v-else-if="slide.type === 'image'">
                             <h2 class="h2">{{ slide.title }}</h2>
                             <p class="p">{{ slide.text }}</p>
 
                             <div class="mediaPlaceholder">
                                 <div class="phTop">
-                                    <span class="phNote">visuals here</span>
+                                    <span class="phNote">{{ slide.mediaType || 'Image here' }}</span>
                                 </div>
                                 <div class="phBox">
-                                    <div class="phIcon">🖼</div>
-                                    <div class="phText">Drop image / infographic</div>
+                                    <div class="phIcon">{{ slide.icon || '🖼' }}</div>
+                                    <div class="phText">{{ slide.mediaText || 'Visual content' }}</div>
                                 </div>
                             </div>
 
-                            <div class="panel">
-                                <div class="panelTitle">Reflection</div>
-                                <div class="p">{{ slide.prompt }}</div>
+                            <div v-if="slide.description" class="panel">
+                                <div class="panelTitle">Description</div>
+                                <div class="p">{{ slide.description }}</div>
                             </div>
                         </template>
 
-                        <!-- Video Placeholder -->
+                        <!-- Video -->
                         <template v-else-if="slide.type === 'video'">
                             <h2 class="h2">{{ slide.title }}</h2>
                             <p class="p">{{ slide.text }}</p>
 
                             <div class="mediaPlaceholder">
                                 <div class="phTop">
-                                    <span class="phTag">VIDEO PLACEHOLDER</span>
-                                    <span class="phNote">Embed or link a short video</span>
+                                    <span class="phTag">VIDEO</span>
+                                    <span class="phNote">{{ slide.duration || '8 min video' }}</span>
                                 </div>
                                 <div class="phBox">
                                     <div class="phIcon">🎬</div>
-                                    <div class="phText">Video player goes here</div>
+                                    <div class="phText">{{ slide.mediaText || 'Video player' }}</div>
                                 </div>
                             </div>
 
-                            <div class="panel">
-                                <div class="panelTitle">Key idea</div>
-                                <div class="p">{{ slide.keyIdea }}</div>
+                            <div v-if="slide.summary" class="panel">
+                                <div class="panelTitle">Video Summary</div>
+                                <div class="p">{{ slide.summary }}</div>
                             </div>
                         </template>
 
@@ -137,18 +136,18 @@
                             </div>
                         </template>
 
-                        <!-- Open question -->
+                        <!-- Open Question -->
                         <template v-else-if="slide.type === 'open'">
                             <h2 class="h2">{{ slide.title }}</h2>
                             <p class="p">{{ slide.text }}</p>
 
                             <div class="panel">
-                                <div class="panelTitle">Write your answer</div>
+                                <div class="panelTitle">{{ slide.label || 'Write your response' }}</div>
                                 <textarea class="textarea" :placeholder="slide.placeholder"
                                     v-model="openAnswers[slide.id]"></textarea>
 
                                 <div class="smallHint">
-                                    Saved locally (mock). In real app, we’d sync it to the user profile.
+                                    Your response is saved locally in this story.
                                 </div>
                             </div>
                         </template>
@@ -159,14 +158,14 @@
                             <p class="p">{{ slide.text }}</p>
 
                             <div class="panel">
-                                <div class="panelTitle">What you practiced</div>
+                                <div class="panelTitle">What you learned</div>
                                 <ul class="ul">
                                     <li v-for="(b, idx) in slide.bullets" :key="idx">{{ b }}</li>
                                 </ul>
                             </div>
 
                             <div class="panel">
-                                <div class="panelTitle">Next action</div>
+                                <div class="panelTitle">Next Step</div>
                                 <div class="quote">{{ slide.nextAction }}</div>
                             </div>
                         </template>
@@ -178,39 +177,39 @@
                             <p class="p">{{ slide.text }}</p>
 
                             <div class="panel">
-                                <div class="panelTitle">Course status</div>
+                                <div class="panelTitle">Content Completed</div>
                                 <div class="statusRow">
                                     <span class="statusPill done">
                                         Done
                                     </span>
-                                    <span class="p">This would update the Journey page UI.</span>
+                                    <span class="p">You've completed this content. Great job!</span>
                                 </div>
                             </div>
                         </template>
-
 
                     </div>
                 </article>
             </div>
         </section>
-                        <!-- Bottom navigation -->
-                        <div class="nav">
-                            <button class="navBtn" :disabled="currentIndex === 0" @click="prev">
-                                Prev
-                            </button>
 
-                            <div class="dots">
-                                <span v-for="(s, idx) in slides" :key="s.id" class="dot"
-                                    :class="{ active: idx === currentIndex }" @click="goTo(idx)"></span>
-                            </div>
+        <!-- Bottom navigation -->
+        <div class="nav">
+            <button class="navBtn" :disabled="currentIndex === 0" @click="prev">
+                Prev
+            </button>
 
-                            <button class="navBtn primary" @click="next">
-                                {{ currentIndex === slides.length - 1 ? 'Finish' : 'Next' }}
-                            </button>
-                        </div>
+            <div class="dots">
+                <span v-for="(s, idx) in slides" :key="s.id" class="dot"
+                    :class="{ active: idx === currentIndex }" @click="goTo(idx)"></span>
+            </div>
+
+            <button class="navBtn primary" @click="next">
+                {{ currentIndex === slides.length - 1 ? 'Finish' : 'Next' }}
+            </button>
+        </div>
 
         <footer class="footerHint">
-            Swipe left/right or use Next/Prev. This is a presentation mockup.
+            Swipe left/right or use Next/Prev to navigate through this content.
         </footer>
     </div>
 </template>
@@ -219,105 +218,110 @@
 import Vue from 'vue'
 
 export default {
-    name: 'CourseMock',
+    name: 'Story',
 
     data() {
         return {
-            course: {
-                title: 'Boundaries & Saying No',
-                track: 'I Dare Track'
+            // Default story - will be overridden by store data
+            story: {
+                title: 'Nora\'s Journey',
+                type: 'Bio',
+                author: 'Nora'
             },
 
             currentIndex: 0,
 
-            // fake "reading" playbar
+            // Reading playbar
             reading: false,
             readingProgress: 0,
             readingTimer: null,
 
-            // touch/swipe
+            // Touch/swipe
             touchStartX: 0,
             touchCurrentX: 0,
             dragging: false,
 
-            // answers
+            // Answers
             answers: {},
             openAnswers: {},
 
             slides: [
                 {
-                    id: 's1',
+                    id: 'intro1',
                     type: 'intro',
-                    icon: '🛡️',
-                    title: 'You’re starting: Boundaries & Saying No',
-                    text: 'In this course, you’ll practice simple boundaries that protect your time and energy without guilt.',
+                    icon: '👩‍💼',
+                    title: 'Nora\'s Journey',
+                    text: 'Meet Nora. From a quiet contributor in her NGO, she became the community organizer who changed how her team works together.',
                     bullets: [
-                        'A 3-sentence boundary script',
-                        'How to handle pushback calmly',
-                        'How to stop over-explaining'
+                        'How small "brave asks" transformed her confidence',
+                        'The power of setting healthy boundaries',
+                        'Leading through collaboration, not control'
                     ]
                 },
                 {
-                    id: 's2',
+                    id: 'text1',
                     type: 'text',
-                    title: 'The boundary formula',
-                    text: 'A boundary is not a debate. It is a clear statement + a limit + what happens next. Short is powerful.',
-                    practiceLine: 'I can’t take this on. I can do X instead. If that doesn’t work, I’ll need to pass.'
+                    title: 'The Turning Point',
+                    text: 'Nora spent five years as a quiet contributor at a nonprofit in Belgium. She attended meetings, completed her tasks, and went home. But she watched the team struggle with unclear roles and burned-out colleagues. One day, she made a small brave ask: "Can we have a team discussion about how we work?"',
+                    points: [
+                        'Quiet doesn\'t mean powerless',
+                        'Asking questions is an act of leadership',
+                        'Sometimes the best change starts with one person speaking up'
+                    ]
                 },
                 {
-                    id: 's3',
+                    id: 'image1',
                     type: 'image',
-                    title: 'See the pattern',
-                    text: 'Many women are trained to “soften” boundaries. This creates confusion and invites negotiation.',
-                    prompt: 'Where do you soften your boundaries: work, family, or community?'
+                    title: 'Nora\'s Workspace',
+                    text: 'This is where Nora runs the community coordination—a modest desk surrounded by notes from team members who now trust her to listen.',
+                    icon: '📸',
+                    mediaType: 'Office photo',
+                    mediaText: 'Nora\'s coordination hub',
+                    description: 'Her walls are covered with sticky notes from community feedback sessions. Each one reminds her why clear communication matters.'
                 },
                 {
-                    id: 's4',
+                    id: 'video1',
                     type: 'video',
-                    title: 'Watch: calm delivery',
-                    text: 'Tone matters. Calm delivery can feel “rude” at first, because you’re used to cushioning.',
-                    keyIdea: 'Calm + short + steady eye contact = clarity.'
+                    title: 'Watch: Nora on Building Community Trust',
+                    text: 'In this 10-minute video, Nora shares how she used boundaries to actually strengthen relationships instead of breaking them.',
+                    duration: '10 min',
+                    mediaText: 'Nora speaking at NGO Leaders Summit 2023',
+                    summary: 'Key insight: "Boundaries aren\'t walls. They\'re invitations to real collaboration." Setting clear expectations made her team stronger, not weaker.'
                 },
                 {
-                    id: 's5',
+                    id: 'mcq1',
                     type: 'mcq',
-                    title: 'Quick decision',
-                    text: 'Someone asks you to do extra work “just this once” again. What is the best response?',
+                    title: 'Reflection',
+                    text: 'What was Nora\'s biggest breakthrough?',
                     options: [
-                        { id: 'a', label: '“Okay… I guess I can try, but I’m really busy.”' },
-                        { id: 'b', label: '“No. I’m not available for that. I can support with X.”' },
-                        { id: 'c', label: 'Ignore the message and hope it goes away.' }
+                        { id: 'a', label: 'She got promoted to a higher position' },
+                        { id: 'b', label: 'She asked for what the team needed and listened for the answers' },
+                        { id: 'c', label: 'She changed her personality to be more outgoing' }
                     ],
                     feedback: {
-                        a: 'This sounds polite, but it leaves the door open and invites negotiation.',
-                        b: 'Clear boundary + alternative. Short, calm, and respectful.',
-                        c: 'Avoidance often increases stress and weakens your position over time.'
+                        a: 'The promotion came later—after she proved her leadership through community organizing.',
+                        b: 'Exactly. Her breakthrough was curiosity and honest communication about what everyone needed.',
+                        c: 'Nora stayed true to herself. She didn\'t become louder; she became clearer.'
                     }
                 },
                 {
-                    id: 's6',
-                    type: 'open',
-                    title: 'Your script',
-                    text: 'Write one boundary you need this week. Keep it under 3 sentences.',
-                    placeholder: 'Example: “I can’t attend the meeting. Please send the notes. If decisions are needed, I’ll respond by Friday.”'
-                },
-                {
-                    id: 's7',
+                    id: 'summary1',
                     type: 'summary',
-                    title: 'Summary',
-                    text: 'You practiced short boundaries, calm tone, and a clear alternative.',
+                    title: 'What You Discovered',
+                    text: 'Nora\'s journey shows that communities thrive when someone dares to ask honest questions and set clear boundaries.',
                     bullets: [
-                        'Boundaries are not negotiations',
-                        'Short is stronger than long',
-                        'Alternatives keep collaboration alive'
+                        'Quiet strength can move mountains',
+                        'A single brave ask can start a movement',
+                        'Boundaries protect trust, not break it',
+                        'Community organizing is leadership'
                     ],
-                    nextAction: 'This week, use your script once in real life. Then come back and mark it as practiced.'
+                    nextAction: 'Practice your own brave ask in a situation where it matters to you.'
                 },
                 {
-                    id: 's8',
+                    id: 'done1',
                     type: 'done',
-                    title: 'Completed',
-                    text: 'Nice. In the real app, this completion updates your Journey progress and unlocks the next module.'
+                    title: 'Excellent Work!',
+                    text: 'You\'ve learned from Nora\'s journey. Now go dare to ask what your community needs.'
                 }
             ]
         }
@@ -349,7 +353,6 @@ export default {
                 this.currentIndex += 1
                 this.syncReadingToSlide()
             } else {
-                // finish pressed on last slide
                 this.reading = false
                 this.stopReadingTimer()
                 this.finishContent()
@@ -368,7 +371,7 @@ export default {
             this.syncReadingToSlide()
         },
 
-        // --- reading playbar (fake) ---
+        // --- reading playbar (mock) ---
         toggleReading() {
             this.reading = !this.reading
             if (this.reading) this.startReadingTimer()
@@ -380,13 +383,10 @@ export default {
             this.readingTimer = setInterval(() => {
                 if (!this.reading) return
 
-                // progress speeds up a bit on shorter slides
                 const step = this.slideIsInteractive() ? 1 : 2
-
                 this.readingProgress = Math.min(100, this.readingProgress + step)
 
                 if (this.readingProgress >= 100) {
-                    // auto-advance when "reading" is done
                     if (this.currentIndex < this.slides.length - 1) {
                         this.currentIndex += 1
                         this.readingProgress = 0
@@ -407,7 +407,6 @@ export default {
         },
 
         syncReadingToSlide() {
-            // reset bar on slide change to keep the mock feeling consistent
             this.readingProgress = 0
         },
 
@@ -450,13 +449,27 @@ export default {
 
             const delta = this.touchStartX - this.touchCurrentX
 
-            // threshold
             if (delta > 55) this.next()
             if (delta < -55) this.prev()
         },
 
         finishContent() {
-            this.$router.push('/journey')
+            // Redirect based on content type - Stories always go back to /stories
+            this.$router.push('/stories')
+        }
+    },
+
+    mounted() {
+        // Load story data from store if available
+        if (this.$store && this.$store.state && this.$store.state.selectedStory) {
+            const storyData = this.$store.state.selectedStory
+            // Merge store data with component data
+            Object.assign(this.story, storyData)
+            
+            // Load slides from store if provided, otherwise use default slides
+            if (storyData.slides && Array.isArray(storyData.slides)) {
+                this.slides = storyData.slides
+            }
         }
     },
 
@@ -467,7 +480,7 @@ export default {
 </script>
 
 <style scoped>
-.course {
+.story {
     max-width: 980px;
     margin: 0 auto;
     padding: 18px 14px 26px;
@@ -498,12 +511,12 @@ export default {
     text-align: center;
 }
 
-.courseTitle {
+.storyTitle {
     font-weight: 900;
     font-size: 16px;
 }
 
-.courseMeta {
+.storyMeta {
     margin-top: 6px;
     display: inline-flex;
     gap: 8px;
@@ -591,12 +604,6 @@ export default {
     background: #0f172a;
 }
 
-.playHint {
-    margin-top: 6px;
-    font-size: 12px;
-    color: #64748b;
-}
-
 .stage {
     border: 1px solid #e2e8f0;
     border-radius: 16px;
@@ -607,46 +614,43 @@ export default {
 
 .slides {
     display: flex;
-    width: 100%;
-    transition: transform 0.18s ease;
+    transition: transform 0.3s ease;
 }
 
 .slide {
-    min-width: 100%;
+    flex: 0 0 100%;
+    min-width: 0;
 }
 
 .slideInner {
-    padding: 16px;
+    padding: 26px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
 .heroIcon {
-    font-size: 46px;
-    line-height: 1;
-    margin-top: 6px;
-}
-
-.doneIcon {
-    font-size: 42px;
-    line-height: 1;
-    margin-top: 10px;
+    font-size: 64px;
+    margin-bottom: 12px;
 }
 
 .h2 {
-    margin: 12px 0 8px;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 900;
+    margin-bottom: 12px;
+    line-height: 1.2;
 }
 
 .p {
-    margin: 0;
     color: #475569;
-    line-height: 1.45;
+    line-height: 1.6;
+    margin-bottom: 12px;
 }
 
 .panel {
     margin-top: 12px;
     border: 1px solid #e2e8f0;
-    border-radius: 14px;
+    border-radius: 16px;
     background: #fbfdff;
     padding: 12px;
 }
@@ -663,116 +667,110 @@ export default {
     color: #334155;
 }
 
-.miniTask {
-    display: grid;
-    gap: 6px;
-}
-
-.miniLabel {
-    font-size: 12px;
-    font-weight: 900;
-    color: #64748b;
-}
-
-.quote {
-    border-left: 4px solid #e2e8f0;
-    padding-left: 10px;
-    font-weight: 900;
-    color: #0f172a;
+.ul li {
+    margin-bottom: 6px;
+    line-height: 1.4;
 }
 
 .mediaPlaceholder {
-    margin-top: 12px;
-    border: 1px dashed #cbd5e1;
-    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
     background: #fbfdff;
-    padding: 12px;
+    overflow: hidden;
+    margin: 12px 0;
 }
 
 .phTop {
+    background: linear-gradient(90deg, rgba(45, 108, 223, 0.06), rgba(255, 45, 122, 0.06));
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px 12px;
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+    align-items: center;
     gap: 10px;
-    margin-bottom: 10px;
+    justify-content: center;
+    text-align: center;
 }
 
 .phTag {
-    font-size: 12px;
     font-weight: 900;
-    color: #0f172a;
-    border: 1px solid #e2e8f0;
-    background: #fff;
-    padding: 6px 10px;
-    border-radius: 999px;
+    font-size: 11px;
+    background: rgba(45, 108, 223, 0.1);
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #2d6cdf;
 }
 
 .phNote {
     font-size: 12px;
     color: #64748b;
+    font-weight: 900;
 }
 
 .phBox {
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    background: #fff;
-    padding: 18px;
-    display: grid;
-    place-items: center;
-    gap: 6px;
+    padding: 60px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
 }
 
 .phIcon {
-    font-size: 28px;
+    font-size: 48px;
 }
 
 .phText {
-    color: #475569;
+    color: #64748b;
     font-weight: 900;
+    font-size: 13px;
 }
 
 .option {
     width: 100%;
-    text-align: left;
     border: 1px solid #e2e8f0;
     background: #fff;
-    border-radius: 14px;
+    border-radius: 12px;
     padding: 12px;
-    cursor: pointer;
+    margin-bottom: 8px;
     display: flex;
-    gap: 10px;
     align-items: center;
-    margin-bottom: 10px;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    text-align: left;
+}
+
+.option:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
 }
 
 .option.selected {
-    border-color: #94a3b8;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    border-color: #2d6cdf;
+    background: rgba(45, 108, 223, 0.05);
 }
 
 .radio {
-    width: 18px;
-    height: 18px;
-    border-radius: 999px;
-    border: 2px solid #cbd5e1;
-    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 50%;
     flex: 0 0 auto;
+    display: grid;
+    place-items: center;
 }
 
 .radio.on {
-    border-color: #0f172a;
+    border-color: #2d6cdf;
+    background: #2d6cdf;
 }
 
 .radio.on::after {
     content: '';
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: #0f172a;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
 }
 
 .optText {
@@ -781,14 +779,17 @@ export default {
 }
 
 .feedback {
-    border-top: 1px solid #e2e8f0;
-    padding-top: 10px;
-    margin-top: 6px;
+    margin-top: 12px;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    background: rgba(34, 197, 94, 0.08);
+    border-radius: 12px;
+    padding: 12px;
 }
 
 .feedbackTitle {
     font-weight: 900;
-    font-size: 13px;
+    font-size: 12px;
+    color: #166534;
     margin-bottom: 6px;
 }
 
@@ -796,59 +797,56 @@ export default {
     width: 100%;
     min-height: 120px;
     border: 1px solid #e2e8f0;
-    border-radius: 14px;
+    border-radius: 12px;
     padding: 12px;
     outline: none;
     resize: vertical;
     font-family: inherit;
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.35;
 }
 
 .textarea:focus {
-    border-color: #94a3b8;
-}
-
-.smallHint {
-    margin-top: 8px;
-    font-size: 12px;
-    color: #64748b;
-}
-
-.statusRow {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.statusPill {
-    font-size: 12px;
-    font-weight: 900;
-    padding: 6px 10px;
-    border-radius: 999px;
-    border: 1px solid #e2e8f0;
+    border-color: rgba(45, 108, 223, 0.35);
     background: #fff;
 }
 
-.statusPill.done {
-    background: #f0fdf4;
-    border-color: #bbf7d0;
+.smallHint {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 900;
 }
 
 .nav {
-    margin-top: 14px;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: #fff;
+    padding: 12px 14px;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
 }
 
 .navBtn {
     border: 1px solid #e2e8f0;
     background: #fff;
     border-radius: 12px;
-    padding: 10px 12px;
+    padding: 10px 14px;
     font-weight: 900;
+    font-size: 14px;
     cursor: pointer;
+    transition: all 0.12s ease;
+    color: #0f172a;
+}
+
+.navBtn:hover:not(:disabled) {
+    border-color: #cbd5e1;
+    background: #f8fafc;
 }
 
 .navBtn:disabled {
@@ -857,238 +855,102 @@ export default {
 }
 
 .navBtn.primary {
-    border-color: #0f172a;
+    background: linear-gradient(90deg, #2d6cdf, #ff2d7a);
+    color: #fff;
+    border: 0;
+    box-shadow: 0 6px 18px rgba(45, 108, 223, 0.18);
+}
+
+.navBtn.primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(45, 108, 223, 0.3);
+    background: linear-gradient(90deg, #1e5dd1, #ff1a6d);
 }
 
 .dots {
-    display: inline-flex;
+    display: flex;
     gap: 6px;
     justify-content: center;
+    flex: 1;
 }
 
 .dot {
     width: 8px;
     height: 8px;
-    border-radius: 999px;
-    background: #e2e8f0;
+    border-radius: 50%;
+    background: #cbd5e1;
     cursor: pointer;
+    transition: all 0.12s ease;
 }
 
 .dot.active {
     background: #0f172a;
+    width: 24px;
+    border-radius: 999px;
 }
 
-.footerHint {
-    margin-top: 10px;
+.quote {
+    border-left: 3px solid #2d6cdf;
+    padding-left: 12px;
+    font-style: italic;
+    color: #334155;
+    line-height: 1.6;
+}
+
+.statusRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.statusPill {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 900;
     font-size: 12px;
-    color: #64748b;
+}
+
+.statusPill.done {
+    background: rgba(34, 197, 94, 0.1);
+    color: #166534;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.doneIcon {
+    font-size: 64px;
+    margin-bottom: 12px;
+}
+
+.footerHint {
     text-align: center;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 900;
 }
 
-/* Make the course container fill the viewport */
-.course {
-  height: 100vh;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 18px 14px 0; /* bottom handled by safe padding below */
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
+@media (max-width: 640px) {
+    .story {
+        padding: 12px 10px 20px;
+    }
 
-/* Let the main content scroll, while keeping the bottom nav fixed */
-.stage {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 96px; /* reserve space for fixed nav */
-  box-sizing: border-box;
-}
+    .slideInner {
+        padding: 20px;
+        min-height: 300px;
+    }
 
-/* Optional: keep slides area from shrinking weirdly */
-.slides {
-  min-height: 100%;
-}
+    .h2 {
+        font-size: 18px;
+    }
 
-/* Make each slide content flow naturally and allow scrolling */
-.slideInner {
-  padding: 16px;
-  padding-bottom: 24px;
-}
+    .nav {
+        gap: 8px;
+    }
 
-/* Fixed bottom navigation */
-.nav {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 12px;
-
-  width: min(980px, calc(100% - 28px));
-  z-index: 50;
-
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 10px;
-  align-items: center;
-
-  padding: 12px;
-  border-radius: 16px;
-
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.10);
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-/* Ensure footer text doesn't sit under the fixed nav */
-.footerHint {
-  padding-bottom: 92px; /* same-ish as nav height */
-}
-
-/* On iOS with home indicator, add safe-area padding */
-@supports (padding: max(0px)) {
-  .nav {
-    bottom: max(12px, env(safe-area-inset-bottom));
-  }
-
-  .stage {
-    padding-bottom: calc(96px + env(safe-area-inset-bottom));
-  }
-
-  .footerHint {
-    padding-bottom: calc(92px + env(safe-area-inset-bottom));
-  }
-}
-
-/* ---- FIXED NAV + SCROLL STAGE (override) ---- */
-
-/* course fills viewport */
-.course {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 0;
-}
-
-/* stage must be the scroll container */
-.stage {
-  flex: 1 1 auto;
-  overflow-y: auto !important;   /* override earlier overflow:hidden */
-  overflow-x: hidden !important;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 120px;         /* room for fixed nav */
-}
-
-/* keep slides normal; only translate horizontally */
-.slides {
-  width: 100%;
-  display: flex;
-  transition: transform 0.18s ease;
-  will-change: transform;
-}
-
-/* IMPORTANT: nav fixed and above everything */
-.nav {
-  position: fixed !important;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 12px;
-
-  width: min(980px, calc(100% - 28px));
-  z-index: 9999;                 /* make sure it stays above slides */
-  pointer-events: auto;          /* ensure clickable */
-}
-
-/* iOS / Android safe-area */
-@supports (padding: max(0px)) {
-  .nav {
-    bottom: max(12px, env(safe-area-inset-bottom));
-  }
-
-  .stage {
-    padding-bottom: calc(120px + env(safe-area-inset-bottom));
-  }
-}
-
-/* footer shouldn't push layout; it can be hidden or padded */
-.footerHint {
-  display: none;                 /* optional: remove to avoid extra space */
-}
-
-/* Optional: prevent any parent creating weird clipping */
-.course,
-.stage,
-.slide,
-.slideInner {
-  overflow: visible;
-}
-
-/* If your webview is aggressive with fixed elements, this helps */
-.nav {
-  transform: translate3d(-50%, 0, 0);
-}
-
-.course {
-  height: 100vh;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 18px 14px 0;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-/* Stage scrolls; content never hides behind fixed nav */
-.stage {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 130px; /* space for nav */
-  box-sizing: border-box;
-}
-
-/* Keep slide animation */
-.slides {
-  display: flex;
-  width: 100%;
-  transition: transform 0.18s ease;
-  will-change: transform;
-}
-
-.slide { min-width: 100%; }
-
-/* Nav is now outside the transformed slides, so fixed works everywhere */
-.nav {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 12px;
-
-  width: min(980px, calc(100% - 28px));
-  z-index: 9999;
-
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 10px;
-  align-items: center;
-
-  padding: 12px;
-  border-radius: 16px;
-
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.10);
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-/* Safe area for iOS home bar */
-@supports (padding: max(0px)) {
-  .nav { bottom: max(12px, env(safe-area-inset-bottom)); }
-  .stage { padding-bottom: calc(130px + env(safe-area-inset-bottom)); }
+    .navBtn {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
 }
 </style>

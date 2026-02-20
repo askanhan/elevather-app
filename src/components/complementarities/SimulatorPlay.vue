@@ -348,6 +348,7 @@ export default {
                 this.feedback = ''
             } else {
                 this.done = true
+                this.finishContent()
             }
         },
 
@@ -377,6 +378,10 @@ export default {
 
         goToCourse() {
             this.$router.push('/course')
+        },
+
+        finishContent() {
+            this.$router.push('/simulator')
         }
     }
 }

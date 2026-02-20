@@ -332,6 +332,10 @@ export const mutations = {
   MARK_NOTIFICATION_VIEWED(state, id) {
     const it = state.notifications.find(x => String(x.id) === String(id));
     if (it) it.is_seen = 1;
+  },
+
+  SET_SELECTED_STORY(state, story) {
+    state.selectedStory = story
   }
 
 
