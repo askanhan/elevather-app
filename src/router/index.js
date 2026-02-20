@@ -7,22 +7,16 @@ import * as globalTypes from '../store/mutation-types.js'
 import Home from '@/components/screens/home/home.vue'
 import AfterLoginPage from '@/components/screens/after-login-page/after-login-page.vue'
 import Search from '@/components/screens/search/search.vue'
-import Add from '@/components/screens/add/add.vue'
-import Chat from '@/components/screens/chat/chat.vue'
 import Profile from '@/components/screens/profile/profile.vue'
-import Business from '@/components/screens/business/business.vue'
 import Conversations from '@/components/complementarities/Conversations.vue'
 import Donate from '@/components/complementarities/donate.vue'
 import Notificaties from '@/components/screens/notificaties/notificaties.vue'
-import SplashScreen from '@/components/screens/splash-screen/splash-screen.vue'
 import Login from '@/components/screens/login/login.vue'
 import Register from '@/components/screens/register/register.vue'
 import showIcons from '@/components/utils/_show_icons/_show_icons.vue'
 import dropdownPage from '@/components/utils/dropdown-page/dropdown-page.vue'
-import myMessages from '@/components/screens/my-messages/my-messages.vue'
 import UpdateProfile from '@/components/screens/update-profile/update-profile.vue'
 import selectTag from '@/components/screens/select-tag/select-tag.vue'
-import postList from '@/components/screens/post-list/post-list.vue'
 
 import postContainer from '@/components/complementarities/PostContainer.vue'
 import HighlightRequest from '../components/complementarities/HighlightRequest.vue'
@@ -34,16 +28,7 @@ import Journey from '../components/complementarities/Journey.vue'
 import StoriesModels from '../components/complementarities/StoriesModels.vue'
 
 const routes = [
-  {
-    path: '/',
-    name: 'splash',
-    component: SplashScreen,
-    meta: {
-      backButtonAvailable: false,
-      moduleName: 'SplashScreen',
-      firstPage: true
-    }
-  },
+  
   {
     path: '/:pathMatch(.*)*',
     redirect: '/home'
@@ -106,19 +91,6 @@ const routes = [
     }
   },
   {
-    path: '/add',
-    name: 'add',
-    component: Add,
-    meta: {
-      keepAlive: true,
-      backButtonAvailable: false,
-      specialButtonAvailable: true,
-      moduleName: 'Add',
-      firstPage: true,
-      showTabs: true
-    }
-  },
-  {
     path: '/notifications',
     name: 'notifications',
     component: Notificaties,
@@ -140,19 +112,6 @@ const routes = [
       backButtonAvailable: true,
       specialButtonAvailable: true,
       moduleName: 'Profile',
-      firstPage: true,
-      showTabs: true
-    }
-  },
-  {
-    path: '/business/:businessID/',
-    name: 'business',
-    component: Business,
-    meta: {
-      keepAlive: true,
-      backButtonAvailable: true,
-      specialButtonAvailable: true,
-      moduleName: 'Business',
       firstPage: true,
       showTabs: true
     }
@@ -266,66 +225,12 @@ const routes = [
     }
   },
   {
-    path: '/chat/:profileID', // 🔥 parametreli chat
-    name: 'chat',
-    component: Chat,
-    meta: {
-      backButtonAvailable: true,
-      moduleName: 'Messages',
-      firstPage: false,
-      showHeaderTitle: true
-    }
-  },
-  {
-    path: '/news-list',
-    name: 'newslist',
-    component: () => import('@/components/screens/news-list/news-list.vue'),
-    meta: {
-      backButtonAvailable: false,
-      specialButtonAvailable: false,
-      moduleName: 'NewsList',
-      firstPage: true,
-      showTabs: true
-    }
-  },
-  {path: '/news-details/:index',
-    name: 'newsDetail',
-    component: () => import('@/components/screens/news-details/news-details.vue'),
-    meta: {
-      backButtonAvailable: true,
-      moduleName: 'newsDetail',
-      firstPage: false,
-      showHeaderTitle: true
-    }
-  },
-  {
-    path: '/my-messages',
-    name: 'mymessages',
-    component: myMessages,
-    meta: {
-      backButtonAvailable: true,
-      moduleName: 'Messages',
-      firstPage: true,
-      showHeaderTitle: true
-    }
-  },
-  {
     path: '/update-profile',
     name: 'updateprofile',
     component: UpdateProfile,
     meta: {
       backButtonAvailable: true,
       moduleName: 'Profile',
-      firstPage: true
-    }
-  },
-  {
-    path: '/post-list',
-    name: 'postList',
-    component: postList,
-    meta: {
-      backButtonAvailable: true,
-      moduleName: 'PostList',
       firstPage: true
     }
   },
