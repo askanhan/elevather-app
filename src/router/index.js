@@ -346,7 +346,6 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    console.log('[scrollBehavior]', to.fullPath, from.fullPath, savedPosition)
 
     // Tarayıcı back/forward pozisyonu varsa, istersen kullanmaya devam
     if (savedPosition) {

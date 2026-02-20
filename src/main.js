@@ -249,19 +249,36 @@ async function restoreAuthenticationFromLocalStorage() {
     const accessToken = await authStore.getItem('access')
     const refreshToken = await authStore.getItem('refresh')
     const myProfile = await authStore.getItem('myProfile')
+    const userJson = await authStore.getItem('user')
     
-    if (accessToken || refreshToken) {
-      // Token existe = utilisateur était connecté
-      console.log('[auto-restore] Tokens trouvés dans localStorage, restauration de la session...')
+    if (accessToken || refreshToken || userJson) {
+      // Token ou user existe = utilisateur était connecté
+      console.log('[auto-restore] Restauration de la session...')
       
-      // Définir loggedIn = true
-      store.commit(globalTypes.LOGGED_IN)
+      // Restaurer l'objet user d'abord (contient l'ID)
+      if (userJson) {
+        try {
+          const user = JSON.parse(userJson)
+          // Utiliser USER_LOGGED_IN qui restaure à la fois user et loggedIn = true
+          store.commit('USER_LOGGED_IN', user)
+          console.log('[auto-restore] User restauré avec USER_LOGGED_IN:', user)
+        } catch (e) {
+          console.warn('[auto-restore] Erreur parsing user', e)
+        }
+      }
+      
+      // Si pas de user mais tokens existent, au moins activer loggedIn
+      if (!userJson && (accessToken || refreshToken)) {
+        store.commit(globalTypes.LOGGED_IN)
+        console.log('[auto-restore] Tokens trouvés, loggedIn activé')
+      }
       
       // Restaurer le profil s'il existe
       if (myProfile) {
         try {
           const profile = JSON.parse(myProfile)
           store.commit(globalTypes.SET_MY_PROFILE, profile)
+          console.log('[auto-restore] MyProfile restauré:', profile)
         } catch (e) {
           console.warn('[auto-restore] Erreur parsing myProfile', e)
         }

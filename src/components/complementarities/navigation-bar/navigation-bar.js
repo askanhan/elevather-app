@@ -22,12 +22,20 @@ export default {
     },
     loggedIn() {
       return this.$store.state.flags.loggedIn
+    },
+    meId() {
+      const s = this.$store?.state;
+      const u = s?.loggedInUserInformation?.UserData || {};
+      return u.userid ?? u.LLinkIDUsername ?? s?.user?.id ?? s?.myProfile?.id ?? 0;
     }
   },
   methods: {
     profileTo() {
-      console.log('Navigating to profile' + this.$store?.state?.myProfile?.id)
-      return this.$store?.state?.myProfile?.id ? this.$router.push('/profile/' + this.$store?.state?.myProfile?.id) : null;
+      if (this.meId && this.meId !== 0) {
+        this.$router.push({ name: 'profile', params: { profileID: this.meId } })
+      } else {
+        console.warn('Profile ID not available')
+      }
     },
     async homeSelected() {
       if (this.current === 'home') {

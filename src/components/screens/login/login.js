@@ -112,10 +112,10 @@ export default {
           console.warn('localStorage yazma hatası', e)
         }
 
-        // Store commit dene ama dispatch'ı çağırma (action.js tetiklenmez)
+        // Store commit avec la bonne mutation
         try {
           if (this.$store && typeof this.$store.commit === 'function') {
-            try { this.$store.commit('SET_USER', storedUser) } catch (e) { }
+            try { this.$store.commit('USER_LOGGED_IN', safeUser) } catch (e) { }
           }
         } catch (e) { /* ignore */ }
 
