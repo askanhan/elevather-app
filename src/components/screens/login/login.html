@@ -59,9 +59,10 @@
             <span>{{ $t('pages.login.appleBtn') }}</span>
         </button>
 
-        <!-- Email Login -->
-        <button class="social-btn google-btn" @click="appleLogin">
-            <span>{{ $t('pages.login.appleBtn') }}</span>
+        <!-- Email Login --> 
+        <button class="social-btn google-btn" @click="mailLogin"> <!-- TODO : mailLogin logic --> 
+            <img src="@/assets/gmail_logo.png" alt="Gmail" class="social-icon">
+            <span>{{ $t('pages.login.mailBtn') }}</span>
         </button>
     </div>
 
