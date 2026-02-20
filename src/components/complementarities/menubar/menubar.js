@@ -38,26 +38,17 @@ export default {
       if (this.$route.name === 'search') {
         return this.$t('components.menubar.subtitle.search')
       }
-      if (this.$route.name === 'add') {
-        return this.$t('components.menubar.subtitle.add')
-      }
       if (this.$route.name === 'newslist') {
         return this.$t('components.menubar.subtitle.newslist')
       }
       if (this.$route.name === 'profile') {
         return this.$t('components.menubar.subtitle.profile')
       }
-      if (this.$route.name === 'business') {
-        return this.$t('components.menubar.subtitle.business')
-      }
       if (this.$route.name === 'donate') {
         return this.$t('components.menubar.subtitle.donate')
       }
       if (this.$route.name === 'conversations') {
         return this.$t('components.menubar.subtitle.conversations')
-      }
-      if (this.$route.name === 'chat') {
-        return this.$t('components.menubar.subtitle.profile')
       }
 
       return this.$t('components.menubar.subtitle.default', { name: firstName })
