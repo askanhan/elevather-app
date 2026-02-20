@@ -107,6 +107,14 @@ export default {
     }
   },
 
+  mounted() {
+    // Initialiser avec la route actuelle au montage
+    this.current = this.$route.name || '/'
+    this.backButtonAvailable = this.$route.meta.backButtonAvailable || false
+    this.specialButtonAvailable = this.$route.meta.specialButtonAvailable || false
+    this.showHeaderTitle = this.$route.meta.showHeaderTitle || false
+  },
+
   methods: {
     goToMessages() {
       this.$router.push({ name: 'conversations' })

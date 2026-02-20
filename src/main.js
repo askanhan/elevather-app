@@ -242,6 +242,36 @@ app.config.globalProperties.moment = moment;
 
 app.config.globalProperties.mainBus = reactive({});
 
+// ✅ NOUVEAU: Restaure l'authentification au refresh si token existe en localStorage
+async function restoreAuthenticationFromLocalStorage() {
+  try {
+    // Vérifier si on a un token en localStorage
+    const accessToken = await authStore.getItem('access')
+    const refreshToken = await authStore.getItem('refresh')
+    const myProfile = await authStore.getItem('myProfile')
+    
+    if (accessToken || refreshToken) {
+      // Token existe = utilisateur était connecté
+      console.log('[auto-restore] Tokens trouvés dans localStorage, restauration de la session...')
+      
+      // Définir loggedIn = true
+      store.commit(globalTypes.LOGGED_IN)
+      
+      // Restaurer le profil s'il existe
+      if (myProfile) {
+        try {
+          const profile = JSON.parse(myProfile)
+          store.commit(globalTypes.SET_MY_PROFILE, profile)
+        } catch (e) {
+          console.warn('[auto-restore] Erreur parsing myProfile', e)
+        }
+      }
+    }
+  } catch (e) {
+    console.log('[auto-restore] Erreur lors de la restauration', e)
+  }
+}
+
 function checkSessionStorage() {
   //TODO console.log("checkSessionStorage");
   let vueRouting = sessionStorage.getItem("VUE_ROUTING");
@@ -342,8 +372,9 @@ window.mainVueApp = {
   },
   setupVue: async function () {
     setupStatusBar()
-  
-    // ✅ auto-login’i geri getirir (prod’da da çalışır)
+      // ✅ Restaurer l'authentification d'abord
+    await restoreAuthenticationFromLocalStorage()
+        // ✅ auto-login’i geri getirir (prod’da da çalışır)
     await __ensureSessionFromStoredRefresh()
   
     app.mount("#app");

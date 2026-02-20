@@ -11,6 +11,11 @@ export default {
       current: '/'
     }
   },
+  mounted() {
+    // Initialiser avec la route actuelle au montage pour que la navbar s'affiche au refresh
+    this.current = this.$route.name || '/'
+  },
+
   computed: {
     lang() {
       return this.$store.state.lang
