@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import genericLogo from '@/assets/burada_generic_logo.png'
 
 export default {
     name: 'ProfileAvatar',

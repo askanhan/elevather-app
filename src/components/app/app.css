@@ -81,14 +81,23 @@
 
 /* ===== SCROLLER MAIN CONTAINER ===== */
 .app-scroller {
-  padding-top: 95px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.app-scroller.with-header-navbar {
+  padding-top: 135px;
   padding-bottom: 50px;
 }
 
 /* ===== VIEW ALANI ===== */
 .view {
-  min-height: calc(100vh - 185px); /* Adjusted for header (135px) + footer (50px) */
+  min-height: 100vh;
   overflow-y: auto;
+}
+
+.app-scroller.with-header-navbar .view {
+  min-height: calc(100vh - 185px); /* Adjusted for header (135px) + footer (50px) */
 }
 
 /* ===== DARK MODE ===== */

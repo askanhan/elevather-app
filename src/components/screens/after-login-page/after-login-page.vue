@@ -2,7 +2,7 @@
   <div class="al-wrap">
     <div class="al-card">
       <div class="al-logo-row">
-        <img v-if="logo" :src="logo" alt="Burada" class="al-logo" />
+        <img v-if="logo" :src="logo" alt="ElevateHer" class="al-logo" />
       </div>
 
       <div class="al-spinner" aria-hidden="true"></div>
@@ -41,7 +41,7 @@ export default {
   name: "afterlogin",
   data() {
     return {
-      logo: require("@/assets/burada_logo.png"),
+      logo: require("@/assets/elevateher_logo.png"),
       error: null,
       step: this.$t('auth.afterlogin.step.stepCompleting')
     }

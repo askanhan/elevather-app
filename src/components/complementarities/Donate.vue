@@ -3,7 +3,7 @@
         <div class="support-hero">
             <div class="support-hero__head">
                 <img src="@/assets/vision_tree_logo.png" width="70%" alt="Vision Tree Logo" class="login-logo">
-                <img src="@/assets/burada_logo.png" width="30%" alt="Burada Logo" class="login-logo">
+                <img src="@/assets/elevateher_logo.png" width="30%" alt="ElevateHer Logo" class="login-logo">
 
                 <div class="support-hero__texts mt-2">
                     <div class="support-hero__title">{{ title || $t('components.donate.title') }}</div>

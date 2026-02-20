@@ -4,7 +4,7 @@
             <div class="feedback-hero__head">
                 <div class="feedback-logos">
                     <img src="@/assets/vision_tree_logo.png" alt="Vision Tree Logo" class="logo logo--vt">
-                    <img src="@/assets/burada_logo.png" alt="Burada Logo" class="logo logo--burada">
+                    <img src="@/assets/elevateher_logo.png" alt="ElevateHer Logo" class="logo logo--burada">
                 </div>
 
                 <div class="feedback-hero__texts mt-2">

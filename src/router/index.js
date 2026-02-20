@@ -40,7 +40,8 @@ const routes = [
     meta: {
       backButtonAvailable: false,
       moduleName: 'Login',
-      firstPage: true
+      firstPage: true,
+      showHeaderAndNavbar: false
     }
   },
   {
@@ -63,7 +64,8 @@ const routes = [
     meta: {
       backButtonAvailable: false,
       moduleName: 'Register',
-      firstPage: true
+      firstPage: true,
+      showHeaderAndNavbar: false
     }
   },
   {

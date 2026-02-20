@@ -58,6 +58,15 @@ export default {
     isDarkMode() {
       return document.body.classList.contains('dark-mode');
     },
+    isUserLoggedIn() {
+      // Vérifier d'abord la métadonnée de la route
+      const routeMeta = this.$route?.meta;
+      if (routeMeta?.showHeaderAndNavbar === false) {
+        return false;
+      }
+      // Par défaut, afficher le header/navbar
+      return true;
+    },
   },
 
   methods: {
