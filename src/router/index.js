@@ -11,6 +11,7 @@ import Profile from '@/components/screens/profile/profile.vue'
 import Conversations from '@/components/complementarities/Conversations.vue'
 import Donate from '@/components/complementarities/donate.vue'
 import Notificaties from '@/components/screens/notificaties/notificaties.vue'
+import Chat from '@/components/screens/chat/chat.vue'
 import Login from '@/components/screens/login/login.vue'
 import Register from '@/components/screens/register/register.vue'
 import showIcons from '@/components/utils/_show_icons/_show_icons.vue'
@@ -103,6 +104,18 @@ const routes = [
       firstPage: true,
       showHeaderTitle: true,
       showTabs: true
+    }
+  },
+
+  {
+    path: '/chat/:profileID', // 🔥 parametreli chat
+    name: 'chat',
+    component: Chat,
+    meta: {
+      backButtonAvailable: true,
+      moduleName: 'Messages',
+      firstPage: false,
+      showHeaderTitle: true
     }
   },
   {

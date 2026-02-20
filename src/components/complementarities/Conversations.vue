@@ -221,6 +221,10 @@ export default {
 </script>
 
 <style scoped>
+.page {
+    margin-top: 15px !important;
+}
+
 .conv-page {
     min-height: 100vh;
     background: #f6f7fb;
@@ -228,6 +232,7 @@ export default {
 }
 
 .conv-topbar {
+    margin-top: 0;
     position: sticky;
     top: 0;
     z-index: 10;
