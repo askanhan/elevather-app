@@ -115,7 +115,8 @@ const routes = [
       backButtonAvailable: true,
       moduleName: 'Messages',
       firstPage: false,
-      showHeaderTitle: true
+      showHeaderTitle: true,
+      showHeaderAndNavbar: false
     }
   },
   {

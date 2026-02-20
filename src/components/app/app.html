@@ -13,12 +13,12 @@
   <div v-if="isScreenDisabled" class="screen-disabled"></div>
 
   <!-- Üst Menü -->
-  <Menubar v-if="isUserLoggedIn" :class="{ 'dark-menubar': isDarkMode }"></Menubar>
+  <Menubar v-if="shouldShowHeaderAndNavbar" :class="{ 'dark-menubar': isDarkMode }"></Menubar>
 
   <!-- Navigation Bar -->
-  <NavigationBar v-if="isUserLoggedIn" :class="{ 'dark-navigation-bar': isDarkMode }"></NavigationBar>
+  <NavigationBar v-if="shouldShowHeaderAndNavbar" :class="{ 'dark-navigation-bar': isDarkMode }"></NavigationBar>
 
-  <div id="SCROLLER" class="app-scroller" :class="{ 'with-header-navbar': isUserLoggedIn }">
+  <div id="SCROLLER" class="app-scroller" :class="{ 'with-header-navbar': shouldShowHeaderAndNavbar }">
     <router-view v-slot="{ Component, route }">
       <transition name="slide">
         <keep-alive :include="['Home','Search','Add','Notificaties','NewsList','AfterLoginPage']">

@@ -58,8 +58,8 @@ export default {
     isDarkMode() {
       return document.body.classList.contains('dark-mode');
     },
-    isUserLoggedIn() {
-      // Vérifier d'abord la métadonnée de la route
+    shouldShowHeaderAndNavbar() {
+      // Vérifier si la route indique qu'on ne doit pas afficher le header/navbar
       const routeMeta = this.$route?.meta;
       if (routeMeta?.showHeaderAndNavbar === false) {
         return false;
