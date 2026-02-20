@@ -79,9 +79,15 @@
   color: #111;
 }
 
+/* ===== SCROLLER MAIN CONTAINER ===== */
+.app-scroller {
+  padding-top: 95px;
+  padding-bottom: 50px;
+}
+
 /* ===== VIEW ALANI ===== */
 .view {
-  min-height: calc(100vh - 56px); /* 🔧 Footer kadar boşluk */
+  min-height: calc(100vh - 185px); /* Adjusted for header (135px) + footer (50px) */
   overflow-y: auto;
 }
 
