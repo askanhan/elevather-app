@@ -216,8 +216,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 export default {
     name: 'CourseMock',
 
@@ -423,7 +421,7 @@ export default {
 
         // --- questions ---
         selectOption(slideId, optionId) {
-            Vue.set(this.answers, slideId, optionId)
+            this.$set(this.answers, slideId, optionId)
         },
 
         getFeedback(slide, optionId) {

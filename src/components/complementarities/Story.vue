@@ -215,8 +215,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 export default {
     name: 'Story',
 
@@ -422,7 +420,7 @@ export default {
 
         // --- questions ---
         selectOption(slideId, optionId) {
-            Vue.set(this.answers, slideId, optionId)
+            this.$set(this.answers, slideId, optionId)
         },
 
         getFeedback(slide, optionId) {
