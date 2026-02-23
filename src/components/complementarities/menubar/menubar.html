@@ -6,12 +6,12 @@
     </a>
 
     <div class="header-brand">
-      <img id="logo" :src="'./static/img/logo.png'" alt="Burada logo" />
+      <img id="logo" :src="'./static/img/elevateher_logo_without_title.png'" alt="Burada logo" />
 
       <div class="header-texts">
         <!-- Home sayfası: BURADA -->
         <span v-if="!showHeaderTitle" id="logo-text">
-          ELEVATE HER
+          {{altyazi}}
         </span>
 
         <!-- Diğer sayfalar: dinamik başlık -->
@@ -21,7 +21,7 @@
 
         <!-- Hoş geldin – sadece user varsa -->
         <span id="welcome-message" v-if="$store.state.user">
-          {{altyazi}}
+          We Rise Together!
         </span>
       </div>
     </div>

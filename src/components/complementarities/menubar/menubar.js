@@ -29,8 +29,8 @@ export default {
     },
 
     altyazi() {
-      return "We Rise Together!"
       const firstName = this.$store?.state?.user?.first_name || ''
+      return "Hello, " + firstName + "." 
 
       if (this.$route.name === 'home') {
         return this.$t('components.menubar.subtitle.home', { name: firstName })
