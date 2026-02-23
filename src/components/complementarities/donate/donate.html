@@ -1,0 +1,69 @@
+<div class="support-page page">
+    <div class="support-hero">
+        <div class="support-hero__head">
+            <img src="@/assets/vision_tree_logo.png" width="70%" alt="Vision Tree Logo" class="login-logo">
+            <img src="@/assets/elevateher_logo.png" width="30%" alt="ElevateHer Logo" class="login-logo">
+
+            <div class="support-hero__texts mt-2">
+                <div class="support-hero__title">{{ title || $t('components.donate.title') }}</div>
+                <div class="support-hero__sub">{{ subtitle || $t('components.donate.sub') }}</div>
+            </div>
+
+            <div class="support-hero__tag mt-2" aria-label="Gönüllü destek etiketi" style="margin-left: auto;">
+                <i class="fas fa-heart"></i>
+                <span>{{ pillText || $t('components.donate.pill') }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="support-card">
+        <div class="support-card__title">
+            <i class="fas fa-hand-holding-heart"></i>
+            <span>{{ $t('components.donate.optionsTitle') }}</span>
+        </div>
+
+        <button class="support-btn support-btn--primary" type="button" @click="openDonation">
+            <span class="support-btn__left">
+                <i class="fas fa-globe"></i>
+                <span>{{ $t('components.donate.webDonate') }}</span>
+            </span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+
+        <div class="support-iban">
+            <div class="support-iban__label">IBAN</div>
+            <div class="support-iban__row">
+                <div class="support-iban__value" :title="iban">{{ iban }}</div>
+                <button class="support-btn support-btn--ghost" type="button" @click="copyIban">
+                    <i class="far fa-copy"></i>
+                    <span>{{ $t('components.donate.copy') }}</span>
+                </button>
+            </div>
+            <div v-if="orgLegalName" class="support-iban__name">
+                {{ $t('components.donate.receiver') }} {{ orgLegalName }}
+            </div>
+        </div>
+
+        <div class="support-note">
+            <i class="fas fa-shield-alt"></i>
+            <span>{{ $t('components.donate.secureNote') }}</span>
+        </div>
+    </div>
+
+    <div class="support-mini">
+        <div class="support-mini__title">{{ $t('components.donate.shareTitle') }}</div>
+        <div class="support-mini__sub">{{ $t('components.donate.shareSub') }}</div>
+
+        <div class="support-mini__actions">
+            <button class="support-btn support-btn--soft" type="button" @click="shareLink">
+                <i class="fas fa-share-alt"></i>
+                <span>{{ $t('components.donate.shareBtn') }}</span>
+            </button>
+
+            <button class="support-btn support-btn--soft" type="button" @click="copyDonationLink">
+                <i class="fas fa-link"></i>
+                <span>{{ $t('components.donate.copyLink') }}</span>
+            </button>
+        </div>
+    </div>
+</div>

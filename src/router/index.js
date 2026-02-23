@@ -9,7 +9,7 @@ import AfterLoginPage from '@/components/screens/after-login-page/after-login-pa
 import Search from '@/components/screens/search/search.vue'
 import Profile from '@/components/screens/profile/profile.vue'
 import Conversations from '@/components/complementarities/Conversations.vue'
-import Donate from '@/components/complementarities/donate.vue'
+import Donate from '@/components/complementarities/donate/donate.vue'
 import Notificaties from '@/components/screens/notificaties/notificaties.vue'
 import Chat from '@/components/screens/chat/chat.vue'
 import Login from '@/components/screens/login/login.vue'
