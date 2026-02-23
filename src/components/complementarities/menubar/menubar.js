@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import * as mutationTypes from '@/store/mutation-types.js'
-import { ChatDotRound } from '@element-plus/icons-vue'
+import { EditPen } from '@element-plus/icons-vue'
 import icons from '@/mixins/icons'
 import basicOperations from '@/mixins/basic-operations'
 
 export default {
   name: 'Menubar',
   mixins: [icons, basicOperations],
-  components: { ChatDotRound },
+  components: { EditPen },
 
   data() {
     return {

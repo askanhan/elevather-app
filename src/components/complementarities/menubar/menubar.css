@@ -211,24 +211,22 @@ body.dark-mode .header-badge {
 
 .header-icon--donate{
   position: relative;
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
   display:flex;
   align-items:center;
   justify-content:center;
   margin-left: 6px;
-  color: rgba(0,0,0,.55);
-  background: rgba(0,0,0,.04);
-  transition: transform .12s ease, background .12s ease, color .12s ease;
-}
-
-.header-icon--donate i{
-  /* font-size: 15px; */
+  color: #111827;
+  background: transparent;
+  transition: background-color .15s ease, transform .05s ease;
 }
 
 .header-icon--donate:hover{
-  transform: translateY(-1px);
-  background: rgba(0,0,0,.07);
-  color: rgba(0,0,0,.75);
+  background: rgba(15, 23, 42, 0.06);
+}
+
+.header-icon--donate:active {
+  transform: scale(0.96);
 }

@@ -29,32 +29,32 @@
 
   <!-- Sağ: Aksiyon ikonları -->
   <div class="header-right" v-if="backButtonAvailable">
-    <button class="header-icon-btn" @click="openFeedback" style="font-size: 2em;">
+    <a @click="openFeedback()" class="header-icon" :aria-label="$t('common.feedback')" :title="$t('common.feedback')">
       <el-icon>
-        <ChatDotRound />
+        <EditPen />
       </el-icon>
-    </button>
+    </a>
   </div>
   <div class="header-right" v-if="!backButtonAvailable && !specialButtonAvailable">
 
 
     <a @click="goToDonate()" class="header-icon header-icon--donate" :aria-label="$t('common.supportAssociation')"
       :title="$t('common.supportAssociation')">
-      <i class="fas fa-hand-holding-heart"></i>
+      <i class="far fa-hand-holding-heart"></i>
     </a>
 
     <a @click="goToMessages()" class="header-icon header-icon--dm" :aria-label="$t('common.messages')">
       <!-- FontAwesome 5: -->
-      <i class="far fa-paper-plane"></i>
-      <!-- FontAwesome 6 kullanıyorsan üstteki yerine: <i class="fa-regular fa-paper-plane"></i> -->
+      <i class="far fa-comment-dots"></i>
+      <!-- FontAwesome 6 kullanıyorsan üstteki yerine: <i class="fa-regular fa-comment-dots"></i> -->
       <span v-if="numberOfUnredMessages > 0" class="header-badge">
         {{ numberOfUnredMessages }}
       </span>
     </a>
     <a @click="goToNotifications()" class="header-icon header-icon--notif" :aria-label="$t('common.notifications')">
       <!-- FontAwesome 5: -->
-      <i class="far fa-heart"></i>
-      <!-- FontAwesome 6: <i class="fa-regular fa-heart"></i> -->
+      <i class="far fa-bell"></i>
+      <!-- FontAwesome 6: <i class="fa-regular fa-bell"></i> -->
       <span v-if="numberOfUnviewedNotifications > 0" class="header-badge">
         {{ numberOfUnviewedNotifications }}
       </span>
