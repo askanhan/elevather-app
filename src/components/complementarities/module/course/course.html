@@ -97,15 +97,11 @@
                                 <div v-if="comp.type === 'mcq'" class="comp-mcq">
                                     <div class="mcq-question">{{ comp.question }}</div>
                                     <button v-for="opt in comp.options" :key="opt.id" class="option"
-                                        :class="{ selected: answers[slide.id] === opt.id }"
+                                        :class="{ selected: answers[slide.id] == opt.id }"
                                         @click="selectOption(slide.id, opt.id)">
-                                        <span class="radio" :class="{ on: answers[slide.id] === opt.id }"></span>
+                                        <span class="radio" :class="{ on: answers[slide.id] == opt.id }"></span>
                                         <span class="optText">{{ opt.text }}</span>
                                     </button>
-                                    <div v-if="answers[slide.id]" class="feedback">
-                                        <div class="feedbackTitle">Feedback</div>
-                                        <div class="p">{{ getFeedback(comp, answers[slide.id]) }}</div>
-                                    </div>
                                 </div>
 
                                 <!-- Open Question -->
@@ -173,7 +169,7 @@
                     :class="{ active: idx === currentIndex }" @click="goTo(idx)"></span>
             </div>
 
-            <button class="navBtn primary" @click="next">
+            <button class="navBtn primary" :disabled="needsChoice && !hasAnsweredMCQ" @click="next">
                 {{ currentIndex === slides.length - 1 ? 'Finish' : 'Next' }}
             </button>
         </div>

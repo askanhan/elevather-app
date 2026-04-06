@@ -43,6 +43,24 @@ export default {
             return {
                 transform: 'translateX(-' + pct + '%)'
             }
+        },
+
+        needsChoice() {
+            const slide = this.slides[this.currentIndex]
+            if (!slide || slide.type !== 'card') return false
+            return (slide.components || []).some(c => c.type === 'mcq' || c.type === 'open question')
+        },
+
+        hasAnsweredMCQ() {
+            const slide = this.slides[this.currentIndex]
+            if (!slide) return true
+            // Check if there's an MCQ that needs answering
+            const hasMCQ = (slide.components || []).some(c => c.type === 'mcq')
+            if (hasMCQ && this.answers[slide.id] === undefined) return false
+            // Check if there's an open question that needs answering
+            const hasOpenQ = (slide.components || []).some(c => c.type === 'open question')
+            if (hasOpenQ && !this.openAnswers[slide.id]) return false
+            return true
         }
     },
 
@@ -215,7 +233,9 @@ export default {
         },
 
         selectOption(slideId, optionId) {
-            this.$set(this.answers, slideId, optionId)
+            console.log('selectOption called:', { slideId, optionId, answers: this.answers })
+            this.answers[slideId] = optionId
+            console.log('answers after select:', this.answers)
         },
 
         getFeedback(component, optionId) {

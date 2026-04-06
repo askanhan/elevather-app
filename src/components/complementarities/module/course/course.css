@@ -272,7 +272,7 @@
 .option {
     width: 100%;
     text-align: left;
-    border: 1px solid #e2e8f0;
+    border: 2px solid #e2e8f0;
     background: #fff;
     border-radius: 12px;
     padding: 12px;
@@ -281,11 +281,19 @@
     gap: 10px;
     align-items: center;
     margin-bottom: 8px;
+    transition: all 0.2s ease;
+}
+
+.option:hover:not(:disabled) {
+    border-color: #cbd5e1;
+    background: #f8fafc;
 }
 
 .option.selected {
-    border-color: #94a3b8;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    border-color: #0f172a;
+    background: #f0f4f8;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+    font-weight: bold;
 }
 
 .radio {
