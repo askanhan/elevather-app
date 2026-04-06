@@ -1,5 +1,5 @@
-const IS_PROD = true
-// const IS_PROD = false
+// Utiliser la variable d'environnement si disponible, sinon false pour développement
+const IS_PROD = process.env.NODE_ENV === 'production'
 
 export default {
   IS_PROD,

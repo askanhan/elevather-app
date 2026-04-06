@@ -19,7 +19,18 @@
             </div>
         </header>
 
-        <section class="grid">
+        
+        <div v-if="error" class="error-message">
+            ⚠️ {{ error }}
+        </div>
+
+        
+        <div v-if="loading" class="loading">
+            Loading simulators...
+        </div>
+
+        
+        <section v-if="!loading" class="grid">
             <article v-for="s in filtered" :key="s.id" class="card" @click="goPlay(s)">
                 <div class="top">
                     <div class="icon">{{ s.icon }}</div>
@@ -45,13 +56,20 @@
             </article>
         </section>
 
-        <p class="note">
-            Partner-created content will replace these placeholders.
+        <!-- if no results -->
+        <p v-if="!loading && filtered.length === 0" class="note">
+            Simulators not found. Try adjusting your search or filters.
+        </p>
+
+        <p v-if="!loading && filtered.length > 0" class="note">
+            Data loaded from the database.
         </p>
     </div>
 </template>
 
 <script>
+import { api } from '@/store/actions.js'
+
 export default {
     name: 'SimulatorHome',
 
@@ -59,50 +77,14 @@ export default {
         return {
             query: '',
             level: 'all',
-
-            scenarios: [
-                {
-                    id: 'meeting_interrupt',
-                    icon: '🗣️',
-                    title: 'The Meeting Interruption',
-                    description: 'You get interrupted repeatedly. Do you reclaim space calmly or let it slide?',
-                    level: 'intro',
-                    duration: '3–4 min',
-                    domain: 'Workplace',
-                    tags: ['Boundaries', 'Voice', 'Visibility']
-                },
-                {
-                    id: 'community_conflict',
-                    icon: '🏘️',
-                    title: 'Community Initiative Conflict',
-                    description: 'Two groups want different directions. You must lead without splitting the group.',
-                    level: 'core',
-                    duration: '4–6 min',
-                    domain: 'Community',
-                    tags: ['Ethical power', 'Inclusion', 'Decision-making']
-                },
-                {
-                    id: 'invisible_labor',
-                    icon: '🏠',
-                    title: 'Invisible Labor Negotiation',
-                    description: 'Household workload is unfair. You negotiate change without turning it into a fight.',
-                    level: 'intro',
-                    duration: '3–5 min',
-                    domain: 'Family',
-                    tags: ['Negotiation', 'Care', 'Boundaries']
-                },
-                {
-                    id: 'ai_bias',
-                    icon: '🤖',
-                    title: 'AI Tool Bias in Hiring',
-                    description: 'A digital tool ranks candidates unfairly. You must challenge it effectively.',
-                    level: 'advanced',
-                    duration: '5–7 min',
-                    domain: 'Digital',
-                    tags: ['Critical thinking', 'Policy literacy', 'Courage']
-                }
-            ]
+            scenarios: [],
+            loading: true,
+            error: null
         }
+    },
+
+    mounted() {
+        this.fetchSimulators()
     },
 
     computed: {
@@ -124,6 +106,39 @@ export default {
     },
 
     methods: {
+        fetchSimulators() {
+            this.loading = true
+            this.error = null
+            api.get('/all-simulators/')
+                .then(response => {
+                    const data = response.data
+
+                    this.scenarios = data.map(sim => {
+                        const tagNames = (sim.tags || []).map(tag => 
+                            typeof tag === 'object' ? tag.name : tag
+                        )
+
+                        return {
+                            id: sim.id,
+                            icon: '🎯', 
+                            title: sim.title,
+                            description: sim.description || '',
+                            level: sim.level || 'intro',
+                            duration: sim.estimated_duration ? `${sim.estimated_duration} min` : 'N/A',
+                            domain: sim.localisation || 'General',
+                            tags: tagNames
+                        }
+                    })
+
+                    this.loading = false
+                })
+                .catch(err => {
+                    console.error('Error while fetching simulators:', err)
+                    this.error = 'Impossible to load simulators. Please try again later.'
+                    this.loading = false
+                })
+        },
+
         labelLevel(l) {
             if (l === 'intro') return 'Intro'
             if (l === 'core') return 'Core'
@@ -131,7 +146,6 @@ export default {
         },
 
         goPlay(s) {
-            // send selected scenario in query for mock demo
             this.$router.push({ path: '/simulator/play', query: { id: s.id } })
         }
     }
@@ -307,5 +321,22 @@ export default {
     margin-top: 12px;
     color: #64748b;
     font-size: 12px;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: #64748b;
+    font-size: 16px;
+}
+
+.error-message {
+    background-color: #fee2e2;
+    color: #991b1b;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-left: 4px solid #dc2626;
+    margin-bottom: 20px;
+    font-size: 14px;
 }
 </style>
