@@ -26,7 +26,7 @@ import Story from '../components/complementarities/Story.vue'
 import SimulatorHome from '../components/complementarities/simulator/simulatorHome/simulatorHome.vue'
 import SimulatorPlay from '../components/complementarities/simulator/simulatorPlay/simulatorPlay.vue'
 import Journey from '../components/complementarities/module/journey/journey.vue'
-import StoriesModels from '../components/complementarities/StoriesModels.vue'
+import StoriesModels from '../components/complementarities/stories/stories.vue'
 
 const routes = [
   

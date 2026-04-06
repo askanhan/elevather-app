@@ -1,0 +1,158 @@
+<template>
+    <div class="sm">
+
+        <header class="head">
+            <div>
+                <h1 class="h1">Stories</h1>
+                <p class="sub">
+                    Inspiration and real stories from our community. Partner-created content will replace these
+                    placeholders.
+                </p>
+            </div>
+
+            <div class="tools">
+                <input v-model="query" class="search" type="search" placeholder="Search stories, people, topics…" />
+            </div>
+        </header>
+
+        <section class="section">
+
+            <!-- Community tabs: Real Stories / Share your story -->
+            <div class="subtabs">
+                <button class="subtab" :class="{ on: storiesTab === 'real' }" @click="storiesTab = 'real'">
+                    Real Stories
+                </button>
+                <button class="subtab" :class="{ on: storiesTab === 'share' }" @click="storiesTab = 'share'">
+                    Share your story
+                </button>
+            </div>
+
+            <!-- Real Stories feed -->
+            <div v-if="storiesTab === 'real'" class="realStories">
+
+                <div class="sectionHead">
+                    <h2 class="h2">Real Stories</h2>
+                    <p class="hint">Anonymous one-liners from real life. No "likes". Only "I relate" and "Support".</p>
+                </div>
+
+                <div class="feed">
+                    <article v-for="p in filteredPool" :key="p.id" class="post">
+                        <div class="postHead">
+                            <div class="anon">
+                                <span class="anonDot"></span>
+                                <span class="anonTxt">Anonymous</span>
+                            </div>
+                            <div class="postMeta">
+                                <span class="chip">{{ p.track }}</span>
+                                <span class="chip">{{ p.when }}</span>
+                            </div>
+                        </div>
+
+                        <div class="postBody">
+                            <div class="postText">{{ p.text }}</div>
+
+                            <div v-if="p.tags && p.tags.length" class="tagRow">
+                                <span v-for="t in p.tags" :key="t" class="tag">{{ t }}</span>
+                            </div>
+                        </div>
+
+                        <div class="postActions">
+                            <button class="pillBtn" :class="{ on: reacted(p.id, 'relate') }"
+                                @click="toggleReaction(p.id, 'relate')">
+                                <span class="ic">🤝</span>
+                                <span>I relate</span>
+                                <span class="count">{{ p.relate }}</span>
+                            </button>
+
+                            <button class="pillBtn" :class="{ on: reacted(p.id, 'support') }"
+                                @click="toggleReaction(p.id, 'support')">
+                                <span class="ic">💗</span>
+                                <span>Support</span>
+                                <span class="count">{{ p.support }}</span>
+                            </button>
+
+                            <button class="pillBtn ghost" @click="openComments(p)">
+                                <span class="ic">💬</span>
+                                <span>Reply</span>
+                            </button>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="miniTip">
+                    Tip: later we can connect this feed to Power Simulator outcomes (recommend a model + a course).
+                </div>
+            </div>
+
+            <!-- Share your story -->
+            <div v-if="storiesTab === 'share'" class="shareStory">
+
+                <div class="sectionHead">
+                    <h2 class="h2">Share your story</h2>
+                    <p class="hint">
+                        This will be posted anonymously. Keep it short and real. One moment is enough.
+                    </p>
+                </div>
+
+                <div class="shareCard">
+                    <div class="anonBanner">
+                        <span class="anonShield">🛡️</span>
+                        <div class="anonBannerTxt">
+                            <div class="anonTitle">Anonymous by default</div>
+                            <div class="anonDesc">We do not show names. In the real app, we would also review harmful
+                                content.</div>
+                        </div>
+                    </div>
+
+                    <label class="lbl">Your one-liner</label>
+                    <textarea v-model="newStory.text" class="ta" maxlength="220"
+                        placeholder="Example: "I said no to my boss today and I didn't explain for 10 minutes.""></textarea>
+
+                    <div class="row">
+                        <div class="field">
+                            <label class="lbl">Track</label>
+                            <select v-model="newStory.track" class="select2">
+                                <option value="I Dare">I Dare</option>
+                                <option value="I Speak">I Speak</option>
+                                <option value="I Earn">I Earn</option>
+                                <option value="I Lead">I Lead</option>
+                                <option value="I Impact">I Impact</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label class="lbl">Context</label>
+                            <select v-model="newStory.context" class="select2">
+                                <option value="Work">Work</option>
+                                <option value="Family">Family</option>
+                                <option value="Community">Community</option>
+                                <option value="Self">Self</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label class="lbl">Optional tags (mock)</label>
+                    <div class="chipsPick">
+                        <button v-for="t in tagOptions" :key="t" class="pick" :class="{ on: newStory.tags.includes(t) }"
+                            @click="toggleTag(t)" type="button">
+                            {{ t }}
+                        </button>
+                    </div>
+
+                    <div class="shareBottom">
+                        <div class="counter">{{ (newStory.text || '').length }}/220</div>
+                        <button class="send" :disabled="!canSend" @click="submitStory">
+                            Share anonymously
+                        </button>
+                    </div>
+
+                    <div v-if="sent" class="sent">
+                        ✅ Submitted (mock). In the real app, this would appear in "Real Stories" after review.
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</template>
