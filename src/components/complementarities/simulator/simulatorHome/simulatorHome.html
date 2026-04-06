@@ -1,0 +1,68 @@
+<template>
+    <div class="simHome">
+        <header class="head">
+            <div>
+                <h1 class="h1">Power Simulator</h1>
+                <p class="sub">
+                    Practice leadership decisions without real-world risk. Choose a scenario and test your approach.
+                </p>
+            </div>
+
+            <div class="tools">
+                <input v-model="query" class="search" type="search" placeholder="Search scenarios…" />
+                <select v-model="level" class="select">
+                    <option value="all">All levels</option>
+                    <option value="intro">Intro</option>
+                    <option value="core">Core</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+            </div>
+        </header>
+
+        
+        <div v-if="error" class="error-message">
+            ⚠️ {{ error }}
+        </div>
+
+        
+        <div v-if="loading" class="loading">
+            Loading simulators...
+        </div>
+
+        
+        <section v-if="!loading" class="grid">
+            <article v-for="s in filtered" :key="s.id" class="card" @click="goPlay(s)">
+                <div class="top">
+                    <div class="icon">{{ s.icon }}</div>
+                    <div class="meta">
+                        <div class="title">{{ s.title }}</div>
+                        <div class="desc">{{ s.description }}</div>
+
+                        <div class="chips">
+                            <span class="chip">{{ labelLevel(s.level) }}</span>
+                            <span class="chip">{{ s.duration }}</span>
+                            <span class="chip">{{ s.domain }}</span>
+                        </div>
+
+                        <div class="tags">
+                            <span v-for="t in s.tags" :key="t" class="tag">{{ t }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom">
+                    <button class="btn">Start simulation →</button>
+                </div>
+            </article>
+        </section>
+
+        <!-- if no results -->
+        <p v-if="!loading && filtered.length === 0" class="note">
+            Simulators not found. Try adjusting your search or filters.
+        </p>
+
+        <p v-if="!loading && filtered.length > 0" class="note">
+            Data loaded from the database.
+        </p>
+    </div>
+</template>

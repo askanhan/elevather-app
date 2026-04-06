@@ -1,0 +1,134 @@
+<template>
+    <div class="simPlay">
+        <!-- Error message -->
+        <div v-if="error" class="error-message">
+            ⚠️ {{ error }}
+        </div>
+
+        <!-- Loading message -->
+        <div v-if="loading" class="loading-message">
+            Loading simulator...
+        </div>
+
+        <!-- Content -->
+        <template v-if="!loading && !error">
+        <header class="topbar">
+            <button class="back" @click="goBack">←</button>
+
+            <div class="titleWrap">
+                <div class="title">{{ scenario.title }}</div>
+                <div class="meta">
+                    <span class="chip">{{ labelLevel(scenario.level) }}</span>
+                    <span class="chip">{{ stepIndex + 1 }}/{{ steps.length }}</span>
+                    <span class="chip">{{ modeLabel }}</span>
+                </div>
+            </div>
+
+            <button class="ghost" @click="restart">Restart</button>
+        </header>
+
+        <section class="meters">
+            <div class="meter" v-for="m in meterKeys" :key="m">
+                <div class="meterTop">
+                    <span class="meterName">{{ m }}</span>
+                    <span class="meterVal">{{ meters[m] }}/100</span>
+                </div>
+                <div class="bar">
+                    <div class="fill" :style="{ width: meters[m] + '%' }"></div>
+                </div>
+            </div>
+
+            <div class="mode">
+                <button class="modeBtn" :class="{ on: mode === 'calm' }" @click="mode = 'calm'">Calm</button>
+                <button class="modeBtn" :class="{ on: mode === 'timed' }" @click="mode = 'timed'">Challenge</button>
+            </div>
+        </section>
+
+        <section class="stage">
+            <div class="card">
+                <div v-if="current.kicker" class="kicker">{{ current.kicker }}</div>
+                <h2 class="h2">{{ current.title }}</h2>
+                <p class="p">{{ current.text }}</p>
+
+                <!-- Render card components -->
+                <div v-for="comp in current.components" :key="comp.order" class="component">
+                    <!-- Text -->
+                    <div v-if="comp.type === 'text'" class="comp-text">{{ comp.content }}</div>
+
+                    <!-- Image -->
+                    <div v-if="comp.type === 'image'" class="media">
+                        <img :src="comp.url" :alt="comp.alt || 'Image'" />
+                    </div>
+
+                    <!-- Video -->
+                    <div v-if="comp.type === 'video'" class="media">
+                        <div class="ph">🎬 {{ comp.url }}</div>
+                    </div>
+
+                    <!-- MCQ as choices -->
+                    <div v-if="comp.type === 'mcq'" class="choices">
+                        <button v-for="opt in comp.options" :key="opt.id" class="choice" :disabled="locked"
+                            @click="choose(opt, comp)">
+                            <div class="choiceTop">
+                                <span class="dot"></span>
+                                <span class="choiceText">{{ opt.text }}</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Quote -->
+                    <div v-if="comp.type === 'quote'" class="comp-quote">
+                        <div class="quote-text">"{{ comp.content }}"</div>
+                        <div class="quote-author">— {{ comp.author }}</div>
+                    </div>
+                </div>
+
+                <div v-if="current.why" class="reveal">
+                    <div class="revealTitle">Why it matters</div>
+                    <p class="p">{{ current.why }}</p>
+                </div>
+
+                <div v-if="feedback" class="reveal">
+                    <div class="revealTitle">Feedback</div>
+                    <p class="p">{{ feedback }}</p>
+
+                    <button class="nextBtn" @click="next">
+                        {{ stepIndex === steps.length - 1 ? 'See debrief →' : 'Continue →' }}
+                    </button>
+                </div>
+
+                <details v-if="current.lens" class="lens">
+                    <summary>Power lens</summary>
+                    <div class="whyBody">{{ current.lens }}</div>
+                </details>
+            </div>
+        </section>
+
+        <section class="debrief" v-if="done">
+            <div class="card">
+                <h2 class="h2">Debrief</h2>
+                <p class="p">You completed the simulator!</p>
+
+                <div class="panel">
+                    <div class="row">
+                        <span class="label">Your score</span>
+                        <span class="value">{{ totalScore }}/{{ steps.length * 10 }}</span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="ghost" @click="restart">Retry</button>
+                    <button class="primary" @click="goToCourse">Back to course →</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="fixedNav">
+            <button class="navBtn" :disabled="stepIndex === 0 || done" @click="prev">Prev</button>
+            <button class="navBtn primary" :disabled="done || (needsChoice && !feedback)" @click="next">
+                {{ stepIndex === steps.length - 1 ? 'Finish' : 'Next' }}
+            </button>
+        </div>
+        </template>
+    </div>
+</template>

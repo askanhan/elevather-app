@@ -1,0 +1,107 @@
+<template>
+    <div class="journey">
+        <header class="top">
+            <div>
+                <h1 class="title">Journey</h1>
+                <p class="subtitle">
+                    Pick a track, open it, and choose a module. Progress is visible at a glance.
+                </p>
+            </div>
+
+            <div class="actions">
+                <input v-model="query" class="search" type="search" placeholder="Search tracks, modules, outcomes…"
+                    aria-label="Search" />
+
+                <select v-model="statusFilter" class="select" aria-label="Status filter">
+                    <option value="all">All statuses</option>
+                    <option value="done">Done</option>
+                    <option value="in_progress">In progress</option>
+                    <option value="not_started">Not started</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Loading state -->
+        <div v-if="loading" class="loading-message">
+            Loading journey...
+        </div>
+
+        <!-- Error state -->
+        <div v-if="error" class="error-message">
+            ⚠️ {{ error }}
+        </div>
+
+        <!-- Content -->
+        <section v-if="!loading" class="list">
+            <article v-for="track in filteredTracks" :key="track.id" class="trackCard">
+                <button class="trackHeader" @click="toggle(track.id)">
+                    <div class="left">
+                        <div class="badge" :style="{ background: track.color }">{{ track.short }}</div>
+                        <div class="headText">
+                            <h2 class="trackTitle">{{ track.title }} Track</h2>
+                            <p class="trackDesc">{{ track.description }}</p>
+                            <div class="trackMeta">
+                                <span class="metaChip">Suggested pace: {{ track.pace }}</span>
+                                <span class="metaChip">Focus: {{ track.focus }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="right">
+                        <div class="progress">
+                            <div class="progressTop">
+                                <span class="progressLabel">Completed</span>
+                                <span class="progressValue">{{ completedCount(track) }}/{{ track.modules.length
+                                }}</span>
+                            </div>
+                            <div class="bar">
+                                <div class="barFill"
+                                    :style="{ width: completionPercent(track) + '%', background: track.color }"></div>
+                            </div>
+                        </div>
+
+                        <div class="chev" :class="{ open: isOpen(track.id) }">⌄</div>
+                    </div>
+                </button>
+
+                <div v-show="isOpen(track.id)" class="trackBody">
+                    <h3 class="sectionTitle">Modules</h3>
+
+                    <button v-for="m in filteredModules(track)" :key="m.id" class="module" @click="goToCourse(m)">
+                        <div class="moduleTop">
+                            <div class="moduleTitleRow">
+                                <div class="moduleTitleWrap">
+                                    <span class="moduleTitle">{{ m.title }}</span>
+                                    <span class="pill" :class="pillClass(m.level)">{{ levelLabel(m.level) }}</span>
+                                </div>
+
+                                <span class="status" :class="statusClass(m.status)">
+                                    <span class="dot"></span>
+                                    {{ statusLabel(m.status) }}
+                                </span>
+                            </div>
+
+                            <p class="moduleDesc">{{ m.summary }}</p>
+                        </div>
+
+                        <div class="moduleBottom">
+                            <div class="outcomes">
+                                <span class="outcomesLabel">Outcomes:</span>
+                                <span class="outcomesText">{{ m.outcomes.join(" • ") }}</span>
+                            </div>
+
+                            <div class="cta">
+                                <span>Open course</span>
+                                <span class="arrow">→</span>
+                            </div>
+                        </div>
+                    </button>
+
+                    <p class="note">
+                        All categories and modules loaded from the database.
+                    </p>
+                </div>
+            </article>
+        </section>
+    </div>
+</template>
