@@ -44,42 +44,15 @@
             <h2 class="h2">Quick check-in</h2>
 
             <div class="qgrid">
-                <div class="qcard">
-                    <div class="qtitle">I expressed myself</div>
-                    <div class="qsub">Voice in meetings / conversations</div>
+                <div v-for="q in questions" :key="q.id" class="qcard">
+                    <div class="qtitle">{{ q.question_text }}</div>
+                    <div class="qsub" v-if="q.subtitle">{{ q.subtitle }}</div>
                     <div class="scale">
-                        <button class="sbtn" :class="{ on: check.voice === 0 }"
-                            @click="setCheck('voice', 0)">No</button>
-                        <button class="sbtn" :class="{ on: check.voice === 50 }"
-                            @click="setCheck('voice', 50)">Some</button>
-                        <button class="sbtn" :class="{ on: check.voice === 100 }"
-                            @click="setCheck('voice', 100)">Yes</button>
-                    </div>
-                </div>
-
-                <div class="qcard">
-                    <div class="qtitle">I set a boundary</div>
-                    <div class="qsub">Said no / protected time</div>
-                    <div class="scale">
-                        <button class="sbtn" :class="{ on: check.boundary === 0 }"
-                            @click="setCheck('boundary', 0)">No</button>
-                        <button class="sbtn" :class="{ on: check.boundary === 50 }"
-                            @click="setCheck('boundary', 50)">Some</button>
-                        <button class="sbtn" :class="{ on: check.boundary === 100 }"
-                            @click="setCheck('boundary', 100)">Yes</button>
-                    </div>
-                </div>
-
-                <div class="qcard">
-                    <div class="qtitle">My energy level</div>
-                    <div class="qsub">Body & mind availability</div>
-                    <div class="scale">
-                        <button class="sbtn" :class="{ on: check.energy === 0 }"
-                            @click="setCheck('energy', 0)">Low</button>
-                        <button class="sbtn" :class="{ on: check.energy === 50 }"
-                            @click="setCheck('energy', 50)">Mid</button>
-                        <button class="sbtn" :class="{ on: check.energy === 100 }"
-                            @click="setCheck('energy', 100)">High</button>
+                        <button v-for="opt in q.options" :key="opt.id" class="sbtn" 
+                            :class="{ on: selectedAnswers[q.id] === opt.id }"
+                            @click="setCheck(q.id, opt.id, opt.score)">
+                            {{ opt.text }}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -217,11 +190,17 @@
 </template>
 
 <script>
+import appConfig from '@/config/app.config.js'
+
 export default {
     name: 'PowerCheck',
 
     data() {
         return {
+            questions: [],
+            selectedAnswers: {},
+            selectedScores: {},
+
             check: {
                 voice: 50,
                 boundary: 50,
@@ -257,16 +236,21 @@ export default {
         }
     },
 
+    mounted() {
+        this.fetchQuestions()
+    },
+
     computed: {
         powerScore() {
-            // simple mock: average of 3 taps
-            const v = this.check.voice || 0
-            const b = this.check.boundary || 0
-            const e = this.check.energy || 0
-            return Math.round((v + b + e) / 3)
+            // Sum all selected answer scores (max 100 from 3 questions)
+            const scores = Object.values(this.selectedScores)
+            if (scores.length === 0) return 0
+            return Math.round(Math.min(100, scores.reduce((a, b) => a + b, 0)))
         },
 
         stateLabel() {
+            const hasAnswers = Object.keys(this.selectedAnswers).length > 0
+            if (!hasAnswers) return 'Find your power'
             const s = this.powerScore
             if (s >= 70) return 'Rising'
             if (s <= 45) return 'Drained'
@@ -274,13 +258,17 @@ export default {
         },
 
         stateEmoji() {
+            const hasAnswers = Object.keys(this.selectedAnswers).length > 0
+            if (!hasAnswers) return '✨'
             const s = this.powerScore
-            if (s >= 70) return '🔥'
-            if (s <= 45) return '🫧'
-            return '⚡'
+            if (s >= 70) return '🚀'
+            if (s <= 45) return '📉'
+            return '🧶'
         },
 
         stateClass() {
+            const hasAnswers = Object.keys(this.selectedAnswers).length > 0
+            if (!hasAnswers) return 'empty'
             const s = this.powerScore
             if (s >= 70) return 'rising'
             if (s <= 45) return 'drained'
@@ -288,11 +276,18 @@ export default {
         },
 
         trackBars() {
-            // mock: mix today score + a little personality so it looks real
+            // Use scores from fetched questions to influence track values
             const base = this.powerScore
+            const scores = Object.values(this.selectedScores)
+            
+            // Get individual question scores (use order or defaults)
+            const q1Score = scores[0] || 50
+            const q2Score = scores[1] || 50
+            const q3Score = scores[2] || 50
+            
             return [
-                { id: 'dare', label: 'I Dare', value: this.clamp(base + (this.check.boundary - 50) / 4), color: '#2D6CDF', hint: 'Courage, boundaries, visibility.' },
-                { id: 'speak', label: 'I Speak', value: this.clamp(base + (this.check.voice - 50) / 3), color: '#F59E0B', hint: 'Communication and influence.' },
+                { id: 'dare', label: 'I Dare', value: this.clamp(base + (q2Score - 50) / 4), color: '#2D6CDF', hint: 'Courage, boundaries, visibility.' },
+                { id: 'speak', label: 'I Speak', value: this.clamp(base + (q1Score - 50) / 3), color: '#F59E0B', hint: 'Communication and influence.' },
                 { id: 'earn', label: 'I Earn', value: this.clamp(base - 6), color: '#1F9D63', hint: 'Money clarity & leverage.' },
                 { id: 'lead', label: 'I Lead', value: this.clamp(base - 3), color: '#8B5CF6', hint: 'Ethical power & decisions.' },
                 { id: 'impact', label: 'I Impact', value: this.clamp(base - 8), color: '#06B6D4', hint: 'Society, systems, civic action.' }
@@ -351,13 +346,74 @@ export default {
     },
 
     methods: {
+        fetchQuestions() {
+            // Fetch questions from backend
+            const apiUrl = appConfig.API_BASE_URL + 'daily-checkin/questions/'
+            
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`)
+                    }
+                    return response.json()
+                })
+                .then(data => {
+                    // Get 3 random questions or just take the first 3
+                    this.questions = data.slice(0, 3)
+                    // Don't initialize selectedAnswers or selectedScores - let user select
+                })
+                .catch(error => {
+                    console.error('Error fetching check-in questions:', error)
+                    // Fallback to mock data if fetch fails
+                    this.loadMockQuestions()
+                })
+        },
+
+        loadMockQuestions() {
+            // Fallback mock data if API fails
+            this.questions = [
+                {
+                    id: 1,
+                    question_text: 'I expressed myself',
+                    subtitle: 'Voice in meetings / conversations',
+                    options: [
+                        { id: 101, text: 'No', score: 0 },
+                        { id: 102, text: 'Some', score: 15 },
+                        { id: 103, text: 'Yes', score: 33 }
+                    ]
+                },
+                {
+                    id: 2,
+                    question_text: 'I set a boundary',
+                    subtitle: 'Said no / protected time',
+                    options: [
+                        { id: 201, text: 'No', score: 0 },
+                        { id: 202, text: 'Some', score: 15 },
+                        { id: 203, text: 'Yes', score: 33 }
+                    ]
+                },
+                {
+                    id: 3,
+                    question_text: 'My energy level',
+                    subtitle: 'Body & mind availability',
+                    options: [
+                        { id: 301, text: 'Low', score: 0 },
+                        { id: 302, text: 'Mid', score: 15 },
+                        { id: 303, text: 'High', score: 34 }
+                    ]
+                }
+            ]
+            // Don't initialize selectedAnswers or selectedScores - let user select
+        },
+
         clamp(v) {
             const n = Math.round(v)
             return Math.max(0, Math.min(100, n))
         },
 
-        setCheck(key, val) {
-            this.check[key] = val
+        setCheck(questionId, optionId, scoreValue) {
+            this.selectedAnswers[questionId] = optionId
+            this.selectedScores[questionId] = scoreValue
         },
 
         selectBlocker(id) {
@@ -365,9 +421,9 @@ export default {
         },
 
         resetToday() {
-            this.check.voice = 50
-            this.check.boundary = 50
-            this.check.energy = 50
+            // Clear all selections and start fresh
+            this.selectedAnswers = {}
+            this.selectedScores = {}
             this.selectedBlocker = 'fear'
             this.selectedDay = null
         },
@@ -492,7 +548,7 @@ export default {
 /* Badge looks like logo palette */
 .badge {
   border: 1px solid var(--line);
-  background: linear-gradient(135deg, rgba(45, 108, 223, 0.08), rgba(255, 45, 122, 0.08));
+  background: linear-gradient(135deg, rgba(45, 108, 223, 0.12), rgba(255, 45, 122, 0.12));
   border-radius: 18px;
   padding: 14px;
   box-shadow: var(--shadow);
@@ -519,16 +575,22 @@ export default {
   display: block;
 }
 
-/* State accents using brand colors */
+/* State accents using intuitive colors */
 .badge.rising {
-  border-color: rgba(255, 45, 122, 0.22);
+  background: rgba(34, 197, 94, 0.16);
+  border-color: rgba(34, 197, 94, 0.28);
 }
 .badge.stable {
-  border-color: rgba(45, 108, 223, 0.22);
+  background: rgba(249, 115, 22, 0.16);
+  border-color: rgba(249, 115, 22, 0.28);
 }
 .badge.drained {
-  border-color: rgba(230, 238, 247, 1);
-  background: #ffffff;
+  background: rgba(239, 68, 68, 0.16);
+  border-color: rgba(239, 68, 68, 0.28);
+}
+.badge.empty {
+  background: linear-gradient(135deg, rgba(100, 116, 139, 0.12), rgba(148, 163, 184, 0.12));
+  border-color: rgba(120, 140, 160, 0.28);
 }
 
 .miniNote {

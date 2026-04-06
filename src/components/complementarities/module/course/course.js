@@ -38,6 +38,14 @@ export default {
     },
 
     computed: {
+        /* boyle yapppp
+        courses() {
+            return this.$store.state.courses || [] 
+             },
+             notCompletedCourses() {
+            return this.$store.state.courses || [] 
+             },
+        */
         slidesStyle() {
             const pct = this.currentIndex * 100
             return {
@@ -78,7 +86,7 @@ export default {
                 this.loading = false
                 return
             }
-
+            
             // Fetch the cards for this module
             api.get(`/module/${moduleId}/cards-full/`)
                 .then(response => {
