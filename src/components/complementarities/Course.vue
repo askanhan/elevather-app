@@ -1,6 +1,18 @@
 <!-- src/views/CourseMock.vue -->
 <template>
     <div class="course">
+        <!-- Error message -->
+        <div v-if="error" class="error-message">
+            ⚠️ {{ error }}
+        </div>
+
+        <!-- Loading message -->
+        <div v-if="loading" class="loading-message">
+            Loading course content...
+        </div>
+
+        <!-- Course content -->
+        <template v-if="!loading && !error">
         <!-- Top bar -->
         <header class="topbar">
             <button class="back" @click="goBack">←</button>
@@ -212,18 +224,21 @@
         <footer class="footerHint">
             Swipe left/right or use Next/Prev. This is a presentation mockup.
         </footer>
+        </template>
     </div>
 </template>
 
 <script>
+import { api } from '@/store/actions.js'
+
 export default {
     name: 'CourseMock',
 
     data() {
         return {
             course: {
-                title: 'Boundaries & Saying No',
-                track: 'I Dare Track'
+                title: 'Loading course...',
+                track: 'Course Track'
             },
 
             currentIndex: 0,
@@ -242,6 +257,10 @@ export default {
             answers: {},
             openAnswers: {},
 
+            // Loading state
+            loading: true,
+            error: null,
+            modules: [],
             slides: [
                 {
                     id: 's1',
@@ -321,6 +340,10 @@ export default {
         }
     },
 
+    mounted() {
+        this.fetchModules()
+    },
+
     computed: {
         slidesStyle() {
             const pct = this.currentIndex * 100
@@ -331,6 +354,94 @@ export default {
     },
 
     methods: {
+        // Fetch all modules from API
+        fetchModules() {
+            this.loading = true
+            this.error = null
+            
+            api.get('/all-modules/')
+                .then(response => {
+                    const allModules = response.data
+                    
+                    if (!allModules || allModules.length === 0) {
+                        this.error = 'No modules found in database.'
+                        this.loading = false
+                        return
+                    }
+
+                    this.modules = allModules
+
+                    // Transform all modules into slides
+                    this.slides = this.transformModulesToSlides(allModules)
+
+                    // Set course title from first module
+                    this.course.title = allModules[0].title
+
+                    this.loading = false
+                })
+                .catch(err => {
+                    console.error('Error while fetching modules:', err)
+                    this.error = 'Impossible to load modules. Please try again later.'
+                    this.loading = false
+                })
+        },
+
+        // Transform all modules data into slides format
+        transformModulesToSlides(modules) {
+            const slides = []
+
+            if (!modules || modules.length === 0) return slides
+
+            // Intro slide
+            slides.push({
+                id: 'intro',
+                type: 'intro',
+                icon: '📚',
+                title: `You're starting: ${modules[0].title}`,
+                text: modules[0].description || 'Start your learning journey with these modules.',
+                bullets: [
+                    `Total modules: ${modules.length}`,
+                    `Target audience: ${modules[0].target_audience || 'All learners'}`,
+                    'Learn at your own pace'
+                ]
+            })
+
+            // Content slide for each module
+            modules.forEach((module) => {
+                slides.push({
+                    id: `module_${module.id}`,
+                    type: 'text',
+                    title: module.title,
+                    text: module.description || 'Module content',
+                    practiceLine: `Day ${module.day_number} • Duration: ${module.estimated_duration || 'N/A'} min • For: ${module.target_audience || 'learners'}`
+                })
+            })
+
+            // Summary slide
+            slides.push({
+                id: 'summary',
+                type: 'summary',
+                title: 'Summary',
+                text: `You reviewed all ${modules.length} modules.`,
+                bullets: [
+                    `Total modules: ${modules.length}`,
+                    'You learned from the database content',
+                    'Your progress is being tracked'
+                ],
+                nextAction: 'Continue to practice or review specific modules.'
+            })
+
+            // Completion slide
+            slides.push({
+                id: 'done',
+                type: 'done',
+                title: 'Completed',
+                text: 'Great! You have reviewed all modules. Your progress has been saved.'
+            })
+
+            return slides
+        },
+
         goBack() {
             this.$router.go(-1)
         },
@@ -1088,5 +1199,31 @@ export default {
 @supports (padding: max(0px)) {
   .nav { bottom: max(12px, env(safe-area-inset-bottom)); }
   .stage { padding-bottom: calc(130px + env(safe-area-inset-bottom)); }
+}
+
+/* Loading and error messages */
+.loading-message,
+.error-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    font-size: 16px;
+    font-weight: 900;
+    color: #475569;
+    text-align: center;
+    padding: 20px;
+}
+
+.error-message {
+    color: #dc2626;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    margin: 12px 0;
+}
+
+.loading-message {
+    color: #0f172a;
 }
 </style>

@@ -22,13 +22,24 @@
             </div>
         </header>
 
-        <section class="list">
+        <!-- Loading state -->
+        <div v-if="loading" class="loading-message">
+            Loading journey...
+        </div>
+
+        <!-- Error state -->
+        <div v-if="error" class="error-message">
+            ⚠️ {{ error }}
+        </div>
+
+        <!-- Content -->
+        <section v-if="!loading" class="list">
             <article v-for="track in filteredTracks" :key="track.id" class="trackCard">
                 <button class="trackHeader" @click="toggle(track.id)">
                     <div class="left">
                         <div class="badge" :style="{ background: track.color }">{{ track.short }}</div>
                         <div class="headText">
-                            <h2 class="trackTitle">{{ track.title }}</h2>
+                            <h2 class="trackTitle">{{ track.title }} Track</h2>
                             <p class="trackDesc">{{ track.description }}</p>
                             <div class="trackMeta">
                                 <span class="metaChip">Suggested pace: {{ track.pace }}</span>
@@ -57,7 +68,7 @@
                 <div v-show="isOpen(track.id)" class="trackBody">
                     <h3 class="sectionTitle">Modules</h3>
 
-                    <button v-for="m in filteredModules(track)" :key="m.title" class="module" @click="goToCourse">
+                    <button v-for="m in filteredModules(track)" :key="m.id" class="module" @click="goToCourse">
                         <div class="moduleTop">
                             <div class="moduleTitleRow">
                                 <div class="moduleTitleWrap">
@@ -88,7 +99,7 @@
                     </button>
 
                     <p class="note">
-                        Partner-created content will replace these placeholders.
+                        All categories and modules loaded from the database.
                     </p>
                 </div>
             </article>
@@ -97,6 +108,10 @@
 </template>
 
 <script>
+import { api } from '@/store/actions.js'
+
+const colors = ['#2D6CDF', '#1F9D63', '#8B5CF6', '#F59E0B', '#EF4444', '#06B6D4']
+
 export default {
     name: 'JourneyHome',
 
@@ -108,206 +123,17 @@ export default {
             // collapsed by default
             openIds: new Set(),
 
-            tracks: [
-                {
-                    id: 'dare',
-                    short: 'I Dare',
-                    title: 'I Dare Track',
-                    description: 'Confidence, boundaries, visibility, and courage in everyday moments.',
-                    pace: '10–15 minutes/day',
-                    focus: 'Self-trust & action',
-                    color: '#2D6CDF',
-                    modules: [
-                        {
-                            title: 'Micro-Courage',
-                            level: 'intro',
-                            status: 'done',
-                            summary: 'Build courage through tiny, repeatable actions that stretch you safely.',
-                            outcomes: ['Name your fear pattern', 'Take one brave micro-step daily', 'Track wins without perfectionism']
-                        },
-                        {
-                            title: 'Boundaries & Saying No',
-                            level: 'core',
-                            status: 'in_progress',
-                            summary: 'Set clear boundaries without guilt, drama, or long explanations.',
-                            outcomes: ['Use a 3-sentence boundary script', 'Handle pushback calmly', 'Reduce people-pleasing loops']
-                        },
-                        {
-                            title: 'Visibility: Speak Up',
-                            level: 'advanced',
-                            status: 'not_started',
-                            summary: 'Practice speaking up with grounded authority in meetings and groups.',
-                            outcomes: ['Interrupt interruption', 'Claim contributions', 'Increase leadership presence']
-                        }
-                    ]
-                },
-
-                {
-                    id: 'earn',
-                    short: 'I Earn',
-                    title: 'I Earn Track',
-                    description: 'Money clarity, negotiation, career moves, and economic independence.',
-                    pace: '2–3 sessions/week',
-                    focus: 'Income & leverage',
-                    color: '#1F9D63',
-                    modules: [
-                        {
-                            title: 'Your Money Map',
-                            level: 'intro',
-                            status: 'in_progress',
-                            summary: 'Understand your money story, constraints, and what you can influence.',
-                            outcomes: ['Identify money beliefs', 'Build a monthly map', 'Pick one leverage point']
-                        },
-                        {
-                            title: 'Negotiation Basics',
-                            level: 'core',
-                            status: 'not_started',
-                            summary: 'Prepare and negotiate without apologizing for your needs.',
-                            outcomes: ['Set target & walk-away', 'Use assertive language', 'Negotiate beyond salary']
-                        },
-                        {
-                            title: 'Enterprise Seed',
-                            level: 'advanced',
-                            status: 'not_started',
-                            summary: 'Turn skills into an offer aligned with socio-ecological transformation.',
-                            outcomes: ['Define value proposition', 'Design a small pilot', 'Plan first 10 customers/users']
-                        }
-                    ]
-                },
-
-                {
-                    id: 'lead',
-                    short: 'I Lead',
-                    title: 'I Lead Track',
-                    description: 'Ethical power, decision-making, and responsibility without abuse.',
-                    pace: 'Weekly deep work',
-                    focus: 'Power & responsibility',
-                    color: '#8B5CF6',
-                    modules: [
-                        {
-                            title: 'Power Literacy',
-                            level: 'intro',
-                            status: 'done',
-                            summary: 'Reframe power from “bad” to “useful” and learn ethical power patterns.',
-                            outcomes: ['Spot power dynamics', 'Name your power style', 'Avoid self-sabotage']
-                        },
-                        {
-                            title: 'Decision-Making Under Pressure',
-                            level: 'core',
-                            status: 'not_started',
-                            summary: 'Make decisions with limited info, manage risk, and stay accountable.',
-                            outcomes: ['Use a 5-step framework', 'Communicate decisions clearly', 'Recover from mistakes faster']
-                        },
-                        {
-                            title: 'Leadership in Community',
-                            level: 'advanced',
-                            status: 'not_started',
-                            summary: 'Lead locally: associations, NGOs, local politics, civic initiatives.',
-                            outcomes: ['Build a coalition', 'Run inclusive meetings', 'Turn ideas into action']
-                        }
-                    ]
-                },
-
-                {
-                    id: 'speak',
-                    short: 'I Speak',
-                    title: 'I Speak Track',
-                    description: 'Communication, conflict navigation, and influence without shrinking.',
-                    pace: '15 minutes/day',
-                    focus: 'Voice & relationships',
-                    color: '#F59E0B',
-                    modules: [
-                        {
-                            title: 'Communication Foundations',
-                            level: 'intro',
-                            status: 'done',
-                            summary: 'Say more with fewer words: clarity, tone, structure.',
-                            outcomes: ['Make clear requests', 'Reduce over-explaining', 'Stay calm in tense moments']
-                        },
-                        {
-                            title: 'Conflict With Care',
-                            level: 'core',
-                            status: 'in_progress',
-                            summary: 'Handle conflict without freezing, fawning, or exploding.',
-                            outcomes: ['Name the issue precisely', 'Set limits respectfully', 'Exit unsafe conversations']
-                        },
-                        {
-                            title: 'Influence Through Story',
-                            level: 'advanced',
-                            status: 'not_started',
-                            summary: 'Use stories to mobilize support without manipulation.',
-                            outcomes: ['Craft a personal narrative', 'Pitch ideas clearly', 'Build support networks']
-                        }
-                    ]
-                },
-
-                {
-                    id: 'build',
-                    short: 'I Build',
-                    title: 'I Build Track',
-                    description: 'Create initiatives: projects, teams, partnerships, and community impact.',
-                    pace: '2 sessions/week',
-                    focus: 'Action & execution',
-                    color: '#EF4444',
-                    modules: [
-                        {
-                            title: 'From Idea to Pilot',
-                            level: 'intro',
-                            status: 'not_started',
-                            summary: 'Turn a vague idea into a small, testable pilot within two weeks.',
-                            outcomes: ['Define a small scope', 'Pick success metrics', 'Recruit 3 pilot participants']
-                        },
-                        {
-                            title: 'Partnership & Stakeholders',
-                            level: 'core',
-                            status: 'not_started',
-                            summary: 'Map allies and blockers, then build support with clear asks.',
-                            outcomes: ['Stakeholder map', '1-page partnership pitch', 'Run a first meeting confidently']
-                        },
-                        {
-                            title: 'Sustainable Operations',
-                            level: 'advanced',
-                            status: 'not_started',
-                            summary: 'Make it last: roles, routines, communication, and sustainable work.',
-                            outcomes: ['Define roles & responsibilities', 'Set weekly routines', 'Prevent burnout patterns']
-                        }
-                    ]
-                },
-
-                {
-                    id: 'impact',
-                    short: 'I Impact',
-                    title: 'I Impact Track',
-                    description: 'Socio-ecological transformation: systems thinking, civic action, policy literacy.',
-                    pace: 'Weekly deep work',
-                    focus: 'Society & change',
-                    color: '#06B6D4',
-                    modules: [
-                        {
-                            title: 'Systems Thinking Basics',
-                            level: 'intro',
-                            status: 'not_started',
-                            summary: 'Understand how systems behave and where small interventions matter.',
-                            outcomes: ['Identify feedback loops', 'Spot leverage points', 'Avoid “quick fix” traps']
-                        },
-                        {
-                            title: 'Civic Action Toolkit',
-                            level: 'core',
-                            status: 'not_started',
-                            summary: 'Take local action: petitions, councils, associations, and public voice.',
-                            outcomes: ['Choose one local issue', 'Plan one civic action', 'Build a micro-coalition']
-                        },
-                        {
-                            title: 'Gender Lens in Transformation',
-                            level: 'advanced',
-                            status: 'not_started',
-                            summary: 'Apply a gender-just lens to digitalization and socio-ecological transitions.',
-                            outcomes: ['Name gendered impacts', 'Create a critique + proposal', 'Communicate to decision-makers']
-                        }
-                    ]
-                }
-            ]
+            // API data
+            loading: true,
+            error: null,
+            categories: [],
+            modules: [],
+            tracks: []
         }
+    },
+
+    mounted() {
+        this.fetchData()
     },
 
     computed: {
@@ -342,6 +168,79 @@ export default {
     },
 
     methods: {
+        // Fetch categories and modules from API
+        fetchData() {
+            this.loading = true
+            this.error = null
+
+            Promise.all([
+                api.get('/categories/'),
+                api.get('/all-modules/')
+            ])
+                .then(([categoriesRes, modulesRes]) => {
+                    this.categories = categoriesRes.data || []
+                    this.modules = modulesRes.data || []
+
+                    // Transform categories and modules into tracks
+                    this.tracks = this.transformToTracks(this.categories, this.modules)
+                    this.loading = false
+                })
+                .catch(err => {
+                    console.error('Error fetching data:', err)
+                    this.error = 'Failed to load categories and modules.'
+                    this.loading = false
+                })
+        },
+
+        // Transform API data into tracks structure
+        transformToTracks(categories, modules) {
+            if (!categories || categories.length === 0) return []
+
+            // Map modules by category ID
+            const modulesByCategory = {}
+            modules.forEach(mod => {
+                const catId = mod.module_category_id
+                if (!modulesByCategory[catId]) {
+                    modulesByCategory[catId] = []
+                }
+                modulesByCategory[catId].push(mod)
+            })
+
+            // Create tracks from categories
+            return categories.map((cat, idx) => {
+                const catModules = modulesByCategory[cat.id] || []
+
+                // Generate short name from title (first 2 words)
+                const titleWords = cat.title.split(' ')
+                const short = titleWords.slice(0, 2).join(' ')
+
+                return {
+                    id: `category_${cat.id}`,
+                    short: short,
+                    title: cat.title,
+                    description: cat.description || 'Learning modules for this category',
+                    pace: '10–15 minutes/day',
+                    focus: 'Core learning',
+                    color: colors[idx % colors.length],
+                    modules: catModules.map(mod => ({
+                        id: mod.id,
+                        title: mod.title,
+                        level: this.determineLevelFromDay(mod.day_number),
+                        status: 'not_started',
+                        summary: mod.description || 'Module content',
+                        outcomes: mod.target_audience ? [mod.target_audience] : ['Learn and practice']
+                    }))
+                }
+            })
+        },
+
+        // Determine level based on day number
+        determineLevelFromDay(dayNum) {
+            if (dayNum <= 3) return 'intro'
+            if (dayNum <= 7) return 'core'
+            return 'advanced'
+        },
+
         toggle(id) {
             const s = new Set(this.openIds)
             if (s.has(id)) s.delete(id)
@@ -350,17 +249,14 @@ export default {
         },
 
         filteredModules(track) {
-  return (track && track.modules) ? track.modules : []
-},
+            return (track && track.modules) ? track.modules : []
+        },
 
         isOpen(id) {
             return this.openIds && this.openIds.has(id)
         },
 
         goToCourse() {
-            // as you requested: click a course -> go to /course
-            // if you prefer by name:
-            // this.$router.push({ name: 'course' })
             this.$router.push('/course')
         },
 
@@ -467,6 +363,27 @@ export default {
     color: #0f172a;
 }
 
+.loading-message,
+.error-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    font-size: 16px;
+    font-weight: 900;
+    color: #475569;
+    text-align: center;
+    padding: 20px;
+}
+
+.error-message {
+    color: #dc2626;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    margin: 12px 0;
+}
+
 .list {
     display: flex;
     flex-direction: column;
@@ -488,7 +405,7 @@ export default {
     background: #fff;
     cursor: pointer;
     padding: 14px;
-    display: block;
+    display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 12px;
@@ -595,7 +512,6 @@ export default {
 
 .chev {
     font-size: 22px;
-    /* line-height: 1; */
     color: #0f172a;
     transform: rotate(0deg);
     transition: transform 0.12s ease;
