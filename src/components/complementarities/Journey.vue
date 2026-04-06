@@ -68,7 +68,7 @@
                 <div v-show="isOpen(track.id)" class="trackBody">
                     <h3 class="sectionTitle">Modules</h3>
 
-                    <button v-for="m in filteredModules(track)" :key="m.id" class="module" @click="goToCourse">
+                    <button v-for="m in filteredModules(track)" :key="m.id" class="module" @click="goToCourse(m)">
                         <div class="moduleTop">
                             <div class="moduleTitleRow">
                                 <div class="moduleTitleWrap">
@@ -256,8 +256,8 @@ export default {
             return this.openIds && this.openIds.has(id)
         },
 
-        goToCourse() {
-            this.$router.push('/course')
+        goToCourse(module) {
+            this.$router.push({ path: '/course', query: { id: module.id } })
         },
 
         completedCount(track) {

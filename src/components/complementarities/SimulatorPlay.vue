@@ -1,5 +1,18 @@
+<!-- src/components/complementarities/SimulatorPlay.vue -->
 <template>
     <div class="simPlay">
+        <!-- Error message -->
+        <div v-if="error" class="error-message">
+            ⚠️ {{ error }}
+        </div>
+
+        <!-- Loading message -->
+        <div v-if="loading" class="loading-message">
+            Loading simulator...
+        </div>
+
+        <!-- Content -->
+        <template v-if="!loading && !error">
         <header class="topbar">
             <button class="back" @click="goBack">←</button>
 
@@ -34,33 +47,50 @@
 
         <section class="stage">
             <div class="card">
-                <div class="kicker">{{ current.kicker }}</div>
+                <div v-if="current.kicker" class="kicker">{{ current.kicker }}</div>
                 <h2 class="h2">{{ current.title }}</h2>
                 <p class="p">{{ current.text }}</p>
 
-                <div v-if="current.media === 'image'" class="media">
-                    <div class="ph">🖼 Image placeholder</div>
+                <!-- Render card components -->
+                <div v-for="comp in current.components" :key="comp.order" class="component">
+                    <!-- Text -->
+                    <div v-if="comp.type === 'text'" class="comp-text">{{ comp.content }}</div>
+
+                    <!-- Image -->
+                    <div v-if="comp.type === 'image'" class="media">
+                        <img :src="comp.url" :alt="comp.alt || 'Image'" />
+                    </div>
+
+                    <!-- Video -->
+                    <div v-if="comp.type === 'video'" class="media">
+                        <div class="ph">🎬 {{ comp.url }}</div>
+                    </div>
+
+                    <!-- MCQ as choices -->
+                    <div v-if="comp.type === 'mcq'" class="choices">
+                        <button v-for="opt in comp.options" :key="opt.id" class="choice" :disabled="locked"
+                            @click="choose(opt, comp)">
+                            <div class="choiceTop">
+                                <span class="dot"></span>
+                                <span class="choiceText">{{ opt.text }}</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Quote -->
+                    <div v-if="comp.type === 'quote'" class="comp-quote">
+                        <div class="quote-text">"{{ comp.content }}"</div>
+                        <div class="quote-author">— {{ comp.author }}</div>
+                    </div>
                 </div>
 
-                <div v-if="current.media === 'video'" class="media">
-                    <div class="ph">🎬 Video placeholder</div>
+                <div v-if="current.why" class="reveal">
+                    <div class="revealTitle">Why it matters</div>
+                    <p class="p">{{ current.why }}</p>
                 </div>
 
-                <div class="choices" v-if="current.choices && current.choices.length">
-                    <button v-for="c in current.choices" :key="c.id" class="choice" :disabled="locked"
-                        @click="choose(c)">
-                        <div class="choiceTop">
-                            <span class="dot"></span>
-                            <span class="choiceText">{{ c.label }}</span>
-                        </div>
-                        <div class="choiceTags">
-                            <span v-for="t in c.tags" :key="t" class="tag">{{ t }}</span>
-                        </div>
-                    </button>
-                </div>
-
-                <div class="reveal" v-if="feedback">
-                    <div class="revealTitle">Instant feedback</div>
+                <div v-if="feedback" class="reveal">
+                    <div class="revealTitle">Feedback</div>
                     <p class="p">{{ feedback }}</p>
 
                     <button class="nextBtn" @click="next">
@@ -68,12 +98,7 @@
                     </button>
                 </div>
 
-                <details class="why">
-                    <summary>Why it matters</summary>
-                    <div class="whyBody">{{ current.why }}</div>
-                </details>
-
-                <details class="lens">
+                <details v-if="current.lens" class="lens">
                     <summary>Power lens</summary>
                     <div class="whyBody">{{ current.lens }}</div>
                 </details>
@@ -83,55 +108,48 @@
         <section class="debrief" v-if="done">
             <div class="card">
                 <h2 class="h2">Debrief</h2>
-                <p class="p">This summary is generated from your choices (mock logic).</p>
+                <p class="p">You completed the simulator!</p>
 
                 <div class="panel">
                     <div class="row">
-                        <span class="label">Your style today</span>
-                        <span class="value">{{ styleLabel }}</span>
+                        <span class="label">Your score</span>
+                        <span class="value">{{ totalScore }}/{{ steps.length * 10 }}</span>
                     </div>
-                    <div class="row">
-                        <span class="label">Strength</span>
-                        <span class="value">{{ strength }}</span>
-                    </div>
-                    <div class="row">
-                        <span class="label">Risk</span>
-                        <span class="value">{{ risk }}</span>
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panelTitle">Suggested micro-practice</div>
-                    <div class="quote">{{ microPractice }}</div>
                 </div>
 
                 <div class="actions">
                     <button class="ghost" @click="restart">Retry</button>
-                    <button class="primary" @click="goToCourse">Recommended course →</button>
+                    <button class="primary" @click="goToCourse">Back to course →</button>
                 </div>
             </div>
         </section>
 
         <div class="fixedNav">
             <button class="navBtn" :disabled="stepIndex === 0 || done" @click="prev">Prev</button>
-            <button class="navBtn primary" :disabled="done || (current.choices && !feedback)" @click="next">
+            <button class="navBtn primary" :disabled="done || (needsChoice && !feedback)" @click="next">
                 {{ stepIndex === steps.length - 1 ? 'Finish' : 'Next' }}
             </button>
         </div>
+        </template>
     </div>
 </template>
 
 <script>
+import { api } from '@/store/actions.js'
+
 export default {
     name: 'SimulatorPlay',
 
     data() {
         return {
+            loading: true,
+            error: null,
             mode: 'calm',
             stepIndex: 0,
             locked: false,
             feedback: '',
             done: false,
+            totalScore: 0,
 
             meters: {
                 Clarity: 50,
@@ -140,126 +158,16 @@ export default {
                 Boundaries: 50
             },
 
-            scenariosById: {
-                meeting_interrupt: {
-                    id: 'meeting_interrupt',
-                    title: 'The Meeting Interruption',
-                    level: 'intro'
-                },
-                community_conflict: {
-                    id: 'community_conflict',
-                    title: 'Community Initiative Conflict',
-                    level: 'core'
-                },
-                invisible_labor: {
-                    id: 'invisible_labor',
-                    title: 'Invisible Labor Negotiation',
-                    level: 'intro'
-                },
-                ai_bias: {
-                    id: 'ai_bias',
-                    title: 'AI Tool Bias in Hiring',
-                    level: 'advanced'
-                }
+            scenario: {
+                title: 'Loading...',
+                level: 'intro'
             },
 
-            steps: [
-                {
-                    id: 'a',
-                    kicker: 'Context',
-                    title: 'You are in a team meeting',
-                    text: 'You propose an idea. A colleague interrupts and repeats your point as if it’s theirs.',
-                    media: 'image',
-                    why: 'Interruptions can erase contribution and reduce confidence over time.',
-                    lens: 'Ethical power: reclaim space without humiliation. Visibility: claim credit without aggression.',
-                    choices: [
-                        {
-                            id: 'a1',
-                            label: 'Calmly reclaim: “I want to finish my point, then I’m happy to hear yours.”',
-                            tags: ['Boundaries', 'Clarity'],
-                            delta: { Boundaries: +12, Clarity: +10, Care: +2, Impact: +6 },
-                            fb: 'Strong. Clear boundary + calm tone. You reclaim space without escalation.'
-                        },
-                        {
-                            id: 'a2',
-                            label: 'Stay quiet and let it go to keep the peace.',
-                            tags: ['Care'],
-                            delta: { Care: +6, Boundaries: -10, Impact: -6, Clarity: -4 },
-                            fb: 'Peaceful short-term, costly long-term. Your contribution becomes invisible.'
-                        },
-                        {
-                            id: 'a3',
-                            label: 'Call them out sharply in front of everyone.',
-                            tags: ['Impact'],
-                            delta: { Impact: +10, Clarity: +6, Care: -12, Boundaries: +6 },
-                            fb: 'You may stop the behavior, but the sharp tone can trigger defensiveness.'
-                        }
-                    ]
-                },
-                {
-                    id: 'b',
-                    kicker: 'Escalation',
-                    title: 'The interruption continues',
-                    text: 'They interrupt again. The room looks uncomfortable. You feel your pulse rise.',
-                    media: 'none',
-                    why: 'Repeated behavior tests your self-regulation and leadership presence.',
-                    lens: 'Power + care: keep your nervous system steady while staying firm.',
-                    choices: [
-                        {
-                            id: 'b1',
-                            label: 'Name it neutrally: “I’ve been interrupted twice. I’m going to finish, then I’ll pass.”',
-                            tags: ['Clarity', 'Boundaries'],
-                            delta: { Boundaries: +10, Clarity: +10, Care: +4, Impact: +6 },
-                            fb: 'Excellent. You name the pattern, set a limit, and keep dignity in the room.'
-                        },
-                        {
-                            id: 'b2',
-                            label: 'Ask the facilitator: “Can we have a speaking order?”',
-                            tags: ['Care', 'Process'],
-                            delta: { Care: +8, Boundaries: +4, Clarity: +6, Impact: +4 },
-                            fb: 'Good move. You shift to process, which reduces personal conflict.'
-                        }
-                    ]
-                },
-                {
-                    id: 'c',
-                    kicker: 'Decision',
-                    title: 'After the meeting',
-                    text: 'They message you: “No hard feelings. You’re just too sensitive.”',
-                    media: 'video',
-                    why: 'This is a classic minimization move. How you respond shapes future dynamics.',
-                    lens: 'Boundaries without drama. Accountability without revenge.',
-                    choices: [
-                        {
-                            id: 'c1',
-                            label: 'Short boundary: “I’m not okay with interruptions. In future, let me finish.”',
-                            tags: ['Boundaries'],
-                            delta: { Boundaries: +12, Clarity: +8, Care: +2, Impact: +6 },
-                            fb: 'Clean and direct. You set expectations for the future.'
-                        },
-                        {
-                            id: 'c2',
-                            label: 'Explain everything in a long message so they “understand”.',
-                            tags: ['Care'],
-                            delta: { Care: +4, Boundaries: -8, Clarity: -6, Impact: -2 },
-                            fb: 'Over-explaining often weakens the boundary and invites debate.'
-                        }
-                    ]
-                }
-            ]
+            steps: []
         }
     },
 
     computed: {
-        scenario() {
-            const id = this.$route.query.id || 'meeting_interrupt'
-            return this.scenariosById[id] || this.scenariosById.meeting_interrupt
-        },
-
-        current() {
-            return this.steps[this.stepIndex] || {}
-        },
-
         meterKeys() {
             return Object.keys(this.meters)
         },
@@ -268,44 +176,79 @@ export default {
             return this.mode === 'timed' ? 'Challenge mode' : 'Calm mode'
         },
 
-        styleLabel() {
-            const b = this.meters.Boundaries
-            const c = this.meters.Care
-            const cl = this.meters.Clarity
-            const i = this.meters.Impact
-
-            if (b >= 60 && c >= 55) return 'Direct & Caring'
-            if (i >= 60 && cl >= 55) return 'Bold & Clear'
-            if (c >= 62 && b < 50) return 'Supportive (risk: self-silencing)'
-            return 'Balanced'
+        current() {
+            return this.steps[this.stepIndex] || {}
         },
 
-        strength() {
-            const top = this.topMeter()
-            if (top === 'Boundaries') return 'You set limits without losing respect.'
-            if (top === 'Clarity') return 'You communicate in a way people can follow.'
-            if (top === 'Care') return 'You protect relationships while navigating tension.'
-            return 'You create momentum and move decisions forward.'
-        },
-
-        risk() {
-            const low = this.lowMeter()
-            if (low === 'Boundaries') return 'You may tolerate too much to keep harmony.'
-            if (low === 'Clarity') return 'You may soften your message and lose impact.'
-            if (low === 'Care') return 'You may sound harsh when you are under pressure.'
-            return 'You may act fast without building enough buy-in.'
-        },
-
-        microPractice() {
-            const low = this.lowMeter()
-            if (low === 'Boundaries') return 'Practice one 2-sentence “No + alternative” this week.'
-            if (low === 'Clarity') return 'Use a “headline first” sentence before details.'
-            if (low === 'Care') return 'Add one empathy line before your limit: “I get it… and…”'
-            return 'Before decisions, ask: “Who is impacted and who needs to be in the room?”'
+        needsChoice() {
+            if (!this.current.components) return false
+            return this.current.components.some(c => c.type === 'mcq')
         }
     },
 
+    mounted() {
+        this.fetchSimulator()
+    },
+
     methods: {
+        // Fetch simulator cards from API
+        fetchSimulator() {
+            this.loading = true
+            this.error = null
+
+            // Get simulator ID from route query
+            const simulatorId = this.$route.query.id
+
+            if (!simulatorId) {
+                this.error = 'No simulator ID provided.'
+                this.loading = false
+                return
+            }
+
+            // Fetch the cards for this simulator
+            api.get(`/simulator/${simulatorId}/cards-full/`)
+                .then(response => {
+                    const cardsData = response.data
+
+                    if (!cardsData || !cardsData.cards || cardsData.cards.length === 0) {
+                        this.error = 'No cards found for this simulator.'
+                        this.loading = false
+                        return
+                    }
+
+                    // Transform cards into steps
+                    this.steps = this.transformCardsToSteps(cardsData.cards)
+
+                    // Set scenario title
+                    if (cardsData.cards.length > 0) {
+                        this.scenario.title = cardsData.cards[0].title || 'Simulator'
+                    }
+
+                    this.loading = false
+                })
+                .catch(err => {
+                    console.error('Error fetching simulator:', err)
+                    this.error = 'Failed to load simulator. Please try again.'
+                    this.loading = false
+                })
+        },
+
+        // Transform cards into simulator steps
+        transformCardsToSteps(cards) {
+            return cards.map((card) => {
+                return {
+                    id: `card_${card.id}`,
+                    kicker: card.subtitle || '',
+                    title: card.title || 'Card',
+                    text: card.end_text || '',
+                    components: card.components || [],
+                    why: card.why_this_question,
+                    lens: '',
+                    choices: []
+                }
+            })
+        },
+
         labelLevel(l) {
             if (l === 'intro') return 'Intro'
             if (l === 'core') return 'Core'
@@ -322,26 +265,23 @@ export default {
             this.done = false
             this.locked = false
             this.meters = { Clarity: 50, Care: 50, Impact: 50, Boundaries: 50 }
+            this.totalScore = 0
         },
 
-        choose(choice) {
-            if (!choice || !choice.delta) return
+        choose(option, component) {
+            if (!component || !component.options) return
             this.locked = true
-            this.applyDelta(choice.delta)
-            this.feedback = choice.fb || 'Noted.'
+            this.feedback = option.feedback || 'Good choice.'
+            
+            // Simple scoring
+            this.totalScore += 10
+            
             setTimeout(() => { this.locked = false }, 250)
-        },
-
-        applyDelta(delta) {
-            Object.keys(delta).forEach(k => {
-                const next = (this.meters[k] || 0) + delta[k]
-                this.meters[k] = Math.max(0, Math.min(100, next))
-            })
         },
 
         next() {
             if (this.done) return
-            if (this.current.choices && this.current.choices.length && !this.feedback) return
+            if (this.needsChoice && !this.feedback) return
 
             if (this.stepIndex < this.steps.length - 1) {
                 this.stepIndex += 1
@@ -358,22 +298,6 @@ export default {
                 this.stepIndex -= 1
                 this.feedback = ''
             }
-        },
-
-        topMeter() {
-            let best = { k: '', v: -1 }
-            Object.keys(this.meters).forEach(k => {
-                if (this.meters[k] > best.v) best = { k, v: this.meters[k] }
-            })
-            return best.k
-        },
-
-        lowMeter() {
-            let worst = { k: '', v: 999 }
-            Object.keys(this.meters).forEach(k => {
-                if (this.meters[k] < worst.v) worst = { k, v: this.meters[k] }
-            })
-            return worst.k
         },
 
         goToCourse() {
@@ -397,16 +321,36 @@ export default {
     position: relative;
 }
 
+.error-message,
+.loading-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    font-size: 16px;
+    font-weight: 900;
+    color: #475569;
+    text-align: center;
+    padding: 20px;
+}
+
+.error-message {
+    color: #dc2626;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+    margin: 12px 0;
+}
+
 .topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
-.back,
-.ghost {
+.back {
     border: 1px solid #e2e8f0;
     background: #fff;
     border-radius: 12px;
@@ -417,15 +361,17 @@ export default {
 
 .titleWrap {
     flex: 1;
+    min-width: 0;
     text-align: center;
 }
 
 .title {
     font-weight: 900;
+    font-size: 16px;
+    margin-bottom: 6px;
 }
 
 .meta {
-    margin-top: 6px;
     display: inline-flex;
     gap: 8px;
     flex-wrap: wrap;
@@ -441,20 +387,35 @@ export default {
     background: #f8fafc;
 }
 
-.meters {
+.ghost {
     border: 1px solid #e2e8f0;
     background: #fff;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.meters {
+    border: 1px solid #e2e8f0;
     border-radius: 16px;
+    background: #fff;
     padding: 12px;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
     margin-bottom: 12px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.meter {
+    margin-bottom: 12px;
+}
+
+.meter:last-child {
+    margin-bottom: 0;
 }
 
 .meterTop {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
     gap: 10px;
     margin-bottom: 6px;
@@ -463,109 +424,157 @@ export default {
 .meterName {
     font-size: 12px;
     font-weight: 900;
-    color: #334155;
+    color: #0f172a;
 }
 
 .meterVal {
     font-size: 12px;
     font-weight: 900;
+    color: #64748b;
 }
 
 .bar {
     height: 10px;
     border-radius: 999px;
     background: #f1f5f9;
-    border: 1px solid #e2e8f0;
     overflow: hidden;
+    border: 1px solid #e2e8f0;
 }
 
 .fill {
     height: 100%;
-    width: 0%;
     background: #0f172a;
 }
 
 .mode {
-    grid-column: 1 / -1;
     display: flex;
-    gap: 8px;
-    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 12px;
 }
 
 .modeBtn {
+    flex: 1;
     border: 1px solid #e2e8f0;
     background: #fff;
     border-radius: 12px;
-    padding: 8px 10px;
+    padding: 8px;
     font-weight: 900;
     cursor: pointer;
 }
 
 .modeBtn.on {
+    background: #0f172a;
+    color: #fff;
     border-color: #0f172a;
 }
 
-.stage {}
+.stage {
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: #fff;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
 
 .card {
-    border: 1px solid #e2e8f0;
-    background: #fff;
-    border-radius: 16px;
-    padding: 14px;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    max-width: 100%;
 }
 
 .kicker {
     font-size: 12px;
     font-weight: 900;
     color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 8px;
 }
 
 .h2 {
-    margin: 8px 0;
+    margin: 0 0 8px;
     font-size: 20px;
     font-weight: 900;
+    color: #0f172a;
 }
 
 .p {
-    margin: 0;
+    margin: 0 0 12px;
     color: #475569;
     line-height: 1.45;
 }
 
+.component {
+    margin-bottom: 16px;
+}
+
+.comp-text {
+    color: #475569;
+    line-height: 1.45;
+    margin: 12px 0;
+}
+
+.comp-quote {
+    border-left: 4px solid #2D6CDF;
+    padding-left: 12px;
+    margin: 12px 0;
+}
+
+.quote-text {
+    font-style: italic;
+    color: #0f172a;
+    font-weight: 900;
+}
+
+.quote-author {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 6px;
+}
+
 .media {
-    margin-top: 12px;
     border: 1px dashed #cbd5e1;
     border-radius: 14px;
     background: #fbfdff;
-    padding: 12px;
+    padding: 18px;
+    text-align: center;
+    margin: 12px 0;
+}
+
+.media img {
+    max-width: 100%;
+    border-radius: 12px;
 }
 
 .ph {
+    color: #64748b;
     font-weight: 900;
-    color: #475569;
-    display: grid;
-    place-items: center;
-    height: 120px;
 }
 
 .choices {
-    margin-top: 12px;
-    display: grid;
-    gap: 10px;
+    margin: 12px 0;
 }
 
 .choice {
+    width: 100%;
+    text-align: left;
     border: 1px solid #e2e8f0;
     background: #fff;
     border-radius: 14px;
     padding: 12px;
     cursor: pointer;
-    text-align: left;
+    margin-bottom: 10px;
+    transition: transform 0.06s ease, box-shadow 0.06s ease;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.choice:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
 }
 
 .choice:disabled {
-    opacity: 0.6;
+    opacity: 0.7;
     cursor: not-allowed;
 }
 
@@ -573,63 +582,72 @@ export default {
     display: flex;
     gap: 10px;
     align-items: center;
+    flex: 1;
 }
 
 .dot {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 999px;
-    background: #0f172a;
+    background: #cbd5e1;
+    flex: 0 0 auto;
 }
 
 .choiceText {
     font-weight: 900;
+    color: #0f172a;
 }
 
 .choiceTags {
-    margin-top: 8px;
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
 }
 
 .tag {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 900;
-    border: 1px solid #e2e8f0;
     background: #f8fafc;
-    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    padding: 4px 8px;
     border-radius: 999px;
+    color: #0f172a;
 }
 
 .reveal {
-    margin-top: 12px;
     border-top: 1px solid #e2e8f0;
     padding-top: 12px;
+    margin-top: 12px;
 }
 
 .revealTitle {
     font-weight: 900;
-    margin-bottom: 6px;
+    font-size: 13px;
+    margin-bottom: 8px;
 }
 
 .nextBtn {
-    margin-top: 10px;
     border: 1px solid #0f172a;
     background: #fff;
+    color: #0f172a;
     border-radius: 12px;
     padding: 10px 12px;
     font-weight: 900;
     cursor: pointer;
+    margin-top: 12px;
 }
 
-.why,
-.lens {
-    margin-top: 10px;
+.lens,
+.why {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 12px;
+    background: #fbfdff;
 }
 
-.why summary,
-.lens summary {
+.lens summary,
+.why summary {
     font-weight: 900;
     cursor: pointer;
 }
@@ -641,76 +659,70 @@ export default {
 }
 
 .debrief {
-    margin-top: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: #fff;
+    padding: 24px;
+    margin-bottom: 12px;
 }
 
 .panel {
-    margin-top: 12px;
     border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    background: #fbfdff;
+    border-radius: 12px;
     padding: 12px;
+    margin: 12px 0;
+    background: #fbfdff;
 }
 
 .row {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
+    padding: 8px 0;
 }
 
 .label {
-    font-size: 12px;
-    font-weight: 900;
-    color: #64748b;
-}
-
-.value {
     font-weight: 900;
     color: #0f172a;
 }
 
+.value {
+    color: #475569;
+}
+
 .panelTitle {
     font-weight: 900;
+    font-size: 13px;
     margin-bottom: 8px;
 }
 
-.quote {
-    border-left: 4px solid #e2e8f0;
-    padding-left: 10px;
-    font-weight: 900;
-}
-
 .actions {
-    margin-top: 12px;
     display: flex;
     gap: 10px;
-    justify-content: flex-end;
-    flex-wrap: wrap;
+    margin-top: 16px;
 }
 
 .primary {
+    flex: 1;
     border: 1px solid #0f172a;
     background: #0f172a;
     color: #fff;
     border-radius: 12px;
-    padding: 10px 12px;
+    padding: 10px;
     font-weight: 900;
     cursor: pointer;
 }
 
-/* fixed bottom nav */
 .fixedNav {
     position: fixed;
     left: 50%;
-    transform: translateX(-50%);
     bottom: 12px;
+    transform: translateX(-50%);
     width: min(980px, calc(100% - 28px));
-    z-index: 9999;
-
+    z-index: 100;
     display: flex;
-    justify-content: space-between;
     gap: 10px;
+    align-items: center;
 
     padding: 12px;
     border-radius: 16px;
@@ -722,13 +734,14 @@ export default {
 }
 
 .navBtn {
+    flex: 1;
     border: 1px solid #e2e8f0;
     background: #fff;
+    color: #0f172a;
     border-radius: 12px;
     padding: 10px 12px;
     font-weight: 900;
     cursor: pointer;
-    min-width: 120px;
 }
 
 .navBtn:disabled {
@@ -738,8 +751,6 @@ export default {
 
 .navBtn.primary {
     border-color: #0f172a;
-    background: #0f172a;
-    color: #fff;
 }
 
 @supports (padding: max(0px)) {
