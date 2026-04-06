@@ -12,9 +12,9 @@
                 <input v-model="query" class="search" type="search" placeholder="Search scenarios…" />
                 <select v-model="level" class="select">
                     <option value="all">All levels</option>
-                    <option value="intro">Intro</option>
-                    <option value="core">Core</option>
-                    <option value="advanced">Advanced</option>
+                    <option v-for="lvl in levels" :key="lvl.value" :value="lvl.value">
+                        {{ lvl.label }}
+                    </option>
                 </select>
             </div>
         </header>

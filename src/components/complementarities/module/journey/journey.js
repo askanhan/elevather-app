@@ -18,11 +18,13 @@ export default {
             error: null,
             categories: [],
             modules: [],
-            tracks: []
+            tracks: [],
+            statuses: []
         }
     },
 
     mounted() {
+        this.fetchProgressStatuses()
         this.fetchData()
     },
 
@@ -58,6 +60,23 @@ export default {
     },
 
     methods: {
+        // Fetch progress statuses from API
+        fetchProgressStatuses() {
+            api.get('/progress-statuses/')
+                .then(response => {
+                    this.statuses = response.data || []
+                })
+                .catch(err => {
+                    console.error('Error fetching progress statuses:', err)
+                    // Fallback to default statuses
+                    this.statuses = [
+                        { value: 'Not started', label: 'Not started' },
+                        { value: 'In progress', label: 'In progress' },
+                        { value: 'Done', label: 'Done' }
+                    ]
+                })
+        },
+
         // Fetch categories and modules from API
         fetchData() {
             this.loading = true

@@ -8,12 +8,14 @@ export default {
             query: '',
             level: 'all',
             scenarios: [],
+            levels: [],
             loading: true,
             error: null
         }
     },
 
     mounted() {
+        this.fetchSimulatorLevels()
         this.fetchSimulators()
     },
 
@@ -36,6 +38,23 @@ export default {
     },
 
     methods: {
+        // Fetch simulator levels from API
+        fetchSimulatorLevels() {
+            api.get('/sim-levels/')
+                .then(response => {
+                    this.levels = response.data || []
+                })
+                .catch(err => {
+                    console.error('Error fetching simulator levels:', err)
+                    // Fallback to default levels
+                    this.levels = [
+                        { value: 'intro', label: 'Intro' },
+                        { value: 'core', label: 'Core' },
+                        { value: 'advanced', label: 'Advanced' }
+                    ]
+                })
+        },
+
         fetchSimulators() {
             this.loading = true
             this.error = null
