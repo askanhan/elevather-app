@@ -50,6 +50,9 @@ export const mutations = {
   [types.SET_SIMULATOR_METRICS](state, metrics) {
     state.simulatorMetrics = metrics || []
   },
+  [types.SET_DAILY_CHECKIN_QUESTIONS](state, questions) {
+    state.dailyCheckinQuestions = questions || []
+  },
 
 
 

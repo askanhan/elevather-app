@@ -117,6 +117,20 @@ export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
   return true
 }
 
+export const fetchDailyCheckinQuestions = async function ({ commit }) {
+  try {
+    const { data } = await api.get('/daily-checkin/questions/')
+    if (!data || !Array.isArray(data)) {
+      throw new Error('Invalid daily checkin questions format.')
+    }
+    commit(types.SET_DAILY_CHECKIN_QUESTIONS, data)
+    return true
+  } catch (error) {
+    console.error('Error fetching daily checkin questions:', error)
+    throw error
+  }
+}
+
 
 
 

@@ -14,7 +14,7 @@ export default function getDefaultState() {
         simulatorCards: [],
         simulatorTags: [],
         simulatorMetrics: [],
-
+        dailyCheckinQuestions: [],
 
 
 

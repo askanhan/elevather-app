@@ -1,235 +1,244 @@
-import PostCard from '@/components/complementarities/PostCard.vue'
-import NewsTicker from '@/components/complementarities/NewsTicker.vue'
-import PartnerRail from '@/components/complementarities/PartnerRail.vue'
-
 export default {
-  name: 'Home',
-  components: { PostCard, NewsTicker, PartnerRail },
+    name: 'PowerCheck',
 
-  computed: {
-    lang() {
-      return this.$store.state.lang
+    data() {
+        return {
+            selectedAnswers: {},
+            selectedScores: {},
+
+            check: {
+                voice: 50,
+                boundary: 50,
+                energy: 50
+            },
+
+            selectedBlocker: 'fear',
+
+            selectedDay: null,
+
+            blockers: [
+                { id: 'fear', icon: '', title: 'Fear', sub: 'Hesitation, self-doubt, overthinking' },
+                { id: 'overload', icon: '', title: 'Overload', sub: 'Too much, too fast, no space' },
+                { id: 'conflict', icon: '', title: 'Conflict', sub: 'Tension, pushback, hard conversations' },
+                { id: 'unclear', icon: '', title: 'Unclear goals', sub: 'No direction, no next step' }
+            ],
+
+            rec: {
+                story: { title: 'The 3-sentence boundary moment', sub: 'A quick story about reclaiming space calmly.' },
+                model: { title: 'Boundary Script Builder', sub: 'Situation  Limit  Alternative  Pushback responses.' },
+                course: { title: 'Boundaries & Saying No', sub: 'Short, calm, repeatable boundaries without guilt.' }
+            },
+
+            last7: [
+                { date: 'Mon', short: 'M', state: 'stable', score: 62, note: 'Used one clear ask. Energy okay.' },
+                { date: 'Tue', short: 'T', state: 'rising', score: 74, note: 'Spoke up in a meeting. Felt strong after.' },
+                { date: 'Wed', short: 'W', state: 'drained', score: 41, note: 'Overcommitted. Needed rest.' },
+                { date: 'Thu', short: 'T', state: 'stable', score: 58, note: 'Kept boundaries in small ways.' },
+                { date: 'Fri', short: 'F', state: 'rising', score: 70, note: 'Negotiated a timeline. Felt respected.' },
+                { date: 'Sat', short: 'S', state: 'drained', score: 45, note: 'Heavy week. Recovery day.' },
+                { date: 'Sun', short: 'S', state: 'stable', score: 60, note: 'Reset and planned one priority.' }
+            ]
+        }
     },
-    posts() {
-      return this.$store.state.posts || []
+
+    mounted() {
+        this.fetchQuestions()
     },
-    generalPosts() {
-      return this.posts.filter(p => p.category == 0)
-    },
-    activityPosts() {
-      return this.posts.filter(p => p.category == 1)
-    },
-    jobPosts() {
-      return this.posts.filter(p => p.category == 2)
-    },
-    educationPosts() {
-      return this.posts.filter(p => p.category == 3)
-    },
-    filteredPosts() {
-      switch (this.activeTab) {
-        case 'general': return this.generalPosts
-        case 'activity': return this.activityPosts
-        case 'job': return this.jobPosts
-        case 'education': return this.educationPosts
-        default: return this.generalPosts
-      }
-    },
-    visiblePosts() {
-      return this.filteredPosts.slice(0, this.numberOfVisiblePosts)
-    },
-  },
 
-  data() {
-    return {
-      activeTab: 'general',
-      __homeScrollRestored: false,
-
-      // infinite (basit)
-      numberOfVisiblePosts: 10,
-      step: 10,
-      loadingMore: false,
-      noMorePosts: false,
-
-      _io: null,
-      _scrollerEl: null,
-      _onScrollerScroll: null,
-      _olderInFlight: false,
-    }
-  },
-
-  watch: {
-    activeTab() {
-      this.numberOfVisiblePosts = 10
-      this.noMorePosts = false
-      this.$nextTick(() => this.setupFeedObserver())
-    },
-    filteredPosts() {
-      // liste güncellenince observer’ı tazele
-      this.$nextTick(() => this.setupFeedObserver())
-    },
-  },
-
-  async activated() {
-    this.$store.dispatch('getAllConversations')
-
-    const newMessages = await this.$store.dispatch('getNewPosts')
-    if (newMessages > 0) {
-      this.$message.success('Yeni postlar var: ' + newMessages + ' adet')
-    }
-
-    this.restoreHomeScroll()
-
-    this.$nextTick(() => {
-      // scroller listener sadece scroll kaydetmek için, infinite için değil
-      const scroller = document.getElementById('SCROLLER')
-      this._scrollerEl = scroller
-
-      this._onScrollerScroll = () => {}
-      if (scroller) scroller.addEventListener('scroll', this._onScrollerScroll, { passive: true })
-
-      this.setupFeedObserver()
-    })
-  },
-
-  deactivated() {
-    this.saveHomeScroll()
-    this.teardownFeedObserver()
-
-    if (this._scrollerEl && this._onScrollerScroll) {
-      this._scrollerEl.removeEventListener('scroll', this._onScrollerScroll)
-    }
-    this._scrollerEl = null
-    this._onScrollerScroll = null
-  },
-
-  beforeUnmount() {
-    this.teardownFeedObserver()
-
-    if (this._scrollerEl && this._onScrollerScroll) {
-      this._scrollerEl.removeEventListener('scroll', this._onScrollerScroll)
-    }
-    this._scrollerEl = null
-    this._onScrollerScroll = null
-  },
-
-  methods: {
-    setupFeedObserver() {
-      this.teardownFeedObserver()
-
-      const sentinel = this.$refs.feedSentinel
-      if (!sentinel) return
-
-      const scroller = document.getElementById('SCROLLER') || null
-
-      this._io = new IntersectionObserver(
-        (entries) => {
-          const e = entries[0]
-          if (!e?.isIntersecting) return
-          this.handleSentinelHit()
+    computed: {
+        questions() {
+            return this.$store.state.dailyCheckinQuestions || []
         },
-        {
-          root: scroller,
-          rootMargin: '400px',
-          threshold: 0.01,
+
+        powerScore() {
+            const scores = Object.values(this.selectedScores)
+            if (scores.length === 0) return 0
+            return Math.round(Math.min(100, scores.reduce((a, b) => a + b, 0)))
+        },
+
+        stateLabel() {
+            const hasAnswers = Object.keys(this.selectedAnswers).length > 0
+            if (!hasAnswers) return 'Find your power'
+            const s = this.powerScore
+            if (s >= 70) return 'Rising'
+            if (s <= 45) return 'Drained'
+            return 'Stable'
+        },
+
+        stateEmoji() {
+            const hasAnswers = Object.keys(this.selectedAnswers).length > 0
+            if (!hasAnswers) return ''
+            const s = this.powerScore
+            if (s >= 70) return ''
+            if (s <= 45) return ''
+            return ''
+        },
+
+        stateClass() {
+            const hasAnswers = Object.keys(this.selectedAnswers).length > 0
+            if (!hasAnswers) return 'empty'
+            const s = this.powerScore
+            if (s >= 70) return 'rising'
+            if (s <= 45) return 'drained'
+            return 'stable'
+        },
+
+        trackBars() {
+            const base = this.powerScore
+            const scores = Object.values(this.selectedScores)
+
+            const q1Score = scores[0] || 50
+            const q2Score = scores[1] || 50
+            const q3Score = scores[2] || 50
+
+            return [
+                { id: 'dare', label: 'I Dare', value: this.clamp(base + (q2Score - 50) / 4), color: '#2D6CDF', hint: 'Courage, boundaries, visibility.' },
+                { id: 'speak', label: 'I Speak', value: this.clamp(base + (q1Score - 50) / 3), color: '#F59E0B', hint: 'Communication and influence.' },
+                { id: 'earn', label: 'I Earn', value: this.clamp(base - 6), color: '#1F9D63', hint: 'Money clarity & leverage.' },
+                { id: 'lead', label: 'I Lead', value: this.clamp(base - 3), color: '#8B5CF6', hint: 'Ethical power & decisions.' },
+                { id: 'impact', label: 'I Impact', value: this.clamp(base - 8), color: '#06B6D4', hint: 'Society, systems, civic action.' }
+            ]
+        },
+
+        leverage() {
+            const b = this.selectedBlocker
+            const s = this.powerScore
+
+            if (b === 'fear') {
+                return {
+                    title: 'Do one micro-courage ask today',
+                    time: '24 min',
+                    track: 'I Dare',
+                    desc: 'Pick one small moment: ask a question, state a preference, or request clarity. Short sentence. No explaining.'
+                }
+            }
+
+            if (b === 'overload') {
+                return {
+                    title: 'Cancel or renegotiate one commitment',
+                    time: '35 min',
+                    track: 'I Lead',
+                    desc: 'Choose one thing to delay or delegate. Use one calm line. Protect tomorrows energy.'
+                }
+            }
+
+            if (b === 'conflict') {
+                return {
+                    title: 'Use a boundary + care sentence',
+                    time: '35 min',
+                    track: 'I Speak',
+                    desc: 'Say: "I get it. And I\'m not available for X. I can do Y." Then stop. Let silence work for you.'
+                }
+            }
+
+            if (s < 55) {
+                return {
+                    title: 'Write your one priority (and one "not now")',
+                    time: '23 min',
+                    track: 'I Impact',
+                    desc: 'Name the single outcome you want this week. Then pick one thing you are not doing.'
+                }
+            }
+
+            return {
+                title: 'Turn one idea into a tiny pilot',
+                time: '58 min',
+                track: 'I Build',
+                desc: 'Define a mini experiment: what, who, when, success signal. Small is smarter.'
+            }
         }
-      )
-
-      this._io.observe(sentinel)
     },
 
-    teardownFeedObserver() {
-      if (this._io) {
-        this._io.disconnect()
-        this._io = null
-      }
-    },
+    methods: {
+        fetchQuestions() {
+            this.$store.dispatch('fetchDailyCheckinQuestions')
+                .then(() => {})
+                .catch(err => {
+                    this.loadMockQuestions()
+                })
+        },
 
-    async handleSentinelHit() {
-      if (this.loadingMore || this.noMorePosts) return
-      const sentinel = this.$refs.feedSentinel
-      if (!this._io || !sentinel) return
+        loadMockQuestions() {
+            const questions = [
+                {
+                    id: 1,
+                    question_text: 'I expressed myself',
+                    subtitle: 'Voice in meetings / conversations',
+                    options: [
+                        { id: 101, text: 'No', score: 0 },
+                        { id: 102, text: 'Some', score: 15 },
+                        { id: 103, text: 'Yes', score: 33 }
+                    ]
+                },
+                {
+                    id: 2,
+                    question_text: 'I set a boundary',
+                    subtitle: 'Said no / protected time',
+                    options: [
+                        { id: 201, text: 'No', score: 0 },
+                        { id: 202, text: 'Some', score: 15 },
+                        { id: 203, text: 'Yes', score: 33 }
+                    ]
+                },
+                {
+                    id: 3,
+                    question_text: 'My energy level',
+                    subtitle: 'Body & mind availability',
+                    options: [
+                        { id: 301, text: 'Low', score: 0 },
+                        { id: 302, text: 'Mid', score: 15 },
+                        { id: 303, text: 'High', score: 34 }
+                    ]
+                }
+            ]
+            this.$store.commit('SET_DAILY_CHECKIN_QUESTIONS', questions)
+        },
 
-      // spam'i bitir: tetikler tetiklemez durdur
-      this._io.unobserve(sentinel)
+        clamp(v) {
+            const n = Math.round(v)
+            return Math.max(0, Math.min(100, n))
+        },
 
-      try {
-        // 1) önce mevcut listeden daha fazla göster
-        if (this.numberOfVisiblePosts < this.filteredPosts.length) {
-          this.numberOfVisiblePosts = Math.min(
-            this.numberOfVisiblePosts + this.step,
-            this.filteredPosts.length
-          )
+        setCheck(questionId, optionId, scoreValue) {
+            this.selectedAnswers[questionId] = optionId
+            this.selectedScores[questionId] = scoreValue
+        },
 
-          // DOM büyüsün, sonra tekrar observe
-          await new Promise(r => this.$nextTick(r))
-          if (this._io && this.$refs.feedSentinel) this._io.observe(this.$refs.feedSentinel)
-          return
+        selectBlocker(id) {
+            this.selectedBlocker = id
+        },
+
+        resetToday() {
+            this.selectedAnswers = {}
+            this.selectedScores = {}
+            this.selectedBlocker = 'fear'
+            this.selectedDay = null
+        },
+
+        dayStateLabel(s) {
+            if (s === 'rising') return 'Rising'
+            if (s === 'drained') return 'Drained'
+            return 'Stable'
+        },
+
+        goJourney() {
+            this.push({ name: 'journey' })
+        },
+
+        goSimulatorFast() {
+            this.push({ path: '/simulator' })
+        },
+
+        goStories() {
+            this.push({ name: 'stories' })
+        },
+
+        openModel() {
+            this.push('/model')
+        },
+
+        openCourse() {
+            this.push('/course')
         }
-
-        // 2) artık UI'da gösterecek yok => store'dan daha eski çek
-        await this.fetchOlderPosts()
-
-      } finally {
-        // her durumda yeniden observe etmeye çalış
-        this.$nextTick(() => {
-          if (this._io && this.$refs.feedSentinel && !this.noMorePosts) {
-            this._io.observe(this.$refs.feedSentinel)
-          }
-        })
-      }
-    },
-
-    async fetchOlderPosts() {
-      if (this._olderInFlight || this.noMorePosts) return
-
-      this._olderInFlight = true
-      this.loadingMore = true
-
-      try {
-        const before = this.filteredPosts.length
-        const res = await this.$store.dispatch('loadOlderPosts')
-        const after = this.filteredPosts.length
-
-        const added = (typeof res === 'number') ? res : (after - before)
-
-        if (!added || added <= 0) {
-          this.noMorePosts = true
-          return
-        }
-
-        // yeni gelenler de görünsün
-        this.numberOfVisiblePosts = Math.min(
-          this.numberOfVisiblePosts + Math.max(this.step, added),
-          this.filteredPosts.length
-        )
-      } catch (e) {
-        console.error('loadOlderPosts failed', e)
-      } finally {
-        this.loadingMore = false
-        this._olderInFlight = false
-      }
-    },
-
-    saveHomeScroll() {
-      const scroller = document.getElementById('SCROLLER')
-      if (!scroller) return
-      sessionStorage.setItem('scroll:home', String(scroller.scrollTop || 0))
-    },
-
-    restoreHomeScroll() {
-      const scroller = document.getElementById('SCROLLER')
-      if (!scroller) return
-
-      const raw = sessionStorage.getItem('scroll:home')
-      const top = raw != null ? Number(raw) : 0
-      if (!top) return
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          scroller.scrollTop = top
-          this.__homeScrollRestored = true
-        })
-      })
-    },
-  },
+    }
 }
