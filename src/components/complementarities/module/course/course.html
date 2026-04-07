@@ -16,14 +16,6 @@
         <header class="topbar">
             <button class="back" @click="goBack">←</button>
 
-            <div class="titleWrap">
-                <div class="courseTitle">{{ course.title }}</div>
-                <div class="courseMeta">
-                    <span class="chip">{{ course.track }}</span>
-                    <span class="chip">{{ currentIndex + 1 }}/{{ slides.length }}</span>
-                </div>
-            </div>
-
             <button class="ghost" @click="restart">Restart</button>
         </header>
 

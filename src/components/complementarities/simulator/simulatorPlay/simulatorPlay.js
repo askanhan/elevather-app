@@ -11,7 +11,8 @@ export default {
             done: false,
             totalScore: 0,
             loading: true,
-            scenario: {}
+            scenario: {},
+            selectedAnswers: {}
         }
     },
 
@@ -144,10 +145,12 @@ export default {
             this.done = false
             this.locked = false
             this.totalScore = 0
+            this.selectedAnswers = {}
         },
 
         choose(option, component) {
             if (!component || !component.options) return
+            this.selectedAnswers[this.current.id] = option.id
             this.locked = true
             this.feedback = option.feedback || 'Good choice.'
             
@@ -159,7 +162,7 @@ export default {
 
         next() {
             if (this.done) return
-            if (this.needsChoice && !this.feedback) return
+            if (this.needsChoice && !this.selectedAnswers[this.current.id]) return
 
             if (this.stepIndex < this.steps.length - 1) {
                 this.stepIndex += 1
@@ -176,6 +179,11 @@ export default {
                 this.stepIndex -= 1
                 this.feedback = ''
             }
+        },
+
+        goTo(idx) {
+            this.stepIndex = idx
+            this.feedback = ''
         },
 
         goToCourse() {
