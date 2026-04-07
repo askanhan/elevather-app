@@ -1,5 +1,3 @@
-import { api } from '@/store/actions.js'
-
 const colors = ['#2D6CDF', '#1F9D63', '#8B5CF6', '#F59E0B', '#EF4444', '#06B6D4']
 
 export default {
@@ -13,22 +11,33 @@ export default {
             // collapsed by default
             openIds: new Set(),
 
-            // API data
+            // Loading state
             loading: true,
-            error: null,
-            categories: [],
-            modules: [],
-            tracks: [],
-            statuses: []
+            error: null
         }
     },
 
     mounted() {
-        this.fetchProgressStatuses()
-        this.fetchData()
+        this.fetchJourneyData()
     },
 
     computed: {
+        statuses() {
+            return this.$store.state.journeyStatuses || []
+        },
+
+        categories() {
+            return this.$store.state.journeyCategories || []
+        },
+
+        modules() {
+            return this.$store.state.journeyModules || []
+        },
+
+        tracks() {
+            return this.transformToTracks(this.categories, this.modules)
+        },
+
         normalizedQuery() {
             return (this.query || '').trim().toLowerCase()
         },
@@ -60,42 +69,36 @@ export default {
     },
 
     methods: {
-        // Fetch progress statuses from API
-        fetchProgressStatuses() {
-            api.get('/progress-statuses/')
-                .then(response => {
-                    this.statuses = response.data || []
-                })
-                .catch(err => {
-                    console.error('Error fetching progress statuses:', err)
-                    // Fallback to default statuses
-                    this.statuses = [
-                        { value: 'Not started', label: 'Not started' },
-                        { value: 'In progress', label: 'In progress' },
-                        { value: 'Done', label: 'Done' }
-                    ]
-                })
-        },
-
-        // Fetch categories and modules from API
-        fetchData() {
+        // Fetch journey data from store
+        fetchJourneyData() {
+            // verify if categories and modules are already in store to avoid unnecessary loading
+            const hasCategories = this.categories.length > 0
+            const hasModules = this.modules.length > 0
+            
+            if (hasCategories && hasModules) {
+                //if data is already in store, use it and skip loading
+                console.log('✓ Using cached journey data')
+                this.loading = false
+                this.error = null
+                return
+            }
+            
+            //if data is not in store, fetch it and show loading
             this.loading = true
             this.error = null
 
             Promise.all([
-                api.get('/categories/'),
-                api.get('/all-modules/')
+                this.$store.dispatch('fetchJourneyProgressStatuses'),
+                this.$store.dispatch('fetchJourneyData')
             ])
-                .then(([categoriesRes, modulesRes]) => {
-                    this.categories = categoriesRes.data || []
-                    this.modules = modulesRes.data || []
-
-                    // Transform categories and modules into tracks
-                    this.tracks = this.transformToTracks(this.categories, this.modules)
+                .then(() => {
+                    if (this.categories.length === 0 || this.modules.length === 0) {
+                        this.error = 'Failed to load journey data.'
+                    }
                     this.loading = false
                 })
                 .catch(err => {
-                    console.error('Error fetching data:', err)
+                    console.error('Error while fetching journey data:', err)
                     this.error = 'Failed to load categories and modules.'
                     this.loading = false
                 })

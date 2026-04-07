@@ -6,7 +6,11 @@ export default function getDefaultState() {
         //for modules (courses and journeys)
         courses: [],
         courseCards: [],
+        courseCardsCache: {}, // { moduleId: [...cards], moduleId2: [...cards] }
         courseAnswers: {},
+        journeyStatuses: [],
+        journeyCategories: [],
+        journeyModules: [],
 
 
 

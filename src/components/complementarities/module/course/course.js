@@ -73,9 +73,6 @@ export default {
     methods: {
         // Fetch cards from module API
         fetchCards() {
-            this.loading = true
-            this.error = null
-            
             // Get module ID from URL query params
             const moduleId = this.$route.query.id
             
@@ -84,6 +81,27 @@ export default {
                 this.loading = false
                 return
             }
+            
+            //verify if we have the cards for this module in cache before making API call
+            const hasCache = this.$store.state.courseCardsCache[moduleId] && 
+                             this.$store.state.courseCardsCache[moduleId].length > 0
+            
+            if (hasCache) {
+                //data is in cache, use it directly
+                console.log(`✓ Using cached course cards for module ${moduleId}`)
+                this.loading = false
+                this.error = null
+                
+                // Set course title
+                if (this.courseCards.length > 0) {
+                    this.course.title = this.courseCards[0].title || 'Module'
+                }
+                return
+            }
+            
+            //data not in cache, fetch it from API
+            this.loading = true
+            this.error = null
             
             // Fetch the cards for this module
             this.$store.dispatch('fetchCourseCards', moduleId)

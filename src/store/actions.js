@@ -41,16 +41,94 @@ let refreshInFlight = null // aynı anda tek refresh
 // -------------------- ACTIONS --------------------
 
 //for modules (courses and journeys)
-export const fetchCourseCards = async function ({ commit }, moduleId) {
+export const fetchCourseCards = async function ({ commit, state }, payload) {
+  // Accepter soit un string moduleId, soit un objet { moduleId, forceRefresh }
+  let moduleId, forceRefresh = false
+  
+  if (typeof payload === 'string') {
+    moduleId = payload
+  } else if (typeof payload === 'object') {
+    moduleId = payload.moduleId
+    forceRefresh = payload.forceRefresh || false
+  }
+  
+  // Vérifier si on a déjà les cartes de ce module dans le cache
+  if (!forceRefresh && state.courseCardsCache[moduleId] && state.courseCardsCache[moduleId].length > 0) {
+    console.log(`✓ Course cards for module ${moduleId} already loaded from cache`)
+    // Mettre à jour courseCards pour le composant
+    store.commit(types.SET_COURSE_CARDS, state.courseCardsCache[moduleId])
+    return true
+  }
+  
   try {
+    console.log(`⟳ Fetching course cards for module ${moduleId}...`)
     const { data } = await api.get(`/module/${moduleId}/cards-full/`)
     if (!data || !data.cards || data.cards.length === 0) {
       throw new Error('No cards found for this module.')
     }
+    // Stocker dans le cache par moduleId ET mettre à jour le state courseCards
+    store.commit(types.SET_COURSE_CARDS_FOR_MODULE, { moduleId, cards: data.cards })
     store.commit(types.SET_COURSE_CARDS, data.cards)
     return true
   } catch (error) {
     console.error('Error fetching course cards:', error)
+    throw error
+  }
+}
+
+// Journey module actions
+export const fetchJourneyProgressStatuses = async function ({ commit, state }, forceRefresh = false) {
+  // Skip if already loaded and not forcing refresh
+  if (!forceRefresh && state.journeyStatuses.length > 0) {
+    console.log('✓ Journey progress statuses already loaded from cache')
+    return true
+  }
+  
+  try {
+    console.log('⟳ Fetching journey progress statuses...')
+    const { data } = await api.get('/progress-statuses/')
+    if (!data) {
+      throw new Error('No progress statuses found.')
+    }
+    
+    store.commit(types.SET_JOURNEY_STATUSES, data)
+    return true
+  } catch (error) {
+    console.error('Error fetching journey progress statuses:', error)
+    // Fallback to default statuses
+    const defaultStatuses = [
+      { value: 'Not started', label: 'Not started' },
+      { value: 'In progress', label: 'In progress' },
+      { value: 'Done', label: 'Done' }
+    ]
+    store.commit(types.SET_JOURNEY_STATUSES, defaultStatuses)
+    throw error
+  }
+}
+
+export const fetchJourneyData = async function ({ commit, state }, forceRefresh = false) {
+  // Skip if already have modules and not forcing refresh
+  if (!forceRefresh && state.journeyModules.length > 0) {
+    console.log('✓ Journey data already loaded from cache')
+    return true
+  }
+  
+  try {
+    console.log('⟳ Fetching journey data...')
+    const [categoriesRes, modulesRes] = await Promise.all([
+      api.get('/categories/'),
+      api.get('/all-modules/')
+    ])
+    
+    if (!categoriesRes.data || !modulesRes.data) {
+      throw new Error('Failed to fetch journey data.')
+    }
+    
+    store.commit(types.SET_JOURNEY_CATEGORIES, categoriesRes.data)
+    store.commit(types.ADD_JOURNEY_MODULES, Array.isArray(modulesRes.data) ? modulesRes.data : modulesRes.data.results || [])
+    return true
+  } catch (error) {
+    console.error('Error fetching journey data:', error)
     throw error
   }
 }

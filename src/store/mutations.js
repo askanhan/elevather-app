@@ -25,8 +25,54 @@ export const mutations = {
     state.courseCards = []
     state.courseAnswers = {}
   },
+  [types.SET_COURSE_CARDS_FOR_MODULE](state, { moduleId, cards }) {
+    if (!state.courseCardsCache) {
+      state.courseCardsCache = {}
+    }
+    state.courseCardsCache[moduleId] = cards || []
+  },
+  [types.SET_JOURNEY_STATUSES](state, statuses) {
+    state.journeyStatuses = statuses
+  },
+  [types.SET_JOURNEY_CATEGORIES](state, categories) {
+    state.journeyCategories = categories
+  },
+  [types.SET_JOURNEY_MODULES](state, modules) {
+    state.journeyModules = modules
+  },
+  [types.RESET_JOURNEY_STATE](state) {
+    state.journeyStatuses = []
+    state.journeyCategories = []
+    state.journeyModules = []
+  },
+  [types.ADD_JOURNEY_MODULES](state, modules) {
+    if (!Array.isArray(modules)) return
+    modules.forEach(module => {
+      if (!state.journeyModules.some(m => m.id === module.id)) {
+        state.journeyModules.push(module)
+      }
+    })
+  },
+  [types.ADD_COURSE_CARDS](state, cards) {
+    if (!Array.isArray(cards)) return
+    cards.forEach(card => {
+      if (!state.courseCards.some(c => c.id === card.id)) {
+        state.courseCards.push(card)
+      }
+    })
+  },
 
 
+
+
+
+
+
+
+
+
+
+  
 
   [types.LOCK_SCREEN](state, params) {
     let timing = 5000
