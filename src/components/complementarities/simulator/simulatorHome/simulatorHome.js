@@ -7,8 +7,6 @@ export default {
         return {
             query: '',
             level: 'all',
-            scenarios: [],
-            levels: [],
             loading: true,
             error: null
         }
@@ -20,6 +18,14 @@ export default {
     },
 
     computed: {
+        simulators() {
+            return this.$store.state.simulators || []
+        },
+
+        levels() {
+            return this.$store.state.simulatorLevels || []
+        },
+
         q() {
             return (this.query || '').trim().toLowerCase()
         },
@@ -28,7 +34,7 @@ export default {
             const q = this.q
             const lvl = this.level
 
-            return this.scenarios.filter(s => {
+            return this.simulators.filter(s => {
                 const hay = (s.title + ' ' + s.description + ' ' + s.domain + ' ' + s.tags.join(' ')).toLowerCase()
                 const matchQ = q ? hay.includes(q) : true
                 const matchL = (lvl === 'all') ? true : (s.level === lvl)
@@ -40,50 +46,33 @@ export default {
     methods: {
         // Fetch simulator levels from API
         fetchSimulatorLevels() {
-            api.get('/sim-levels/')
-                .then(response => {
-                    this.levels = response.data || []
-                })
+            if (this.levels.length > 0) {
+                console.log('✓ Simulator levels already loaded from cache')
+                return
+            }
+            this.$store.dispatch('fetchSimulatorLevels')
                 .catch(err => {
-                    console.error('Error fetching simulator levels:', err)
-                    // Fallback to default levels
-                    this.levels = [
-                        { value: 'intro', label: 'Intro' },
-                        { value: 'core', label: 'Core' },
-                        { value: 'advanced', label: 'Advanced' }
-                    ]
+                    console.error('Error while fetching simulator levels:', err)
                 })
         },
 
         fetchSimulators() {
-            this.loading = true
-            this.error = null
-            api.get('/all-simulators/')
-                .then(response => {
-                    const data = response.data
-
-                    this.scenarios = data.map(sim => {
-                        const tagNames = (sim.tags || []).map(tag => 
-                            typeof tag === 'object' ? tag.name : tag
-                        )
-
-                        return {
-                            id: sim.id,
-                            icon: '🎯', 
-                            title: sim.title,
-                            description: sim.description || '',
-                            level: sim.level || 'intro',
-                            duration: sim.estimated_duration ? `${sim.estimated_duration} min` : 'N/A',
-                            domain: sim.localisation || 'General',
-                            tags: tagNames
-                        }
-                    })
-
+            if (this.simulators.length > 0) {
+                console.log('✓ Simulators already loaded from cache')
+                this.loading = false
+                this.error = null
+                return
+            }
+            this.$store.dispatch('fetchSimulators')
+                .then(() => {
+                    if (this.simulators.length === 0) {
+                        this.error = 'No simulators found.'
+                    }
                     this.loading = false
                 })
                 .catch(err => {
                     console.error('Error while fetching simulators:', err)
-                    this.error = 'Impossible to load simulators. Please try again later.'
+                    this.error = 'Failed to load simulators.'
                     this.loading = false
                 })
         },

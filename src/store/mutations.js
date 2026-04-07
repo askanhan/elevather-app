@@ -61,6 +61,13 @@ export const mutations = {
       }
     })
   },
+  //mutations for simulator
+  [types.SET_SIMULATORS](state, simulators) {
+    state.simulators = simulators || []
+  },
+  [types.SET_SIMULATOR_LEVELS](state, levels) {
+    state.simulatorLevels = levels || []
+  },
 
 
 
@@ -69,10 +76,6 @@ export const mutations = {
 
 
 
-
-
-
-  
 
   [types.LOCK_SCREEN](state, params) {
     let timing = 5000

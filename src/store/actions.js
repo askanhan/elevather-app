@@ -133,6 +133,82 @@ export const fetchJourneyData = async function ({ commit, state }, forceRefresh 
   }
 }
 
+//for simulator
+export const fetchSimulatorLevels = async function ({commit, state }, forceRefresh = false) {
+  //check cache first
+  if (!forceRefresh && state.simulatorLevels.length > 0) {
+    console.log('✓ Simulator levels already loaded from cache')
+    return true
+  }
+  
+  try {
+    console.log('⟳ Fetching simulator levels...')
+    const { data } = await api.get('/sim-levels/')
+    if (!data) {
+      throw new Error('No simulator levels found.')
+    }
+    store.commit(types.SET_SIMULATOR_LEVELS, data)
+    return true
+  } catch (error) {
+    console.error('Error fetching simulator levels:', error)
+    // Fallback to default levels
+    const defaultLevels = [
+      { value: 'intro', label: 'Intro' },
+      { value: 'core', label: 'Core' },
+      { value: 'advanced', label: 'Advanced' }
+    ]
+    store.commit(types.SET_SIMULATOR_LEVELS, defaultLevels)
+    throw error
+  }
+}
+
+export const fetchSimulators = async function ({ commit, state }, forceRefresh = false) {
+  //check cache first
+  if (!forceRefresh && state.simulators.length > 0) {
+    console.log('✓ Simulators already loaded from cache')
+    return true
+  }
+  
+  try {
+    console.log('⟳ Fetching simulators...')
+    const { data } = await api.get('/all-simulators/')
+    if (!data || !Array.isArray(data)) {
+      throw new Error('No simulators found.')
+    }
+    
+    const transformedSimulators = data.map(sim => {
+      const tagNames = (sim.tags || []).map(tag => 
+        typeof tag === 'object' ? tag.name : tag
+      )
+      
+      return {
+        id: sim.id,
+        icon: '🎯', 
+        title: sim.title,
+        description: sim.description || '',
+        level: sim.level || 'intro',
+        duration: sim.estimated_duration ? `${sim.estimated_duration} min` : 'N/A',
+        domain: sim.localisation || 'General',
+        tags: tagNames
+      }
+    })
+    
+    store.commit(types.SET_SIMULATORS, transformedSimulators)
+    return true
+  } catch (error) {
+    console.error('Error fetching simulators:', error)
+    throw error
+  }
+}
+
+
+
+
+
+
+
+
+
 
 
 
