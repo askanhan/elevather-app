@@ -14,6 +14,8 @@ export default function getDefaultState() {
         //for simulator
         simulators: [],
         simulatorLevels: [],
+        simulatorCards: [],
+        simulatorCardsCache: {}, // { simulatorId: [...cards], simulatorId2: [...cards] }
 
 
 

@@ -1,5 +1,3 @@
-import { api } from '@/store/actions.js'
-
 export default {
     name: 'SimulatorPlay',
 
@@ -24,13 +22,19 @@ export default {
             scenario: {
                 title: 'Loading...',
                 level: 'intro'
-            },
-
-            steps: []
+            }
         }
     },
 
     computed: {
+        simulatorCards() {
+            return this.$store.state.simulatorCards || []
+        },
+
+        steps() {
+            return this.transformCardsToSteps(this.simulatorCards)
+        },
+
         meterKeys() {
             return Object.keys(this.meters)
         },
@@ -54,11 +58,8 @@ export default {
     },
 
     methods: {
-        // Fetch simulator cards from API
+        // Fetch simulator cards from store with cache check
         fetchSimulator() {
-            this.loading = true
-            this.error = null
-
             // Get simulator ID from route query
             const simulatorId = this.$route.query.id
 
@@ -68,25 +69,29 @@ export default {
                 return
             }
 
-            // Fetch the cards for this simulator
-            api.get(`/simulator/${simulatorId}/cards-full/`)
-                .then(response => {
-                    const cardsData = response.data
+            // Check cache first
+            const cachedCards = this.$store.state.simulatorCardsCache[simulatorId]
+            if (cachedCards && cachedCards.length > 0) {
+                // Cache hit - display immediately
+                this.loading = false
+                this.error = null
+                if (cachedCards.length > 0) {
+                    this.scenario.title = cachedCards[0].title || 'Simulator'
+                }
+                return
+            }
 
-                    if (!cardsData || !cardsData.cards || cardsData.cards.length === 0) {
+            // Cache miss - dispatch action to fetch from API
+            this.loading = true
+            this.error = null
+
+            this.$store.dispatch('fetchSimulatorCards', simulatorId)
+                .then(success => {
+                    if (success && this.simulatorCards.length > 0) {
+                        this.scenario.title = this.simulatorCards[0].title || 'Simulator'
+                    } else if (!success) {
                         this.error = 'No cards found for this simulator.'
-                        this.loading = false
-                        return
                     }
-
-                    // Transform cards into steps
-                    this.steps = this.transformCardsToSteps(cardsData.cards)
-
-                    // Set scenario title
-                    if (cardsData.cards.length > 0) {
-                        this.scenario.title = cardsData.cards[0].title || 'Simulator'
-                    }
-
                     this.loading = false
                 })
                 .catch(err => {

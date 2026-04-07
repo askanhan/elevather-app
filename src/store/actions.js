@@ -201,6 +201,44 @@ export const fetchSimulators = async function ({ commit, state }, forceRefresh =
   }
 }
 
+//for simulator play
+export const fetchSimulatorCards = async function ({ commit, state }, payload) {
+  // Accept either a string simulatorId, or an object { simulatorId, forceRefresh }
+  let simulatorId, forceRefresh = false
+  
+  if (typeof payload === 'string') {
+    simulatorId = payload
+  } else if (typeof payload === 'object') {
+    simulatorId = payload.simulatorId
+    forceRefresh = payload.forceRefresh || false
+  }
+  
+  // Check if we already have the cards for this simulator in cache
+  if (!forceRefresh && state.simulatorCardsCache[simulatorId] && state.simulatorCardsCache[simulatorId].length > 0) {
+    console.log('✓ Simulator cards already loaded from cache')
+    commit(types.SET_SIMULATOR_CARDS, state.simulatorCardsCache[simulatorId])
+    return true
+  }
+  
+  try {
+    console.log('⟳ Fetching simulator cards...')
+    const { data: cardsData } = await api.get(`/simulator/${simulatorId}/cards-full/`)
+    if (!cardsData || !cardsData.cards) {
+      commit(types.SET_SIMULATOR_CARDS, [])
+      return false
+    }
+    
+    // Store cards in both the current display and in the cache
+    commit(types.SET_SIMULATOR_CARDS_FOR_SIMULATOR, { simulatorId, cards: cardsData.cards })
+    commit(types.SET_SIMULATOR_CARDS, cardsData.cards)
+    return true
+  } catch (error) {
+    console.error('Error fetching simulator cards:', error)
+    commit(types.SET_SIMULATOR_CARDS, [])
+    return false
+  }
+}
+
 
 
 

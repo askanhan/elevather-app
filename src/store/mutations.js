@@ -68,6 +68,15 @@ export const mutations = {
   [types.SET_SIMULATOR_LEVELS](state, levels) {
     state.simulatorLevels = levels || []
   },
+  [types.SET_SIMULATOR_CARDS](state, cards) {
+    state.simulatorCards = cards || []
+  },
+  [types.SET_SIMULATOR_CARDS_FOR_SIMULATOR](state, { simulatorId, cards }) {
+    if (!state.simulatorCardsCache) {
+      state.simulatorCardsCache = {}
+    }
+    state.simulatorCardsCache[simulatorId] = cards || []
+  },
 
 
 
