@@ -12,6 +12,8 @@ export default function getDefaultState() {
         simulators: [],
         simulatorLevels: [],
         simulatorCards: [],
+        simulatorTags: [],
+        simulatorMetrics: [],
 
 
 

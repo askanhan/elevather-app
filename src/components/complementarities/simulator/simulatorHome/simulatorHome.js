@@ -44,21 +44,14 @@ export default {
     },
 
     methods: {
-        // Fetch simulator levels from API
         fetchSimulatorLevels() {
-            if (this.levels.length > 0) {
-                console.log('✓ Simulator levels already loaded from cache')
-                return
-            }
+            if (this.levels.length > 0) return
             this.$store.dispatch('fetchSimulatorLevels')
-                .catch(err => {
-                    console.error('Error while fetching simulator levels:', err)
-                })
+                .catch(err => console.error('Error fetching simulator levels:', err))
         },
 
         fetchSimulators() {
             if (this.simulators.length > 0) {
-                console.log('✓ Simulators already loaded from cache')
                 this.loading = false
                 this.error = null
                 return
@@ -71,7 +64,7 @@ export default {
                     this.loading = false
                 })
                 .catch(err => {
-                    console.error('Error while fetching simulators:', err)
+                    console.error('Error fetching simulators:', err)
                     this.error = 'Failed to load simulators.'
                     this.loading = false
                 })

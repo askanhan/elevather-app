@@ -50,18 +50,9 @@ export const fetchCourseCards = async function ({ state }, moduleId) {
 
 export const fetchJourneyProgressStatuses = async function ({ state }) {
   if (state.journeyStatuses.length > 0) return true
-  try {
-    const { data } = await api.get('/progress-statuses/')
-    store.commit(types.SET_JOURNEY_STATUSES, data)
-    return true
-  } catch (error) {
-    store.commit(types.SET_JOURNEY_STATUSES, [
-      { value: 'Not started', label: 'Not started' },
-      { value: 'In progress', label: 'In progress' },
-      { value: 'Done', label: 'Done' }
-    ])
-    throw error
-  }
+  const { data } = await api.get('/progress-statuses/')
+  store.commit(types.SET_JOURNEY_STATUSES, data)
+  return true
 }
 
 export const fetchJourneyData = async function ({ state }) {
@@ -77,18 +68,10 @@ export const fetchJourneyData = async function ({ state }) {
 
 export const fetchSimulatorLevels = async function ({ state }) {
   if (state.simulatorLevels.length > 0) return true
-  try {
-    const { data } = await api.get('/sim-levels/')
-    store.commit(types.SET_SIMULATOR_LEVELS, data)
-    return true
-  } catch (error) {
-    store.commit(types.SET_SIMULATOR_LEVELS, [
-      { value: 'intro', label: 'Intro' },
-      { value: 'core', label: 'Core' },
-      { value: 'advanced', label: 'Advanced' }
-    ])
-    throw error
-  }
+  const { data } = await api.get('/sim-levels/')
+  store.commit(types.SET_SIMULATOR_LEVELS, data)
+  return true
+  
 }
 
 export const fetchSimulators = async function ({ state }) {
@@ -100,7 +83,7 @@ export const fetchSimulators = async function ({ state }) {
     icon: '🎯',
     title: sim.title,
     description: sim.description || '',
-    level: sim.level || 'intro',
+    level: sim.level || 'N/A',
     duration: sim.estimated_duration ? `${sim.estimated_duration} min` : 'N/A',
     domain: sim.localisation || 'General',
     tags: (sim.tags || []).map(tag => typeof tag === 'object' ? tag.name : tag)
@@ -117,6 +100,20 @@ export const fetchSimulatorCards = async function ({ state }, simulatorId) {
   }
   store.commit(types.SET_SIMULATOR_CARDS_FOR_SIMULATOR, { simulatorId, cards: cardsData.cards })
   store.commit(types.SET_SIMULATOR_CARDS, cardsData.cards)
+  return true
+}
+
+export const fetchSimulatorTags = async function ({ state }, simulatorId) {
+  const { data } = await api.get(`/simulator/${simulatorId}/tags/`)
+  store.commit(types.SET_SIMULATOR_TAGS, data || [])
+  return true
+}
+
+export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
+  const { data } = await api.get(`/simulator/${simulatorId}/metrics/`)
+
+  const metricsData = Array.isArray(data) ? data : (data?.results || data?.metrics || [])
+  store.commit(types.SET_SIMULATOR_METRICS, metricsData)
   return true
 }
 

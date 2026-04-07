@@ -7,26 +7,16 @@ export default {
                 title: 'Module',
                 track: 'Module'
             },
-
             currentIndex: 0,
-
-            // fake "reading" playbar
             reading: false,
             readingProgress: 0,
             readingTimer: null,
-
-            // touch/swipe
             touchStartX: 0,
             touchCurrentX: 0,
             dragging: false,
-
-            // answers
             answers: {},
             openAnswers: {},
-
-            // Loading state
-            loading: false,
-            error: null,
+            error: null
         }
     },
 

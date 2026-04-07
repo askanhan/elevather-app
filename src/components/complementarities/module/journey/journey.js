@@ -7,11 +7,7 @@ export default {
         return {
             query: '',
             statusFilter: 'all',
-
-            // collapsed by default
             openIds: new Set(),
-
-            // Loading state
             loading: true,
             error: null
         }
@@ -69,21 +65,16 @@ export default {
     },
 
     methods: {
-        // Fetch journey data from store
         fetchJourneyData() {
-            // verify if categories and modules are already in store to avoid unnecessary loading
             const hasCategories = this.categories.length > 0
             const hasModules = this.modules.length > 0
             
             if (hasCategories && hasModules) {
-                //if data is already in store, use it and skip loading
-                console.log('✓ Using cached journey data')
                 this.loading = false
                 this.error = null
                 return
             }
             
-            //if data is not in store, fetch it and show loading
             this.loading = true
             this.error = null
 
@@ -98,13 +89,12 @@ export default {
                     this.loading = false
                 })
                 .catch(err => {
-                    console.error('Error while fetching journey data:', err)
+                    console.error('Error fetching journey data:', err)
                     this.error = 'Failed to load categories and modules.'
                     this.loading = false
                 })
         },
 
-        // Transform API data into tracks structure
         transformToTracks(categories, modules) {
             if (!categories || categories.length === 0) return []
 
@@ -121,8 +111,6 @@ export default {
             // Create tracks from categories
             return categories.map((cat, idx) => {
                 const catModules = modulesByCategory[cat.id] || []
-
-                // Generate short name from title (first 2 words)
                 const titleWords = cat.title.split(' ')
                 const short = titleWords.slice(0, 2).join(' ')
 
@@ -146,7 +134,6 @@ export default {
             })
         },
 
-        // Determine level based on day number
         determineLevelFromDay(dayNum) {
             if (dayNum <= 3) return 'intro'
             if (dayNum <= 7) return 'core'
@@ -158,10 +145,6 @@ export default {
             if (s.has(id)) s.delete(id)
             else s.add(id)
             this.openIds = s
-        },
-
-        filteredModules(track) {
-            return (track && track.modules) ? track.modules : []
         },
 
         isOpen(id) {
@@ -183,6 +166,10 @@ export default {
             return Math.round((this.completedCount(track) / total) * 100)
         },
 
+        filteredModules(track) {
+            return (track && track.modules) ? track.modules : []
+        },
+
         levelLabel(level) {
             if (level === 'intro') return 'Intro'
             if (level === 'core') return 'Core'
@@ -190,11 +177,7 @@ export default {
         },
 
         pillClass(level) {
-            return {
-                intro: level === 'intro',
-                core: level === 'core',
-                advanced: level === 'advanced'
-            }
+            return { intro: level === 'intro', core: level === 'core', advanced: level === 'advanced' }
         },
 
         statusLabel(status) {
@@ -204,11 +187,7 @@ export default {
         },
 
         statusClass(status) {
-            return {
-                done: status === 'done',
-                in_progress: status === 'in_progress',
-                not_started: status === 'not_started'
-            }
+            return { done: status === 'done', in_progress: status === 'in_progress', not_started: status === 'not_started' }
         }
     }
 }

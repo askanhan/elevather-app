@@ -44,6 +44,12 @@ export const mutations = {
   [types.SET_SIMULATOR_CARDS_FOR_SIMULATOR](state, { simulatorId, cards }) {
     state.simulatorCards = cards || []
   },
+  [types.SET_SIMULATOR_TAGS](state, tags) {
+    state.simulatorTags = tags || []
+  },
+  [types.SET_SIMULATOR_METRICS](state, metrics) {
+    state.simulatorMetrics = metrics || []
+  },
 
 
 
