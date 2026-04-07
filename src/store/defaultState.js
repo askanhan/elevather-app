@@ -4,10 +4,7 @@ export default function getDefaultState() {
     return {
         lang: 'en',
         //for modules (courses and journeys)
-        courses: [],
         courseCards: [],
-        courseCardsCache: {}, // { moduleId: [...cards], moduleId2: [...cards] }
-        courseAnswers: {},
         journeyStatuses: [],
         journeyCategories: [],
         journeyModules: [],
@@ -15,7 +12,6 @@ export default function getDefaultState() {
         simulators: [],
         simulatorLevels: [],
         simulatorCards: [],
-        simulatorCardsCache: {}, // { simulatorId: [...cards], simulatorId2: [...cards] }
 
 
 

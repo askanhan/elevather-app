@@ -3,7 +3,7 @@ export default {
 
     data() {
         return {
-            loading: true,
+            loading: false,
             error: null,
             mode: 'calm',
             stepIndex: 0,
@@ -20,7 +20,7 @@ export default {
             },
 
             scenario: {
-                title: 'Loading...',
+                title: 'Simulator',
                 level: 'intro'
             }
         }
@@ -58,31 +58,17 @@ export default {
     },
 
     methods: {
-        // Fetch simulator cards from store with cache check
+        // Fetch simulator cards from API
         fetchSimulator() {
             // Get simulator ID from route query
             const simulatorId = this.$route.query.id
 
             if (!simulatorId) {
                 this.error = 'No simulator ID provided.'
-                this.loading = false
                 return
             }
 
-            // Check cache first
-            const cachedCards = this.$store.state.simulatorCardsCache[simulatorId]
-            if (cachedCards && cachedCards.length > 0) {
-                // Cache hit - display immediately
-                this.loading = false
-                this.error = null
-                if (cachedCards.length > 0) {
-                    this.scenario.title = cachedCards[0].title || 'Simulator'
-                }
-                return
-            }
-
-            // Cache miss - dispatch action to fetch from API
-            this.loading = true
+            // Fetch fresh data in background (data displays immediately via reactive state)
             this.error = null
 
             this.$store.dispatch('fetchSimulatorCards', simulatorId)
@@ -92,12 +78,10 @@ export default {
                     } else if (!success) {
                         this.error = 'No cards found for this simulator.'
                     }
-                    this.loading = false
                 })
                 .catch(err => {
                     console.error('Error fetching simulator:', err)
                     this.error = 'Failed to load simulator. Please try again.'
-                    this.loading = false
                 })
         },
 

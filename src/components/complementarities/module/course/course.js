@@ -4,7 +4,7 @@ export default {
     data() {
         return {
             course: {
-                title: 'Loading course...',
+                title: 'Module',
                 track: 'Module'
             },
 
@@ -25,7 +25,7 @@ export default {
             openAnswers: {},
 
             // Loading state
-            loading: true,
+            loading: false,
             error: null,
         }
     },
@@ -78,29 +78,10 @@ export default {
             
             if (!moduleId) {
                 this.error = 'No module ID provided.'
-                this.loading = false
                 return
             }
             
-            //verify if we have the cards for this module in cache before making API call
-            const hasCache = this.$store.state.courseCardsCache[moduleId] && 
-                             this.$store.state.courseCardsCache[moduleId].length > 0
-            
-            if (hasCache) {
-                //data is in cache, use it directly
-                console.log(`✓ Using cached course cards for module ${moduleId}`)
-                this.loading = false
-                this.error = null
-                
-                // Set course title
-                if (this.courseCards.length > 0) {
-                    this.course.title = this.courseCards[0].title || 'Module'
-                }
-                return
-            }
-            
-            //data not in cache, fetch it from API
-            this.loading = true
+            // Fetch fresh data in background (data displays immediately via reactive state)
             this.error = null
             
             // Fetch the cards for this module
@@ -109,7 +90,6 @@ export default {
 
                     if (this.courseCards.length === 0) {
                         this.error = 'No cards found for this module.'
-                        this.loading = false
                         return
                     }
 
@@ -120,13 +100,10 @@ export default {
                     if (this.courseCards.length > 0) {
                         this.course.title = this.courseCards[0].title || 'Module'
                     }
-
-                    this.loading = false
                 })
                 .catch(err => {
                     console.error('Error while fetching module cards:', err)
                     this.error = 'Impossible to load module. Please try again later.'
-                    this.loading = false
                 })
         },
 

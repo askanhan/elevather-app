@@ -11,25 +11,11 @@ const helpFunctions = new HF()
 /* global $  */
 export const mutations = {
   //mutations for modules (courses and journeys)
-  [types.SET_COURSES](state, courses) {
-    state.courses = courses
-  },
   [types.SET_COURSE_CARDS](state, courseCards) {
     state.courseCards = courseCards
   },
-  [types.SET_COURSE_ANSWERS](state, courseAnswers) {
-    state.courseAnswers = courseAnswers
-  },
-  [types.RESET_COURSE_STATE](state) {
-    state.courses = []
-    state.courseCards = []
-    state.courseAnswers = {}
-  },
   [types.SET_COURSE_CARDS_FOR_MODULE](state, { moduleId, cards }) {
-    if (!state.courseCardsCache) {
-      state.courseCardsCache = {}
-    }
-    state.courseCardsCache[moduleId] = cards || []
+    state.courseCards = cards || []
   },
   [types.SET_JOURNEY_STATUSES](state, statuses) {
     state.journeyStatuses = statuses
@@ -37,27 +23,11 @@ export const mutations = {
   [types.SET_JOURNEY_CATEGORIES](state, categories) {
     state.journeyCategories = categories
   },
-  [types.SET_JOURNEY_MODULES](state, modules) {
-    state.journeyModules = modules
-  },
-  [types.RESET_JOURNEY_STATE](state) {
-    state.journeyStatuses = []
-    state.journeyCategories = []
-    state.journeyModules = []
-  },
   [types.ADD_JOURNEY_MODULES](state, modules) {
     if (!Array.isArray(modules)) return
     modules.forEach(module => {
       if (!state.journeyModules.some(m => m.id === module.id)) {
         state.journeyModules.push(module)
-      }
-    })
-  },
-  [types.ADD_COURSE_CARDS](state, cards) {
-    if (!Array.isArray(cards)) return
-    cards.forEach(card => {
-      if (!state.courseCards.some(c => c.id === card.id)) {
-        state.courseCards.push(card)
       }
     })
   },
@@ -72,10 +42,7 @@ export const mutations = {
     state.simulatorCards = cards || []
   },
   [types.SET_SIMULATOR_CARDS_FOR_SIMULATOR](state, { simulatorId, cards }) {
-    if (!state.simulatorCardsCache) {
-      state.simulatorCardsCache = {}
-    }
-    state.simulatorCardsCache[simulatorId] = cards || []
+    state.simulatorCards = cards || []
   },
 
 

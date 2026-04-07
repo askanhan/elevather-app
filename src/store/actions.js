@@ -40,203 +40,84 @@ let refreshInFlight = null // aynı anda tek refresh
 
 // -------------------- ACTIONS --------------------
 
-//for modules (courses and journeys)
-export const fetchCourseCards = async function ({ commit, state }, payload) {
-  // Accepter soit un string moduleId, soit un objet { moduleId, forceRefresh }
-  let moduleId, forceRefresh = false
-  
-  if (typeof payload === 'string') {
-    moduleId = payload
-  } else if (typeof payload === 'object') {
-    moduleId = payload.moduleId
-    forceRefresh = payload.forceRefresh || false
-  }
-  
-  // Vérifier si on a déjà les cartes de ce module dans le cache
-  if (!forceRefresh && state.courseCardsCache[moduleId] && state.courseCardsCache[moduleId].length > 0) {
-    console.log(`✓ Course cards for module ${moduleId} already loaded from cache`)
-    // Mettre à jour courseCards pour le composant
-    store.commit(types.SET_COURSE_CARDS, state.courseCardsCache[moduleId])
-    return true
-  }
-  
-  try {
-    console.log(`⟳ Fetching course cards for module ${moduleId}...`)
-    const { data } = await api.get(`/module/${moduleId}/cards-full/`)
-    if (!data || !data.cards || data.cards.length === 0) {
-      throw new Error('No cards found for this module.')
-    }
-    // Stocker dans le cache par moduleId ET mettre à jour le state courseCards
-    store.commit(types.SET_COURSE_CARDS_FOR_MODULE, { moduleId, cards: data.cards })
-    store.commit(types.SET_COURSE_CARDS, data.cards)
-    return true
-  } catch (error) {
-    console.error('Error fetching course cards:', error)
-    throw error
-  }
+export const fetchCourseCards = async function ({ state }, moduleId) {
+  const { data } = await api.get(`/module/${moduleId}/cards-full/`)
+  if (!data?.cards?.length) throw new Error('No cards found')
+  store.commit(types.SET_COURSE_CARDS_FOR_MODULE, { moduleId, cards: data.cards })
+  store.commit(types.SET_COURSE_CARDS, data.cards)
+  return true
 }
 
-// Journey module actions
-export const fetchJourneyProgressStatuses = async function ({ commit, state }, forceRefresh = false) {
-  // Skip if already loaded and not forcing refresh
-  if (!forceRefresh && state.journeyStatuses.length > 0) {
-    console.log('✓ Journey progress statuses already loaded from cache')
-    return true
-  }
-  
+export const fetchJourneyProgressStatuses = async function ({ state }) {
+  if (state.journeyStatuses.length > 0) return true
   try {
-    console.log('⟳ Fetching journey progress statuses...')
     const { data } = await api.get('/progress-statuses/')
-    if (!data) {
-      throw new Error('No progress statuses found.')
-    }
-    
     store.commit(types.SET_JOURNEY_STATUSES, data)
     return true
   } catch (error) {
-    console.error('Error fetching journey progress statuses:', error)
-    // Fallback to default statuses
-    const defaultStatuses = [
+    store.commit(types.SET_JOURNEY_STATUSES, [
       { value: 'Not started', label: 'Not started' },
       { value: 'In progress', label: 'In progress' },
       { value: 'Done', label: 'Done' }
-    ]
-    store.commit(types.SET_JOURNEY_STATUSES, defaultStatuses)
-    throw error
-  }
-}
-
-export const fetchJourneyData = async function ({ commit, state }, forceRefresh = false) {
-  // Skip if already have modules and not forcing refresh
-  if (!forceRefresh && state.journeyModules.length > 0) {
-    console.log('✓ Journey data already loaded from cache')
-    return true
-  }
-  
-  try {
-    console.log('⟳ Fetching journey data...')
-    const [categoriesRes, modulesRes] = await Promise.all([
-      api.get('/categories/'),
-      api.get('/all-modules/')
     ])
-    
-    if (!categoriesRes.data || !modulesRes.data) {
-      throw new Error('Failed to fetch journey data.')
-    }
-    
-    store.commit(types.SET_JOURNEY_CATEGORIES, categoriesRes.data)
-    store.commit(types.ADD_JOURNEY_MODULES, Array.isArray(modulesRes.data) ? modulesRes.data : modulesRes.data.results || [])
-    return true
-  } catch (error) {
-    console.error('Error fetching journey data:', error)
     throw error
   }
 }
 
-//for simulator
-export const fetchSimulatorLevels = async function ({commit, state }, forceRefresh = false) {
-  //check cache first
-  if (!forceRefresh && state.simulatorLevels.length > 0) {
-    console.log('✓ Simulator levels already loaded from cache')
-    return true
-  }
-  
+export const fetchJourneyData = async function ({ state }) {
+  if (state.journeyModules.length > 0) return true
+  const [categoriesRes, modulesRes] = await Promise.all([
+    api.get('/categories/'),
+    api.get('/all-modules/')
+  ])
+  store.commit(types.SET_JOURNEY_CATEGORIES, categoriesRes.data)
+  store.commit(types.ADD_JOURNEY_MODULES, Array.isArray(modulesRes.data) ? modulesRes.data : modulesRes.data.results || [])
+  return true
+}
+
+export const fetchSimulatorLevels = async function ({ state }) {
+  if (state.simulatorLevels.length > 0) return true
   try {
-    console.log('⟳ Fetching simulator levels...')
     const { data } = await api.get('/sim-levels/')
-    if (!data) {
-      throw new Error('No simulator levels found.')
-    }
     store.commit(types.SET_SIMULATOR_LEVELS, data)
     return true
   } catch (error) {
-    console.error('Error fetching simulator levels:', error)
-    // Fallback to default levels
-    const defaultLevels = [
+    store.commit(types.SET_SIMULATOR_LEVELS, [
       { value: 'intro', label: 'Intro' },
       { value: 'core', label: 'Core' },
       { value: 'advanced', label: 'Advanced' }
-    ]
-    store.commit(types.SET_SIMULATOR_LEVELS, defaultLevels)
+    ])
     throw error
   }
 }
 
-export const fetchSimulators = async function ({ commit, state }, forceRefresh = false) {
-  //check cache first
-  if (!forceRefresh && state.simulators.length > 0) {
-    console.log('✓ Simulators already loaded from cache')
-    return true
-  }
-  
-  try {
-    console.log('⟳ Fetching simulators...')
-    const { data } = await api.get('/all-simulators/')
-    if (!data || !Array.isArray(data)) {
-      throw new Error('No simulators found.')
-    }
-    
-    const transformedSimulators = data.map(sim => {
-      const tagNames = (sim.tags || []).map(tag => 
-        typeof tag === 'object' ? tag.name : tag
-      )
-      
-      return {
-        id: sim.id,
-        icon: '🎯', 
-        title: sim.title,
-        description: sim.description || '',
-        level: sim.level || 'intro',
-        duration: sim.estimated_duration ? `${sim.estimated_duration} min` : 'N/A',
-        domain: sim.localisation || 'General',
-        tags: tagNames
-      }
-    })
-    
-    store.commit(types.SET_SIMULATORS, transformedSimulators)
-    return true
-  } catch (error) {
-    console.error('Error fetching simulators:', error)
-    throw error
-  }
+export const fetchSimulators = async function ({ state }) {
+  if (state.simulators.length > 0) return true
+  const { data } = await api.get('/all-simulators/')
+  if (!data?.length) throw new Error('No simulators found')
+  const transformed = data.map(sim => ({
+    id: sim.id,
+    icon: '🎯',
+    title: sim.title,
+    description: sim.description || '',
+    level: sim.level || 'intro',
+    duration: sim.estimated_duration ? `${sim.estimated_duration} min` : 'N/A',
+    domain: sim.localisation || 'General',
+    tags: (sim.tags || []).map(tag => typeof tag === 'object' ? tag.name : tag)
+  }))
+  store.commit(types.SET_SIMULATORS, transformed)
+  return true
 }
 
-//for simulator play
-export const fetchSimulatorCards = async function ({ commit, state }, payload) {
-  // Accept either a string simulatorId, or an object { simulatorId, forceRefresh }
-  let simulatorId, forceRefresh = false
-  
-  if (typeof payload === 'string') {
-    simulatorId = payload
-  } else if (typeof payload === 'object') {
-    simulatorId = payload.simulatorId
-    forceRefresh = payload.forceRefresh || false
-  }
-  
-  // Check if we already have the cards for this simulator in cache
-  if (!forceRefresh && state.simulatorCardsCache[simulatorId] && state.simulatorCardsCache[simulatorId].length > 0) {
-    console.log('✓ Simulator cards already loaded from cache')
-    commit(types.SET_SIMULATOR_CARDS, state.simulatorCardsCache[simulatorId])
-    return true
-  }
-  
-  try {
-    console.log('⟳ Fetching simulator cards...')
-    const { data: cardsData } = await api.get(`/simulator/${simulatorId}/cards-full/`)
-    if (!cardsData || !cardsData.cards) {
-      commit(types.SET_SIMULATOR_CARDS, [])
-      return false
-    }
-    
-    // Store cards in both the current display and in the cache
-    commit(types.SET_SIMULATOR_CARDS_FOR_SIMULATOR, { simulatorId, cards: cardsData.cards })
-    commit(types.SET_SIMULATOR_CARDS, cardsData.cards)
-    return true
-  } catch (error) {
-    console.error('Error fetching simulator cards:', error)
-    commit(types.SET_SIMULATOR_CARDS, [])
+export const fetchSimulatorCards = async function ({ state }, simulatorId) {
+  const { data: cardsData } = await api.get(`/simulator/${simulatorId}/cards-full/`)
+  if (!cardsData?.cards?.length) {
+    store.commit(types.SET_SIMULATOR_CARDS, [])
     return false
   }
+  store.commit(types.SET_SIMULATOR_CARDS_FOR_SIMULATOR, { simulatorId, cards: cardsData.cards })
+  store.commit(types.SET_SIMULATOR_CARDS, cardsData.cards)
+  return true
 }
 
 
@@ -689,7 +570,7 @@ export const unhideConversation = async function ({ state }, otherProfileId) {
 
 
 
-export const updateProfile = async function ({ commit }, { id, payload }) {
+export const updateProfile = async function ({ state }, { id, payload }) {
   try {
     const res = await api.put(`/profile/${id}/update`, payload, {
       headers: {
