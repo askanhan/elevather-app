@@ -82,10 +82,6 @@
                 <div v-if="feedback" class="reveal">
                     <div class="revealTitle">Feedback</div>
                     <p class="p">{{ feedback }}</p>
-
-                    <button class="nextBtn" @click="next">
-                        {{ stepIndex === steps.length - 1 ? 'See debrief →' : 'Continue →' }}
-                    </button>
                 </div>
 
                 <details v-if="current.lens" class="lens">
