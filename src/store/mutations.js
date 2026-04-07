@@ -10,6 +10,23 @@ const helpFunctions = new HF()
 
 /* global $  */
 export const mutations = {
+  //mutations for modules (courses and journeys)
+  [types.SET_COURSES](state, courses) {
+    state.courses = courses
+  },
+  [types.SET_COURSE_CARDS](state, courseCards) {
+    state.courseCards = courseCards
+  },
+  [types.SET_COURSE_ANSWERS](state, courseAnswers) {
+    state.courseAnswers = courseAnswers
+  },
+  [types.RESET_COURSE_STATE](state) {
+    state.courses = []
+    state.courseCards = []
+    state.courseAnswers = {}
+  },
+
+
 
   [types.LOCK_SCREEN](state, params) {
     let timing = 5000

@@ -1,5 +1,3 @@
-import { api } from '@/store/actions.js'
-
 export default {
     name: 'CourseMock',
 
@@ -29,7 +27,6 @@ export default {
             // Loading state
             loading: true,
             error: null,
-            slides: []
         }
     },
 
@@ -38,14 +35,15 @@ export default {
     },
 
     computed: {
-        /* boyle yapppp
-        courses() {
-            return this.$store.state.courses || [] 
-             },
-             notCompletedCourses() {
-            return this.$store.state.courses || [] 
-             },
-        */
+
+        courseCards() {
+            return this.$store.state.courseCards || []
+        },
+
+        slides() {
+            return this.transformCardsToSlides(this.courseCards)
+        },
+
         slidesStyle() {
             const pct = this.currentIndex * 100
             return {
@@ -88,22 +86,21 @@ export default {
             }
             
             // Fetch the cards for this module
-            api.get(`/module/${moduleId}/cards-full/`)
-                .then(response => {
-                    const cardsData = response.data
-                    
-                    if (!cardsData || !cardsData.cards || cardsData.cards.length === 0) {
+            this.$store.dispatch('fetchCourseCards', moduleId)
+                .then(() => {
+
+                    if (this.courseCards.length === 0) {
                         this.error = 'No cards found for this module.'
                         this.loading = false
                         return
                     }
 
                     // Transform cards into slides
-                    this.slides = this.transformCardsToSlides(cardsData.cards)
+                    this.slides = this.transformCardsToSlides(this.courseCards)
 
                     // Set course title
-                    if (cardsData.cards.length > 0) {
-                        this.course.title = cardsData.cards[0].title || 'Module'
+                    if (this.courseCards.length > 0) {
+                        this.course.title = this.courseCards[0].title || 'Module'
                     }
 
                     this.loading = false

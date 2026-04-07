@@ -1,3 +1,14 @@
+//mutation types for modules (courses and journeys)
+export const SET_COURSES = 'SET_COURSES'
+export const SET_COURSE_CARDS = 'SET_COURSE_CARDS'
+export const SET_COURSE_ANSWERS = 'SET_COURSE_ANSWERS'
+export const RESET_COURSE_STATE = 'RESET_COURSE_STATE'
+
+
+
+
+
+
 export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE'
 export const ADD_POST_TO_FRONT = 'ADD_POST_TO_FRONT'
 export const SET_LANG = 'SET_LANG'

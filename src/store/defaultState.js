@@ -3,6 +3,17 @@ import AppConfig from '@/config/app.config.js'
 export default function getDefaultState() {
     return {
         lang: 'en',
+        //for modules (courses and journeys)
+        courses: [],
+        courseCards: [],
+        courseAnswers: {},
+
+
+
+
+
+
+
         receivedLastPostsOn: '',
         connectedProvince: -1,
         allCatched: false,

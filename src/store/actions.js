@@ -40,6 +40,25 @@ let refreshInFlight = null // aynı anda tek refresh
 
 // -------------------- ACTIONS --------------------
 
+//for modules (courses and journeys)
+export const fetchCourseCards = async function ({ commit }, moduleId) {
+  try {
+    const { data } = await api.get(`/module/${moduleId}/cards-full/`)
+    if (!data || !data.cards || data.cards.length === 0) {
+      throw new Error('No cards found for this module.')
+    }
+    store.commit(types.SET_COURSE_CARDS, data.cards)
+    return true
+  } catch (error) {
+    console.error('Error fetching course cards:', error)
+    throw error
+  }
+}
+
+
+
+
+
 // Temel verileri arkaplanda getir
 export const initializeBasicInfo = async function ({ state }) {
   const { data: categories } = await api.get('/categories')
