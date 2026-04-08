@@ -63,6 +63,22 @@ export const mutations = {
     state.dailyCheckinQuestions = questions || []
   },
   
+  //mutations for simulator results
+  [types.SET_SIMULATOR_RESULTS](state, results) {
+    state.simulatorResults = results || []
+  },
+  
+  [types.ADD_SIMULATOR_RESULT](state, result) {
+    if (!state.simulatorResults) {
+      state.simulatorResults = []
+    }
+    state.simulatorResults.push(result)
+  },
+  
+  [types.SET_CURRENT_SIMULATOR_RESULT](state, result) {
+    state.currentSimulatorResult = result
+  },
+  
   //mutations for mcq responses
   [types.SET_MCQ_RESPONSE](state, { userId, optionId, feedback, updatedMetrics }) {
     if (!state.mcqResponses) {

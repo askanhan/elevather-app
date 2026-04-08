@@ -1393,6 +1393,100 @@ body.dark-mode .profile-actions__btn--outline:hover{
   }
 }
 
+/* ===== SIMULATOR RESULTS SECTION ===== */
+.resultsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.resultCard {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px;
+    transition: all 0.2s;
+}
+
+.resultCard:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.resultHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.resultTitle {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.resultScore {
+    font-size: 14px;
+    font-weight: 900;
+    color: #10b981;
+    background: #ecfdf5;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.resultMeta {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.metaTag {
+    font-size: 12px;
+    font-weight: 600;
+    color: #0f172a;
+    background: #dbeafe;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.metaDate {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.resultBar {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.resultFill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #059669);
+    border-radius: 999px;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 30px 20px;
+    color: #64748b;
+}
+
+.emptyIcon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.emptyText {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #475569;
+}
+
 /* ===== PROFILE TABS ===== */
 #profile-page .profile-tabs{
   width: 100%;

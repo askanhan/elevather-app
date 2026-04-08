@@ -20,6 +20,9 @@ export default function getDefaultState() {
         dailyCheckinPowerLevel: null,
         mcqResponses: [],
         openQuestionResponses: [],
+        //for simulator results
+        simulatorResults: [],
+        currentSimulatorResult: null,
 
 
 

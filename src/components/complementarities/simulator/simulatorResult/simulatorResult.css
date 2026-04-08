@@ -1,0 +1,425 @@
+.simResult {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    color: #0f172a;
+    background: rgba(15, 23, 42, 0.5);
+    z-index: 9999;
+}
+
+.resultModal {
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.resultCard {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 24px;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.15);
+    position: relative;
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Score Circle */
+.scoreCircle {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circleSvg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.bgCircle {
+    fill: none;
+    stroke: #f1f5f9;
+    stroke-width: 8;
+}
+
+.progressCircle {
+    fill: none;
+    stroke: #10b981;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 595;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s ease-out;
+}
+
+.scoreContent {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.scoreValue {
+    font-size: 32px;
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1;
+}
+
+.scoreLabel {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+/* Message Section */
+.messageSection {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.h1 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #0f172a;
+    margin: 0 0 8px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Metrics Box */
+.metricsBox {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #e2e8f0;
+}
+
+.sectionTitle {
+    font-size: 14px;
+    font-weight: 900;
+    color: #0f172a;
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metricsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.metricItem {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.metricTop {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.metricName {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.metricValue {
+    font-size: 13px;
+    font-weight: 900;
+    color: #0f172a;
+}
+
+.metricBar {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.metricFill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #059669);
+    border-radius: 999px;
+}
+
+.metricDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+.metricDetails .strength {
+    color: #059669;
+    font-weight: 600;
+}
+
+.metricDetails .risk {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+/* Advice Box */
+.adviceBox {
+    background: #eff6ff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #bfdbfe;
+}
+
+.adviceText {
+    font-size: 14px;
+    color: #1e40af;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Loading State */
+.loadingCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    min-height: 300px;
+}
+
+.loadingSpinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #10b981;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loadingText {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Error State */
+.errorCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 24px;
+    min-height: 300px;
+    justify-content: center;
+}
+
+.errorIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.errorTitle {
+    font-size: 20px;
+    font-weight: 900;
+    color: #0f172a;
+    margin: 0 0 8px;
+    text-align: center;
+}
+
+.errorMessage {
+    font-size: 14px;
+    color: #64748b;
+    text-align: center;
+    margin: 0 0 24px;
+    line-height: 1.5;
+}
+
+.errorCard .actions {
+    width: 100%;
+}
+
+/* Meta Information */
+.metaInfo {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.metaLabel {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.metaBadge {
+    font-size: 12px;
+    font-weight: 900;
+    color: #0f172a;
+    background: #f1f5f9;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.metaValue {
+    font-size: 12px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.btnSecondary,
+.btnPrimary {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 900;
+    font-size: 14px;
+    border: 1px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnSecondary {
+    background: #fff;
+    color: #0f172a;
+    border-color: #e2e8f0;
+}
+
+.btnSecondary:hover:not(:disabled) {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.btnSecondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btnPrimary {
+    background: #10b981;
+    color: #fff;
+    border-color: #10b981;
+}
+
+.btnPrimary:hover:not(:disabled) {
+    background: #059669;
+    border-color: #059669;
+}
+
+.btnPrimary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Close button */
+.closeBtn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.closeBtn:hover {
+    background: #e2e8f0;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .resultCard {
+        padding: 24px 16px;
+        border-radius: 16px;
+    }
+
+    .h1 {
+        font-size: 20px;
+    }
+
+    .scoreCircle {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 24px;
+    }
+
+    .scoreValue {
+        font-size: 28px;
+    }
+
+    .metricsBox,
+    .adviceBox {
+        padding: 12px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .btnSecondary,
+    .btnPrimary {
+        width: 100%;
+    }
+}

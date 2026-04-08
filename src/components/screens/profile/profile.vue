@@ -83,7 +83,34 @@
                 </div>
             </div>
         </section>
+<!-- Simulator Results History -->
+        <section class="card">
+            <div class="cardHead">
+                <div class="h2">Simulation history</div>
+                <button class="link" @click="goSimulatorHistory">See all</button>
+            </div>
 
+            <div v-if="simulatorResults.length > 0" class="resultsList">
+                <div v-for="result in simulatorResults.slice(0, 3)" :key="result.id" class="resultCard">
+                    <div class="resultHeader">
+                        <div class="resultTitle">{{ result.simulatorTitle }}</div>
+                        <div class="resultScore">{{ result.score }}/{{ result.maxScore }}</div>
+                    </div>
+                    <div class="resultMeta">
+                        <span class="metaTag">{{ result.level }}</span>
+                        <span class="metaDate">{{ formatResultDate(result.completedAt) }}</span>
+                    </div>
+                    <div class="resultBar">
+                        <div class="resultFill" :style="{ width: (result.score / result.maxScore * 100) + '%' }"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-else class="emptyState">
+                <div class="emptyIcon">🎯</div>
+                <div class="emptyText">No simulations yet. Start your first challenge!</div>
+            </div>
+        </section>
         <!-- Power patterns -->
         <section class="card">
             <div class="cardHead">
@@ -205,6 +232,8 @@
             </div>
         </section>
 
+        
+
         <!-- Support / Preferences -->
         <section class="card">
             <div class="cardHead">
@@ -323,6 +352,45 @@ export default {
                 { id: 'b3', icon: '🌱', title: 'Impact Seed', sub: 'Designed a tiny civic pilot' }
             ],
 
+            simulatorResults: [
+                {
+                    id: 1,
+                    simulatorTitle: 'Leadership in Crisis',
+                    score: 85,
+                    maxScore: 100,
+                    level: 'Advanced',
+                    completedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+                    metrics: [
+                        { name: 'Decision Making', value: 90 },
+                        { name: 'Communication', value: 85 }
+                    ]
+                },
+                {
+                    id: 2,
+                    simulatorTitle: 'Difficult Conversations',
+                    score: 72,
+                    maxScore: 100,
+                    level: 'Intermediate',
+                    completedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+                    metrics: [
+                        { name: 'Empathy', value: 75 },
+                        { name: 'Active Listening', value: 70 }
+                    ]
+                },
+                {
+                    id: 3,
+                    simulatorTitle: 'Team Conflict Resolution',
+                    score: 78,
+                    maxScore: 100,
+                    level: 'Intermediate',
+                    completedAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+                    metrics: [
+                        { name: 'Problem Solving', value: 80 },
+                        { name: 'Negotiation', value: 76 }
+                    ]
+                }
+            ],
+
             prefs: {
                 language: 'English',
                 notifications: 'On'
@@ -344,6 +412,24 @@ export default {
     },
 
     methods: {
+        formatResultDate(date) {
+            if (!date) return ''
+            const now = new Date()
+            const resultDate = new Date(date)
+            const diffMs = now - resultDate
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+            
+            if (diffDays === 0) return 'Today'
+            if (diffDays === 1) return 'Yesterday'
+            if (diffDays < 7) return `${diffDays} days ago`
+            if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`
+            return resultDate.toLocaleDateString()
+        },
+
+        goSimulatorHistory() {
+            this.$router.push('/simulator-history')
+        },
+
         goGoals() {
             this.$router.push('/goals')
         },

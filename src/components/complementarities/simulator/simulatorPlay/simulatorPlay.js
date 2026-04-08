@@ -1,8 +1,13 @@
 export default {
     name: 'SimulatorPlay',
 
+    components: {
+        SimulatorResult: () => import('@/components/complementarities/simulator/simulatorResult/simulatorResult.vue')
+    },
+
     data() {
         return {
+            simulatorId: null,
             error: null,
             mode: 'calm',
             stepIndex: 0,
@@ -12,7 +17,11 @@ export default {
             totalScore: 0,
             loading: true,
             scenario: {},
-            selectedAnswers: {}
+            selectedAnswers: {},
+            showResults: false,
+            showDebrief: false,
+            debriefData: null,
+            debriefLoading: false
         }
     },
 
@@ -73,9 +82,9 @@ export default {
         // Fetch simulator cards, tags, and metrics from API
         fetchSimulator() {
             // Get simulator ID from route query
-            const simulatorId = this.$route.query.id
+            this.simulatorId = this.$route.query.id
 
-            if (!simulatorId) {
+            if (!this.simulatorId) {
                 this.error = 'No simulator ID provided.'
                 this.loading = false
                 return
@@ -96,12 +105,12 @@ export default {
             // Fetch fresh data in background (always refresh tags/metrics, fetch cards only if not cached)
             const cardsPromise = hasCache 
                 ? Promise.resolve(true)
-                : this.$store.dispatch('fetchSimulatorCards', simulatorId)
+                : this.$store.dispatch('fetchSimulatorCards', this.simulatorId)
 
             Promise.all([
                 cardsPromise,
-                this.$store.dispatch('fetchSimulatorTags', simulatorId),
-                this.$store.dispatch('fetchSimulatorMetrics', simulatorId)
+                this.$store.dispatch('fetchSimulatorTags', this.simulatorId),
+                this.$store.dispatch('fetchSimulatorMetrics', this.simulatorId)
             ])
                 .then(([cardsSuccess]) => {
                     if (cardsSuccess && this.simulatorCards.length > 0) {
@@ -155,14 +164,11 @@ export default {
             this.selectedAnswers[this.current.id] = option.id
             
             try {
-                // Get simulator ID from route
-                const simulatorId = this.$route.query.id
-                
                 // TODO: Replace with actual auth when available
                 // For now, use fixed userId for testing
                 const userId = 1
                 
-                if (!userId || !simulatorId) {
+                if (!userId || !this.simulatorId) {
                     console.error('Missing userId or simulatorId')
                     this.feedback = 'Error: Could not save response.'
                     this.locked = false
@@ -173,7 +179,7 @@ export default {
                 const response = await this.$store.dispatch('saveSimulatorMCQResponse', {
                     userId: userId,
                     selectedOptionId: option.id,
-                    simulatorId: simulatorId
+                    simulatorId: this.simulatorId
                 })
                 
                 // Use feedback from backend
@@ -232,6 +238,46 @@ export default {
         },
 
         finishContent() {
+            // Show results modal instead of redirecting immediately
+            this.showResults = true
+        },
+
+        handleResultsClose() {
+            // Close modal and navigate to simulators
+            this.showResults = false
+            this.$router.push('/simulators')
+        },
+
+        // Show debrief with feedbacks
+        async showResultsDebrief() {
+            this.debriefLoading = true
+            
+            try {
+                // Get user ID from store (or use default for testing)
+                const userId = this.$store.state.myProfile?.id || 1
+                
+                // Fetch results from API
+                const response = await this.$store.dispatch('fetchSimulatorResults', {
+                    userId: userId,
+                    simulatorId: this.simulatorId
+                })
+                
+                if (response && response.feedbacks) {
+                    this.debriefData = response.feedbacks
+                    this.showDebrief = true
+                } else {
+                    this.feedback = 'Could not load results.'
+                }
+            } catch (err) {
+                console.error('Error loading debrief:', err)
+                this.feedback = 'Error loading results.'
+            } finally {
+                this.debriefLoading = false
+            }
+        },
+
+        // Finish and redirect to simulators
+        finishAndNavigate() {
             this.$router.push('/simulator')
         }
     }

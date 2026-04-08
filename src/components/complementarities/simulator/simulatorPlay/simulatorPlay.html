@@ -91,28 +91,59 @@
             </div>
         </section>
 
-        <section class="debrief" v-if="done">
+        <!-- Debrief Section -->
+        <section class="debrief debriefSection" v-if="showDebrief && debriefData">
             <div class="card">
-                <h2 class="h2">Debrief</h2>
-                <p class="p">You completed the simulator!</p>
+                <h2 class="h2">📊 Your Feedback</h2>
+                <p class="p">Here's how you performed on each metric:</p>
 
-                <div class="panel">
-                    <div class="row">
-                        <span class="label">Your score</span>
-                        <span class="value">{{ totalScore }}/{{ steps.length * 10 }}</span>
+                <!-- Feedbacks list -->
+                <div class="feedbacksList">
+                    <div v-for="feedback in debriefData" :key="feedback.metric_name" class="feedbackItem">
+                        <div class="feedbackHeader">
+                            <h3 class="feedbackTitle">{{ feedback.metric_name }}</h3>
+                            <span class="feedbackScore">{{ feedback.score }}%</span>
+                        </div>
+                        
+                        <div v-if="feedback.strength" class="feedbackBox strengthBox">
+                            <span class="feedbackIcon">💪</span>
+                            <div>
+                                <div class="feedbackLabel">Strength</div>
+                                <p class="feedbackText">{{ feedback.strength }}</p>
+                            </div>
+                        </div>
+
+                        <div v-if="feedback.risk" class="feedbackBox riskBox">
+                            <span class="feedbackIcon">⚠️</span>
+                            <div>
+                                <div class="feedbackLabel">Area to develop</div>
+                                <p class="feedbackText">{{ feedback.risk }}</p>
+                            </div>
+                        </div>
+
+                        <div v-if="feedback.practice" class="feedbackBox practiceBox">
+                            <span class="feedbackIcon">🎯</span>
+                            <div>
+                                <div class="feedbackLabel">Micro-practice</div>
+                                <p class="feedbackText">{{ feedback.practice }}</p>
+                            </div>
+                        </div>
+
+                        <div v-if="feedback.recommendation && feedback.recommendation.reason" class="feedbackBox recommendationBox">
+                            <span class="feedbackIcon">📚</span>
+                            <div>
+                                <div class="feedbackLabel">Recommended module</div>
+                                <p class="feedbackText">{{ feedback.recommendation.reason }}</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="actions">
-                    <button class="ghost" @click="restart">Retry</button>
-                    <button class="primary" @click="goToCourse">Back to course →</button>
                 </div>
             </div>
         </section>
 
         <!-- Bottom navigation with dots -->
         <div class="nav">
-            <button class="navBtn" :disabled="stepIndex === 0" @click="prev">
+            <button class="navBtn" :disabled="stepIndex === 0 || showDebrief" @click="prev">
                 Prev
             </button>
 
@@ -121,10 +152,21 @@
                     :class="{ active: idx === stepIndex }" @click="goTo(idx)"></span>
             </div>
 
-            <button class="navBtn primary" :disabled="needsChoice && !feedback" @click="next">
-                {{ stepIndex === steps.length - 1 ? 'Finish' : 'Next' }}
+            <!-- Finish button (debrief page) -->
+            <button v-if="showDebrief" class="navBtn primary" @click="finishAndNavigate">
+                Finish →
+            </button>
+
+            <!-- Next/Show result button -->
+            <button v-else class="navBtn primary" 
+                :disabled="(stepIndex === steps.length - 1 ? debriefLoading : (needsChoice && !feedback))" 
+                @click="stepIndex === steps.length - 1 ? showResultsDebrief() : next()">
+                {{ stepIndex === steps.length - 1 ? 'Show result' : 'Next' }}
             </button>
         </div>
         </template>
+
+        <!-- Results Modal -->
+        <SimulatorResult v-if="showResults" :simulatorIdProp="simulatorId" :isModal="true" @close="handleResultsClose" />
     </div>
 </template>

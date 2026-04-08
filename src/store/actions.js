@@ -127,6 +127,26 @@ export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
   store.commit(types.SET_SIMULATOR_METRICS, metricsData)
   return true
 }
+
+// ============ SIMULATOR RESULTS ACTIONS ============
+// fetching simulator results for a user
+export const fetchSimulatorResults = async function ({ state }, { userId, simulatorId }) {
+  try {
+    const { data } = await api.get(`/user/${userId}/simulator/${simulatorId}/results/`)
+    return data
+  } catch (error) {
+    console.error('Error fetching simulator results:', error)
+    throw error
+  }
+}
+
+// saving simulator result after completion
+export const saveSimulatorResult = async function ({ state }, resultData) {
+  // TODO: Replace with API call to POST /simulator-results/
+  store.commit(types.ADD_SIMULATOR_RESULT, resultData)
+  return true
+}
+
 //fetching questions for daily check-in
 export const fetchDailyCheckinQuestions = async function ({ state }) {
   try {

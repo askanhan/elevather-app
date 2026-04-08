@@ -1,0 +1,101 @@
+<template>
+    <div class="simResult">
+        <!-- Loading state -->
+        <div v-if="loading" class="resultModal">
+            <div class="resultCard loadingCard">
+                <div class="loadingSpinner"></div>
+                <p class="loadingText">Loading your results...</p>
+            </div>
+        </div>
+
+        <!-- Error state -->
+        <div v-else-if="error" class="resultModal">
+            <div class="resultCard errorCard">
+                <div class="errorIcon">⚠️</div>
+                <h2 class="errorTitle">Unable to Load Results</h2>
+                <p class="errorMessage">{{ error }}</p>
+                <div class="actions">
+                    <button class="btnSecondary" @click="goBack">← Go back</button>
+                    <button class="btnPrimary" @click="fetchResults">Retry</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal background -->
+        <div v-else class="resultModal">
+            <!-- Success card -->
+            <div class="resultCard">
+                <!-- Progress circle -->
+                <div class="scoreCircle">
+                    <svg viewBox="0 0 200 200" class="circleSvg">
+                        <circle cx="100" cy="100" r="95" class="bgCircle"></circle>
+                        <circle cx="100" cy="100" r="95" class="progressCircle" 
+                            :style="{ 'stroke-dashoffset': 595 - (595 * scorePercentage / 100) }"></circle>
+                    </svg>
+                    <div class="scoreContent">
+                        <div class="scoreValue">{{ score }}/{{ maxScore }}</div>
+                        <div class="scoreLabel">Points</div>
+                    </div>
+                </div>
+
+                <!-- Congratulations message -->
+                <div class="messageSection">
+                    <h1 class="h1">🎉 {{ feedbackMessage }}</h1>
+                    <p class="subtitle">You completed {{ simulatorTitle }}</p>
+                </div>
+
+                <!-- Metrics breakdown -->
+                <section class="metricsBox">
+                    <h3 class="sectionTitle">Your performance</h3>
+                    <div class="metricsList">
+                        <div v-for="metric in metricsResults" :key="metric.name" class="metricItem">
+                            <div class="metricTop">
+                                <span class="metricName">{{ metric.name }}</span>
+                                <span class="metricValue">{{ metric.value }}%</span>
+                            </div>
+                            <div class="metricBar">
+                                <div class="metricFill" :style="{ width: metric.value + '%' }"></div>
+                            </div>
+                            <!-- Strength/Risk info -->
+                            <div v-if="metric.strength || metric.risk" class="metricDetails">
+                                <span v-if="metric.strength" class="strength">💪 {{ metric.strength }}</span>
+                                <span v-if="metric.risk" class="risk">⚠️ {{ metric.risk }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Personalized advice -->
+                <section v-if="adviceText" class="adviceBox">
+                    <h3 class="sectionTitle">📍 Focus area</h3>
+                    <p class="adviceText">{{ adviceText }}</p>
+                </section>
+
+                <!-- Meta information -->
+                <div class="metaInfo">
+                    <div class="metaItem">
+                        <span class="metaLabel">Level:</span>
+                        <span class="metaBadge">{{ level }}</span>
+                    </div>
+                    <div class="metaItem">
+                        <span class="metaLabel">Completed:</span>
+                        <span class="metaValue">{{ formatDate(completedAt) }}</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button class="btnSecondary" @click="retrySimulator" :disabled="saveInProgress">
+                        ↻ Try Again
+                    </button>
+                    <button class="btnPrimary" @click="saveResult" :disabled="saveInProgress">
+                        {{ saveInProgress ? 'Saving...' : '✓ Save & Continue' }}
+                    </button>
+                </div>
+
+                <!-- Close button -->
+                <button class="closeBtn" @click="goBack">✕</button>
+            </div>
+        </div>
+    </div>
+</template>
