@@ -16,14 +16,11 @@ export default {
             dragging: false,
             answers: {},
             openAnswers: {},
-            mcqFeedback: {}, // Store feedback for each MCQ
-            mcqMetrics: {}, // Store metrics updates for each MCQ
             error: null,
             moduleId: null,
             userId: 1,
             progressStarted: false,
-            loading: false,
-            savingMCQ: {} // Track which MCQs are being saved
+            loading: false
         }
     },
 
@@ -167,6 +164,26 @@ export default {
         },
 
         next() {
+            // Save open question response before moving to next slide
+            const currentSlide = this.slides[this.currentIndex]
+            if (currentSlide && currentSlide.type === 'card') {
+                const hasOpenQuestion = (currentSlide.components || []).some(c => c.type === 'open question')
+                if (hasOpenQuestion && this.openAnswers[currentSlide.id]) {
+                    // Find the open question component
+                    const openQuestionComponent = (currentSlide.components || []).find(c => c.type === 'open question')
+                    if (openQuestionComponent && this.openAnswers[currentSlide.id].trim()) {
+                        // Save the open question response
+                        this.$store.dispatch('saveOpenQuestionResponse', {
+                            userId: this.userId,
+                            openQuestionId: openQuestionComponent.id,
+                            answerText: this.openAnswers[currentSlide.id].trim()
+                        }).catch((error) => {
+                            console.error('Error saving open question:', error)
+                        })
+                    }
+                }
+            }
+            
             if (this.currentIndex < this.slides.length - 1) {
                 this.currentIndex += 1
                 this.syncReadingToSlide()
@@ -252,27 +269,13 @@ export default {
             console.log('selectOption called:', { slideId, optionId, answers: this.answers })
             this.answers[slideId] = optionId
             
-            // Mark this MCQ as saving
-            this.savingMCQ[slideId] = true
-            
             // Save the MCQ response to the backend
             this.$store.dispatch('saveMCQResponse', {
                 userId: this.userId,
                 selectedOptionId: optionId
             })
-            .then((response) => {
-                console.log('MCQ response saved successfully:', response)
-                
-                // Store feedback and metrics for this MCQ
-                this.mcqFeedback[slideId] = response.feedback
-                this.mcqMetrics[slideId] = response.updatedMetrics
-                
-                this.savingMCQ[slideId] = false
-            })
             .catch((error) => {
                 console.error('Error saving MCQ response:', error)
-                this.savingMCQ[slideId] = false
-                
                 // Show error message but keep the answer selected
                 this.$store.commit('SHOW_MESSAGE', ['Error saving your response. Please try again.', 'error'])
             })

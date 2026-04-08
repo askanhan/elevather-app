@@ -212,6 +212,35 @@ export const saveMCQResponse = async function ({ state }, { userId, selectedOpti
   }
 }
 
+//saving open question response for a course question
+export const saveOpenQuestionResponse = async function ({ state }, { userId, openQuestionId, answerText }) {
+  try {
+    const payload = {
+      user_id: userId,
+      open_question_id: openQuestionId,
+      answer_text: answerText
+    }
+    console.log('Sending open question response:', payload)
+    const { data } = await api.post('/user/response/open-question/', payload)
+    
+    // Store the response in state
+    store.commit(types.SET_OPEN_QUESTION_RESPONSE, {
+      userId: userId,
+      openQuestionId: openQuestionId,
+      answerText: answerText,
+      responseId: data.id
+    })
+    
+    return {
+      id: data.id,
+      linkedToQuestion: data.linked_to_question
+    }
+  } catch (error) {
+    console.error('Error saving open question response:', error)
+    throw error
+  }
+}
+
 
 
 

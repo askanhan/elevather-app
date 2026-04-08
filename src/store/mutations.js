@@ -92,6 +92,36 @@ export const mutations = {
       state.mcqResponses.push({ userId, optionId, feedback, updatedMetrics })
     }
   },
+  
+  //mutations for open question responses
+  [types.SET_OPEN_QUESTION_RESPONSE](state, { userId, openQuestionId, answerText, responseId }) {
+    if (!state.openQuestionResponses) {
+      state.openQuestionResponses = []
+    }
+    const existingIndex = state.openQuestionResponses.findIndex(r => 
+      r.userId === userId && r.openQuestionId === openQuestionId
+    )
+    if (existingIndex !== -1) {
+      state.openQuestionResponses[existingIndex] = { userId, openQuestionId, answerText, responseId }
+    } else {
+      state.openQuestionResponses.push({ userId, openQuestionId, answerText, responseId })
+    }
+  },
+  
+  [types.UPDATE_OPEN_QUESTION_RESPONSE](state, { userId, openQuestionId, answerText, responseId }) {
+    if (!state.openQuestionResponses) {
+      state.openQuestionResponses = []
+    }
+    const response = state.openQuestionResponses.find(r => 
+      r.userId === userId && r.openQuestionId === openQuestionId
+    )
+    if (response) {
+      response.answerText = answerText
+      response.responseId = responseId
+    } else {
+      state.openQuestionResponses.push({ userId, openQuestionId, answerText, responseId })
+    }
+  },
 
 
 
