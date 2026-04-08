@@ -212,6 +212,40 @@ export const saveMCQResponse = async function ({ state }, { userId, selectedOpti
   }
 }
 
+//saving MCQ response for a simulator question
+export const saveSimulatorMCQResponse = async function ({ state }, { userId, selectedOptionId, simulatorId }) {
+  try {
+    const payload = {
+      user_id: userId,
+      selected_option_id: selectedOptionId
+    }
+    console.log('Sending simulator MCQ response:', payload)
+    const { data } = await api.post('/user/response/mcq/', payload)
+    
+    // Update the simulator metrics in state with the new scores
+    if (data.updated_metrics) {
+      const updatedMetrics = {}
+      data.updated_metrics.forEach(metric => {
+        updatedMetrics[metric.metric] = metric.new_score
+      })
+      store.commit(types.SET_SIMULATOR_METRICS, 
+        state.simulatorMetrics.map(m => ({
+          ...m,
+          value: updatedMetrics[m.name] !== undefined ? updatedMetrics[m.name] : m.value
+        }))
+      )
+    }
+    
+    return {
+      feedback: data.feedback,
+      updatedMetrics: data.updated_metrics
+    }
+  } catch (error) {
+    console.error('Error saving simulator MCQ response:', error)
+    throw error
+  }
+}
+
 //saving open question response for a course question
 export const saveOpenQuestionResponse = async function ({ state }, { userId, openQuestionId, answerText }) {
   try {

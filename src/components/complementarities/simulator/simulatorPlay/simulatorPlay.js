@@ -148,16 +148,51 @@ export default {
             this.selectedAnswers = {}
         },
 
-        choose(option, component) {
+        async choose(option, component) {
             if (!component || !component.options) return
-            this.selectedAnswers[this.current.id] = option.id
+            
             this.locked = true
-            this.feedback = option.feedback || 'Good choice.'
+            this.selectedAnswers[this.current.id] = option.id
             
-            // Simple scoring
-            this.totalScore += 10
-            
-            setTimeout(() => { this.locked = false }, 250)
+            try {
+                // Get simulator ID from route
+                const simulatorId = this.$route.query.id
+                
+                // TODO: Replace with actual auth when available
+                // For now, use fixed userId for testing
+                const userId = 1
+                
+                if (!userId || !simulatorId) {
+                    console.error('Missing userId or simulatorId')
+                    this.feedback = 'Error: Could not save response.'
+                    this.locked = false
+                    return
+                }
+                
+                // Call the action to save MCQ response and update metrics
+                const response = await this.$store.dispatch('saveSimulatorMCQResponse', {
+                    userId: userId,
+                    selectedOptionId: option.id,
+                    simulatorId: simulatorId
+                })
+                
+                // Use feedback from backend
+                this.feedback = response.feedback || option.feedback || 'Good choice.'
+                
+                // Update total score (can be based on updatedMetrics if needed)
+                if (response.updatedMetrics && Array.isArray(response.updatedMetrics)) {
+                    // Feedback received, metrics already updated in state
+                    console.log('Metrics updated:', response.updatedMetrics)
+                }
+                this.totalScore += 10
+                
+            } catch (error) {
+                console.error('Error saving MCQ response:', error)
+                this.feedback = 'Error saving response. Please try again.'
+            } finally {
+                // Allow moving forward after a short delay
+                setTimeout(() => { this.locked = false }, 250)
+            }
         },
 
         next() {
