@@ -12,12 +12,21 @@
                 <input v-model="query" class="search" type="search" placeholder="Search tracks, modules, outcomes…"
                     aria-label="Search" />
 
-                <select v-model="statusFilter" class="select" aria-label="Status filter">
-                    <option value="all">All statuses</option>
-                    <option v-for="status in statuses" :key="status.value" :value="status.value">
-                        {{ status.label }}
-                    </option>
-                </select>
+                <div class="filters">
+                    <select v-model="categoryFilter" class="select" aria-label="Category filter">
+                        <option value="all">All categories</option>
+                        <option v-for="category in categories" :key="category.id" :value="category.id">
+                            {{ category.title }}
+                        </option>
+                    </select>
+
+                    <select v-model="statusFilter" class="select" aria-label="Status filter">
+                        <option value="all">All statuses</option>
+                        <option v-for="status in statuses" :key="status.value" :value="status.value">
+                            {{ status.label }}
+                        </option>
+                    </select>
+                </div>
             </div>
         </header>
 
@@ -29,6 +38,12 @@
         <!-- Error state -->
         <div v-if="error" class="error-message">
             ⚠️ {{ error }}
+        </div>
+
+        <!-- Global Progress Block -->
+        <div v-if="!loading" class="progressBlock">
+            <div class="progressBlockLabel">Progress</div>
+            <div class="progressBlockValue">{{ totalProgression.completed }}/{{ totalProgression.total }}</div>
         </div>
 
         <!-- Content -->

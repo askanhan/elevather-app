@@ -7,6 +7,7 @@ export default {
         return {
             query: '',
             statusFilter: 'all',
+            categoryFilter: 'all',
             openIds: new Set(),
             loading: true,
             error: null
@@ -41,8 +42,10 @@ export default {
         filteredTracks() {
             const q = this.normalizedQuery
             const s = this.statusFilter
+            const c = this.categoryFilter
 
             return this.tracks
+                .filter(t => c === 'all' ? true : (t.id === `category_${c}`))
                 .map(t => {
                     const modules = (t.modules || []).filter(m => {
                         const hay = (
@@ -61,6 +64,18 @@ export default {
                     return { ...t, modules }
                 })
                 .filter(t => (t.modules || []).length > 0)
+        },
+
+        totalProgression() {
+            const allModules = this.modules || []
+            const completed = allModules.filter(m => m.status === 'done').length
+            const total = allModules.length
+            return { completed, total }
+        },
+
+        progressPercentage() {
+            const prog = this.totalProgression
+            return prog.total > 0 ? Math.round((prog.completed / prog.total) * 100) : 0
         }
     },
 

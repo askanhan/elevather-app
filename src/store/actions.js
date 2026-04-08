@@ -40,6 +40,7 @@ let refreshInFlight = null // aynı anda tek refresh
 
 // -------------------- ACTIONS --------------------
 
+//fetching cards for a module
 export const fetchCourseCards = async function ({ state }, moduleId) {
   const { data } = await api.get(`/module/${moduleId}/cards-full/`)
   if (!data?.cards?.length) throw new Error('No cards found')
@@ -47,14 +48,14 @@ export const fetchCourseCards = async function ({ state }, moduleId) {
   store.commit(types.SET_COURSE_CARDS, data.cards)
   return true
 }
-
+//fetching statuses for tracks page filter based on statuses
 export const fetchJourneyProgressStatuses = async function ({ state }) {
   if (state.journeyStatuses.length > 0) return true
   const { data } = await api.get('/progress-statuses/')
   store.commit(types.SET_JOURNEY_STATUSES, data)
   return true
 }
-
+//fetching data (categories and modules) for tracks page
 export const fetchJourneyData = async function ({ state }) {
   if (state.journeyModules.length > 0) return true
   const [categoriesRes, modulesRes] = await Promise.all([
@@ -65,7 +66,7 @@ export const fetchJourneyData = async function ({ state }) {
   store.commit(types.ADD_JOURNEY_MODULES, Array.isArray(modulesRes.data) ? modulesRes.data : modulesRes.data.results || [])
   return true
 }
-
+//fetching simulator levels for filter based on levels
 export const fetchSimulatorLevels = async function ({ state }) {
   if (state.simulatorLevels.length > 0) return true
   const { data } = await api.get('/sim-levels/')
@@ -73,7 +74,7 @@ export const fetchSimulatorLevels = async function ({ state }) {
   return true
   
 }
-
+//fetching simulators for simulators page
 export const fetchSimulators = async function ({ state }) {
   if (state.simulators.length > 0) return true
   const { data } = await api.get('/all-simulators/')
@@ -91,7 +92,7 @@ export const fetchSimulators = async function ({ state }) {
   store.commit(types.SET_SIMULATORS, transformed)
   return true
 }
-
+//fetching cards for a simulator
 export const fetchSimulatorCards = async function ({ state }, simulatorId) {
   const { data: cardsData } = await api.get(`/simulator/${simulatorId}/cards-full/`)
   if (!cardsData?.cards?.length) {
@@ -102,13 +103,13 @@ export const fetchSimulatorCards = async function ({ state }, simulatorId) {
   store.commit(types.SET_SIMULATOR_CARDS, cardsData.cards)
   return true
 }
-
+//fetching tags for a simulator
 export const fetchSimulatorTags = async function ({ state }, simulatorId) {
   const { data } = await api.get(`/simulator/${simulatorId}/tags/`)
   store.commit(types.SET_SIMULATOR_TAGS, data || [])
   return true
 }
-
+//fetching metrics for a simulator
 export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
   const { data } = await api.get(`/simulator/${simulatorId}/metrics/`)
 
@@ -116,7 +117,7 @@ export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
   store.commit(types.SET_SIMULATOR_METRICS, metricsData)
   return true
 }
-
+//fetching questions for daily check-in
 export const fetchDailyCheckinQuestions = async function ({ commit }) {
   try {
     const { data } = await api.get('/daily-checkin/questions/')
