@@ -133,24 +133,6 @@ export default {
             this.saveInProgress = true
             
             try {
-                const result = {
-                    id: Date.now(),
-                    simulatorId: this.simulatorId,
-                    simulatorTitle: this.simulatorTitle,
-                    score: this.score,
-                    maxScore: this.maxScore,
-                    level: this.level,
-                    completedAt: this.completedAt,
-                    metrics: this.metricsResults,
-                    feedbacks: this.apiResponse?.feedbacks || []
-                }
-
-                // Save to Vuex store
-                await this.$store.dispatch('saveSimulatorResult', result)
-                
-                // Set current result for potential detail view
-                this.$store.commit('SET_CURRENT_SIMULATOR_RESULT', result)
-                
                 this.saveInProgress = false
                 
                 // If used as modal, emit event; otherwise navigate
