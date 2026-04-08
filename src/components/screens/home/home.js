@@ -202,6 +202,38 @@ export default {
         setCheck(questionId, optionId, scoreValue) {
             this.selectedAnswers[questionId] = optionId
             this.selectedScores[questionId] = scoreValue
+            
+            // Check if all 3 questions are answered
+            if (Object.keys(this.selectedAnswers).length === 3) {
+                // Auto-submit the checkin
+                this.submitCheckin()
+            }
+        },
+
+        submitCheckin() {
+            // Get all selected option IDs
+            const optionIds = Object.values(this.selectedAnswers)
+            
+            if (optionIds.length !== 3) {
+                console.warn('Not all questions answered yet')
+                return
+            }
+            
+            console.log('Submitting daily checkin with options:', optionIds)
+            
+            // Submit to backend
+            this.$store.dispatch('submitDailyCheckin', {
+                userId: 1, // Replace with actual user ID from auth
+                optionIds: optionIds
+            })
+            .then((response) => {
+                console.log('Daily checkin submitted successfully:', response)
+                this.$store.commit('SHOW_MESSAGE', `Power level: ${response.powerLevel}/100 (${response.status})`)
+            })
+            .catch((error) => {
+                console.error('Error submitting daily checkin:', error)
+                this.$store.commit('SHOW_MESSAGE', ['Error submitting check-in. Please try again.', 'error'])
+            })
         },
 
         selectBlocker(id) {

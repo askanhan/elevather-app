@@ -241,6 +241,33 @@ export const saveOpenQuestionResponse = async function ({ state }, { userId, ope
   }
 }
 
+//submitting daily checkin responses
+export const submitDailyCheckin = async function ({ state }, { userId, optionIds }) {
+  try {
+    const payload = {
+      user_id: userId,
+      option_ids: optionIds
+    }
+    console.log('Submitting daily checkin:', payload)
+    const { data } = await api.post('/daily-checkin/submit/', payload)
+    
+    // Store the responses in state
+    store.commit(types.SET_DAILY_CHECKIN_RESPONSES, {
+      responses: optionIds.map(id => ({ option_id: id })),
+      powerLevel: data.power_level
+    })
+    
+    return {
+      powerLevel: data.power_level,
+      status: data.status,
+      message: data.message
+    }
+  } catch (error) {
+    console.error('Error submitting daily checkin:', error)
+    throw error
+  }
+}
+
 
 
 

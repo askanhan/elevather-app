@@ -122,6 +122,16 @@ export const mutations = {
       state.openQuestionResponses.push({ userId, openQuestionId, answerText, responseId })
     }
   },
+  
+  //mutations for daily checkin responses
+  [types.SET_DAILY_CHECKIN_RESPONSES](state, { responses, powerLevel }) {
+    state.dailyCheckinResponses = responses || []
+    state.dailyCheckinPowerLevel = powerLevel
+  },
+  
+  [types.SET_DAILY_CHECKIN_POWER_LEVEL](state, powerLevel) {
+    state.dailyCheckinPowerLevel = powerLevel
+  },
 
 
 
