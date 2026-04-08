@@ -123,7 +123,12 @@ export const fetchSimulatorTags = async function ({ state }, simulatorId) {
 export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
   const { data } = await api.get(`/simulator/${simulatorId}/metrics/`)
 
+  console.log('📊 RAW METRICS DATA from backend:', data)
+  
   const metricsData = Array.isArray(data) ? data : (data?.results || data?.metrics || [])
+  
+  console.log('📊 PROCESSED METRICS DATA:', metricsData)
+  
   store.commit(types.SET_SIMULATOR_METRICS, metricsData)
   return true
 }
@@ -247,15 +252,30 @@ export const saveSimulatorMCQResponse = async function ({ state }, { userId, sel
     const { data } = await api.post('/user/response/mcq/', payload)
     
     // Update the simulator metrics in state with the new scores
-    if (data.updated_metrics) {
-      const updatedMetrics = {}
+    if (data.updated_metrics && Array.isArray(data.updated_metrics)) {
+      // Create a map indexed by metric name for accurate lookups
+      const updatedMetricsMap = {}
+      
       data.updated_metrics.forEach(metric => {
-        updatedMetrics[metric.metric] = metric.new_score
+        // Backend sends: {metric: 'Authority', new_score: 35}
+        // Support both formats for flexibility
+        const metricName = metric.metric_name || metric.name || metric.metric
+        const newScore = metric.new_score || metric.score
+        
+        // Index by the metric name
+        if (metricName) {
+          updatedMetricsMap[metricName] = newScore
+          console.log(`✅ Metric: ${metricName} → New Score: ${newScore}`)
+        }
       })
+      
+      // Update metrics in state, matching by metric name
       store.commit(types.SET_SIMULATOR_METRICS, 
         state.simulatorMetrics.map(m => ({
           ...m,
-          value: updatedMetrics[m.name] !== undefined ? updatedMetrics[m.name] : m.value
+          value: updatedMetricsMap[m.name] !== undefined 
+            ? updatedMetricsMap[m.name] 
+            : m.value
         }))
       )
     }

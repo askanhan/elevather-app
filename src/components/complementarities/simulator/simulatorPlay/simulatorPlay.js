@@ -54,14 +54,12 @@ export default {
             const meters = {}
             if (Array.isArray(this.simulatorMetrics)) {
                 this.simulatorMetrics.forEach(m => {
-                    meters[m.name || m.label] = m.value || m.initial_value || 50
+                    // Initialize with value, initial_value, or default 50
+                    const score = m.value !== undefined ? m.value : (m.initial_value || 50)
+                    meters[m.name || m.label] = score
                 })
             }
             return meters
-        },
-
-        modeLabel() {
-            return this.mode === 'timed' ? 'Challenge mode' : 'Calm mode'
         },
 
         current() {
@@ -69,21 +67,13 @@ export default {
         },
 
         needsChoice() {
-            if (!this.current.components) return false
-            return this.current.components.some(c => c.type === 'mcq')
+            return this.current && this.current.components && 
+                   this.current.components.some(c => c.type === 'mcq')
         }
     },
 
-    mounted() {
-        this.fetchSimulator()
-    },
-
     methods: {
-        // Fetch simulator cards, tags, and metrics from API
         fetchSimulator() {
-            // Get simulator ID from route query
-            this.simulatorId = this.$route.query.id
-
             if (!this.simulatorId) {
                 this.error = 'No simulator ID provided.'
                 this.loading = false
@@ -119,6 +109,20 @@ export default {
                     } else if (!cardsSuccess) {
                         this.error = 'No cards found for this simulator.'
                     }
+                    
+                    // Initialize metrics with default values if empty
+                    if ((!this.simulatorMetrics || this.simulatorMetrics.length === 0)) {
+                        console.log('⚠️ No metrics from backend, initializing with defaults...')
+                        // Default metrics initialization - adjust names based on your simulator
+                        const defaultMetrics = [
+                            { name: 'Authority', value: 50, initial_value: 50 },
+                            { name: 'Clarity', value: 50, initial_value: 50 },
+                            { name: 'Empathy', value: 50, initial_value: 50 }
+                        ]
+                        this.$store.commit('SET_SIMULATOR_METRICS', defaultMetrics)
+                        console.log('✅ Default metrics initialized')
+                    }
+                    
                     this.loading = false
                 })
                 .catch(err => {
@@ -161,6 +165,7 @@ export default {
             if (!component || !component.options) return
             
             this.locked = true
+            const previousAnswer = this.selectedAnswers[this.current.id]
             this.selectedAnswers[this.current.id] = option.id
             
             try {
@@ -175,26 +180,89 @@ export default {
                     return
                 }
                 
+                // ========== DEBUG: LOG THE EXACT OPTION BEING SENT ==========
+                console.log('========== OPTION SELECTION DEBUG ==========')
+                console.log('Question ID:', this.current.id)
+                console.log('Option object:', option)
+                console.log('Option.id being sent:', option.id)
+                console.log('Option.text:', option.text)
+                console.log('Full option object:', JSON.stringify(option, null, 2))
+                
+                // Check if this is a new answer or changing a previous answer
+                const isChangingAnswer = previousAnswer && previousAnswer !== option.id
+                if (isChangingAnswer) {
+                    console.log(`⚠️ User changed answer from option ${previousAnswer} to option ${option.id}`)
+                }
+                
+                // Log current metrics before update
+                console.log('📊 Metrics BEFORE update:')
+                this.$store.state.simulatorMetrics.forEach(m => {
+                    console.log(`  ${m.name}: ${m.value}`)
+                })
+                
                 // Call the action to save MCQ response and update metrics
+                console.log(
+                    `📤 SENDING TO BACKEND: userId=${userId}, selectedOptionId=${option.id}, simulatorId=${this.simulatorId}`
+                )
+                
                 const response = await this.$store.dispatch('saveSimulatorMCQResponse', {
                     userId: userId,
                     selectedOptionId: option.id,
                     simulatorId: this.simulatorId
                 })
                 
+                // Log current metrics after update
+                console.log('📊 Metrics AFTER update:')
+                this.$store.state.simulatorMetrics.forEach(m => {
+                    console.log(`  ${m.name}: ${m.value}`)
+                })
+                
                 // Use feedback from backend
                 this.feedback = response.feedback || option.feedback || 'Good choice.'
                 
-                // Update total score (can be based on updatedMetrics if needed)
+                // ========== VERIFICATION & COMPARISON ==========
+                console.log('████████████████████████████████████████')
+                console.log('📋 BACKEND RESPONSE:')
+                console.log('Backend returned updated metrics:', response.updatedMetrics)
+                
+                // Verify metrics were actually updated
                 if (response.updatedMetrics && Array.isArray(response.updatedMetrics)) {
-                    // Feedback received, metrics already updated in state
-                    console.log('Metrics updated:', response.updatedMetrics)
+                    console.log('\n✅ VERIFICATION RESULTS:')
+                    
+                    // Double-check that state reflects the updates
+                    const metersAfter = this.meters
+                    response.updatedMetrics.forEach(metric => {
+                        // Backend format: {metric: 'Authority', new_score: 35}
+                        const metricName = metric.metric_name || metric.name || metric.metric
+                        const expectedScore = metric.new_score || metric.score
+                        const actualScore = metersAfter[metricName]
+                        
+                        if (actualScore !== expectedScore) {
+                            console.warn(
+                                `❌ MISMATCH for ${metricName}: expected ${expectedScore}, got ${actualScore}`
+                            )
+                        } else {
+                            console.log(
+                                `✅ ${metricName}: ${actualScore} (correct)`
+                            )
+                        }
+                    })
                 }
-                this.totalScore += 10
+                
+                // Update total score based on actual metric changes
+                if (response.updatedMetrics && Array.isArray(response.updatedMetrics)) {
+                    const metersAfter = this.meters
+                    const score = Object.values(metersAfter).reduce((sum, val) => sum + val, 0) / Object.keys(metersAfter).length
+                    this.totalScore = Math.round(score)
+                }
+                
+                console.log('████████████████████████████████████████\n')
                 
             } catch (error) {
                 console.error('Error saving MCQ response:', error)
                 this.feedback = 'Error saving response. Please try again.'
+                // Revert the answer on error
+                this.selectedAnswers[this.current.id] = previousAnswer
             } finally {
                 // Allow moving forward after a short delay
                 setTimeout(() => { this.locked = false }, 250)
@@ -279,6 +347,18 @@ export default {
         // Finish and redirect to simulators
         finishAndNavigate() {
             this.$router.push('/simulator')
+        }
+    },
+
+    mounted() {
+        // Get simulator ID from route query
+        const simulatorId = this.$route.query.id
+        if (simulatorId) {
+            this.simulatorId = simulatorId
+            this.fetchSimulator()
+        } else {
+            this.error = 'No simulator ID provided.'
+            this.loading = false
         }
     }
 }
