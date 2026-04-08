@@ -22,6 +22,10 @@ export const ADD_SIMULATOR = 'ADD_SIMULATOR'
 // ============ DAILY CHECK-IN ============
 export const SET_DAILY_CHECKIN_QUESTIONS = 'SET_DAILY_CHECKIN_QUESTIONS'
 
+// ============ MCQ RESPONSES ============
+export const SET_MCQ_RESPONSE = 'SET_MCQ_RESPONSE'
+export const UPDATE_MCQ_RESPONSE = 'UPDATE_MCQ_RESPONSE'
+
 
 
 

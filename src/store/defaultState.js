@@ -16,6 +16,7 @@ export default function getDefaultState() {
         simulatorTags: [],
         simulatorMetrics: [],
         dailyCheckinQuestions: [],
+        mcqResponses: [],
 
 
 

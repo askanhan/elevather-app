@@ -184,6 +184,35 @@ export const fetchUserProgress = async function ({ state }, userId) {
   }
 }
 
+//saving MCQ response for a course question
+export const saveMCQResponse = async function ({ state }, { userId, selectedOptionId }) {
+  try {
+    const payload = {
+      user_id: userId,
+      selected_option_id: selectedOptionId
+    }
+    console.log('Sending MCQ response:', payload)
+    const { data } = await api.post('/user/response/mcq/', payload)
+    
+    // Store the response in state
+    store.commit(types.SET_MCQ_RESPONSE, {
+      userId: userId,
+      optionId: selectedOptionId,
+      feedback: data.feedback,
+      updatedMetrics: data.updated_metrics
+    })
+    
+    return {
+      feedback: data.feedback,
+      updatedMetrics: data.updated_metrics
+    }
+  } catch (error) {
+    console.error('Error saving MCQ response:', error)
+    throw error
+  }
+}
+
+
 
 
 

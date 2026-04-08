@@ -89,11 +89,28 @@
                                 <div v-if="comp.type === 'mcq'" class="comp-mcq">
                                     <div class="mcq-question">{{ comp.question }}</div>
                                     <button v-for="opt in comp.options" :key="opt.id" class="option"
-                                        :class="{ selected: answers[slide.id] == opt.id }"
-                                        @click="selectOption(slide.id, opt.id)">
+                                        :class="{ selected: answers[slide.id] == opt.id, saving: savingMCQ[slide.id] }"
+                                        @click="selectOption(slide.id, opt.id)"
+                                        :disabled="savingMCQ[slide.id]">
                                         <span class="radio" :class="{ on: answers[slide.id] == opt.id }"></span>
                                         <span class="optText">{{ opt.text }}</span>
+                                        <span v-if="savingMCQ[slide.id] && answers[slide.id] == opt.id" class="saving-indicator">💾</span>
                                     </button>
+                                    
+                                    <!-- Feedback section -->
+                                    <div v-if="answers[slide.id] && mcqFeedback[slide.id]" class="mcq-feedback">
+                                        <div class="feedback-label">Feedback:</div>
+                                        <div class="feedback-text">{{ mcqFeedback[slide.id] }}</div>
+                                    </div>
+                                    
+                                    <!-- Metrics update section -->
+                                    <div v-if="answers[slide.id] && mcqMetrics[slide.id] && mcqMetrics[slide.id].length > 0" class="mcq-metrics">
+                                        <div class="metrics-label">Score Updates:</div>
+                                        <div v-for="metric in mcqMetrics[slide.id]" :key="metric.metric" class="metric-item">
+                                            <span class="metric-name">{{ metric.metric }}:</span>
+                                            <span class="metric-value">{{ metric.new_score }}/100</span>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- Open Question -->

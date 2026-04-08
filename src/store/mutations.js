@@ -62,6 +62,36 @@ export const mutations = {
   [types.SET_DAILY_CHECKIN_QUESTIONS](state, questions) {
     state.dailyCheckinQuestions = questions || []
   },
+  
+  //mutations for mcq responses
+  [types.SET_MCQ_RESPONSE](state, { userId, optionId, feedback, updatedMetrics }) {
+    if (!state.mcqResponses) {
+      state.mcqResponses = []
+    }
+    const existingIndex = state.mcqResponses.findIndex(r => 
+      r.userId === userId && r.optionId === optionId
+    )
+    if (existingIndex !== -1) {
+      state.mcqResponses[existingIndex] = { userId, optionId, feedback, updatedMetrics }
+    } else {
+      state.mcqResponses.push({ userId, optionId, feedback, updatedMetrics })
+    }
+  },
+  
+  [types.UPDATE_MCQ_RESPONSE](state, { userId, optionId, feedback, updatedMetrics }) {
+    if (!state.mcqResponses) {
+      state.mcqResponses = []
+    }
+    const response = state.mcqResponses.find(r => 
+      r.userId === userId && r.optionId === optionId
+    )
+    if (response) {
+      response.feedback = feedback
+      response.updatedMetrics = updatedMetrics
+    } else {
+      state.mcqResponses.push({ userId, optionId, feedback, updatedMetrics })
+    }
+  },
 
 
 

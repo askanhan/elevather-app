@@ -16,11 +16,14 @@ export default {
             dragging: false,
             answers: {},
             openAnswers: {},
+            mcqFeedback: {}, // Store feedback for each MCQ
+            mcqMetrics: {}, // Store metrics updates for each MCQ
             error: null,
             moduleId: null,
             userId: 1,
             progressStarted: false,
-            loading: false
+            loading: false,
+            savingMCQ: {} // Track which MCQs are being saved
         }
     },
 
@@ -248,7 +251,31 @@ export default {
         selectOption(slideId, optionId) {
             console.log('selectOption called:', { slideId, optionId, answers: this.answers })
             this.answers[slideId] = optionId
-            console.log('answers after select:', this.answers)
+            
+            // Mark this MCQ as saving
+            this.savingMCQ[slideId] = true
+            
+            // Save the MCQ response to the backend
+            this.$store.dispatch('saveMCQResponse', {
+                userId: this.userId,
+                selectedOptionId: optionId
+            })
+            .then((response) => {
+                console.log('MCQ response saved successfully:', response)
+                
+                // Store feedback and metrics for this MCQ
+                this.mcqFeedback[slideId] = response.feedback
+                this.mcqMetrics[slideId] = response.updatedMetrics
+                
+                this.savingMCQ[slideId] = false
+            })
+            .catch((error) => {
+                console.error('Error saving MCQ response:', error)
+                this.savingMCQ[slideId] = false
+                
+                // Show error message but keep the answer selected
+                this.$store.commit('SHOW_MESSAGE', ['Error saving your response. Please try again.', 'error'])
+            })
         },
 
         getFeedback(component, optionId) {
