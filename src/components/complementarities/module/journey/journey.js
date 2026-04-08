@@ -68,7 +68,7 @@ export default {
 
         totalProgression() {
             const allModules = this.modules || []
-            const completed = allModules.filter(m => m.status === 'done').length
+            const completed = allModules.filter(m => m.status === 'Done').length
             const total = allModules.length
             return { completed, total }
         },
@@ -95,7 +95,8 @@ export default {
 
             Promise.all([
                 this.$store.dispatch('fetchJourneyProgressStatuses'),
-                this.$store.dispatch('fetchJourneyData')
+                this.$store.dispatch('fetchJourneyData'),
+                this.$store.dispatch('fetchUserProgress', 1) // userId: 1 for now
             ])
                 .then(() => {
                     if (this.categories.length === 0 || this.modules.length === 0) {
@@ -141,7 +142,7 @@ export default {
                         id: mod.id,
                         title: mod.title,
                         level: this.determineLevelFromDay(mod.day_number),
-                        status: 'not_started',
+                        status: mod.status || 'Not started',
                         summary: mod.description || 'Module content',
                         outcomes: mod.target_audience ? [mod.target_audience] : ['Learn and practice']
                     }))
@@ -196,13 +197,34 @@ export default {
         },
 
         statusLabel(status) {
-            if (status === 'done') return 'Done'
-            if (status === 'in_progress') return 'In progress'
+            if (status === 'Done') return 'Done'
+            if (status === 'In progress') return 'In progress'
             return 'Not started'
         },
 
         statusClass(status) {
-            return { done: status === 'done', in_progress: status === 'in_progress', not_started: status === 'not_started' }
+            return { done: status === 'Done', in_progress: status === 'In progress', not_started: status === 'Not started' }
+        },
+
+        getTrackStatusClass(track) {
+            const modules = track.modules || []
+            if (modules.length === 0) return ''
+            
+            // If any module is done, show as done (green)
+            if (modules.some(m => m.status === 'Done')) {
+                return 'track-done'
+            }
+            // If any module is in progress, show as in progress (orange)
+            if (modules.some(m => m.status === 'In progress')) {
+                return 'track-in-progress'
+            }
+            return 'track-not-started'
+        },
+
+        getModuleStatusClass(status) {
+            if (status === 'Done') return 'module-done'
+            if (status === 'In progress') return 'module-in-progress'
+            return 'module-not-started'
         }
     }
 }

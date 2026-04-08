@@ -16,7 +16,11 @@ export default {
             dragging: false,
             answers: {},
             openAnswers: {},
-            error: null
+            error: null,
+            moduleId: null,
+            userId: 1,
+            progressStarted: false,
+            loading: false
         }
     },
 
@@ -64,36 +68,54 @@ export default {
         // Fetch cards from module API
         fetchCards() {
             // Get module ID from URL query params
-            const moduleId = this.$route.query.id
+            const moduleId = parseInt(this.$route.query.id, 10)
             
-            if (!moduleId) {
+            if (!moduleId || isNaN(moduleId)) {
                 this.error = 'No module ID provided.'
                 return
             }
             
-            // Fetch fresh data in background (data displays immediately via reactive state)
+            this.moduleId = moduleId
+            this.loading = true
             this.error = null
             
             // Fetch the cards for this module
             this.$store.dispatch('fetchCourseCards', moduleId)
                 .then(() => {
-
                     if (this.courseCards.length === 0) {
                         this.error = 'No cards found for this module.'
+                        this.loading = false
                         return
                     }
-
-                    // Transform cards into slides
-                    this.slides = this.transformCardsToSlides(this.courseCards)
 
                     // Set course title
                     if (this.courseCards.length > 0) {
                         this.course.title = this.courseCards[0].title || 'Module'
                     }
+                    
+                    this.loading = false
+                    
+                    // Update progress to "In progress" - don't block if it fails
+                    return this.$store.dispatch('updateUserProgress', {
+                        userId: this.userId,
+                        ownerType: 'module',
+                        ownerId: moduleId,
+                        status: 'In progress'
+                    })
+                })
+                .then(() => {
+                    this.progressStarted = true
                 })
                 .catch(err => {
                     console.error('Error while fetching module cards:', err)
-                    this.error = 'Impossible to load module. Please try again later.'
+                    // Only show error if cards weren't loaded
+                    if (this.courseCards.length === 0) {
+                        this.error = 'Impossible to load module. Please try again later.'
+                    } else {
+                        // Cards loaded but progress update failed - log it but don't block
+                        console.warn('Progress update failed but cards loaded:', err)
+                    }
+                    this.loading = false
                 })
         },
 
@@ -146,9 +168,10 @@ export default {
                 this.currentIndex += 1
                 this.syncReadingToSlide()
             } else {
+                // Last slide - finish the course
                 this.reading = false
                 this.stopReadingTimer()
-                this.finishContent()
+                this.finishCourse()
             }
         },
 
@@ -258,6 +281,24 @@ export default {
 
         finishContent() {
             this.$router.push('/journey')
+        },
+
+        finishCourse() {
+            // Update progress to "Done"
+            this.$store.dispatch('updateUserProgress', {
+                userId: this.userId,
+                ownerType: 'module',
+                ownerId: this.moduleId,
+                status: 'Done'
+            })
+                .then(() => {
+                    this.$router.push('/journey')
+                })
+                .catch(err => {
+                    console.error('Error finishing course:', err)
+                    // Still redirect even if update fails
+                    this.$router.push('/journey')
+                })
         }
     },
 

@@ -8,6 +8,7 @@ export default function getDefaultState() {
         journeyStatuses: [],
         journeyCategories: [],
         journeyModules: [],
+        userProgress: [],
         //for simulator
         simulators: [],
         simulatorLevels: [],

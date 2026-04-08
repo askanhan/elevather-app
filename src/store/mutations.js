@@ -31,6 +31,15 @@ export const mutations = {
       }
     })
   },
+  [types.SET_USER_PROGRESS](state, progress) {
+    state.userProgress = progress || []
+  },
+  [types.UPDATE_MODULE_STATUS](state, { moduleId, status }) {
+    const module = (state.journeyModules || []).find(m => m.id === moduleId)
+    if (module) {
+      module.status = status
+    }
+  },
   //mutations for simulator
   [types.SET_SIMULATORS](state, simulators) {
     state.simulators = simulators || []

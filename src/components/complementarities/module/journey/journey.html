@@ -48,7 +48,7 @@
 
         <!-- Content -->
         <section v-if="!loading" class="list">
-            <article v-for="track in filteredTracks" :key="track.id" class="trackCard">
+            <article v-for="track in filteredTracks" :key="track.id" class="trackCard" :class="getTrackStatusClass(track)">
                 <button class="trackHeader" @click="toggle(track.id)">
                     <div class="left">
                         <div class="badge" :style="{ background: track.color }">{{ track.short }}</div>
@@ -64,11 +64,6 @@
 
                     <div class="right">
                         <div class="progress">
-                            <div class="progressTop">
-                                <span class="progressLabel">Completed</span>
-                                <span class="progressValue">{{ completedCount(track) }}/{{ track.modules.length
-                                }}</span>
-                            </div>
                             <div class="bar">
                                 <div class="barFill"
                                     :style="{ width: completionPercent(track) + '%', background: track.color }"></div>
@@ -82,7 +77,7 @@
                 <div v-show="isOpen(track.id)" class="trackBody">
                     <h3 class="sectionTitle">Modules</h3>
 
-                    <button v-for="m in filteredModules(track)" :key="m.id" class="module" @click="goToCourse(m)">
+                    <button v-for="m in filteredModules(track)" :key="m.id" class="module" :class="getModuleStatusClass(m.status)" @click="goToCourse(m)">
                         <div class="moduleTop">
                             <div class="moduleTitleRow">
                                 <div class="moduleTitleWrap">

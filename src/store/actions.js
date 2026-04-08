@@ -38,14 +38,21 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 let refreshInFlight = null // aynı anda tek refresh
 
+// Cache tracking (without mutations)
+let cachedCourseCardsModuleId = null
+let cachedSimulatorCardsSimulatorId = null
+
 // -------------------- ACTIONS --------------------
 
 //fetching cards for a module
 export const fetchCourseCards = async function ({ state }, moduleId) {
+  // Return cached cards if already loaded for THIS moduleId
+  if (cachedCourseCardsModuleId === moduleId && state.courseCards.length > 0) return true
   const { data } = await api.get(`/module/${moduleId}/cards-full/`)
   if (!data?.cards?.length) throw new Error('No cards found')
   store.commit(types.SET_COURSE_CARDS_FOR_MODULE, { moduleId, cards: data.cards })
   store.commit(types.SET_COURSE_CARDS, data.cards)
+  cachedCourseCardsModuleId = moduleId // Update cache tracking
   return true
 }
 //fetching statuses for tracks page filter based on statuses
@@ -94,6 +101,8 @@ export const fetchSimulators = async function ({ state }) {
 }
 //fetching cards for a simulator
 export const fetchSimulatorCards = async function ({ state }, simulatorId) {
+  // Return cached cards if already loaded for THIS simulatorId
+  if (cachedSimulatorCardsSimulatorId === simulatorId && state.simulatorCards.length > 0) return true
   const { data: cardsData } = await api.get(`/simulator/${simulatorId}/cards-full/`)
   if (!cardsData?.cards?.length) {
     store.commit(types.SET_SIMULATOR_CARDS, [])
@@ -101,6 +110,7 @@ export const fetchSimulatorCards = async function ({ state }, simulatorId) {
   }
   store.commit(types.SET_SIMULATOR_CARDS_FOR_SIMULATOR, { simulatorId, cards: cardsData.cards })
   store.commit(types.SET_SIMULATOR_CARDS, cardsData.cards)
+  cachedSimulatorCardsSimulatorId = simulatorId // Update cache tracking
   return true
 }
 //fetching tags for a simulator
@@ -118,16 +128,58 @@ export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
   return true
 }
 //fetching questions for daily check-in
-export const fetchDailyCheckinQuestions = async function ({ commit }) {
+export const fetchDailyCheckinQuestions = async function ({ state }) {
   try {
     const { data } = await api.get('/daily-checkin/questions/')
     if (!data || !Array.isArray(data)) {
       throw new Error('Invalid daily checkin questions format.')
     }
-    commit(types.SET_DAILY_CHECKIN_QUESTIONS, data)
+    store.commit(types.SET_DAILY_CHECKIN_QUESTIONS, data)
     return true
   } catch (error) {
     console.error('Error fetching daily checkin questions:', error)
+    throw error
+  }
+}
+
+//updating user progress for a module/simulator
+export const updateUserProgress = async function ({ state }, { userId, ownerType, ownerId, status }) {
+  try {
+    const payload = {
+      user_id: userId,
+      owner_type: ownerType,
+      owner_id: ownerId,
+      status: status
+    }
+    console.log('Sending progress update:', payload)
+    const { data } = await api.post('/user/progress/update/', payload)
+    // Update local state with new status
+    store.commit(types.UPDATE_MODULE_STATUS, { moduleId: ownerId, status: status })
+    return true
+  } catch (error) {
+    console.error('Error updating user progress:', error)
+    throw error
+  }
+}
+
+//fetching user progress for a specific user
+export const fetchUserProgress = async function ({ state }, userId) {
+  try {
+    // Return cached progress if already loaded
+    if (state.userProgress.length > 0) return true
+    const { data } = await api.get(`/user/${userId}/progress/`)
+    store.commit(types.SET_USER_PROGRESS, data)
+    // Synchronize module statuses with user progress
+    if (Array.isArray(data)) {
+      data.forEach(item => {
+        if (item.owner_type === 'module') {
+          store.commit(types.UPDATE_MODULE_STATUS, { moduleId: item.owner_id, status: item.status })
+        }
+      })
+    }
+    return true
+  } catch (error) {
+    console.error('Error fetching user progress:', error)
     throw error
   }
 }
