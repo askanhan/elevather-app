@@ -1,8 +1,12 @@
+import SimulatorResult from '@/components/complementarities/simulator/simulatorResult/simulatorResult.vue'
+import AudioButton from '@/components/complementarities/audioPlayer/audioButton.vue'
+
 export default {
     name: 'SimulatorPlay',
 
     components: {
-        SimulatorResult: () => import('@/components/complementarities/simulator/simulatorResult/simulatorResult.vue')
+        SimulatorResult,
+        AudioButton
     },
 
     data() {
@@ -137,6 +141,7 @@ export default {
             return cards.map((card) => {
                 return {
                     id: `card_${card.id}`,
+                    cardId: card.id,  // Store numeric ID separately for audio
                     kicker: card.subtitle || '',
                     title: card.title || 'Card',
                     text: card.end_text || '',
@@ -360,5 +365,11 @@ export default {
             this.error = 'No simulator ID provided.'
             this.loading = false
         }
+    },
+
+    beforeDestroy() {
+        // Stop audio when navigating away
+        const audioService = require('@/components/complementarities/audioPlayer/audioService.js').default
+        audioService.stop()
     }
 }

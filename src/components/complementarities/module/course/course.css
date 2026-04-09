@@ -488,6 +488,22 @@
     text-align: center;
 }
 
+/* Audio button footer */
+.slide-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.slide-footer-left {
+    display: flex;
+    align-items: center;
+}
+
 @supports (padding: max(0px)) {
     .nav {
         bottom: max(12px, env(safe-area-inset-bottom));

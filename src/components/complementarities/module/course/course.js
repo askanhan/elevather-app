@@ -1,5 +1,11 @@
+import AudioButton from '@/components/complementarities/audioPlayer/audioButton.vue'
+
 export default {
     name: 'CourseMock',
+
+    components: {
+        AudioButton
+    },
 
     data() {
         return {
@@ -129,6 +135,7 @@ export default {
             cards.forEach((card) => {
                 const cardSlide = {
                     id: `card_${card.id}`,
+                    cardId: card.id,  // Store numeric ID separately for audio
                     type: 'card',
                     title: card.title || 'Card',
                     subtitle: card.subtitle || '',
@@ -334,5 +341,8 @@ export default {
 
     beforeDestroy() {
         this.stopReadingTimer()
+        // Stop audio when navigating away
+        const audioService = require('@/components/complementarities/audioPlayer/audioService.js').default
+        audioService.stop()
     }
 }

@@ -94,6 +94,16 @@
                     <div class="whyBody">{{ current.lens }}</div>
                 </details>
             </div>
+
+            <!-- Step Footer -->
+            <div class="step-footer">
+                <audio-button 
+                    v-if="current"
+                    :owner-type="'card'" 
+                    :owner-id="current.cardId" 
+                    class="step-footer-left">
+                </audio-button>
+            </div>
         </section>
 
         <!-- Debrief Section -->

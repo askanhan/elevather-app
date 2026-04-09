@@ -147,6 +147,16 @@
                         </template>
 
                     </div>
+
+                    <!-- Slide Footer -->
+                    <div class="slide-footer">
+                        <audio-button 
+                            v-if="slide.type === 'card'"
+                            :owner-type="'card'" 
+                            :owner-id="slide.cardId" 
+                            class="slide-footer-left">
+                        </audio-button>
+                    </div>
                 </article>
             </div>
         </section>

@@ -983,7 +983,34 @@ export const unhideConversation = async function ({ state }, otherProfileId) {
   return data
 }
 
+// ============ AUDIO ============
+export const fetchAudioForCard = async function ({ state, commit }, { ownerType, ownerId }) {
+  const key = `${ownerType}-${ownerId}`
+  
+  // Check cache first
+  if (state.audioCache[key]) {
+    return state.audioCache[key].url
+  }
 
+  try {
+    const response = await api.get(
+      `/audio/fetch/${ownerType}/${ownerId}/`
+    )
+
+    const audioUrl = response.data.audio_url || response.data.url
+    if (!audioUrl) {
+      throw new Error('No audio URL in response')
+    }
+
+    // Cache it in Vuex
+    commit('AUDIO_CARD_FETCHED', { key, url: audioUrl })
+
+    return audioUrl
+  } catch (error) {
+    console.error(`[fetchAudioForCard] Failed to fetch audio for ${key}:`, error)
+    throw error
+  }
+}
 
 export const updateProfile = async function ({ state }, { id, payload }) {
   try {

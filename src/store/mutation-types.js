@@ -129,3 +129,6 @@ export const CLOSE_DIALOG = 'CLOSE_DIALOG'
 export const LAST_ACTIVE_DIALOG = 'LAST_ACTIVE_DIALOG'
 
 export const SET_USER_PREFERENCES = 'SET_USER_PREFERENCES'
+
+// ============ AUDIO ============
+export const AUDIO_CARD_FETCHED = 'AUDIO_CARD_FETCHED'

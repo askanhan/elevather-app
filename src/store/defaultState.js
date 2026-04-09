@@ -95,6 +95,7 @@ export default function getDefaultState() {
         closeDialog: false,
         lastActiveDialog: '',
         selectedStory: null,
+        audioCache: {},
         
     }
 }

@@ -554,6 +554,11 @@ export const mutations = {
 
   SET_STORY_TAGS(state, tags) {
     state.storyTags = Array.isArray(tags) ? tags : []
+  },
+
+  // ============ AUDIO ============
+  [types.AUDIO_CARD_FETCHED](state, { key, url }) {
+    Vue.set(state.audioCache, key, { url, timestamp: Date.now() })
   }
 
 }
