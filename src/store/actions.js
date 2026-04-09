@@ -450,9 +450,9 @@ export const fetchStoriesByCategory = async function ({ state }, { categoryId, v
     throw error
   }
 }
-/*
-// Submit a reaction to a story
-export const submitStoryReaction = async function ({ state }, { storyId, reactionType, userId }) {
+
+// Toggle a reaction to a story (create/update/delete)
+export const toggleStoryReaction = async function ({ state, commit }, { storyId, reactionType, userId }) {
   try {
     const payload = {
       story_id: storyId,
@@ -460,39 +460,18 @@ export const submitStoryReaction = async function ({ state }, { storyId, reactio
       user_id: userId
     }
     
-    const { data } = await api.post('/story-reactions/', payload)
+    const { data } = await api.post('/stories/react/', payload)
     
-    // Update the reaction count in the store
-    store.commit(types.ADD_STORY_REACTION, { storyId, reaction: reactionType })
+    // Backend returns action: 'created', 'updated', or 'deleted'
+    // The component handles state updates directly, so just return the response
     
     return data
   } catch (error) {
-    console.error('submitStoryReaction error:', error)
+    console.error('toggleStoryReaction error:', error)
     throw error
   }
 }
 
-// Remove a reaction from a story
-export const removeStoryReaction = async function ({ state }, { storyId, reactionType, userId }) {
-  try {
-    const { data } = await api.delete(`/story-reactions/`, {
-      data: {
-        story_id: storyId,
-        reaction_type: reactionType,
-        user_id: userId
-      }
-    })
-    
-    // Update the reaction count in the store
-    store.commit(types.REMOVE_STORY_REACTION, { storyId, reaction: reactionType })
-    
-    return data
-  } catch (error) {
-    console.error('removeStoryReaction error:', error)
-    throw error
-  }
-}
-*/
 // Create a new story
 export const createStory = async function ({ state }, { userId, content, track, context, tags, authorName = 'Anonymous' }) {
   try {

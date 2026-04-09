@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 // Mapping for localisation IDs to text (backward compatible)
 // Now backend stores text directly (e.g., "Community") but we keep this for legacy data
 const CONTEXT_TEXT_MAP = {
@@ -235,21 +237,55 @@ export default {
             return !!r[kind]
         },
 
-        toggleReaction(postId, kind) {
+        async toggleReaction(postId, kind) {
             // Find the post in the store
             const post = (this.$store.state.allStories || []).find(x => x.id === postId)
             if (!post) return
 
-            const r = this.reactions[postId] || { relatable: false, support: false }
-            const next = !r[kind]
+            try {
+                // Call the actual API through the store action
+                const result = await this.$store.dispatch('toggleStoryReaction', {
+                    storyId: postId,
+                    reactionType: kind,
+                    userId: this.currentUserId
+                })
 
-            // For now: update local reaction state (mock)
-            // TODO: Implement actual API call to submitStoryReaction / removeStoryReaction when backend endpoints are ready
-            if (kind === 'relatable' && post.reactions_count) post.reactions_count.relatable += next ? 1 : -1
-            if (kind === 'support' && post.reactions_count) post.reactions_count.support += next ? 1 : -1
-
-            r[kind] = next
-            this.$set(this.reactions, postId, r)
+                // Track local reaction state for UI feedback
+                const r = this.reactions[postId] || { relatable: false, support: false }
+                
+                // Initialize reactions_count if needed
+                if (!post.reactions_count) {
+                    post.reactions_count = { relatable: 0, support: 0 }
+                }
+                
+                // Update local state based on backend action
+                if (result.action === 'created') {
+                    // User added a reaction
+                    r[kind] = true
+                    post.reactions_count[kind] = (post.reactions_count[kind] || 0) + 1
+                } else if (result.action === 'updated') {
+                    // User switched from one reaction to another
+                    if (r.relatable && kind !== 'relatable') {
+                        r.relatable = false
+                        post.reactions_count.relatable = Math.max(0, (post.reactions_count.relatable || 1) - 1)
+                    }
+                    if (r.support && kind !== 'support') {
+                        r.support = false
+                        post.reactions_count.support = Math.max(0, (post.reactions_count.support || 1) - 1)
+                    }
+                    r[kind] = true
+                    post.reactions_count[kind] = (post.reactions_count[kind] || 0) + 1
+                } else if (result.action === 'deleted') {
+                    // User removed their reaction
+                    r[kind] = false
+                    post.reactions_count[kind] = Math.max(0, (post.reactions_count[kind] || 1) - 1)
+                }
+                
+                // Use Vue.set for proper reactivity
+                Vue.set(this.reactions, postId, r)
+            } catch (error) {
+                console.error('Error toggling reaction:', error)
+            }
         },
 
         openComments() {
@@ -454,3 +490,4 @@ export default {
         this.loadStoryTags()
     }
 }
+
