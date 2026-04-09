@@ -482,8 +482,46 @@ export const mutations = {
 
   SET_SELECTED_STORY(state, story) {
     state.selectedStory = story
+  },
+
+  // ============ STORIES ============
+  [types.SET_ALL_STORIES](state, stories) {
+    state.allStories = stories || []
+  },
+
+  [types.SET_USER_STORIES](state, stories) {
+    state.userStories = stories || []
+  },
+
+  [types.SET_CATEGORY_STORIES](state, stories) {
+    state.categoryStories = stories || []
+  },
+
+  [types.ADD_STORY_REACTION](state, { storyId, reaction }) {
+    const story = state.allStories.find(s => s.id === storyId)
+    if (story) {
+      if (!story.reactions_count) {
+        story.reactions_count = { relatable: 0, support: 0, powerful: 0, inspiring: 0 }
+      }
+      if (reaction && story.reactions_count.hasOwnProperty(reaction)) {
+        story.reactions_count[reaction]++
+      }
+      story.user_has_reacted = reaction
+    }
+  },
+
+  [types.REMOVE_STORY_REACTION](state, { storyId, reaction }) {
+    const story = state.allStories.find(s => s.id === storyId)
+    if (story && story.reactions_count && story.reactions_count.hasOwnProperty(reaction)) {
+      if (story.reactions_count[reaction] > 0) {
+        story.reactions_count[reaction]--
+      }
+      if (story.user_has_reacted === reaction) {
+        story.user_has_reacted = null
+      }
+    }
   }
 
-
 }
+
 

@@ -88,5 +88,9 @@ export default function getDefaultState() {
         closeDialog: false,
         lastActiveDialog: '',
         selectedStory: null,
+        // Stories
+        allStories: [],
+        userStories: [],
+        categoryStories: [],
     }
 }

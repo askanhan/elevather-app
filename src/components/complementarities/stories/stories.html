@@ -12,6 +12,11 @@
 
             <div class="tools">
                 <input v-model="query" class="search" type="search" placeholder="Search stories, people, topics…" />
+                
+                <button class="filterBtn" :class="{ active: showUserStoriesOnly }" @click="toggleUserStoriesOnly">
+                    <span class="filterIcon">👤</span>
+                    My Stories
+                </button>
             </div>
         </header>
 
@@ -32,7 +37,7 @@
 
                 <div class="sectionHead">
                     <h2 class="h2">Real Stories</h2>
-                    <p class="hint">Anonymous one-liners from real life. No "likes". Only "I relate" and "Support".</p>
+                    <p class="hint">{{ showUserStoriesOnly ? 'Your stories' : 'Anonymous one-liners from real life. No "likes". Only "I relate" and "Support".' }}</p>
                 </div>
 
                 <div class="feed">
@@ -40,16 +45,16 @@
                         <div class="postHead">
                             <div class="anon">
                                 <span class="anonDot"></span>
-                                <span class="anonTxt">Anonymous</span>
+                                <span class="anonTxt">{{ p.author || 'Anonymous' }}</span>
                             </div>
                             <div class="postMeta">
-                                <span class="chip">{{ p.track }}</span>
-                                <span class="chip">{{ p.when }}</span>
+                                <span class="chip">{{ p.track || p.category?.title }}</span>
+                                <span class="chip">{{ p.when || p.created_at }}</span>
                             </div>
                         </div>
 
                         <div class="postBody">
-                            <div class="postText">{{ p.text }}</div>
+                            <div class="postText">{{ p.content || p.text }}</div>
 
                             <div v-if="p.tags && p.tags.length" class="tagRow">
                                 <span v-for="t in p.tags" :key="t" class="tag">{{ t }}</span>
@@ -57,18 +62,18 @@
                         </div>
 
                         <div class="postActions">
-                            <button class="pillBtn" :class="{ on: reacted(p.id, 'relate') }"
-                                @click="toggleReaction(p.id, 'relate')">
+                            <button class="pillBtn" :class="{ on: reacted(p.id, 'relatable') }"
+                                @click="toggleReaction(p.id, 'relatable')">
                                 <span class="ic">🤝</span>
                                 <span>I relate</span>
-                                <span class="count">{{ p.relate }}</span>
+                                <span class="count">{{ p.reactions_count?.relatable || p.relate || 0 }}</span>
                             </button>
 
                             <button class="pillBtn" :class="{ on: reacted(p.id, 'support') }"
                                 @click="toggleReaction(p.id, 'support')">
                                 <span class="ic">💗</span>
                                 <span>Support</span>
-                                <span class="count">{{ p.support }}</span>
+                                <span class="count">{{ p.reactions_count?.support || p.support || 0 }}</span>
                             </button>
 
                             <button class="pillBtn ghost" @click="openComments(p)">

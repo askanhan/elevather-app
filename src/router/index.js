@@ -22,7 +22,6 @@ import selectTag from '@/components/screens/select-tag/select-tag.vue'
 import postContainer from '@/components/complementarities/PostContainer.vue'
 import Feedback from '../components/complementarities/Feedback.vue'
 import Course from '../components/complementarities/module/course/course.vue'
-import Story from '../components/complementarities/Story.vue'
 import SimulatorHome from '../components/complementarities/simulator/simulatorHome/simulatorHome.vue'
 import SimulatorPlay from '../components/complementarities/simulator/simulatorPlay/simulatorPlay.vue'
 import Journey from '../components/complementarities/module/journey/journey.vue'
@@ -164,18 +163,6 @@ const routes = [
       keepAlive: false,
       backButtonAvailable: true,
       moduleName: 'course',
-      firstPage: true,
-      showTabs: true
-    }
-  },
-  {
-    path: '/story',
-    name: 'story',
-    component: Story,
-    meta: {
-      keepAlive: false,
-      backButtonAvailable: true,
-      moduleName: 'story',
       firstPage: true,
       showTabs: true
     }

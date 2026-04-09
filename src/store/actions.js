@@ -122,13 +122,7 @@ export const fetchSimulatorTags = async function ({ state }, simulatorId) {
 //fetching metrics for a simulator
 export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
   const { data } = await api.get(`/simulator/${simulatorId}/metrics/`)
-
-  console.log('📊 RAW METRICS DATA from backend:', data)
-  
   const metricsData = Array.isArray(data) ? data : (data?.results || data?.metrics || [])
-  
-  console.log('📊 PROCESSED METRICS DATA:', metricsData)
-  
   store.commit(types.SET_SIMULATOR_METRICS, metricsData)
   return true
 }
@@ -345,6 +339,115 @@ export const submitDailyCheckin = async function ({ state }, { userId, optionIds
     throw error
   }
 }
+// -------------------- STORIES --------------------
+
+// Fetch all stories with optional filters
+export const fetchAllStories = async function ({ state }, { categoryId = null, userId = null, viewerId = null }) {
+  try {
+    let url = '/stories/'
+    const params = []
+    
+    if (categoryId) params.push(`category_id=${categoryId}`)
+    if (userId) params.push(`user_id=${userId}`)
+    if (viewerId) params.push(`viewer_id=${viewerId}`)
+    
+    if (params.length > 0) {
+      url += '?' + params.join('&')
+    }
+    
+    const { data } = await api.get(url)
+    store.commit(types.SET_ALL_STORIES, data)
+    return true
+  } catch (error) {
+    console.error('fetchAllStories error:', error)
+    throw error
+  }
+}
+
+// Fetch stories for a specific user
+export const fetchUserStories = async function ({ state }, { userId, viewerId = null }) {
+  try {
+    const { data } = await api.get(`/stories/?user_id=${userId}${viewerId ? `&viewer_id=${viewerId}` : ''}`)
+    store.commit(types.SET_USER_STORIES, data)
+    return true
+  } catch (error) {
+    console.error('fetchUserStories error:', error)
+    throw error
+  }
+}
+
+// Fetch stories by category
+export const fetchStoriesByCategory = async function ({ state }, { categoryId, viewerId = null }) {
+  try {
+    const { data } = await api.get(`/stories/?category_id=${categoryId}${viewerId ? `&viewer_id=${viewerId}` : ''}`)
+    store.commit(types.SET_CATEGORY_STORIES, data)
+    return true
+  } catch (error) {
+    console.error('fetchStoriesByCategory error:', error)
+    throw error
+  }
+}
+/*
+// Submit a reaction to a story
+export const submitStoryReaction = async function ({ state }, { storyId, reactionType, userId }) {
+  try {
+    const payload = {
+      story_id: storyId,
+      reaction_type: reactionType,
+      user_id: userId
+    }
+    
+    const { data } = await api.post('/story-reactions/', payload)
+    
+    // Update the reaction count in the store
+    store.commit(types.ADD_STORY_REACTION, { storyId, reaction: reactionType })
+    
+    return data
+  } catch (error) {
+    console.error('submitStoryReaction error:', error)
+    throw error
+  }
+}
+
+// Remove a reaction from a story
+export const removeStoryReaction = async function ({ state }, { storyId, reactionType, userId }) {
+  try {
+    const { data } = await api.delete(`/story-reactions/`, {
+      data: {
+        story_id: storyId,
+        reaction_type: reactionType,
+        user_id: userId
+      }
+    })
+    
+    // Update the reaction count in the store
+    store.commit(types.REMOVE_STORY_REACTION, { storyId, reaction: reactionType })
+    
+    return data
+  } catch (error) {
+    console.error('removeStoryReaction error:', error)
+    throw error
+  }
+}
+
+// Create a new story
+export const createStory = async function ({ state }, { userId, content, categoryId, tags }) {
+  try {
+    const payload = {
+      user_id: userId,
+      content,
+      category_id: categoryId,
+      tags
+    }
+    
+    const { data } = await api.post('/stories/', payload)
+    return data
+  } catch (error) {
+    console.error('createStory error:', error)
+    throw error
+  }
+}
+*/
 
 
 
