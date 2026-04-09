@@ -341,6 +341,69 @@ export const submitDailyCheckin = async function ({ state }, { userId, optionIds
 }
 // -------------------- STORIES --------------------
 
+// Fetch story categories (tracks)
+export const fetchStoryCategories = async function ({ state }) {
+  try {
+    if (state.storyCategories && state.storyCategories.length > 0) {
+      return state.storyCategories
+    }
+    
+    const { data } = await api.get('/categories/')
+    console.log('🔵 [fetchStoryCategories] Fetched categories:', data)
+    store.commit('SET_STORY_CATEGORIES', data)
+    
+    return data
+  } catch (error) {
+    console.error('❌ [fetchStoryCategories] Error:', error)
+    throw error
+  }
+}
+
+// Fetch story tags
+export const fetchStoryTags = async function ({ state }) {
+  try {
+    if (state.storyTags && state.storyTags.length > 0) {
+      return state.storyTags
+    }
+    
+    const { data } = await api.get('/story-tags/')
+    console.log('🔵 [fetchStoryTags] Fetched tags:', data)
+    store.commit('SET_STORY_TAGS', data)
+    
+    return data
+  } catch (error) {
+    console.error('❌ [fetchStoryTags] Error:', error)
+    throw error
+  }
+}
+
+// Build mapping from categories (dynamic)
+function buildTrackMapping(categories) {
+  const mapping = {}
+  if (Array.isArray(categories)) {
+    categories.forEach(cat => {
+      mapping[cat.name || cat.title] = cat.id
+    })
+  }
+  return mapping
+}
+
+// Mapping for context names to localisation IDs (static for now)
+const CONTEXT_TO_LOCALISATION_ID = {
+  'Work': 1,
+  'Family': 2,
+  'Community': 3,
+  'Self': 4
+}
+
+// Mapping for localisation IDs back to names (reverse)
+const LOCALISATION_ID_TO_TEXT = {
+  1: 'Work',
+  2: 'Family',
+  3: 'Community',
+  4: 'Self'
+}
+
 // Fetch all stories with optional filters
 export const fetchAllStories = async function ({ state }, { categoryId = null, userId = null, viewerId = null }) {
   try {
@@ -429,25 +492,68 @@ export const removeStoryReaction = async function ({ state }, { storyId, reactio
     throw error
   }
 }
-
+*/
 // Create a new story
-export const createStory = async function ({ state }, { userId, content, categoryId, tags }) {
+export const createStory = async function ({ state }, { userId, content, track, context, tags, authorName = 'Anonymous' }) {
   try {
+    // Build dynamic mapping from fetched categories
+    const categories = state.storyCategories || []
+    const trackMapping = {}
+    categories.forEach(cat => {
+      trackMapping[cat.name || cat.title] = cat.id
+    })
+    
+    // Convert track string to category_id number
+    const categoryId = trackMapping[track]
+    const finalCategoryId = categoryId !== undefined ? categoryId : (categories.length > 0 ? categories[0].id : 1)
+    
+    // Send context string directly (not converted to number)
+    // Backend will store the text value (e.g., "Community" not 3)
+    const contextStr = String(context)
+    
     const payload = {
       user_id: userId,
-      content,
-      category_id: categoryId,
-      tags
+      author_name: authorName,
+      category_id: finalCategoryId,
+      localisation: contextStr,
+      content: content,
+      tags: tags // Array of tag IDs or tag names
     }
+    const response = await api.post('/stories/create/', payload)
+    const { data } = response
     
-    const { data } = await api.post('/stories/', payload)
-    return data
+    // Refresh stories after creating
+    await fetchAllStories({ state }, { viewerId: userId })
+    
+    // Return the created story for tracking
+    return data || { id: null }
   } catch (error) {
-    console.error('createStory error:', error)
+    console.error('❌ [createStory] ERROR:', error.message)
+    console.error('❌ [createStory] Full error object:', error)
+    if (error.response) {
+      console.error('❌ [createStory] Response status:', error.response.status)
+      console.error('❌ [createStory] Response data:', error.response.data)
+      console.error('❌ [createStory] Response headers:', error.response.headers)
+    }
     throw error
   }
 }
-*/
+
+// Delete a story
+export const deleteStory = async function ({ state }, { storyId, userId }) {
+  try {
+    await api.delete(`/stories/${storyId}/delete/?user_id=${userId}`)
+    
+    // Refresh stories after deleting
+    await fetchAllStories({ state }, { viewerId: userId })
+    
+    return true
+  } catch (error) {
+    console.error('deleteStory error:', error)
+    throw error
+  }
+}
+
 
 
 

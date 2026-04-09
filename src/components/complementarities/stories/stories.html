@@ -49,7 +49,11 @@
                             </div>
                             <div class="postMeta">
                                 <span class="chip">{{ p.track || p.category?.title }}</span>
+                                <span class="chip">{{ getStoryContext(p) }}</span>
                                 <span class="chip">{{ p.when || p.created_at }}</span>
+                                <button v-if="isOwnStory(p)" class="deleteBtn" @click="deleteStory(p.id)" title="Delete story">
+                                    🗑️
+                                </button>
                             </div>
                         </div>
 
@@ -95,7 +99,7 @@
                 <div class="sectionHead">
                     <h2 class="h2">Share your story</h2>
                     <p class="hint">
-                        This will be posted anonymously. Keep it short and real. One moment is enough.
+                        Share brief, real moments from your life. Your story will appear anonymously in the feed for the community to relate to and support.
                     </p>
                 </div>
 
@@ -103,25 +107,23 @@
                     <div class="anonBanner">
                         <span class="anonShield">🛡️</span>
                         <div class="anonBannerTxt">
-                            <div class="anonTitle">Anonymous by default</div>
-                            <div class="anonDesc">We do not show names. In the real app, we would also review harmful
-                                content.</div>
+                            <div class="anonTitle">Your privacy is protected</div>
+                            <div class="anonDesc">All stories are posted anonymously. You can share freely without worry. We create a safe space for real stories.</div>
                         </div>
                     </div>
 
                     <label class="lbl">Your one-liner</label>
                     <textarea v-model="newStory.text" class="ta" maxlength="220"
-                        placeholder="Example: I said no to my boss today and I didn&apos;t explain for 10 minutes."></textarea>
+                        placeholder="Share a brief moment..."></textarea>
 
                     <div class="row">
                         <div class="field">
                             <label class="lbl">Track</label>
                             <select v-model="newStory.track" class="select2">
-                                <option value="I Dare">I Dare</option>
-                                <option value="I Speak">I Speak</option>
-                                <option value="I Earn">I Earn</option>
-                                <option value="I Lead">I Lead</option>
-                                <option value="I Impact">I Impact</option>
+                                <option value="" disabled>Select a track</option>
+                                <option v-for="cat in trackOptions" :key="cat.id" :value="cat.name || cat.title">
+                                    {{ cat.name || cat.title }}
+                                </option>
                             </select>
                         </div>
 
@@ -136,28 +138,54 @@
                         </div>
                     </div>
 
-                    <label class="lbl">Optional tags (mock)</label>
+                    <label class="lbl">Optional tags (up to 3)</label>
                     <div class="chipsPick">
-                        <button v-for="t in tagOptions" :key="t" class="pick" :class="{ on: newStory.tags.includes(t) }"
-                            @click="toggleTag(t)" type="button">
-                            {{ t }}
+                        <button v-for="tag in tagOptions" :key="tag.id" class="pick" :class="{ on: isTagSelected(tag.id) }"
+                            @click="toggleTag(tag)" type="button">
+                            {{ tag.name }}
                         </button>
                     </div>
 
                     <div class="shareBottom">
                         <div class="counter">{{ (newStory.text || '').length }}/220</div>
-                        <button class="send" :disabled="!canSend" @click="submitStory">
-                            Share anonymously
-                        </button>
+                        <div class="buttonsGroup">
+                            <button class="send" :disabled="!canSend" @click="submitStory">
+                                Share anonymously
+                            </button>
+                            <button class="sendNamed" :disabled="!canSend" @click="submitStoryWithName">
+                                Share with my name
+                            </button>
+                        </div>
                     </div>
 
                     <div v-if="sent" class="sent">
-                        ✅ Submitted (mock). In the real app, this would appear in "Real Stories" after review.
+                        ✅ Your story has been submitted! It will now appear in the Real Stories feed.
                     </div>
                 </div>
             </div>
 
         </section>
+
+        <!-- Delete Confirmation Modal (integrated in page, not browser dialog) -->
+        <div v-if="showDeleteModal" class="modalOverlay">
+            <div class="modalContent">
+                <div class="modalHeader">
+                    <h3>Delete Story</h3>
+                </div>
+                <div class="modalBody">
+                    <p>Are you sure you want to delete this story?</p>
+                    <p class="modalWarn">This action cannot be undone.</p>
+                </div>
+                <div class="modalFooter">
+                    <button class="modalCancel" @click="cancelDelete">
+                        Cancel
+                    </button>
+                    <button class="modalDelete" @click="confirmDeleteStory">
+                        Delete Story
+                    </button>
+                </div>
+            </div>
+        </div>
 
     </div>
 </template>

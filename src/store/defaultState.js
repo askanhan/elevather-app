@@ -15,15 +15,22 @@ export default function getDefaultState() {
         simulatorCards: [],
         simulatorTags: [],
         simulatorMetrics: [],
+        //for daily check-in
         dailyCheckinQuestions: [],
         dailyCheckinResponses: [],
         dailyCheckinPowerLevel: null,
+        //for mcq and open question responses
         mcqResponses: [],
         openQuestionResponses: [],
         //for simulator results
         simulatorResults: [],
         currentSimulatorResult: null,
-
+        // Stories
+        allStories: [],
+        userStories: [],
+        categoryStories: [],
+        storyCategories: [],
+        storyTags: [],
 
 
 
@@ -88,9 +95,6 @@ export default function getDefaultState() {
         closeDialog: false,
         lastActiveDialog: '',
         selectedStory: null,
-        // Stories
-        allStories: [],
-        userStories: [],
-        categoryStories: [],
+        
     }
 }

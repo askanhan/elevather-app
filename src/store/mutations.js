@@ -486,15 +486,35 @@ export const mutations = {
 
   // ============ STORIES ============
   [types.SET_ALL_STORIES](state, stories) {
-    state.allStories = stories || []
+    // Enrich stories with user_id if missing
+    const enrichedStories = Array.isArray(stories) ? stories.map(story => ({
+      ...story,
+      // Add user_id from user object if not present
+      user_id: story.user_id || story.user?.id || null,
+      // Ensure reactions_count exists
+      reactions_count: story.reactions_count || { relatable: 0, support: 0, powerful: 0, inspiring: 0 }
+    })) : []
+    state.allStories = enrichedStories
   },
 
   [types.SET_USER_STORIES](state, stories) {
-    state.userStories = stories || []
+    // Enrich stories with user_id if missing
+    const enrichedStories = Array.isArray(stories) ? stories.map(story => ({
+      ...story,
+      user_id: story.user_id || story.user?.id || null,
+      reactions_count: story.reactions_count || { relatable: 0, support: 0, powerful: 0, inspiring: 0 }
+    })) : []
+    state.userStories = enrichedStories
   },
 
   [types.SET_CATEGORY_STORIES](state, stories) {
-    state.categoryStories = stories || []
+    // Enrich stories with user_id if missing
+    const enrichedStories = Array.isArray(stories) ? stories.map(story => ({
+      ...story,
+      user_id: story.user_id || story.user?.id || null,
+      reactions_count: story.reactions_count || { relatable: 0, support: 0, powerful: 0, inspiring: 0 }
+    })) : []
+    state.categoryStories = enrichedStories
   },
 
   [types.ADD_STORY_REACTION](state, { storyId, reaction }) {
@@ -520,6 +540,20 @@ export const mutations = {
         story.user_has_reacted = null
       }
     }
+  },
+
+  [types.DELETE_STORY](state, storyId) {
+    state.allStories = state.allStories.filter(s => s.id !== storyId)
+    state.userStories = state.userStories.filter(s => s.id !== storyId)
+    state.categoryStories = state.categoryStories.filter(s => s.id !== storyId)
+  },
+
+  SET_STORY_CATEGORIES(state, categories) {
+    state.storyCategories = Array.isArray(categories) ? categories : []
+  },
+
+  SET_STORY_TAGS(state, tags) {
+    state.storyTags = Array.isArray(tags) ? tags : []
   }
 
 }
