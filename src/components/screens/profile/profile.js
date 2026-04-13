@@ -6,8 +6,6 @@ export default {
     data() {
         return {
             user: {
-                name: 'ElevateHer Member',
-                motto: 'We Rise Together!',
                 streakDays: 4,
                 trend: 'Rising',
                 mission: 'I want to take responsibility in my community without burning out.'
@@ -74,7 +72,19 @@ export default {
     },
 
     computed: {
-        ...mapState(['journeyCategories', 'userProgress', 'simulatorResults']),
+        ...mapState(['journeyCategories', 'userProgress', 'simulatorResults', 'myProfile']),
+
+        userName() {
+            const user = this.$store.state.user
+            if (user) {
+                let name = user.first_name || user.firstName || user.name || user.username || 'User'
+                // If it contains a space, take only first name
+                if (name && name.includes(' ')) {
+                    name = name.split(' ')[0]
+                }
+                return name
+            }
+        },
 
         focusTrack() {
             const top = (this.tracks || []).slice().sort((a, b) => (b.value || 0) - (a.value || 0))[0]
@@ -89,6 +99,11 @@ export default {
     },
 
     mounted() {
+        // Load user profile
+        this.$store.dispatch('getMyProfile', this.userId)
+            .catch(err => console.error('Error loading profile:', err))
+        
+        // Load user progress data
         this.loadUserProgressData()
     },
 
