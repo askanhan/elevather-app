@@ -130,6 +130,7 @@ export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
 // fetching and saving simulator results for a user (combined fetch + save)
 export const fetchSimulatorResults = async function ({ state, commit }, { userId, simulatorId }) {
   try {
+    console.log(`📥 Fetching simulator results: userId=${userId}, simulatorId=${simulatorId}`)
     const { data } = await api.get(`/user/${userId}/simulator/${simulatorId}/results/`)
     
     // Build result object to save
@@ -166,7 +167,7 @@ export const fetchDailyCheckinQuestions = async function ({ state }) {
 }
 
 //updating user progress for a module/simulator
-export const updateUserProgress = async function ({ state }, { userId, ownerType, ownerId, status }) {
+export const updateUserProgress = async function ({ state, dispatch }, { userId, ownerType, ownerId, status }) {
   try {
     const payload = {
       user_id: userId,
@@ -178,6 +179,8 @@ export const updateUserProgress = async function ({ state }, { userId, ownerType
     const { data } = await api.post('/user/progress/update/', payload)
     // Update local state with new status
     store.commit(types.UPDATE_MODULE_STATUS, { moduleId: ownerId, status: status })
+    // Reload user progress to ensure profile page sees the update
+    await dispatch('fetchUserProgress', userId)
     return true
   } catch (error) {
     console.error('Error updating user progress:', error)
@@ -188,8 +191,6 @@ export const updateUserProgress = async function ({ state }, { userId, ownerType
 //fetching user progress for a specific user
 export const fetchUserProgress = async function ({ state }, userId) {
   try {
-    // Return cached progress if already loaded
-    if (state.userProgress.length > 0) return true
     const { data } = await api.get(`/user/${userId}/progress/`)
     store.commit(types.SET_USER_PROGRESS, data)
     // Synchronize module statuses with user progress

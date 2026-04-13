@@ -85,6 +85,16 @@ export default {
             }
 
             this.error = null
+            
+            // Update progress to "In progress" when starting simulator
+            const userId = this.$store.state.myProfile?.id || 1
+            this.$store.dispatch('updateUserProgress', {
+                userId: userId,
+                ownerType: 'simulator',
+                ownerId: this.simulatorId,
+                status: 'In progress'
+            })
+                .catch(err => console.error('Error marking simulator as in progress:', err))
 
             // If cards are already cached, display immediately
             const hasCache = this.simulatorCards.length > 0
@@ -316,9 +326,9 @@ export default {
         },
 
         handleResultsClose() {
-            // Close modal and navigate to simulators
+            // Just close the modal - status update happens in finishAndNavigate()
+            console.log('🔵 Closing results modal (status NOT updated here)')
             this.showResults = false
-            this.$router.push('/simulators')
         },
 
         // Show debrief with feedbacks
@@ -338,6 +348,7 @@ export default {
                 if (response && response.feedbacks) {
                     this.debriefData = response.feedbacks
                     this.showDebrief = true
+                    this.showResults = true  // ← SHOW THE RESULTS MODAL
                 } else {
                     this.feedback = 'Could not load results.'
                 }
@@ -351,7 +362,28 @@ export default {
 
         // Finish and redirect to simulators
         finishAndNavigate() {
-            this.$router.push('/simulator')
+            // Update progress to "Done" before navigating
+            const userId = this.$store.state.myProfile?.id || 1
+            
+            console.log('🟢 finishAndNavigate called')
+            console.log('userId:', userId)
+            console.log('simulatorId:', this.simulatorId)
+            
+            this.$store.dispatch('updateUserProgress', {
+                userId: userId,
+                ownerType: 'simulator',
+                ownerId: this.simulatorId,
+                status: 'Done'
+            })
+                .then(() => {
+                    console.log('✅ Simulator marked as DONE in DB')
+                    this.$router.push('/simulators')
+                })
+                .catch(err => {
+                    console.error('❌ Error updating simulator progress:', err)
+                    // Still navigate even if update fails
+                    this.$router.push('/simulators')
+                })
         }
     },
 

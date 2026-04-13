@@ -9,6 +9,10 @@ export default {
         isModal: {
             type: Boolean,
             default: false
+        },
+        debriefDataProp: {
+            type: Object,
+            default: null
         }
     },
 
@@ -66,7 +70,13 @@ export default {
             return
         }
 
-        this.fetchResults()
+        // If debriefData passed as prop, use it directly; otherwise fetch from API
+        if (this.debriefDataProp) {
+            this.processResultsData(this.debriefDataProp)
+            this.loading = false
+        } else {
+            this.fetchResults()
+        }
     },
 
     methods: {
@@ -132,11 +142,15 @@ export default {
         async saveResult() {
             this.saveInProgress = true
             
+            console.log('🔵 saveResult() called')
+            console.log('isModal:', this.isModal)
+            
             try {
                 this.saveInProgress = false
                 
                 // If used as modal, emit event; otherwise navigate
                 if (this.isModal) {
+                    console.log('📤 Emitting close event')
                     this.$emit('close')
                 } else {
                     this.$router.push('/simulators')
