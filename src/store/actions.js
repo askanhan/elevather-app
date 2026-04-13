@@ -127,6 +127,24 @@ export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
   return true
 }
 
+// Reset all simulator scores to 50 when entering a simulator
+export const resetSimulatorMetrics = async function ({ state }, simulatorId) {
+  try {
+    const userId = state.myProfile?.id || 1
+    console.log(`🔄 Resetting metrics for user ${userId}, simulator ${simulatorId}`)
+    
+    // Call backend endpoint to reset all scores to 50
+    const { data } = await api.post(`/user/${userId}/simulator/${simulatorId}/reset-scores/`)
+    
+    console.log(`✅ Metrics reset successfully:`, data)
+    return true
+  } catch (err) {
+    console.error('⚠️ Error resetting metrics:', err.message)
+    // Still return true to allow navigation to continue
+    return true
+  }
+}
+
 // fetching and saving simulator results for a user (combined fetch + save)
 export const fetchSimulatorResults = async function ({ state, commit }, { userId, simulatorId }) {
   try {
