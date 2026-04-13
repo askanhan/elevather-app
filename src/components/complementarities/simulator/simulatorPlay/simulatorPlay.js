@@ -377,12 +377,12 @@ export default {
             })
                 .then(() => {
                     console.log('✅ Simulator marked as DONE in DB')
-                    this.$router.push('/simulators')
+                    this.$router.push('/simulator')
                 })
                 .catch(err => {
                     console.error('❌ Error updating simulator progress:', err)
                     // Still navigate even if update fails
-                    this.$router.push('/simulators')
+                    this.$router.push('/simulator')
                 })
         }
     },
