@@ -76,117 +76,8 @@
                 </div>
                 <div class="stat">
                     <div class="statVal">{{ stats.simulations }}</div>
-                    <div class="statLbl">Simulations</div>
+                    <div class="statLbl">Completed simulators</div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Simulator Results History -->
-        <section class="card">
-            <div class="cardHead">
-                <div class="h2">Simulation history</div>
-                <button class="link" @click="goSimulatorHistory">See all</button>
-            </div>
-
-            <div v-if="simulatorResults.length > 0" class="resultsList">
-                <div v-for="result in simulatorResults.slice(0, 3)" :key="result.id" class="resultCard">
-                    <div class="resultHeader">
-                        <div class="resultTitle">{{ result.simulatorTitle }}</div>
-                        <div class="resultScore">{{ result.score }}/{{ result.maxScore }}</div>
-                    </div>
-                    <div class="resultMeta">
-                        <span class="metaTag">{{ result.level }}</span>
-                        <span class="metaDate">{{ formatResultDate(result.completedAt) }}</span>
-                    </div>
-                    <div class="resultBar">
-                        <div class="resultFill" :style="{ width: (result.score / result.maxScore * 100) + '%' }"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div v-else class="emptyState">
-                <div class="emptyIcon"></div>
-                <div class="emptyText">No simulations yet. Start your first challenge!</div>
-            </div>
-        </section>
-
-        <!-- Power patterns -->
-        <section class="card">
-            <div class="cardHead">
-                <div class="h2">My power patterns</div>
-                <button class="link" @click="goPowerCheck">Open Power Check</button>
-            </div>
-
-            <div class="patternGrid">
-                <div class="pattern">
-                    <div class="pIcon"></div>
-                    <div class="pTxt">
-                        <div class="pTitle">Most common blocker</div>
-                        <div class="pValue">{{ patterns.blocker }}</div>
-                    </div>
-                </div>
-
-                <div class="pattern">
-                    <div class="pIcon"></div>
-                    <div class="pTxt">
-                        <div class="pTitle">Best booster</div>
-                        <div class="pValue">{{ patterns.booster }}</div>
-                    </div>
-                </div>
-
-                <div class="pattern">
-                    <div class="pIcon"></div>
-                    <div class="pTxt">
-                        <div class="pTitle">Hardest context</div>
-                        <div class="pValue">{{ patterns.context }}</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hint">
-                These are derived from your check-ins and simulations (mock).
-            </div>
-        </section>
-
-        <!-- Toolkit -->
-        <section class="card">
-            <div class="cardHead">
-                <div class="h2">My toolkit</div>
-                <button class="link" @click="goToolkit">See all</button>
-            </div>
-
-            <div class="toolGrid">
-                <button class="tool" @click="openScripts">
-                    <div class="tIcon"></div>
-                    <div class="tText">
-                        <div class="tTitle">Saved scripts</div>
-                        <div class="tSub">{{ toolkit.scripts }} items</div>
-                    </div>
-                </button>
-
-                <button class="tool" @click="openModels">
-                    <div class="tIcon"></div>
-                    <div class="tText">
-                        <div class="tTitle">Saved models</div>
-                        <div class="tSub">{{ toolkit.models }} items</div>
-                    </div>
-                </button>
-
-                <button class="tool" @click="openStories">
-                    <div class="tIcon"></div>
-                    <div class="tText">
-                        <div class="tTitle">Saved stories</div>
-                        <div class="tSub">{{ toolkit.stories }} items</div>
-                    </div>
-                </button>
-
-                <button class="tool" @click="openBookmarks">
-                    <div class="tIcon"></div>
-                    <div class="tText">
-                        <div class="tTitle">Bookmarked courses</div>
-                        <div class="tSub">{{ toolkit.bookmarks }} items</div>
-                    </div>
-                </button>
             </div>
         </section>
 
@@ -206,28 +97,6 @@
                     <div class="jTitle">{{ j.title }}</div>
                     <div class="jBody">{{ j.snippet }}</div>
                 </article>
-            </div>
-        </section>
-
-        <!-- Badges -->
-        <section class="card">
-            <div class="cardHead">
-                <div class="h2">Badges & certificates</div>
-                <button class="link" @click="goBadges">See all</button>
-            </div>
-
-            <div class="badges">
-                <div v-for="b in badges" :key="b.id" class="badgeCard">
-                    <div class="bIcon">{{ b.icon }}</div>
-                    <div class="bTxt">
-                        <div class="bTitle">{{ b.title }}</div>
-                        <div class="bSub">{{ b.sub }}</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hint">
-                Designed for sharing and Erasmus-style recognition (mock).
             </div>
         </section>
 

@@ -28,17 +28,12 @@
                     <div class="fill" :style="{ width: meters[m] + '%' }"></div>
                 </div>
             </div>
-
-            <div class="mode">
-                <button class="modeBtn" :class="{ on: mode === 'calm' }" @click="mode = 'calm'">Calm</button>
-                <button class="modeBtn" :class="{ on: mode === 'timed' }" @click="mode = 'timed'">Challenge</button>
-            </div>
         </section>
 
         <section class="stage">
             <div class="card">
-                <div v-if="current.kicker" class="kicker">{{ current.kicker }}</div>
-                <h2 class="h2">{{ current.title }}</h2>
+                <h2 class="kicker">{{ current.title }}</h2>
+                <div v-if="current.kicker" class="h2">{{ current.kicker }}</div>
                 <p class="p">{{ current.text }}</p>
 
                 <!-- Render card components -->

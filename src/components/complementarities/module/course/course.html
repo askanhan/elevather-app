@@ -19,28 +19,6 @@
             <button class="ghost" @click="restart">Restart</button>
         </header>
 
-        <!-- Playbar -->
-        <section class="playbar">
-            <button class="playBtn" @click="toggleReading">
-                <span v-if="!reading">▶</span>
-                <span v-else>⏸</span>
-            </button>
-
-            <div class="playInfo">
-                <div class="playTop">
-                    <span class="playState">{{ reading ? 'Reading…' : 'Ready' }}</span>
-                    <span class="playPct">{{ readingProgress }}%</span>
-                </div>
-                <div class="progress">
-                    <div class="fill" :style="{ width: readingProgress + '%' }"></div>
-                </div>
-            </div>
-
-            <button class="ghost" @click="skipToInteractive">
-                Skip to question
-            </button>
-        </section>
-
         <!-- Swipeable stage -->
         <section class="stage" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
             <div class="slides" :style="slidesStyle">
