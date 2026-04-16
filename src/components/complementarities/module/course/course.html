@@ -49,7 +49,7 @@
 
                                 <!-- Image -->
                                 <div v-if="comp.type === 'image'" class="comp-image">
-                                    <img :src="comp.url" :alt="comp.alt || 'Image'" />
+                                    <img :src="getImageUrl(comp.url || comp.image)" :alt="comp.alt || 'Image'" />
                                     <p v-if="comp.description" class="image-desc">{{ comp.description }}</p>
                                 </div>
 

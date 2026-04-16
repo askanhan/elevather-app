@@ -1,4 +1,5 @@
 import AudioButton from '@/components/complementarities/audioPlayer/audioButton.vue'
+import imageOperations from '@/mixins/image-operations.js'
 
 export default {
     name: 'CourseMock',
@@ -6,6 +7,8 @@ export default {
     components: {
         AudioButton
     },
+    
+    mixins: [imageOperations],
 
     data() {
         return {
