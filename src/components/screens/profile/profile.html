@@ -57,10 +57,10 @@
             </div>
 
             <div class="bars">
-                <div v-for="t in tracks" :key="t.id" class="barRow">
+                <div v-for="t in tracks" :key="t.id" class="barRow" :style="{ backgroundColor: t.color + '15', borderColor: t.color + '30' }">
                     <div class="barTop">
-                        <span class="barName">{{ t.label }}</span>
-                        <span class="barVal">{{ t.completed }}/{{ t.total }}</span>
+                        <span class="barName" :style="{ color: t.color }">{{ t.label }}</span>
+                        <span class="barVal" :style="{ backgroundColor: t.color, color: '#fff' }">{{ t.completed }}/{{ t.total }}</span>
                     </div>
                 </div>
             </div>

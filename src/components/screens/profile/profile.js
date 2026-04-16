@@ -139,13 +139,25 @@ export default {
                 
                 // Process and format tracks data from journeyCategories
                 if (this.journeyCategories && Array.isArray(this.journeyCategories)) {
-                    const colors = ['#2D6CDF', '#F59E0B', '#1F9D63', '#8B5CF6', '#06B6D4', '#EC4899', '#10B981', '#3B82F6']
+                    const colors = ['#2D6CDF', '#1F9D63', '#8B5CF6', '#F59E0B', '#EF4444', '#06B6D4']
+                    const journeyModules = this.$store.state.journeyModules || []
+                    
                     this.tracks = this.journeyCategories.map((category, index) => {
-                        console.log('Processing category:', category)
+                        console.log('Processing category:', category, 'at index', index)
                         
-                        // Find all progress items for this category
+                        // Assign first 3 colors explicitly: blue, green, purple
+                        const categoryColors = ['#2D6CDF', '#1F9D63', '#8B5CF6']
+                        let color = categoryColors[index] || colors[index % colors.length]
+                        
+                        console.log('Assigned color:', color, 'for index:', index)
+                        
+                        // Find all modules that belong to this category
+                        const modulesInCategory = journeyModules.filter(m => m.module_category_id === category.id)
+                        const moduleIdsInCategory = modulesInCategory.map(m => m.id)
+                        
+                        // Find all progress items for modules in this category
                         const categoryProgress = this.userProgress.filter(p => 
-                            (p.localisation_id === category.id || p.owner_id === category.id) &&
+                            moduleIdsInCategory.includes(p.owner_id) &&
                             p.owner_type === 'module'  // Only count course modules, not other types
                         )
                         
@@ -161,13 +173,13 @@ export default {
                         const value = total > 0 ? Math.round((completed / total) * 100) : 0
                         
                         const trackName = category.name || category.title || category.label || `Track ${index + 1}`
-                        console.log(`Track ${index}: name="${trackName}", completed=${completed}, total=${total}`)
+                        console.log(`Track ${index}: name="${trackName}", completed=${completed}, total=${total}, color=${color}`)
                         
                         return {
                             id: category.id,
                             label: trackName,
                             value: Math.min(Math.max(value, 0), 100),
-                            color: colors[index % colors.length],
+                            color: color,
                             completed: completed,
                             total: total
                         }
