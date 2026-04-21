@@ -141,19 +141,12 @@ export default {
                     modules: catModules.map(mod => ({
                         id: mod.id,
                         title: mod.title,
-                        level: this.determineLevelFromDay(mod.day_number),
                         status: mod.status || 'Not started',
                         summary: mod.description || 'Module content',
                         outcomes: mod.target_audience ? [mod.target_audience] : ['Learn and practice']
                     }))
                 }
             })
-        },
-
-        determineLevelFromDay(dayNum) {
-            if (dayNum <= 3) return 'intro'
-            if (dayNum <= 7) return 'core'
-            return 'advanced'
         },
 
         toggle(id) {
@@ -184,16 +177,6 @@ export default {
 
         filteredModules(track) {
             return (track && track.modules) ? track.modules : []
-        },
-
-        levelLabel(level) {
-            if (level === 'intro') return 'Intro'
-            if (level === 'core') return 'Core'
-            return 'Advanced'
-        },
-
-        pillClass(level) {
-            return { intro: level === 'intro', core: level === 'core', advanced: level === 'advanced' }
         },
 
         statusLabel(status) {

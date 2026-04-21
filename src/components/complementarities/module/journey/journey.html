@@ -51,7 +51,7 @@
             <article v-for="track in filteredTracks" :key="track.id" class="trackCard" :class="getTrackStatusClass(track)">
                 <button class="trackHeader" @click="toggle(track.id)">
                     <div class="left">
-                        <div class="badge" :style="{ background: track.color }">{{ track.short }}</div>
+                        <div class="badge" :style="{ background: track.color }">{{ track.title }}</div>
                         <div class="headText">
                             <h2 class="trackTitle">{{ track.title }} Track</h2>
                             <p class="trackDesc">{{ track.description }}</p>
@@ -63,13 +63,6 @@
                     </div>
 
                     <div class="right">
-                        <div class="progress">
-                            <div class="bar">
-                                <div class="barFill"
-                                    :style="{ width: completionPercent(track) + '%', background: track.color }"></div>
-                            </div>
-                        </div>
-
                         <div class="chev" :class="{ open: isOpen(track.id) }">⌄</div>
                     </div>
                 </button>
@@ -82,7 +75,6 @@
                             <div class="moduleTitleRow">
                                 <div class="moduleTitleWrap">
                                     <span class="moduleTitle">{{ m.title }}</span>
-                                    <span class="pill" :class="pillClass(m.level)">{{ levelLabel(m.level) }}</span>
                                 </div>
 
                                 <span class="status" :class="statusClass(m.status)">
