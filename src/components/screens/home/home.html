@@ -15,7 +15,7 @@
                 <span class="value">{{ stateLabel }}</span>
             </div>
             <div class="miniNote">
-                Based on 3 quick taps. You can change it anytime.
+                Based on 3 quick taps. You can press on Reset to change it.
             </div>
         </div>
         <div class="heroRight">
@@ -27,7 +27,6 @@
                 <div class="bar">
                     <div class="fill" :style="{ width: powerScore + '%' }"></div>
                 </div>
-                <div class="scoreHint">Goal: small consistent moves, not perfection.</div>
             </div>
         </div>
     </section>
@@ -46,81 +45,6 @@
                     </button>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section class="tracks">
-        <div class="tracksHead">
-            <h2 class="h2">Your tracks (snapshot)</h2>
-            <button class="link" @click="goJourney">Open Tracks →</button>
-        </div>
-        <div class="tgrid">
-            <div v-for="t in trackBars" :key="t.id" class="tcard">
-                <div class="ttop">
-                    <span class="tname">{{ t.label }}</span>
-                    <span class="tval">{{ t.value }}%</span>
-                </div>
-                <div class="tbar">
-                    <div class="tfill" :style="{ width: t.value + '%', background: t.color }"></div>
-                </div>
-                <div class="thint">{{ t.hint }}</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="blockers">
-        <div class="blockHead">
-            <h2 class="h2">What is blocking your power right now?</h2>
-            <div class="hint">Pick one. We'll recommend the fastest next step.</div>
-        </div>
-        <div class="bgrid">
-            <button v-for="b in blockers" :key="b.id" class="bcard" :class="{ on: selectedBlocker === b.id }"
-                @click="selectBlocker(b.id)">
-                <div class="bicon">{{ b.icon }}</div>
-                <div class="btxt">
-                    <div class="btitle">{{ b.title }}</div>
-                    <div class="bsub">{{ b.sub }}</div>
-                </div>
-            </button>
-        </div>
-    </section>
-
-    <section class="move">
-        <h2 class="h2">Your next leverage move</h2>
-        <div class="moveCard">
-            <div class="moveTop">
-                <div class="moveTitle">{{ leverage.title }}</div>
-                <div class="moveMeta">
-                    <span class="chip">{{ leverage.time }}</span>
-                    <span class="chip">{{ leverage.track }}</span>
-                </div>
-            </div>
-            <p class="p">{{ leverage.desc }}</p>
-            <div class="moveActions">
-                <button class="primary" @click="goSimulatorFast">Run 3-min simulator →</button>
-                <button class="ghost" @click="openModel">Open model</button>
-                <button class="ghost" @click="openCourse">Open course</button>
-            </div>
-        </div>
-    </section>
-
-    <section class="timeline">
-        <div class="timeHead">
-            <h2 class="h2">Last 7 days</h2>
-            <div class="hint">Tap a day to see a short note (mock).</div>
-        </div>
-        <div class="dotsRow">
-            <button v-for="d in last7" :key="d.date" class="dayDot" :class="d.state" @click="selectedDay = d">
-                <span class="dayLbl">{{ d.short }}</span>
-            </button>
-        </div>
-        <div v-if="selectedDay" class="dayCard">
-            <div class="dayTop">
-                <span class="chip">{{ selectedDay.date }}</span>
-                <span class="chip">{{ dayStateLabel(selectedDay.state) }}</span>
-                <span class="chip">{{ selectedDay.score }}/100</span>
-            </div>
-            <div class="p">{{ selectedDay.note }}</div>
         </div>
     </section>
 </div>

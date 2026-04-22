@@ -67,11 +67,11 @@ export default {
 
         stateEmoji() {
             const hasAnswers = Object.keys(this.selectedAnswers).length > 0
-            if (!hasAnswers) return ''
+            if (!hasAnswers) return '✨'
             const s = this.powerScore
-            if (s >= 70) return ''
-            if (s <= 45) return ''
-            return ''
+            if (s >= 70) return '🔥'
+            if (s <= 45) return '🔋'
+            return '⚡'
         },
 
         stateClass() {

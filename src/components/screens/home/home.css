@@ -81,32 +81,74 @@
 }
 
 .badge {
-  border: 1px solid var(--line);
-  background: linear-gradient(135deg, rgba(45, 108, 223, 0.12), rgba(255, 45, 122, 0.12));
-  border-radius: 18px;
-  padding: 14px;
-  box-shadow: var(--shadow);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--card);
+}
+
+.badge.rising {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.badge.stable {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+.badge.drained {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  transform: translateY(2px);
+}
+
+.badge.empty {
+  background: var(--line);
+  color: var(--muted);
 }
 
 .badge .emoji {
-  font-size: 26px;
+  font-size: 32px;
   line-height: 1;
   display: inline-block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
 .badge .label {
   color: var(--muted);
-  font-weight: 900;
-  font-size: 12px;
-  display: block;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.badge.empty .label {
+  color: var(--muted);
 }
 
 .badge .value {
+  font-size: 24px;
   font-weight: 900;
-  font-size: 18px;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+  
+
+.badge .value {
+  font-weight: 900;
+  font-size: 30px;
   margin-top: 4px;
   display: block;
+  color: var(--muted);
 }
 
 .badge.rising {
