@@ -1,6 +1,6 @@
 import Menubar from '@/components/complementarities/menubar/menubar.vue';
 import NavigationBar from '@/components/complementarities/navigation-bar/navigation-bar.vue';
-import OnboardingTour from '@/components/utils/OnboardingTour.vue';
+import OnboardingTour from '@/components/complementarities/onboarding-tour/OnboardingTour.vue';
 import * as mutationTypes from '@/store/mutation-types.js';
 import icons from '@/mixins/icons.js';
 import globalMixin from '@/mixins/global.js';
