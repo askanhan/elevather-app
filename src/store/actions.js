@@ -170,14 +170,19 @@ export const fetchSimulatorResults = async function ({ state, commit }, { userId
 }
 
 //fetching questions for daily check-in
-export const fetchDailyCheckinQuestions = async function ({ state }) {
+export const fetchDailyCheckinQuestions = async function ({ state }, userId) {
   try {
-    const { data } = await api.get('/daily-checkin/questions/')
-    if (!data || !Array.isArray(data)) {
+    const { data } = await api.get(`/daily-checkin/questions/?user_id=${userId}`)
+    // Backend now returns { questions: [...], is_today_response: boolean, message: string }
+    if (!data || !data.questions || !Array.isArray(data.questions)) {
       throw new Error('Invalid daily checkin questions format.')
     }
-    store.commit(types.SET_DAILY_CHECKIN_QUESTIONS, data)
-    return true
+    store.commit(types.SET_DAILY_CHECKIN_QUESTIONS, data.questions)
+    return {
+      questions: data.questions,
+      isTodayResponse: data.is_today_response,
+      message: data.message
+    }
   } catch (error) {
     console.error('Error fetching daily checkin questions:', error)
     throw error

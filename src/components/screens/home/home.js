@@ -151,9 +151,15 @@ export default {
 
     methods: {
         fetchQuestions() {
-            this.$store.dispatch('fetchDailyCheckinQuestions')
-                .then(() => {})
+            // Get userId from store (from user or profile)
+            const userId = this.$store.state.user?.id || this.$store.state.myProfile?.id || 1
+            
+            this.$store.dispatch('fetchDailyCheckinQuestions', userId)
+                .then((response) => {
+                    console.log('Daily checkin questions fetched:', response)
+                })
                 .catch(err => {
+                    console.error('Error fetching questions:', err)
                     this.loadMockQuestions()
                 })
         },
@@ -164,6 +170,7 @@ export default {
                     id: 1,
                     question_text: 'I expressed myself',
                     subtitle: 'Voice in meetings / conversations',
+                    metric_id: 1,
                     options: [
                         { id: 101, text: 'No', score: 0 },
                         { id: 102, text: 'Some', score: 15 },
@@ -174,6 +181,7 @@ export default {
                     id: 2,
                     question_text: 'I set a boundary',
                     subtitle: 'Said no / protected time',
+                    metric_id: 2,
                     options: [
                         { id: 201, text: 'No', score: 0 },
                         { id: 202, text: 'Some', score: 15 },
@@ -184,6 +192,7 @@ export default {
                     id: 3,
                     question_text: 'My energy level',
                     subtitle: 'Body & mind availability',
+                    metric_id: 3,
                     options: [
                         { id: 301, text: 'Low', score: 0 },
                         { id: 302, text: 'Mid', score: 15 },
@@ -219,11 +228,14 @@ export default {
                 return
             }
             
-            console.log('Submitting daily checkin with options:', optionIds)
+            // Get userId from store
+            const userId = this.$store.state.user?.id || this.$store.state.myProfile?.id || 1
+            
+            console.log('Submitting daily checkin with options:', optionIds, 'userId:', userId)
             
             // Submit to backend
             this.$store.dispatch('submitDailyCheckin', {
-                userId: 1, // Replace with actual user ID from auth
+                userId: userId,
                 optionIds: optionIds
             })
             .then((response) => {
