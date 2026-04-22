@@ -4,7 +4,6 @@
             <h1 class="h1">Power Check</h1>
             <p class="sub">A 30-second check-in. Know your state, then take one small leverage move.</p>
         </div>
-        <button class="ghost" @click="resetToday">Reset</button>
     </header>
 
     <section class="hero">
@@ -13,9 +12,6 @@
                 <span class="emoji">{{ stateEmoji }}</span>
                 <span class="label">Today your power is</span>
                 <span class="value">{{ stateLabel }}</span>
-            </div>
-            <div class="miniNote">
-                Based on 3 quick taps. You can press on Reset to change it.
             </div>
         </div>
         <div class="heroRight">
@@ -31,7 +27,7 @@
         </div>
     </section>
 
-    <section class="checkin">
+    <section class="checkin" v-if="!isCompleted">
         <h2 class="h2">Quick check-in</h2>
         <div class="qgrid">
             <div v-for="q in questions" :key="q.id" class="qcard">
@@ -46,5 +42,9 @@
                 </div>
             </div>
         </div>
+    </section>
+    <section class="checkin-complete" v-else>
+        <p class="reset-hint">Need to update your energy levels? Reset to start over.</p>
+        <button v-if="isCompleted" class="ghost" @click="resetToday">Reset</button>
     </section>
 </div>

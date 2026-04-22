@@ -1,3 +1,4 @@
+import confetti from 'canvas-confetti';
 export default {
     name: 'PowerCheck',
 
@@ -5,39 +6,14 @@ export default {
         return {
             selectedAnswers: {},
             selectedScores: {},
+            isCompleted: false, // to track if the check-in has been completed
 
             check: {
                 voice: 50,
                 boundary: 50,
                 energy: 50
             },
-
-            selectedBlocker: 'fear',
-
-            selectedDay: null,
-
-            blockers: [
-                { id: 'fear', icon: '', title: 'Fear', sub: 'Hesitation, self-doubt, overthinking' },
-                { id: 'overload', icon: '', title: 'Overload', sub: 'Too much, too fast, no space' },
-                { id: 'conflict', icon: '', title: 'Conflict', sub: 'Tension, pushback, hard conversations' },
-                { id: 'unclear', icon: '', title: 'Unclear goals', sub: 'No direction, no next step' }
-            ],
-
-            rec: {
-                story: { title: 'The 3-sentence boundary moment', sub: 'A quick story about reclaiming space calmly.' },
-                model: { title: 'Boundary Script Builder', sub: 'Situation  Limit  Alternative  Pushback responses.' },
-                course: { title: 'Boundaries & Saying No', sub: 'Short, calm, repeatable boundaries without guilt.' }
-            },
-
-            last7: [
-                { date: 'Mon', short: 'M', state: 'stable', score: 62, note: 'Used one clear ask. Energy okay.' },
-                { date: 'Tue', short: 'T', state: 'rising', score: 74, note: 'Spoke up in a meeting. Felt strong after.' },
-                { date: 'Wed', short: 'W', state: 'drained', score: 41, note: 'Overcommitted. Needed rest.' },
-                { date: 'Thu', short: 'T', state: 'stable', score: 58, note: 'Kept boundaries in small ways.' },
-                { date: 'Fri', short: 'F', state: 'rising', score: 70, note: 'Negotiated a timeline. Felt respected.' },
-                { date: 'Sat', short: 'S', state: 'drained', score: 45, note: 'Heavy week. Recovery day.' },
-                { date: 'Sun', short: 'S', state: 'stable', score: 60, note: 'Reset and planned one priority.' }
-            ]
+            
         }
     },
 
@@ -164,45 +140,6 @@ export default {
                 })
         },
 
-        loadMockQuestions() {
-            const questions = [
-                {
-                    id: 1,
-                    question_text: 'I expressed myself',
-                    subtitle: 'Voice in meetings / conversations',
-                    metric_id: 1,
-                    options: [
-                        { id: 101, text: 'No', score: 0 },
-                        { id: 102, text: 'Some', score: 15 },
-                        { id: 103, text: 'Yes', score: 33 }
-                    ]
-                },
-                {
-                    id: 2,
-                    question_text: 'I set a boundary',
-                    subtitle: 'Said no / protected time',
-                    metric_id: 2,
-                    options: [
-                        { id: 201, text: 'No', score: 0 },
-                        { id: 202, text: 'Some', score: 15 },
-                        { id: 203, text: 'Yes', score: 33 }
-                    ]
-                },
-                {
-                    id: 3,
-                    question_text: 'My energy level',
-                    subtitle: 'Body & mind availability',
-                    metric_id: 3,
-                    options: [
-                        { id: 301, text: 'Low', score: 0 },
-                        { id: 302, text: 'Mid', score: 15 },
-                        { id: 303, text: 'High', score: 34 }
-                    ]
-                }
-            ]
-            this.$store.commit('SET_DAILY_CHECKIN_QUESTIONS', questions)
-        },
-
         clamp(v) {
             const n = Math.round(v)
             return Math.max(0, Math.min(100, n))
@@ -216,6 +153,8 @@ export default {
             if (Object.keys(this.selectedAnswers).length === 3) {
                 // Auto-submit the checkin
                 this.submitCheckin()
+                this.isCompleted = true;
+                this.triggerConfetti();
             }
         },
 
@@ -238,25 +177,52 @@ export default {
                 userId: userId,
                 optionIds: optionIds
             })
-            .then((response) => {
-                console.log('Daily checkin submitted successfully:', response)
-                this.$store.commit('SHOW_MESSAGE', `Power level: ${response.powerLevel}/100 (${response.status})`)
-            })
             .catch((error) => {
                 console.error('Error submitting daily checkin:', error)
                 this.$store.commit('SHOW_MESSAGE', ['Error submitting check-in. Please try again.', 'error'])
             })
         },
 
-        selectBlocker(id) {
-            this.selectedBlocker = id
+        triggerConfetti() {
+            const scalar = 7;
+            const emoji = confetti.shapeFromText({ text: this.stateEmoji, scalar });
+
+            const duration = 1 * 1000;
+            const animationEnd = Date.now() + duration;
+
+            const frame = () => {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    shapes: [emoji],
+                    ticks: 200,      
+                    gravity: 1.2,    
+                    scalar: scalar
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    shapes: [emoji],
+                    ticks: 200,      
+                    gravity: 1.2,    
+                    scalar: scalar
+                });
+
+                if (Date.now() < animationEnd) {
+                    requestAnimationFrame(frame);
+                }
+            };
+            frame();
         },
 
         resetToday() {
             this.selectedAnswers = {}
             this.selectedScores = {}
-            this.selectedBlocker = 'fear'
-            this.selectedDay = null
+            this.isCompleted = false;
         },
 
         dayStateLabel(s) {
