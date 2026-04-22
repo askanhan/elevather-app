@@ -305,6 +305,9 @@
 
 .moduleTop {
     margin-bottom: 10px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
 }
 
 .moduleTitleRow {
@@ -313,6 +316,7 @@
     justify-content: space-between;
     gap: 10px;
     flex-wrap: wrap;
+    flex: 1;
 }
 
 .moduleTitleWrap {
@@ -320,6 +324,25 @@
     gap: 8px;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.dayNumber {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: #fef3c7;
+    color: #000;
+    font-weight: 900;
+    font-size: 14px;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    transform: rotate(-2deg);
+    text-align: center;
+    flex: 0 0 auto;
+    border: 1px solid #f5d547;
+    padding: 0;
 }
 
 .moduleTitle {

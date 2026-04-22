@@ -126,7 +126,10 @@ export default {
 
             // Create tracks from categories
             return categories.map((cat, idx) => {
-                const catModules = modulesByCategory[cat.id] || []
+                let catModules = modulesByCategory[cat.id] || []
+                // Sort modules by day_number in ascending order
+                catModules = catModules.sort((a, b) => (a.day_number || 0) - (b.day_number || 0))
+                
                 const titleWords = cat.title.split(' ')
                 const short = titleWords.slice(0, 2).join(' ')
 
@@ -138,12 +141,13 @@ export default {
                     pace: '10–15 minutes/day',
                     focus: 'Core learning',
                     color: colors[idx % colors.length],
-                    modules: catModules.map(mod => ({
+                    modules: catModules.map((mod) => ({
                         id: mod.id,
                         title: mod.title,
                         status: mod.status || 'Not started',
                         summary: mod.description || 'Module content',
-                        outcomes: mod.target_audience ? [mod.target_audience] : ['Learn and practice']
+                        outcomes: mod.target_audience ? [mod.target_audience] : ['Learn and practice'],
+                        dayNumber: mod.day_number || 0
                     }))
                 }
             })

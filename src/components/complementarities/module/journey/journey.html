@@ -72,6 +72,7 @@
 
                     <button v-for="m in filteredModules(track)" :key="m.id" class="module" :class="getModuleStatusClass(m.status)" @click="goToCourse(m)">
                         <div class="moduleTop">
+                            <div class="dayNumber">Day {{ m.dayNumber }}</div>
                             <div class="moduleTitleRow">
                                 <div class="moduleTitleWrap">
                                     <span class="moduleTitle">{{ m.title }}</span>
@@ -88,7 +89,7 @@
 
                         <div class="moduleBottom">
                             <div class="outcomes">
-                                <span class="outcomesLabel">Outcomes:</span>
+                                <span class="outcomesLabel">Audience:</span>
                                 <span class="outcomesText">{{ m.outcomes.join(" • ") }}</span>
                             </div>
 
