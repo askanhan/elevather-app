@@ -22,13 +22,17 @@
 
         <section class="section">
 
-            <!-- Community tabs: Real Stories / Share your story -->
+            <!-- Community tabs: Real Stories / Share your story / Pending Stories -->
             <div class="subtabs">
                 <button class="subtab" :class="{ on: storiesTab === 'real' }" @click="storiesTab = 'real'">
                     Real Stories
                 </button>
                 <button class="subtab" :class="{ on: storiesTab === 'share' }" @click="storiesTab = 'share'">
                     Share your story
+                </button>
+                <button class="subtab" :class="{ on: storiesTab === 'pending' }" @click="storiesTab = 'pending'">
+                    Pending Stories
+                    <span v-if="pendingStoriesCount > 0" class="badgeCount">{{ pendingStoriesCount }}</span>
                 </button>
             </div>
 
@@ -154,12 +158,72 @@
                     </div>
 
                     <div v-if="sent" class="sent">
-                        ✅ Your story has been submitted! It will now appear in the Real Stories feed.
+                        ✅ Your story has been submitted! It's now awaiting moderation and will appear in the Real Stories feed once approved.
+                    </div>
+
+                    <div v-if="storySubmitError" class="error">
+                        ❌ {{ storySubmitError }}
                     </div>
                 </div>
             </div>
 
+            <!-- Pending Stories tab -->
+            <div v-if="storiesTab === 'pending'" class="pendingStories">
+
+                <div class="sectionHead">
+                    <h2 class="h2">Your Pending Stories</h2>
+                    <p class="hint">
+                        Stories you've submitted that are awaiting moderation approval. Once approved, they'll appear in the Real Stories feed.
+                    </p>
+                </div>
+
+                <div v-if="pendingStoriesList.length === 0" class="noPendingStories">
+                    <p>You don't have any pending stories.</p>
+                    <p class="sub">Your submitted stories will appear here while they await publication.</p>
+                </div>
+
+                <div v-else class="feed">
+                    <article v-for="p in pendingStoriesList" :key="p.id" class="post pending">
+                        <div class="statusBadge">⏳ Pending</div>
+                        
+                        <div class="postHead">
+                            <div class="anon">
+                                <span class="anonDot"></span>
+                                <span class="anonTxt">{{ p.author || 'Anonymous' }}</span>
+                            </div>
+                            <div class="postMeta">
+                                <span class="chip">{{ p.track || p.category?.title }}</span>
+                                <span class="chip">{{ getStoryContext(p) }}</span>
+                                <span class="chip">{{ p.when || p.created_at }}</span>
+                                <button class="deleteBtn" @click="deleteStory(p.id)" title="Delete story">
+                                    🗑️
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="postBody">
+                            <div class="postText">{{ p.content || p.text }}</div>
+
+                            <div v-if="p.tags && p.tags.length" class="tagRow">
+                                <span v-for="t in p.tags" :key="t" class="tag">{{ t }}</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
         </section>
+
+        <!-- Error Modal Popup -->
+        <div v-if="showErrorModal" class="errorModalOverlay" @click="closeErrorModal">
+            <div class="errorModalContent" @click.stop>
+                <div class="errorModalIcon">✨</div>
+                <div class="errorModalMessage">{{ errorModalMessage }}</div>
+                <button class="errorModalBtn" @click="closeErrorModal">
+                    I Understand
+                </button>
+            </div>
+        </div>
 
         <!-- Delete Confirmation Modal (integrated in page, not browser dialog) -->
         <div v-if="showDeleteModal" class="modalOverlay">

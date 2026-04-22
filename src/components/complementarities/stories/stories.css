@@ -819,3 +819,176 @@
     font-size: 12px;
     font-weight: 900;
 }
+
+/* Pending Stories Tab */
+.pendingStories {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.noPendingStories {
+    text-align: center;
+    padding: 40px 20px;
+    background: #fbfdff;
+    border-radius: 16px;
+    border: 1px dashed var(--line);
+}
+
+.noPendingStories p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+.noPendingStories p.sub {
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+/* Pending Story Card */
+.post.pending {
+    position: relative;
+    opacity: 0.85;
+    border-left: 4px solid #f59e0b;
+}
+
+.statusBadge {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 4px 10px;
+    background: #fef3c7;
+    color: #92400e;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Error message in form */
+.error {
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+    color: #78350f;
+    border-radius: 12px;
+    border-left: 4px solid #f59e0b;
+    font-size: 14px;
+    font-weight: 600;
+    animation: slideDown 0.3s ease-out;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+}
+
+.sent {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: #dcfce7;
+    color: #15803d;
+    border-radius: 12px;
+    border-left: 4px solid #22c55e;
+    font-size: 14px;
+    font-weight: 600;
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Badge count on tab */
+.badgeCount {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    margin-left: 6px;
+    padding: 0 6px;
+    background: #ff2d7a;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Error Modal Popup */
+.errorModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.5);
+    display: grid;
+    place-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+    backdrop-filter: blur(2px);
+}
+
+.errorModalContent {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    animation: slideDown 0.3s ease-out;
+}
+
+.errorModalIcon {
+    font-size: 48px;
+    animation: slideDown 0.3s ease-out 0.1s backwards;
+}
+
+.errorModalMessage {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f172a;
+    text-align: center;
+    line-height: 1.5;
+    animation: slideDown 0.3s ease-out 0.2s backwards;
+}
+
+.errorModalBtn {
+    margin-top: 8px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+    color: #78350f;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    animation: slideDown 0.3s ease-out 0.3s backwards;
+}
+
+.errorModalBtn:hover {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+    transform: translateY(-2px);
+}
+
+.errorModalBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}

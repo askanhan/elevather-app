@@ -517,6 +517,16 @@ export const mutations = {
     state.categoryStories = enrichedStories
   },
 
+  [types.SET_PENDING_STORIES](state, stories) {
+    // Enrich stories with user_id if missing
+    const enrichedStories = Array.isArray(stories) ? stories.map(story => ({
+      ...story,
+      user_id: story.user_id || story.user?.id || null,
+      reactions_count: story.reactions_count || { relatable: 0, support: 0, powerful: 0, inspiring: 0 }
+    })) : []
+    state.pendingStories = enrichedStories
+  },
+
   [types.ADD_STORY_REACTION](state, { storyId, reaction }) {
     const story = state.allStories.find(s => s.id === storyId)
     if (story) {

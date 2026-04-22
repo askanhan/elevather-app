@@ -552,6 +552,26 @@ export const deleteStory = async function ({ state }, { storyId, userId }) {
   }
 }
 
+// Fetch pending stories for the current user (unpublished stories)
+// Fetch pending stories for the current user (unpublished stories awaiting moderation)
+export const fetchPendingStories = async function ({ state }, userId) {
+  try {
+    // Fetch all pending stories from the moderation queue
+    // Backend returns all unpublished stories, we filter by user_id on frontend
+    const { data } = await api.get(`/stories/pending/`)
+    
+    // Filter to show only current user's pending stories
+    const userPendingStories = Array.isArray(data) ? data.filter(story => story.user_id === userId) : []
+    store.commit(types.SET_PENDING_STORIES, userPendingStories)
+    return true
+  } catch (error) {
+    console.error('fetchPendingStories error:', error)
+    // If endpoint doesn't exist, just set empty pending stories
+    store.commit(types.SET_PENDING_STORIES, [])
+    return true
+  }
+}
+
 
 
 

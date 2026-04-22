@@ -42,6 +42,12 @@ export default {
             },
 
             sent: false,
+            
+            storySubmitError: '',
+
+            // Error modal popup
+            showErrorModal: false,
+            errorModalMessage: '',
 
             // Delete confirmation modal
             showDeleteModal: false,
@@ -85,6 +91,14 @@ export default {
 
         canSend() {
             return (this.newStory.text || '').trim().length > 0
+        },
+
+        pendingStoriesList() {
+            return this.$store.state.pendingStories || []
+        },
+
+        pendingStoriesCount() {
+            return this.pendingStoriesList.length
         }
     },
 
@@ -183,6 +197,15 @@ export default {
                 console.log(`✅ Loaded ${this.tagOptions.length} story tags`)
             } catch (error) {
                 console.error('Error loading story tags:', error)
+            }
+        },
+
+        async loadPendingStories() {
+            try {
+                await this.$store.dispatch('fetchPendingStories', this.currentUserId)
+                console.log(`📋 Loaded ${this.pendingStoriesCount} pending stories`)
+            } catch (error) {
+                console.error('Error loading pending stories:', error)
             }
         },
 
@@ -325,6 +348,9 @@ export default {
             console.log('📝 [submitStory] Submitting story...', this.newStory)
             console.log('📝 [submitStory] currentUserId:', this.currentUserId)
 
+            // Clear error message
+            this.storySubmitError = ''
+
             // Call the action to create story
             const storyPayload = {
                 userId: this.currentUserId,
@@ -348,16 +374,18 @@ export default {
                 
                 // Success: show sent message and reset form
                 this.sent = true
+                this.storySubmitError = ''
                 this.newStory.text = ''
                 this.newStory.tags = []
                 this.newStory.track = 'I Dare'
                 this.newStory.context = 'Work'
 
-                // Switch to Real Stories to see it
-                this.storiesTab = 'real'
+                // Switch to Pending Stories to see it (story awaits moderation)
+                this.storiesTab = 'pending'
 
-                // Reload stories to see the new one and make sure tracking is updated
+                // Reload stories to see the new one
                 this.loadStories()
+                this.loadPendingStories()
 
                 // Hide sent message after 2 seconds and redirect
                 setTimeout(() => {
@@ -372,7 +400,16 @@ export default {
                 console.error('❌ [submitStory] Error message:', error.message)
                 console.error('❌ [submitStory] Full error:', error)
                 this.sent = false
-                alert('Failed to submit story. Error: ' + (error.message || 'Unknown error'))
+                
+                // Check for rate limiting error
+                if (error.response && error.response.status === 429) {
+                    this.errorModalMessage = '✨ One inspiring story per day keeps our community thriving! Come back tomorrow to share your next story.'
+                } else if (error.response && error.response.data && error.response.data.error) {
+                    this.errorModalMessage = error.response.data.error
+                } else {
+                    this.errorModalMessage = 'Failed to submit story. Please try again.'
+                }
+                this.showErrorModal = true
             })
         },
 
@@ -398,6 +435,9 @@ export default {
             console.log('📝 [submitStoryWithName] Submitting story with name:', firstName)
             console.log('📝 [submitStoryWithName] currentUserId:', this.currentUserId)
 
+            // Clear error message
+            this.storySubmitError = ''
+
             // Call the action to create story with author name
             const storyPayload = {
                 userId: this.currentUserId,
@@ -422,16 +462,18 @@ export default {
                 
                 // Success: show sent message and reset form
                 this.sent = true
+                this.storySubmitError = ''
                 this.newStory.text = ''
                 this.newStory.tags = []
                 this.newStory.track = 'I Dare'
                 this.newStory.context = 'Work'
 
-                // Switch to Real Stories to see it
-                this.storiesTab = 'real'
+                // Switch to Pending Stories to see it (story awaits moderation)
+                this.storiesTab = 'pending'
 
-                // Reload stories to see the new one and make sure tracking is updated
+                // Reload stories to see the new one
                 this.loadStories()
+                this.loadPendingStories()
 
                 // Hide sent message after 2 seconds and redirect
                 setTimeout(() => {
@@ -446,8 +488,23 @@ export default {
                 console.error('❌ [submitStoryWithName] Error message:', error.message)
                 console.error('❌ [submitStoryWithName] Full error:', error)
                 this.sent = false
-                alert('Failed to submit story. Error: ' + (error.message || 'Unknown error'))
+                
+                // Check for rate limiting error
+                if (error.response && error.response.status === 429) {
+                    this.errorModalMessage = '✨ One inspiring story per day keeps our community thriving! Come back tomorrow to share your next story.'
+                } else if (error.response && error.response.data && error.response.data.error) {
+                    this.errorModalMessage = error.response.data.error
+                } else {
+                    this.errorModalMessage = 'Failed to submit story. Please try again.'
+                }
+                this.showErrorModal = true
             })
+        },
+
+        closeErrorModal() {
+            this.showErrorModal = false
+            this.errorModalMessage = ''
+            this.storiesTab = 'real'
         },
 
         deleteStory(storyId) {
@@ -488,6 +545,7 @@ export default {
         this.loadStories()
         this.loadStoryCategories()
         this.loadStoryTags()
+        this.loadPendingStories()
     }
 }
 
