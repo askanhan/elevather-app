@@ -132,19 +132,40 @@
 }
 
 .tags {
+    display: block;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #64748b; 
+}
+
+.label {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 800;
+    margin-bottom: 6px; 
+}
+
+.tags-list {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    gap: 6px 10px; 
 }
 
 .tag {
-    font-size: 12px;
-    font-weight: 900;
-    color: #0f172a;
-    border: 1px solid #e2e8f0;
-    background: #fff;
-    padding: 6px 10px;
-    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    background: none; 
+    padding: 0;
+    border: none;
+}
+
+
+.tag:not(:last-child)::after {
+    content: "•";
+    margin-left: 10px;
+    color: #64748b;
+    font-weight: 800;
 }
 
 .bottom {
@@ -154,12 +175,11 @@
 }
 
 .btn {
-    border: 1px solid #0f172a;
-    background: #fff;
-    border-radius: 12px;
-    padding: 10px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 900;
-    cursor: pointer;
+    color: #0f172a;
 }
 
 .note {

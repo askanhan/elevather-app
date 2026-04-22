@@ -45,7 +45,10 @@
                         </div>
 
                         <div class="tags">
-                            <span v-for="t in s.tags" :key="t" class="tag">{{ t }}</span>
+                            <p class="label">Focus skills</p>
+                            <div class="tags-list">
+                                <span v-for="t in s.tags" :key="t" class="tag">{{ t }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
