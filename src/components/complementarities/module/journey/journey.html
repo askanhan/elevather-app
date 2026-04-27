@@ -52,16 +52,7 @@
                 <button class="trackHeader" @click="toggle(track.id)">
                     <div class="left">
                         <div class="badge" :style="{ background: track.color }">{{ track.title }}</div>
-                        <div class="headText">
-                            <h2 class="trackTitle">{{ track.title }} Track</h2>
-                            <p class="trackDesc">{{ track.description }}</p>
-                            <div class="trackMeta">
-                                <span class="metaChip">Suggested pace: {{ track.pace }}</span>
-                                <span class="metaChip">Focus: {{ track.focus }}</span>
-                            </div>
-                        </div>
                     </div>
-
                     <div class="right">
                         <div class="chev" :class="{ open: isOpen(track.id) }">⌄</div>
                     </div>
@@ -99,10 +90,6 @@
                             </div>
                         </div>
                     </button>
-
-                    <p class="note">
-                        All categories and modules loaded from the database.
-                    </p>
                 </div>
             </article>
         </section>

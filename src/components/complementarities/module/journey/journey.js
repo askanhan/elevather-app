@@ -87,6 +87,7 @@ export default {
             if (hasCategories && hasModules) {
                 this.loading = false
                 this.error = null
+                this.initializeOpenIds()
                 return
             }
             
@@ -101,6 +102,8 @@ export default {
                 .then(() => {
                     if (this.categories.length === 0 || this.modules.length === 0) {
                         this.error = 'Failed to load journey data.'
+                    } else {
+                        this.initializeOpenIds()
                     }
                     this.loading = false
                 })
@@ -109,6 +112,14 @@ export default {
                     this.error = 'Failed to load categories and modules.'
                     this.loading = false
                 })
+        },
+
+        initializeOpenIds() {
+            const openIdSet = new Set()
+            this.tracks.forEach(track => {
+                openIdSet.add(track.id)
+            })
+            this.openIds = openIdSet
         },
 
         transformToTracks(categories, modules) {
