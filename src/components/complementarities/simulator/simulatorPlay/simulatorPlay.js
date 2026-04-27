@@ -349,6 +349,14 @@ export default {
                     this.debriefData = response.feedbacks
                     this.showDebrief = true
                     this.showResults = true  // ← SHOW THE RESULTS MODAL
+                    
+                    // Scroll to debrief section after DOM update
+                    this.$nextTick(() => {
+                        const debriefSection = document.querySelector('.debriefSection')
+                        if (debriefSection) {
+                            debriefSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                        }
+                    })
                 } else {
                     this.feedback = 'Could not load results.'
                 }
