@@ -167,13 +167,19 @@
     max-width: 100%;
 }
 
-.kicker {
-    font-size: 12px;
-    font-weight: 900;
-    color: #64748b;
-    text-transform: uppercase;
-    margin-bottom: 8px;
+.card-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
 }
+
+.card-audio-button {
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
 
 .h2 {
     margin: 0 0 8px;

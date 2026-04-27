@@ -32,7 +32,15 @@
 
         <section class="stage">
             <div class="card">
-                <h2 class="kicker">{{ current.title }}</h2>
+                <div class="card-header-wrapper">
+                    <h2 class="kicker">{{ current.title }}</h2>
+                    <audio-button 
+                        v-if="current"
+                        :owner-type="'card'" 
+                        :owner-id="current.cardId" 
+                        class="card-audio-button">
+                    </audio-button>
+                </div>
                 <div v-if="current.kicker" class="h2">{{ current.kicker }}</div>
                 <p class="p">{{ current.text }}</p>
 
@@ -90,15 +98,7 @@
                 </details>
             </div>
 
-            <!-- Step Footer -->
-            <div class="step-footer">
-                <audio-button 
-                    v-if="current"
-                    :owner-type="'card'" 
-                    :owner-id="current.cardId" 
-                    class="step-footer-left">
-                </audio-button>
-            </div>
+
         </section>
 
         <!-- Debrief Section -->

@@ -156,6 +156,19 @@
     padding: 16px;
 }
 
+.card-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.card-audio-button {
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
 .h2 {
     margin: 12px 0 8px;
     font-size: 20px;

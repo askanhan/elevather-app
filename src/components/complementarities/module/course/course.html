@@ -27,7 +27,15 @@
 
                         <!-- Card with components -->
                         <template v-if="slide.type === 'card'">
-                            <h2 class="h2">{{ slide.title }}</h2>
+                            <div class="card-header-wrapper">
+                                <h2 class="h2">{{ slide.title }}</h2>
+                                <audio-button 
+                                    v-if="slide.type === 'card'"
+                                    :owner-type="'card'" 
+                                    :owner-id="slide.cardId" 
+                                    class="card-audio-button">
+                                </audio-button>
+                            </div>
                             <p v-if="slide.subtitle" class="subtitle">{{ slide.subtitle }}</p>
 
                             <!-- Render components -->
@@ -126,15 +134,7 @@
 
                     </div>
 
-                    <!-- Slide Footer -->
-                    <div class="slide-footer">
-                        <audio-button 
-                            v-if="slide.type === 'card'"
-                            :owner-type="'card'" 
-                            :owner-id="slide.cardId" 
-                            class="slide-footer-left">
-                        </audio-button>
-                    </div>
+
                 </article>
             </div>
         </section>
