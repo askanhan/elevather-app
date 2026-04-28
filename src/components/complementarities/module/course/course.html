@@ -39,82 +39,86 @@
                             <p v-if="slide.subtitle" class="subtitle">{{ slide.subtitle }}</p>
 
                             <!-- Render components -->
-                            <div v-for="comp in slide.components" :key="comp.order" class="component">
-                                <!-- Title -->
-                                <div v-if="comp.type === 'title'" class="comp-title">{{ comp.content }}</div>
+                            <div v-for="comp in slide.components" :key="comp.order" >
+                                <div class="component" v-if="!(
+                                    (comp.type === 'title' && comp.content === slide.title) || 
+                                    (comp.type === 'subtitle' && comp.content === slide.subtitle))"
+                                >
+                                    <!-- Title -->
+                                    <div v-if="comp.type === 'title'" class="comp-title">{{ comp.content }}</div>
 
-                                <!-- Subtitle -->
-                                <div v-if="comp.type === 'subtitle'" class="comp-subtitle">{{ comp.content }}</div>
+                                    <!-- Subtitle -->
+                                    <div v-if="comp.type === 'subtitle'" class="comp-subtitle">{{ comp.content }}</div>
 
-                                <!-- Text -->
-                                <div v-if="comp.type === 'text'" class="comp-text">{{ comp.content }}</div>
+                                    <!-- Text -->
+                                    <div v-if="comp.type === 'text'" class="comp-text">{{ comp.content }}</div>
 
-                                <!-- Quote -->
-                                <div v-if="comp.type === 'quote'" class="comp-quote">
-                                    <div class="quote-text">"{{ comp.content }}"</div>
-                                    <div class="quote-author">— {{ comp.author }}</div>
-                                </div>
-
-                                <!-- Image -->
-                                <div v-if="comp.type === 'image'" class="comp-image">
-                                    <img :src="getImageUrl(comp.url || comp.image)" :alt="comp.alt || 'Image'" />
-                                    <p v-if="comp.description" class="image-desc">{{ comp.description }}</p>
-                                </div>
-
-                                <!-- Video -->
-                                <div v-if="comp.type === 'video'" class="comp-video">
-                                    <div class="video-placeholder">
-                                        <div class="video-icon">🎬</div>
-                                        <div class="video-url">{{ comp.url }}</div>
-                                        <div v-if="comp.duration" class="video-duration">Duration: {{ comp.duration }} min</div>
+                                    <!-- Quote -->
+                                    <div v-if="comp.type === 'quote'" class="comp-quote">
+                                        <div class="quote-text">"{{ comp.content }}"</div>
+                                        <div class="quote-author">— {{ comp.author }}</div>
                                     </div>
-                                    <p v-if="comp.description" class="video-desc">{{ comp.description }}</p>
+
+                                    <!-- Image -->
+                                    <div v-if="comp.type === 'image'" class="comp-image">
+                                        <img :src="getImageUrl(comp.url || comp.image)" :alt="comp.alt || 'Image'" />
+                                        <p v-if="comp.description" class="image-desc">{{ comp.description }}</p>
+                                    </div>
+
+                                    <!-- Video -->
+                                    <div v-if="comp.type === 'video'" class="comp-video">
+                                        <div class="video-placeholder">
+                                            <div class="video-icon">🎬</div>
+                                            <div class="video-url">{{ comp.url }}</div>
+                                            <div v-if="comp.duration" class="video-duration">Duration: {{ comp.duration }} min</div>
+                                        </div>
+                                        <p v-if="comp.description" class="video-desc">{{ comp.description }}</p>
+                                    </div>
+
+                                    <!-- MCQ -->
+                                    <div v-if="comp.type === 'mcq'" class="comp-mcq">
+                                        <div class="mcq-question">{{ comp.question }}</div>
+                                        <button v-for="opt in comp.options" :key="opt.id" class="option"
+                                            :class="{ selected: answers[slide.id] == opt.id }"
+                                            @click="selectOption(slide.id, opt.id)">
+                                            <span class="radio" :class="{ on: answers[slide.id] == opt.id }"></span>
+                                            <span class="optText">{{ opt.text }}</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Open Question -->
+                                    <div v-if="comp.type === 'open question'" class="comp-open-question">
+                                        <div class="question-label">{{ comp.question }}</div>
+                                        <textarea class="textarea" :placeholder="comp.placeholder || 'Your answer...'"
+                                            v-model="openAnswers[slide.id]"></textarea>
+                                    </div>
+
+                                    <!-- List -->
+                                    <div v-if="comp.type === 'list'" class="comp-list">
+                                        <ul class="ul">
+                                            <li v-for="(item, idx) in comp.content.split('\n').filter(i => i.trim())" :key="idx">
+                                                {{ item.trim() }}
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Last Message -->
+                                    <div v-if="comp.type === 'last message'" class="comp-last-message">
+                                        <div class="message-box">{{ comp.content }}</div>
+                                    </div>
                                 </div>
 
-                                <!-- MCQ -->
-                                <div v-if="comp.type === 'mcq'" class="comp-mcq">
-                                    <div class="mcq-question">{{ comp.question }}</div>
-                                    <button v-for="opt in comp.options" :key="opt.id" class="option"
-                                        :class="{ selected: answers[slide.id] == opt.id }"
-                                        @click="selectOption(slide.id, opt.id)">
-                                        <span class="radio" :class="{ on: answers[slide.id] == opt.id }"></span>
-                                        <span class="optText">{{ opt.text }}</span>
-                                    </button>
+                                <!-- End text -->
+                                <div v-if="slide.endText" class="end-text">
+                                    <p>{{ slide.endText }}</p>
                                 </div>
 
-                                <!-- Open Question -->
-                                <div v-if="comp.type === 'open question'" class="comp-open-question">
-                                    <div class="question-label">{{ comp.question }}</div>
-                                    <textarea class="textarea" :placeholder="comp.placeholder || 'Your answer...'"
-                                        v-model="openAnswers[slide.id]"></textarea>
-                                </div>
-
-                                <!-- List -->
-                                <div v-if="comp.type === 'list'" class="comp-list">
-                                    <ul class="ul">
-                                        <li v-for="(item, idx) in comp.content.split('\n').filter(i => i.trim())" :key="idx">
-                                            {{ item.trim() }}
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <!-- Last Message -->
-                                <div v-if="comp.type === 'last message'" class="comp-last-message">
-                                    <div class="message-box">{{ comp.content }}</div>
-                                </div>
-                            </div>
-
-                            <!-- End text -->
-                            <div v-if="slide.endText" class="end-text">
-                                <p>{{ slide.endText }}</p>
-                            </div>
-
-                            <!-- Why this question -->
-                            <details v-if="slide.whyThisQuestion" class="why">
-                                <summary>Why this question</summary>
-                                <div class="whyBody">{{ slide.whyThisQuestion }}</div>
-                            </details>
-                        </template>
+                                <!-- Why this question -->
+                                <details v-if="slide.whyThisQuestion" class="why">
+                                    <summary>Why this question</summary>
+                                    <div class="whyBody">{{ slide.whyThisQuestion }}</div>
+                                </details>
+                            </template>
 
                         <!-- Completed -->
                         <template v-else-if="slide.type === 'done'">
