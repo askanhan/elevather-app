@@ -162,6 +162,35 @@ export default {
                 }
             })
         },
+        shouldShowComponent(comp) {
+            // Hide text components that are identical to their companion MCQ question
+            if (comp.type === 'text') {
+                const content = comp.content ? comp.content.trim() : '';
+                
+                // Check if there's a following MCQ with the same question
+                const compIndex = this.current.components.indexOf(comp);
+                if (compIndex !== -1 && compIndex < this.current.components.length - 1) {
+                    const nextComp = this.current.components[compIndex + 1];
+                    if (nextComp && nextComp.type === 'mcq') {
+                        const question = nextComp.question ? nextComp.question.trim() : '';
+                        if (content === question) {
+                            return false; // Hide this text, it's a duplicate of the MCQ question
+                        }
+                    }
+                }
+            }
+            
+            // Also hide text if its content equals its own question (internal logic error)
+            if (comp.type === 'text') {
+                const content = comp.content ? comp.content.trim() : '';
+                const question = comp.question ? comp.question.trim() : '';
+                if (content === question && question !== '') {
+                    return false;
+                }
+            }
+            
+            return true;
+        },
 
         goBack() {
             this.$router.push('/simulator')

@@ -45,7 +45,8 @@
                 <p class="p">{{ current.text }}</p>
 
                 <!-- Render card components -->
-                <div v-for="comp in current.components" :key="comp.order" class="component">
+                <div v-for="comp in current.components" :key="comp.order" >
+                    <div class="component" v-if="shouldShowComponent(comp)">
                     <!-- Text -->
                     <div v-if="comp.type === 'text'" class="comp-text">{{ comp.content }}</div>
 
@@ -61,6 +62,7 @@
 
                     <!-- MCQ as options -->
                     <div v-if="comp.type === 'mcq'" class="comp-mcq">
+                        <div v-if="comp.text && comp.text !== comp.question" class="mcq-text">{{ comp.text }}</div>
                         <div class="mcq-question">{{ comp.question || 'Select an option:' }}</div>
                         <button v-for="opt in comp.options" :key="opt.id" class="option"
                             :class="{ selected: selectedAnswers[current.id] == opt.id }"
@@ -69,6 +71,11 @@
                             <span class="optText">{{ opt.text }}</span>
                             
                         </button>
+                        <!-- Feedback appears here after options -->
+                        <div v-if="feedback" class="reveal">
+                            <div class="revealTitle">Feedback</div>
+                            <p class="p">{{ feedback }}</p>
+                        </div>
                     </div>
 
                     <!-- Quote -->
@@ -76,16 +83,13 @@
                         <div class="quote-text">"{{ comp.content }}"</div>
                         <div class="quote-author">— {{ comp.author }}</div>
                     </div>
+                    
+                </div>
                 </div>
 
                 <div v-if="current.why" class="reveal">
                     <div class="revealTitle">Why it matters</div>
                     <p class="p">{{ current.why }}</p>
-                </div>
-
-                <div v-if="feedback" class="reveal">
-                    <div class="revealTitle">Feedback</div>
-                    <p class="p">{{ feedback }}</p>
                 </div>
 
                 <details v-if="current.lens" class="lens">
