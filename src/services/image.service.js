@@ -120,25 +120,83 @@ export default class ImageService {
     const exact = this.availableImages.find(img => img.toLowerCase() === searchLower)
     if (exact) return exact
 
-    // Find by prefix
-    const prefix = searchLower.split(/[\s_\-.]/).shift()
-    if (prefix && prefix.length > 2) {
-      const byPrefix = this.availableImages.find(img =>
-        img.toLowerCase().startsWith(prefix)
-      )
-      if (byPrefix) return byPrefix
+    // Extract important keywords from search name (numbers and meaningful words)
+    const searchKeywords = this.extractKeywords(searchLower)
+
+    // Calculate similarity score for each available image
+    const scoredImages = this.availableImages
+      .map(img => ({
+        name: img,
+        score: this.calculateSimilarityScore(searchKeywords, this.extractKeywords(img.toLowerCase()))
+      }))
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+
+    return scoredImages.length > 0 ? scoredImages[0].name : null
+  }
+
+  /**
+   * Extract meaningful keywords from filename
+   * @param {string} filename - filename to parse
+   * @returns {string[]} - array of keywords
+   */
+  extractKeywords(filename) {
+    return filename
+      .split(/[\s_\-./\\]+/)
+      .filter(w => w.length > 0)
+      .map(w => w.toLowerCase())
+  }
+
+  /**
+   * Calculate similarity score between two keyword sets
+   * Higher score means better match
+   * @param {string[]} search - search keywords
+   * @param {string[]} candidate - candidate keywords
+   * @returns {number} - similarity score
+   */
+  calculateSimilarityScore(search, candidate) {
+    if (!search || !candidate || search.length === 0) return 0
+
+    let matchCount = 0
+    let exactMatches = 0
+    let prefixMatches = 0
+
+    // Check each search keyword
+    for (const keyword of search) {
+      // Exact keyword match
+      if (candidate.includes(keyword)) {
+        matchCount++
+        exactMatches++
+        continue
+      }
+
+      // Prefix match (for partial matches)
+      for (const candWord of candidate) {
+        if (candWord.startsWith(keyword) || keyword.startsWith(candWord)) {
+          matchCount++
+          prefixMatches++
+          break
+        }
+      }
     }
 
-    // Find by keyword
-    const keywords = searchLower.split(/[\s_\-.]/).filter(w => w.length > 2)
-    for (const keyword of keywords) {
-      const byKeyword = this.availableImages.find(img =>
-        img.toLowerCase().includes(keyword)
-      )
-      if (byKeyword) return byKeyword
+    // Calculate base score
+    let score = matchCount
+
+    // Bonus for exact matches
+    score += exactMatches * 0.5
+
+    // Bonus if all search keywords are found
+    if (matchCount === search.length) {
+      score += 10
     }
 
-    return null
+    // Bonus if images have similar length (closer match)
+    const lengthDiff = Math.abs(search.length - candidate.length)
+    if (lengthDiff === 0) score += 2
+    if (lengthDiff === 1) score += 1
+
+    return score
   }
 
   /**
