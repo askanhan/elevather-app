@@ -161,6 +161,22 @@ export default {
 
             return slides
         },
+        shouldShowComponent(comp, slide) {
+        const content = comp.content ? comp.content.trim() : '';
+
+        if (content === '-' || content === '-') {
+            return false;
+        }
+
+        if (comp.type === 'title' && content === slide.title) {
+            return false;
+        }
+
+        if ((comp.type === 'subtitle' && content === slide.subtitle)) {
+            return false;
+        }
+        return true;
+        },
 
         goBack() {
             this.$router.go(-1)

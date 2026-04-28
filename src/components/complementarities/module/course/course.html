@@ -40,15 +40,14 @@
 
                             <!-- Render components -->
                             <div v-for="comp in slide.components" :key="comp.order" >
-                                <div class="component" v-if="!(
-                                    (comp.type === 'title' && comp.content === slide.title) || 
-                                    (comp.type === 'subtitle' && comp.content === slide.subtitle))"
-                                >
+
+                                <div class="component" v-if="shouldShowComponent(comp, slide)">
                                     <!-- Title -->
                                     <div v-if="comp.type === 'title'" class="comp-title">{{ comp.content }}</div>
 
                                     <!-- Subtitle -->
                                     <div v-if="comp.type === 'subtitle'" class="comp-subtitle">{{ comp.content }}</div>
+                                
 
                                     <!-- Text -->
                                     <div v-if="comp.type === 'text'" class="comp-text">{{ comp.content }}</div>
@@ -118,6 +117,7 @@
                                     <summary>Why this question</summary>
                                     <div class="whyBody">{{ slide.whyThisQuestion }}</div>
                                 </details>
+                            </div>
                             </template>
 
                         <!-- Completed -->
