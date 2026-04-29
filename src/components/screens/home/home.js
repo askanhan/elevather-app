@@ -136,7 +136,6 @@ export default {
                 })
                 .catch(err => {
                     console.error('Error fetching questions:', err)
-                    this.loadMockQuestions()
                 })
         },
 

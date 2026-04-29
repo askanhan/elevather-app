@@ -40,24 +40,24 @@ export default {
   },
   async mounted() {
 
-    try {
+    // try {
 
-      const { value: session } = await Preferences.get({ key: 'session' })
-      if (session) {
-        console.log('Session var -> afterlogin')
-        await this.$router.isReady()
-        this.$router.replace({ name: 'afterlogin' })
-        return
-      }
+    //   const { value: session } = await Preferences.get({ key: 'session' })
+    //   if (session) {
+    //     console.log('Session var -> afterlogin')
+    //     await this.$router.isReady()
+    //     this.$router.replace({ name: 'afterlogin' })
+    //     return
+    //   }
 
-      console.log('Session yok -> splash ekranda kal')
-      // hiçbir şey yapma, burada bitir
-      return
-    } catch (e) {
-      console.log('Session check hata', e)
-      // hata olsa da ekranda kal
-      return
-    }
+    //   console.log('Session yok -> splash ekranda kal')
+    //   // hiçbir şey yapma, burada bitir
+    //   return
+    // } catch (e) {
+    //   console.log('Session check hata', e)
+    //   // hata olsa da ekranda kal
+    //   return
+    // }
   },
   methods: {
     detectLocation() {

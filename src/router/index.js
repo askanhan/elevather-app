@@ -18,7 +18,7 @@ import showIcons from '@/components/utils/_show_icons/_show_icons.vue'
 import dropdownPage from '@/components/utils/dropdown-page/dropdown-page.vue'
 import UpdateProfile from '@/components/screens/update-profile/update-profile.vue'
 import selectTag from '@/components/screens/select-tag/select-tag.vue'
-
+import splashScreen from '../components/screens/splash-screen/splash-screen.vue'
 import postContainer from '@/components/complementarities/PostContainer.vue'
 import Feedback from '../components/complementarities/Feedback.vue'
 import Course from '../components/complementarities/module/course/course.vue'
@@ -30,9 +30,17 @@ import StoriesModels from '../components/complementarities/stories/stories.vue'
 const routes = [
   
   {
-    path: '/:pathMatch(.*)*',
-    redirect: '/home'
+    path: '/',
+    name: 'splashscreen',
+    component: splashScreen,
+    meta: {
+      backButtonAvailable: false,
+      moduleName: 'splashScreen',
+      firstPage: true,
+      showHeaderAndNavbar: false
+    }
   },
+  
   {
     path: '/login',
     name: 'login',
