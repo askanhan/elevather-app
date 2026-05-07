@@ -185,7 +185,7 @@ export default {
         !!window.cordova
 
       const appRedirect = isNative
-        ? 'burada://afterlogin'
+        ? 'elevather://afterlogin'
         : `${window.location.origin}/#/afterlogin`   // localhost yok
 
       const next = encodeURIComponent(

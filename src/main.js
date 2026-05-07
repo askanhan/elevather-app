@@ -434,7 +434,7 @@ let __deepLinkTimer = null
 function __parseBuradaUrl(url) {
   let u
   try { u = new URL(url) } catch (_) { return null }
-  if (u.protocol !== 'burada:') return null
+  if (u.protocol !== 'elevather:') return null
 
   // burada://afterlogin?session=...
   if (u.host === 'afterlogin') {
