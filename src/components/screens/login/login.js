@@ -129,6 +129,12 @@ export default {
       }
     },
 
+    goToEmailRegister() {
+      if (this.$router && typeof this.$router.push === 'function') {
+        this.$router.push({ name: 'email-register' }).catch(() => { })
+      }
+    },
+
     async appleLogin() {
       try {
         console.log('[apple] start');

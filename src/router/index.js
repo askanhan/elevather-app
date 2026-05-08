@@ -26,6 +26,8 @@ import SimulatorHome from '../components/complementarities/simulator/simulatorHo
 import SimulatorPlay from '../components/complementarities/simulator/simulatorPlay/simulatorPlay.vue'
 import Journey from '@/components/complementarities/module/journey/journey.vue'
 import StoriesModels from '../components/complementarities/stories/stories.vue'
+import EmailLogin from '@/components/screens/email-login/email-login.vue'
+import EmailRegister from '@/components/screens/email-register/email-register.vue'
 
 const routes = [
   
@@ -74,6 +76,29 @@ const routes = [
       moduleName: 'Register',
       firstPage: true,
       showHeaderAndNavbar: false
+    }
+  },
+
+  {
+    path: '/email-login',
+    name: 'email-login',
+    component: () => EmailLogin,
+    meta: {
+        backButtonAvailable: false,
+        moduleName: 'EmailLogin',
+        firstPage: true,
+        showHeaderAndNavbar: false
+    }
+  },
+  {
+    path: '/email-register',
+    name: 'email-register',
+    component: () => EmailRegister,
+    meta: {
+        backButtonAvailable: false,
+        moduleName: 'EmailRegister',
+        firstPage: true,
+        showHeaderAndNavbar: false
     }
   },
   {

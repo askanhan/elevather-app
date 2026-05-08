@@ -345,6 +345,7 @@
       }
     },
     "login": {
+      "explore": "Explore the app without an account",
       "mailBtn": "Sign in with Email",
       "appleBtn": "Sign in with Apple",
       "googleBtn": "Sign in with Google",
