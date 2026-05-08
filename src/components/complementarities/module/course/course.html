@@ -20,7 +20,7 @@
         </header>
 
         <!-- Swipeable stage -->
-        <section class="stage" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
+        <section class="stage" :style="{ height: stageHeight }" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
             <div class="slides" :style="slidesStyle">
                 <article v-for="(slide, i) in slides" :key="slide.id" class="slide">
                     <div class="slideInner">

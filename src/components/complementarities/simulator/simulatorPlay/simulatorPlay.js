@@ -297,6 +297,14 @@ export default {
             if (this.stepIndex < this.steps.length - 1) {
                 this.stepIndex += 1
                 this.feedback = ''
+                
+                this.$nextTick(() => {
+                    const topbar = document.querySelector('.topbar')
+                    if (topbar) {
+                        topbar.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    }
+                })
+
             } else {
                 this.done = true
                 this.finishContent()
@@ -309,6 +317,13 @@ export default {
                 this.stepIndex -= 1
                 this.feedback = ''
             }
+            
+            this.$nextTick(() => {
+                    const topbar = document.querySelector('.topbar')
+                    if (topbar) {
+                        topbar.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    }
+                })
         },
 
         goTo(idx) {
@@ -398,8 +413,11 @@ export default {
                     // Still navigate even if update fails
                     this.$router.push('/simulator')
                 })
-        }
+        },
+        
     },
+
+    
 
     mounted() {
         // Get simulator ID from route query
@@ -419,3 +437,4 @@ export default {
         audioService.stop()
     }
 }
+

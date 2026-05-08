@@ -32,7 +32,8 @@ export default {
             moduleId: null,
             userId: 1,
             progressStarted: false,
-            loading: false
+            loading: false,
+            stageHeight: 'auto'
         }
     },
 
@@ -117,6 +118,7 @@ export default {
                 })
                 .then(() => {
                     this.progressStarted = true
+                    this.updateStageHeight()
                 })
                 .catch(err => {
                     console.error('Error while fetching module cards:', err)
@@ -191,7 +193,19 @@ export default {
             this.readingProgress = 0
             this.stopReadingTimer()
         },
-
+        updateStageHeight() {
+        this.$nextTick(() => {
+            // On cible la slide qui a la classe "active" ou l'index actuel
+            const slides = this.$el.querySelectorAll('.slide');
+            const activeSlide = slides[this.currentIndex];
+            
+            if (activeSlide) {
+                const inner = activeSlide.querySelector('.slideInner');
+                // On ajuste la hauteur du parent (.stage) sur le contenu réel
+                this.stageHeight = inner ? (inner.offsetHeight + 'px') : 'auto';
+            }
+        });
+    },
         next() {
             // Save open question response before moving to next slide
             const currentSlide = this.slides[this.currentIndex]
@@ -212,28 +226,49 @@ export default {
                     }
                 }
             }
-            
+
             if (this.currentIndex < this.slides.length - 1) {
                 this.currentIndex += 1
                 this.syncReadingToSlide()
+                this.updateStageHeight();
             } else {
                 // Last slide - finish the course
                 this.reading = false
                 this.stopReadingTimer()
                 this.finishCourse()
             }
+
+            /* tried for auto scroll but was too buggy
+            this.$nextTick(() => {
+                    const topbar = document.querySelector('.topbar')
+                    if (topbar) {
+                        topbar.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    }
+            })
+            */
+            
         },
 
         prev() {
             if (this.currentIndex > 0) {
                 this.currentIndex -= 1
                 this.syncReadingToSlide()
+                this.updateStageHeight();
             }
+            /* tried for auto scroll but was too buggy
+            this.$nextTick(() => {
+                    const topbar = document.querySelector('.topbar')
+                    if (topbar) {
+                        topbar.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    }
+                })
+            */
         },
 
         goTo(idx) {
             this.currentIndex = idx
             this.syncReadingToSlide()
+            this.updateStageHeight();
         },
 
         toggleReading() {
