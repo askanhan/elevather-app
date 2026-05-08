@@ -7,7 +7,7 @@ export default class ImageService {
     // Base paths for different contexts
     this.basePaths = {
       'course': '/static/img/courses_images/',
-      'simulator': '/static/simulators_images/',
+      'simulator': '/static/img/simulators_images/',
       'default': '/static/img/courses_images/'
     }
   }
