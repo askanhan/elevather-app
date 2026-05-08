@@ -1,13 +1,19 @@
 import SimulatorResult from '@/components/complementarities/simulator/simulatorResult/simulatorResult.vue'
 import AudioButton from '@/components/complementarities/audioPlayer/audioButton.vue'
+import VideoPlayer from '@/components/complementarities/video-player/video-player.vue'
+import imageOperations from '@/mixins/image-operations.js'
+import videoOperations from '@/mixins/video-operations.js'
 
 export default {
     name: 'SimulatorPlay',
 
     components: {
         SimulatorResult,
-        AudioButton
+        AudioButton,
+        VideoPlayer
     },
+
+    mixins: [imageOperations, videoOperations],
 
     data() {
         return {

@@ -4,17 +4,22 @@
  */
 export default class ImageService {
   constructor() {
-    // Base path for images - using static folder which is public
-    this.basePath = '/static/img/courses_images/'
+    // Base paths for different contexts
+    this.basePaths = {
+      'course': '/static/img/courses_images/',
+      'simulator': '/static/simulators_images/',
+      'default': '/static/img/courses_images/'
+    }
   }
 
   /**
    * Resolve image URL from various sources
    * @param {string|object} imageInput - image URL, filename, or object with image properties
    * @param {string} fallbackFilename - fallback filename if primary fails
+   * @param {string} type - 'course' or 'simulator' to determine the base path
    * @returns {string} - resolved image URL
    */
-  getImageUrl(imageInput, fallbackFilename = null) {
+  getImageUrl(imageInput, fallbackFilename = null, type = 'course') {
     // If it's an HTTPS URL, use it directly
     if (typeof imageInput === 'string' && imageInput.startsWith('http')) {
       return imageInput
@@ -22,7 +27,7 @@ export default class ImageService {
 
     // If it's a filename, try to find it in assets
     if (typeof imageInput === 'string' && imageInput.trim()) {
-      return this.resolveLocalImage(imageInput)
+      return this.resolveLocalImage(imageInput, type)
     }
 
     // If object with image properties, check various fields
@@ -31,19 +36,19 @@ export default class ImageService {
         return imageInput.image_url
       }
       if (imageInput.image) {
-        return this.resolveLocalImage(imageInput.image)
+        return this.resolveLocalImage(imageInput.image, type)
       }
       if (imageInput.thumbnail) {
-        return this.resolveLocalImage(imageInput.thumbnail)
+        return this.resolveLocalImage(imageInput.thumbnail, type)
       }
       if (imageInput.imageName) {
-        return this.resolveLocalImage(imageInput.imageName)
+        return this.resolveLocalImage(imageInput.imageName, type)
       }
     }
 
     // Use fallback if provided
     if (fallbackFilename) {
-      return this.resolveLocalImage(fallbackFilename)
+      return this.resolveLocalImage(fallbackFilename, type)
     }
 
     // Return placeholder
@@ -53,9 +58,10 @@ export default class ImageService {
   /**
    * Resolve local image from assets
    * @param {string} filename - image filename
+   * @param {string} type - 'course' or 'simulator'
    * @returns {string} - resolved asset URL
    */
-  resolveLocalImage(filename) {
+  resolveLocalImage(filename, type = 'course') {
     if (!filename || typeof filename !== 'string') {
       return this.getPlaceholder()
     }
@@ -63,8 +69,11 @@ export default class ImageService {
     // Extract just the filename if it's a full path
     const justFilename = filename.split('/').pop()
 
+    // Get base path based on type
+    const basePath = this.basePaths[type] || this.basePaths['default']
+
     // Directly construct and return the image URL
-    return this.basePath + justFilename
+    return basePath + justFilename
   }
 
   /**

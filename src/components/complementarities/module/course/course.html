@@ -66,11 +66,10 @@
 
                                     <!-- Video -->
                                     <div v-if="comp.type === 'video'" class="comp-video">
-                                        <div class="video-placeholder">
-                                            <div class="video-icon">🎬</div>
-                                            <div class="video-url">{{ comp.url }}</div>
-                                            <div v-if="comp.duration" class="video-duration">Duration: {{ comp.duration }} min</div>
-                                        </div>
+                                        <video-player 
+                                            :source="getVideoUrl(comp.url || comp.video)" 
+                                            :play-now="false">
+                                        </video-player>
                                         <p v-if="comp.description" class="video-desc">{{ comp.description }}</p>
                                     </div>
 
