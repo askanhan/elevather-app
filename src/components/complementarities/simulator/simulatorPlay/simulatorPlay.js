@@ -296,18 +296,17 @@ export default {
         },
         updateStageHeight() {
             this.$nextTick(() => {
-        // On vérifie d'abord si on est sur le débrief
-        const debriefElement = this.$el.querySelector('.debriefSection .card');
-        // Sinon on regarde la carte normale du simulateur
-        const cardElement = this.$el.querySelector('.stage .card');
-        
-        if (this.showDebrief && debriefElement) {
-            // On ajoute un peu de marge (40px) pour ne pas coller au bord
-            this.stageHeight = (debriefElement.scrollHeight + 40) + 'px';
-        } else if (cardElement) {
-            this.stageHeight = (cardElement.offsetHeight + 32) + 'px';
-        }
-    });
+                // Check if we're showing debrief or regular card to adjust height accordingly
+                const debriefElement = this.$el.querySelector('.debriefSection .card');
+                const cardElement = this.$el.querySelector('.stage .card');
+                
+                // if showing debrief, set height based on debrief content; otherwise, use current card height
+                if (this.showDebrief && debriefElement) {
+                    this.stageHeight = (debriefElement.scrollHeight + 40) + 'px';
+                } else if (cardElement) {
+                    this.stageHeight = (cardElement.offsetHeight + 32) + 'px';
+                }
+            });
         },
 
         next() {
