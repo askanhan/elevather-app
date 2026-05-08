@@ -48,7 +48,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     port: process.env.PORT || config.dev.port,
     historyApiFallback: true,
     hot: true,
-    static: false,
+    liveReload: true,
+    // static: false,
     compress: true,
     open: Boolean(config.dev.autoOpenBrowser),
     client: {
@@ -60,20 +61,20 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     },
     proxy: config.dev.proxyTable ? config.dev.proxyTable : undefined,
     allowedHosts: 'all',
-    watchFiles: config.dev.poll
-      ? {
-          paths: ['src/**/*', 'static/**/*'],
-        }
-      : undefined,
+    watchFiles: ['src/**/*.vue', 'src/**/*.js', 'src/**/*.html', 'src/**/*.css'],
+    // watchFiles: config.dev.poll
+    //   ? {
+    //       paths: ['src/**/*', 'static/**/*'],
+    //     }
+    //   : undefined,
   },
 
   plugins: [
     new webpack.DefinePlugin({ 'process.env': require('../config/dev.env') }),
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      templateContent: () =>
-        fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8'),
+      template: path.resolve(__dirname, '../index.html'),
       inject: true,
     }),
     new CopyWebpackPlugin({

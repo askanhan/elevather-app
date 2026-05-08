@@ -1,7 +1,6 @@
 
 import * as types from './mutation-types.js'
 import HF from './help-functions.js'
-import Vue from 'vue'
 import iconsMixin from '@/mixins/icons.js'
 import getDefaultState from './defaultState'
 

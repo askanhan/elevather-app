@@ -13,6 +13,9 @@ function resolve(dir) {
 module.exports = {
   // no 'mode' here; dev/prod merge files set it
   context: path.resolve(__dirname, '../'),
+  snapshot: {
+    managedPaths: [],
+  },
   entry: {
     app: ['@babel/polyfill', './src/main.js'],
   },
@@ -34,7 +37,13 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.vue$/, loader: 'vue-loader' },
+      { 
+        test: /\.vue$/, 
+        loader: 'vue-loader',
+        options: {
+          hotReload: true,
+        },
+      },
       { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
       // NOTE: CSS rules are defined in webpack.dev.conf.js (and usually a prod config)
       {

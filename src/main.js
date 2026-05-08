@@ -133,12 +133,18 @@ if (__isDev) {
     if (!s.allProfiles.some(x => String(x.p_id) === String(p.p_id))) s.allProfiles.push(p);
   };
 
-
-  //afterlogin ile uyumlu olsun diye
-  let refresh = await authStore.getItem('refresh')
-  if (refresh) {
-    Preferences.set({ key: 'session', value: JSON.stringify({ refresh: refresh }) })
-  }
+  // ✅ FIXED: Wrapped top-level await in an async IIFE to prevent Webpack warning
+  (async () => {
+    try {
+      //afterlogin ile uyumlu olsun diye
+      let refresh = await authStore.getItem('refresh');
+      if (refresh) {
+        await Preferences.set({ key: 'session', value: JSON.stringify({ refresh: refresh }) });
+      }
+    } catch (err) {
+      console.warn('[dev] Session restore failed:', err);
+    }
+  })();
 
   ensureProfile({
     p_id: 7,

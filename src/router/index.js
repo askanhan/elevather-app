@@ -24,7 +24,7 @@ import Feedback from '../components/complementarities/Feedback.vue'
 import Course from '../components/complementarities/module/course/course.vue'
 import SimulatorHome from '../components/complementarities/simulator/simulatorHome/simulatorHome.vue'
 import SimulatorPlay from '../components/complementarities/simulator/simulatorPlay/simulatorPlay.vue'
-import Journey from '../components/complementarities/module/journey/journey.vue'
+import Journey from '@/components/complementarities/module/journey/journey.vue'
 import StoriesModels from '../components/complementarities/stories/stories.vue'
 
 const routes = [

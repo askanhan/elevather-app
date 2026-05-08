@@ -116,13 +116,13 @@ export default {
             }
         },
         // Also watch for deep changes
-        userProgress: {
-            handler(newVal) {
-                console.log('User progress deep watcher triggered, data changed')
-                this.loadUserProgressData()
-            },
-            deep: true
-        }
+        // userProgress: {
+        //     handler(newVal) {
+        //         console.log('User progress deep watcher triggered, data changed')
+        //         this.loadUserProgressData()
+        //     },
+        //     deep: true
+        // }
     },
 
     methods: {

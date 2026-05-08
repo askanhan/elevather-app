@@ -41,14 +41,21 @@
         </div>
 
         <!-- Global Progress Block -->
-        <div v-if="!loading" class="progressBlock">
-            <div class="progressBlockLabel">Progress</div>
+        <div class="progressBlock">
+            <div class="progressBlockLabel">Progress
+
             <div class="progressBlockValue">{{ totalProgression.completed }}/{{ totalProgression.total }}</div>
+            </div>
+            <div class="progressBar">
+                <div class="progressBarFill"
+                    :style="{ width: (totalProgression.completed / totalProgression.total * 100) + '%' }"></div>
+            </div>
         </div>
 
         <!-- Content -->
         <section v-if="!loading" class="list">
-            <article v-for="track in filteredTracks" :key="track.id" class="trackCard" :class="getTrackStatusClass(track)">
+            <article v-for="track in filteredTracks" :key="track.id" class="trackCard"
+                :class="getTrackStatusClass(track)">
                 <button class="trackHeader" @click="toggle(track.id)">
                     <div class="left">
                         <div class="badge" :style="{ background: track.color }">{{ track.title }}</div>
@@ -59,9 +66,12 @@
                 </button>
 
                 <div v-show="isOpen(track.id)" class="trackBody">
-                    <button v-for="m in filteredModules(track)" :key="m.id" class="module" :class="getModuleStatusClass(m.status)" @click="goToCourse(m)">
+                    <button v-for="m in filteredModules(track)" :key="m.id" class="module"
+                        :class="getModuleStatusClass(m.status)" @click="goToCourse(m)">
                         <div class="moduleTop">
-                            <div class="dayNumber">Day {{ m.dayNumber }}</div>
+                            <div class="dayNumber">Day {{ m.dayNumber }}
+                                <img class="track-img" src="static/img/tracks.png" alt="">
+                            </div>
                             <div class="moduleTitleRow">
                                 <div class="moduleTitleWrap">
                                     <span class="moduleTitle">{{ m.title }}</span>
@@ -71,7 +81,7 @@
                                     <span class="dot"></span>
                                     {{ statusLabel(m.status) }}
                                 </span>
-                                
+
                                 <p class="moduleDesc">{{ m.summary }}</p>
                             </div>
                         </div>

@@ -134,8 +134,8 @@ export default {
         console.log('[apple] start');
 
         const res = await SignInWithApple.authorize({
-          clientId: 'be.visiontree.burada',
-          redirectURI: 'https://api.burada.be/auth/apple/callback',
+          clientId: 'be.visiontree.elevather',
+          redirectURI: 'https://app.elevather.be/auth/apple/callback',
           scopes: 'email name',
           state: String(Date.now()),
           nonce: String(Math.random()).slice(2),

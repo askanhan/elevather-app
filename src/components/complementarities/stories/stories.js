@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 // Mapping for localisation IDs to text (backward compatible)
 // Now backend stores text directly (e.g., "Community") but we keep this for legacy data
 const CONTEXT_TEXT_MAP = {
