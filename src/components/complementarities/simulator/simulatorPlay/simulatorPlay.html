@@ -57,7 +57,7 @@
                     <!-- Video -->
                     <div v-if="comp.type === 'video'" class="media">
                         <video-player 
-                            :source="getVideoUrl(comp.url || comp.video)" 
+                            :source="getVideoUrl(comp.url || comp.video, null, 'simulator')" 
                             :play-now="false">
                         </video-player>
                     </div>

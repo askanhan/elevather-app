@@ -4,17 +4,22 @@
  */
 export default class VideoService {
   constructor() {
-    // Base path for videos - using static folder which is public
-    this.basePath = '/static/videos/courses_videos/'
+    // Base paths for different contexts
+    this.basePaths = {
+      'course': '/static/videos/courses_videos/',
+      'simulator': '/static/simulators_videos/',
+      'default': '/static/videos/courses_videos/'
+    }
   }
 
   /**
    * Resolve video URL from various sources
    * @param {string|object} videoInput - video URL, filename, or object with video properties
    * @param {string} fallbackFilename - fallback filename if primary fails
+   * @param {string} type - 'course' or 'simulator' to determine the base path
    * @returns {string} - resolved video URL
    */
-  getVideoUrl(videoInput, fallbackFilename = null) {
+  getVideoUrl(videoInput, fallbackFilename = null, type = 'course') {
     // If it's an HTTPS URL, use it directly
     if (typeof videoInput === 'string' && videoInput.startsWith('http')) {
       return videoInput
@@ -22,7 +27,7 @@ export default class VideoService {
 
     // If it's a filename, try to find it in assets
     if (typeof videoInput === 'string' && videoInput.trim()) {
-      return this.resolveLocalVideo(videoInput)
+      return this.resolveLocalVideo(videoInput, type)
     }
 
     // If object with video properties, check various fields
@@ -31,16 +36,16 @@ export default class VideoService {
         return videoInput.video_url
       }
       if (videoInput.video) {
-        return this.resolveLocalVideo(videoInput.video)
+        return this.resolveLocalVideo(videoInput.video, type)
       }
       if (videoInput.videoName) {
-        return this.resolveLocalVideo(videoInput.videoName)
+        return this.resolveLocalVideo(videoInput.videoName, type)
       }
     }
 
     // Use fallback if provided
     if (fallbackFilename) {
-      return this.resolveLocalVideo(fallbackFilename)
+      return this.resolveLocalVideo(fallbackFilename, type)
     }
 
     // Return placeholder
@@ -50,9 +55,10 @@ export default class VideoService {
   /**
    * Resolve local video from assets
    * @param {string} filename - video filename
+   * @param {string} type - 'course' or 'simulator'
    * @returns {string} - resolved asset URL
    */
-  resolveLocalVideo(filename) {
+  resolveLocalVideo(filename, type = 'course') {
     if (!filename || typeof filename !== 'string') {
       return this.getPlaceholder()
     }
@@ -60,8 +66,11 @@ export default class VideoService {
     // Extract just the filename if it's a full path
     const justFilename = filename.split('/').pop()
 
+    // Get base path based on type
+    const basePath = this.basePaths[type] || this.basePaths['default']
+
     // Directly construct and return the video URL
-    return this.basePath + justFilename
+    return basePath + justFilename
   }
 
   /**

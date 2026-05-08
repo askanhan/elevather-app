@@ -67,7 +67,7 @@
                                     <!-- Video -->
                                     <div v-if="comp.type === 'video'" class="comp-video">
                                         <video-player 
-                                            :source="getVideoUrl(comp.url || comp.video)" 
+                                            :source="getVideoUrl(comp.url || comp.video, null, 'course')" 
                                             :play-now="false">
                                         </video-player>
                                         <p v-if="comp.description" class="video-desc">{{ comp.description }}</p>
