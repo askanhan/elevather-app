@@ -195,13 +195,11 @@ export default {
         },
         updateStageHeight() {
         this.$nextTick(() => {
-            // On cible la slide qui a la classe "active" ou l'index actuel
             const slides = this.$el.querySelectorAll('.slide');
             const activeSlide = slides[this.currentIndex];
             
             if (activeSlide) {
                 const inner = activeSlide.querySelector('.slideInner');
-                // On ajuste la hauteur du parent (.stage) sur le contenu réel
                 this.stageHeight = inner ? (inner.offsetHeight + 'px') : 'auto';
             }
         });

@@ -31,7 +31,8 @@ export default {
             showResults: false,
             showDebrief: false,
             debriefData: null,
-            debriefLoading: false
+            debriefLoading: false,
+            stageHeight: 'auto'
         }
     },
 
@@ -240,6 +241,10 @@ export default {
                 
                 // Use feedback from backend
                 this.feedback = response.feedback || option.feedback || 'Good choice.'
+
+                this.$nextTick(() => {
+                    this.updateStageHeight();
+                });
                 
                 // ========== VERIFICATION & COMPARISON ==========
                 console.log('████████████████████████████████████████')
@@ -289,6 +294,21 @@ export default {
                 setTimeout(() => { this.locked = false }, 250)
             }
         },
+        updateStageHeight() {
+            this.$nextTick(() => {
+        // On vérifie d'abord si on est sur le débrief
+        const debriefElement = this.$el.querySelector('.debriefSection .card');
+        // Sinon on regarde la carte normale du simulateur
+        const cardElement = this.$el.querySelector('.stage .card');
+        
+        if (this.showDebrief && debriefElement) {
+            // On ajoute un peu de marge (40px) pour ne pas coller au bord
+            this.stageHeight = (debriefElement.scrollHeight + 40) + 'px';
+        } else if (cardElement) {
+            this.stageHeight = (cardElement.offsetHeight + 32) + 'px';
+        }
+    });
+        },
 
         next() {
             if (this.done) return
@@ -297,7 +317,7 @@ export default {
             if (this.stepIndex < this.steps.length - 1) {
                 this.stepIndex += 1
                 this.feedback = ''
-                
+                this.updateStageHeight()
                 this.$nextTick(() => {
                     const topbar = document.querySelector('.topbar')
                     if (topbar) {
@@ -316,6 +336,7 @@ export default {
             if (this.stepIndex > 0) {
                 this.stepIndex -= 1
                 this.feedback = ''
+                this.updateStageHeight()
             }
             
             this.$nextTick(() => {
@@ -329,6 +350,7 @@ export default {
         goTo(idx) {
             this.stepIndex = idx
             this.feedback = ''
+            this.updateStageHeight()
         },
 
         goToCourse() {
