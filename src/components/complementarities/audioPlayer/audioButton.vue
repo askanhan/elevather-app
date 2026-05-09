@@ -1,18 +1,12 @@
 <template>
   <div class="audio-button-wrapper">
-    <button
-      class="audio-button"
-      :class="[`state-${state}`, { loading: isLoading }]"
-      @click="handleClick"
-      :aria-label="`Play audio for ${ownerType} ${ownerId}`"
-      :title="buttonTitle"
-      :disabled="isLoading"
-    >
-      <span class="audio-icon">🔊</span>
+    <button class="audio-button" :class="[`state-${state}`, { loading: isLoading }]" @click="handleClick"
+      :aria-label="`Play audio for ${ownerType} ${ownerId}`" :title="buttonTitle" :disabled="isLoading">
+      <!-- Replaced the hardcoded emoji with a dynamic computed property -->
+      <span class="audio-icon">{{ currentIcon }}</span>
     </button>
   </div>
 </template>
-
 <script>
 import audioService from './audioService.js'
 import { mapState } from 'vuex'
@@ -45,27 +39,32 @@ export default {
         idle: 'Click to play audio',
         loading: 'Loading audio...',
         playing: 'Click to pause',
-        paused: 'Click to resume or stop'
+        paused: 'Click to resume'
       }
       return titles[this.state] || 'Play audio'
     },
     key() {
       return `${this.ownerType}-${this.ownerId}`
+    }, currentIcon() {
+      const icons = {
+        idle: '🔊',      // Or standard '🔊'
+        loading: '⏳',    // Shows while fetching from backend
+        playing: '🔊⏸️',    // Pause icon when it's actively playing
+        paused: '🔊▶️'      // Play icon when it's ready to resume
+      }
+      return icons[this.state] || '🔊'
     }
   },
   methods: {
     async handleClick() {
       try {
         if (this.state === 'idle') {
-          // Transition: idle -> loading -> playing
           await this.loadAndPlay()
         } else if (this.state === 'playing') {
-          // Transition: playing -> paused
           this.pauseAudio()
         } else if (this.state === 'paused') {
-          // Transition: paused -> stop (reset) and play from start
-          audioService.stop()
-          await this.loadAndPlay()
+          // MODIFIED: Just resume playing, don't stop and reload!
+          this.resumeAudio()
         }
       } catch (error) {
         console.error('[AudioButton] Error:', error)
@@ -79,14 +78,11 @@ export default {
         this.isLoading = true
         this.state = 'loading'
 
-        // Load audio (from cache or backend)
         this.audioUrl = await audioService.loadAudio(this.ownerType, this.ownerId)
 
-        // Set source and play
         audioService.setSourceAndPlay(this.audioUrl)
         this.state = 'playing'
 
-        // Poll state for UI sync
         this.startPolling()
       } catch (error) {
         this.isLoading = false
@@ -103,12 +99,21 @@ export default {
       this.stopPolling()
     },
 
+    // ADDED: New method just for resuming
+    resumeAudio() {
+      audioService.play()
+      this.state = 'playing'
+      this.startPolling()
+    },
+
     startPolling() {
       this.stopPolling()
       this.pollInterval = setInterval(() => {
         const serviceState = audioService.getCurrentState()
-        if (serviceState === 'idle' && this.state === 'playing') {
-          // Audio ended naturally
+        const activeKey = audioService.getCurrentKey() // Check who is currently using the service
+
+        // MODIFIED: If service is idle OR another button hijacked the audio, reset this button
+        if (serviceState === 'idle' || activeKey !== this.key) {
           this.state = 'idle'
           this.stopPolling()
         }
@@ -123,7 +128,6 @@ export default {
     },
 
     showErrorToast() {
-      // Use existing toast system from the app
       this.$store.commit('SHOW_MESSAGE', {
         type: 'error',
         message: 'Audio unavailable. Please try again.'
@@ -132,9 +136,10 @@ export default {
   },
   beforeDestroy() {
     this.stopPolling()
-    audioService.stop()
+    // Optional: Only stop the global audio if THIS specific button was the one playing it
+    if (audioService.getCurrentKey() === this.key) {
+      audioService.stop()
+    }
   }
 }
 </script>
-
-<style scoped src="./audioPlayer.css"></style>

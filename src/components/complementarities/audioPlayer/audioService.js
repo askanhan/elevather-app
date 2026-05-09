@@ -213,6 +213,20 @@ class AudioService {
   clearCache() {
     audioCache.clear()
   }
+  /**
+   * Query: Get current state
+   */
+  getCurrentState() {
+    return currentAudioState
+  }
+
+  // ---> ADD THIS NEW METHOD <---
+  /**
+   * Query: Get the key of the currently loaded audio
+   */
+  getCurrentKey() {
+    return currentKey
+  }
 
   /**
    * Cleanup - call on component destroy
