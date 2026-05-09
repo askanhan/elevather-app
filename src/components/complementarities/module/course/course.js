@@ -2,6 +2,7 @@ import AudioButton from '@/components/complementarities/audioPlayer/audioButton.
 import VideoPlayer from '@/components/complementarities/video-player/video-player.vue'
 import imageOperations from '@/mixins/image-operations.js'
 import videoOperations from '@/mixins/video-operations.js'
+import audioService from '@/components/complementarities/audioPlayer/audioService.js'
 
 export default {
     name: 'CourseMock',
@@ -39,6 +40,7 @@ export default {
 
     mounted() {
         this.fetchCards()
+        window.addEventListener('keydown', this.handleKeydown)
     },
 
     computed: {
@@ -213,6 +215,7 @@ export default {
             })
         },
         next() {
+            audioService.stop()
             // Save open question response before moving to next slide
             const currentSlide = this.slides[this.currentIndex]
             if (currentSlide && currentSlide.type === 'card') {
@@ -248,6 +251,7 @@ export default {
         },
 
         prev() {
+            audioService.stop()
             if (this.currentIndex > 0) {
                 this.currentIndex -= 1
                 this.syncReadingToSlide()
@@ -256,7 +260,20 @@ export default {
             this.goToTopOfThePage()
         },
 
+        handleKeydown(e) {
+            // Spacebar to toggle play/pause (ignore if typing in an input/textarea)
+            if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault() // prevent page scroll
+                if (audioService.isPlaying()) {
+                    audioService.pause()
+                } else {
+                    audioService.play()
+                }
+            }
+        },
+
         goTo(idx) {
+            audioService.stop()
             this.currentIndex = idx
             this.syncReadingToSlide()
             this.updateStageHeight();
@@ -389,8 +406,10 @@ export default {
 
     beforeDestroy() {
         this.stopReadingTimer()
-        // Stop audio when navigating away
-        const audioService = require('@/components/complementarities/audioPlayer/audioService.js').default
+        // ---> ADD THIS LINE <---
+        window.removeEventListener('keydown', this.handleKeydown)
+        
+        // MODIFIED: Since we imported it at the top, we can just call it directly now
         audioService.stop()
     }
 }
