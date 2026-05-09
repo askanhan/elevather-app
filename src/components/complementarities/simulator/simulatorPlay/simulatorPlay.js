@@ -317,17 +317,19 @@ export default {
                 this.stepIndex += 1
                 this.feedback = ''
                 this.updateStageHeight()
-                this.$nextTick(() => {
-                    const topbar = document.querySelector('.topbar')
-                    if (topbar) {
-                        topbar.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                    }
-                })
-
             } else {
                 this.done = true
                 this.finishContent()
             }
+            this.goToTopOfThePage()
+        },
+        goToTopOfThePage() {
+            this.$nextTick(() => {
+                document.querySelector('.app-scroller').scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            })
         },
 
         prev() {
@@ -338,12 +340,7 @@ export default {
                 this.updateStageHeight()
             }
             
-            this.$nextTick(() => {
-                    const topbar = document.querySelector('.topbar')
-                    if (topbar) {
-                        topbar.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                    }
-                })
+            this.goToTopOfThePage()
         },
 
         goTo(idx) {

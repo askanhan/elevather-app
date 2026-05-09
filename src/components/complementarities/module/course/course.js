@@ -10,7 +10,7 @@ export default {
         AudioButton,
         VideoPlayer
     },
-    
+
     mixins: [imageOperations, videoOperations],
 
     data() {
@@ -82,16 +82,16 @@ export default {
         fetchCards() {
             // Get module ID from URL query params
             const moduleId = parseInt(this.$route.query.id, 10)
-            
+
             if (!moduleId || isNaN(moduleId)) {
                 this.error = 'No module ID provided.'
                 return
             }
-            
+
             this.moduleId = moduleId
             this.loading = true
             this.error = null
-            
+
             // Fetch the cards for this module
             this.$store.dispatch('fetchCourseCards', moduleId)
                 .then(() => {
@@ -105,9 +105,9 @@ export default {
                     if (this.courseCards.length > 0) {
                         this.course.title = this.courseCards[0].title || 'Module'
                     }
-                    
+
                     this.loading = false
-                    
+
                     // Update progress to "In progress" - don't block if it fails
                     return this.$store.dispatch('updateUserProgress', {
                         userId: this.userId,
@@ -167,20 +167,20 @@ export default {
             return slides
         },
         shouldShowComponent(comp, slide) {
-        const content = comp.content ? comp.content.trim() : '';
+            const content = comp.content ? comp.content.trim() : '';
 
-        if (content === '-' || content === '-') {
-            return false;
-        }
+            if (content === '-' || content === '-') {
+                return false;
+            }
 
-        if (comp.type === 'title' && content === slide.title) {
-            return false;
-        }
+            if (comp.type === 'title' && content === slide.title) {
+                return false;
+            }
 
-        if ((comp.type === 'subtitle' && content === slide.subtitle)) {
-            return false;
-        }
-        return true;
+            if ((comp.type === 'subtitle' && content === slide.subtitle)) {
+                return false;
+            }
+            return true;
         },
 
         goBack() {
@@ -194,16 +194,24 @@ export default {
             this.stopReadingTimer()
         },
         updateStageHeight() {
-        this.$nextTick(() => {
-            const slides = this.$el.querySelectorAll('.slide');
-            const activeSlide = slides[this.currentIndex];
-            
-            if (activeSlide) {
-                const inner = activeSlide.querySelector('.slideInner');
-                this.stageHeight = inner ? (inner.offsetHeight + 'px') : 'auto';
-            }
-        });
-    },
+            this.$nextTick(() => {
+                const slides = this.$el.querySelectorAll('.slide');
+                const activeSlide = slides[this.currentIndex];
+
+                if (activeSlide) {
+                    const inner = activeSlide.querySelector('.slideInner');
+                    this.stageHeight = inner ? (inner.offsetHeight + 'px') : 'auto';
+                }
+            });
+        },
+        goToTopOfThePage() {
+            this.$nextTick(() => {
+                document.querySelector('.app-scroller').scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            })
+        },
         next() {
             // Save open question response before moving to next slide
             const currentSlide = this.slides[this.currentIndex]
@@ -235,16 +243,8 @@ export default {
                 this.stopReadingTimer()
                 this.finishCourse()
             }
+            this.goToTopOfThePage()
 
-            /* tried for auto scroll but was too buggy
-            this.$nextTick(() => {
-                    const topbar = document.querySelector('.topbar')
-                    if (topbar) {
-                        topbar.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                    }
-            })
-            */
-            
         },
 
         prev() {
@@ -253,14 +253,7 @@ export default {
                 this.syncReadingToSlide()
                 this.updateStageHeight();
             }
-            /* tried for auto scroll but was too buggy
-            this.$nextTick(() => {
-                    const topbar = document.querySelector('.topbar')
-                    if (topbar) {
-                        topbar.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                    }
-                })
-            */
+            this.goToTopOfThePage()
         },
 
         goTo(idx) {
@@ -330,17 +323,17 @@ export default {
         selectOption(slideId, optionId) {
             console.log('selectOption called:', { slideId, optionId, answers: this.answers })
             this.answers[slideId] = optionId
-            
+
             // Save the MCQ response to the backend
             this.$store.dispatch('saveMCQResponse', {
                 userId: this.userId,
                 selectedOptionId: optionId
             })
-            .catch((error) => {
-                console.error('Error saving MCQ response:', error)
-                // Show error message but keep the answer selected
-                this.$store.commit('SHOW_MESSAGE', ['Error saving your response. Please try again.', 'error'])
-            })
+                .catch((error) => {
+                    console.error('Error saving MCQ response:', error)
+                    // Show error message but keep the answer selected
+                    this.$store.commit('SHOW_MESSAGE', ['Error saving your response. Please try again.', 'error'])
+                })
         },
 
         getFeedback(component, optionId) {
