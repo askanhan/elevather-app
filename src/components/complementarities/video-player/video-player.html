@@ -1,21 +1,44 @@
-<div style="position: relative;" :class="thumbnailvideo ? 'thumbnail-video' : ''"
-v-observe-visibility="visibilityChanged">
-
-    <i v-if="!thumbnailvideo" @click="fullScreen = !fullScreen" class="far fa-compress-alt let-full-screen"></i>
-    <video ref="myDiv" :id="id" class="video-player" :autoplay="playNow" webkit-playsinline playsinline :muted="isMuted"
-        :class="{'full-screen' : fullScreen, 'fixed-height': !fullScreen, 'paused': videoPaused}" 
-        loop preload="none">
-        <source :src="source" :type="'video/' + getExtension(source)">
-        Your browser does not support the video tag.
-    </video>
-    <i @click.stop="isMuted = !isMuted" v-if="isMuted" class="sesayar fal fa-volume-mute"></i>
-    <i @click.stop="isMuted = !isMuted" v-if="!isMuted" class="sesayar fal fa-volume"></i>
-    <div class="video-cover" @click="playVideo()">
-        <i class="far fa-play paused-icon" v-if="videoPaused" style="margin-right: 10px;"></i>
+<template>
+    <div style="position: relative;" :class="thumbnailvideo ? 'thumbnail-video' : ''">
+      <i v-if="!thumbnailvideo" @click="fullScreen = !fullScreen" class="far fa-compress-alt let-full-screen"></i>
+  
+      <!-- YOUTUBE PLAYER -->
+      <iframe
+        v-if="isYouTube"
+        :id="id"
+        class="video-player youtube-player"
+        :class="{ 'full-screen': fullScreen, 'fixed-height': !fullScreen }"
+        :src="youtubeEmbedUrl"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+  
+      <!-- NATIVE HTML5 PLAYER (For MP4, etc.) -->
+      <template v-else>
+        <video 
+          ref="myDiv" 
+          :id="id" 
+          class="video-player" 
+          :autoplay="playNow" 
+          webkit-playsinline 
+          playsinline 
+          :muted="isMuted"
+          :class="{'full-screen' : fullScreen, 'fixed-height': !fullScreen, 'paused': videoPaused}" 
+          loop 
+          preload="none"
+        >
+          <source :src="source" :type="'video/' + getExtension(source)">
+          Your browser does not support the video tag.
+        </video>
+  
+        <!-- Custom Controls (Only show for native video) -->
+        <i @click.stop="isMuted = !isMuted" v-if="isMuted" class="sesayar fal fa-volume-mute"></i>
+        <i @click.stop="isMuted = !isMuted" v-if="!isMuted" class="sesayar fal fa-volume"></i>
+        <div class="video-cover" @click="playVideo()">
+          <i class="far fa-play paused-icon" v-if="videoPaused" style="margin-right: 10px;"></i>
+        </div>
+      </template>
     </div>
-</div>
-<!-- 
-<video width="320" height="240" controls>
-    <source :src="source" :type="'video/' + getExtension(source)">
-    Your browser does not support the video tag.
-  </video> -->
+  </template>
+  

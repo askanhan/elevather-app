@@ -1,4 +1,18 @@
-.video-player {
+  /* Ensure the iframe behaves like the native video block visually */
+  .youtube-player {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Standard video ratio, adjust if needed */
+    border: none;
+  }
+  
+  .fixed-height {
+    /* Add your fixed height logic here if it isn't already defined globally */
+  }
+  .full-screen {
+    /* Add your full screen logic here if it isn't already defined globally */
+  }
+  
+  .video-player {
     width: 100%;
 }
 
