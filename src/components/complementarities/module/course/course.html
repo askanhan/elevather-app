@@ -63,7 +63,6 @@
                                         <img :src="getImageUrl(comp.url || comp.image)" :alt="comp.alt || 'Image'" />
                                         <p v-if="comp.description" class="image-desc">{{ comp.description }}</p>
                                     </div>
-                                    {{comp}}
                                     <!-- Video -->
                                     <div v-if="comp.type === 'video'" class="comp-video">
                                         

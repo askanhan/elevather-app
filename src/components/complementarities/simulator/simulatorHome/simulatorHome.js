@@ -77,17 +77,23 @@ export default {
         },
 
         goPlay(s) {
-            // Reset all metrics to 50 before entering simulator
-            this.$store.dispatch('resetSimulatorMetrics', s.id)
-                .then(() => {
-                    // Navigate to simulator after metrics are reset
-                    this.$router.push({ path: '/simulator/play', query: { id: s.id } })
-                })
-                .catch(err => {
-                    console.error('Error resetting metrics:', err)
-                    // Still navigate even if reset fails
-                    this.$router.push({ path: '/simulator/play', query: { id: s.id } })
-                })
+            if (this.$store.state.guestMode) {
+                // alert('Please log in to access the course content.')
+                this.$message.success('Please log in to access the course content.')
+                return
+            } else {
+                // Reset all metrics to 50 before entering simulator
+                this.$store.dispatch('resetSimulatorMetrics', s.id)
+                    .then(() => {
+                        // Navigate to simulator after metrics are reset
+                        this.$router.push({ path: '/simulator/play', query: { id: s.id } })
+                    })
+                    .catch(err => {
+                        console.error('Error resetting metrics:', err)
+                        // Still navigate even if reset fails
+                        this.$router.push({ path: '/simulator/play', query: { id: s.id } })
+                    })
+            }
         }
     }
 }

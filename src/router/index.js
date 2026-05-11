@@ -206,7 +206,7 @@ const routes = [
     component: StoriesModels,
     meta: {
       keepAlive: false,
-      backButtonAvailable: true,
+      backButtonAvailable: false,
       moduleName: 'stories',
       firstPage: true,
       showTabs: true
@@ -218,7 +218,7 @@ const routes = [
     component: Journey,
     meta: {
       keepAlive: false,
-      backButtonAvailable: true,
+      backButtonAvailable: false,
       moduleName: 'journey',
       firstPage: true,
       showTabs: true
@@ -230,7 +230,7 @@ const routes = [
     component: SimulatorHome,
     meta: {
       keepAlive: false,
-      backButtonAvailable: true,
+      backButtonAvailable: false,
       moduleName: 'simulator',
       firstPage: true,
       showTabs: true

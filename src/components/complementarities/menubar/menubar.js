@@ -29,29 +29,11 @@ export default {
     },
 
     altyazi() {
+      if (this.$store.state.guestMode) {
+        return "Log in to access all features."
+      }
       const firstName = this.$store?.state?.user?.first_name || ''
       return "Hello, " + firstName + "." 
-
-      if (this.$route.name === 'home') {
-        return this.$t('components.menubar.subtitle.home', { name: firstName })
-      }
-      if (this.$route.name === 'search') {
-        return this.$t('components.menubar.subtitle.search')
-      }
-      if (this.$route.name === 'newslist') {
-        return this.$t('components.menubar.subtitle.newslist')
-      }
-      if (this.$route.name === 'profile') {
-        return this.$t('components.menubar.subtitle.profile')
-      }
-      if (this.$route.name === 'donate') {
-        return this.$t('components.menubar.subtitle.donate')
-      }
-      if (this.$route.name === 'conversations') {
-        return this.$t('components.menubar.subtitle.conversations')
-      }
-
-      return this.$t('components.menubar.subtitle.default', { name: firstName })
     },
 
     allConversations() {

@@ -34,6 +34,12 @@ export default {
   },
   mounted() { },
   methods: {
+    passAsGuest() {
+
+      try { this.$store.commit('LOGGED_IN') } catch (e) { }
+      try { this.$store.commit('USER_LOGGED_IN_AS_GUEST') } catch (e) { }
+      this.$router.push({ name: 'home' }).catch(() => { })
+    },
 
     validateEmail(email) {
       let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

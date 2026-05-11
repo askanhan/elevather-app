@@ -58,6 +58,10 @@ export default {
             return (this.query || '').trim().toLowerCase()
         },
 
+        isGuest() {
+            return this.$store.state.guestMode || false
+        },
+
         filteredPool() {
             const q = this.q
             // Use userStories if filtering own stories, otherwise use allStories

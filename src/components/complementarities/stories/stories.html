@@ -5,12 +5,14 @@
             <div>
                 <h1 class="h1">Stories</h1>
                 <p class="sub">
-                    Inspiration and real stories from our community. Partner-created content will replace these
-                    placeholders.
+                    Inspiration and real stories from our community. 
+                </p>
+                <p class="sub">
+                    Share your own story and connect with others who relate and support you. A safe, anonymous space to express and find solidarity.
                 </p>
             </div>
 
-            <div class="tools">
+            <div class="tools" v-if="!isGuest">
                 <input v-model="query" class="search" type="search" placeholder="Search stories, people, topics…" />
                 
                 <button class="filterBtn" :class="{ active: showUserStoriesOnly }" @click="toggleUserStoriesOnly">
@@ -20,7 +22,7 @@
             </div>
         </header>
 
-        <section class="section">
+        <section class="section" v-if="!isGuest">
 
             <!-- Community tabs: Real Stories / Share your story / Pending Stories -->
             <div class="subtabs">

@@ -16,6 +16,9 @@ export const mutations = {
   [types.SET_COURSE_CARDS_FOR_MODULE](state, { moduleId, cards }) {
     state.courseCards = cards || []
   },
+  [types.USER_LOGGED_IN_AS_GUEST](state, statuses) {
+    state.guestMode = true
+  },
   [types.SET_JOURNEY_STATUSES](state, statuses) {
     state.journeyStatuses = statuses
   },

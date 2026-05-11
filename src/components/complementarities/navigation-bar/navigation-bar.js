@@ -34,6 +34,7 @@ export default {
       if (this.meId && this.meId !== 0) {
         this.$router.push({ name: 'profile', params: { profileID: this.meId } })
       } else {
+        this.$message.success('Please log in to access your profile and your achivements.')
         console.warn('Profile ID not available')
       }
     },

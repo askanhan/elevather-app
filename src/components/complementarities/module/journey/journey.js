@@ -83,14 +83,14 @@ export default {
         fetchJourneyData() {
             const hasCategories = this.categories.length > 0
             const hasModules = this.modules.length > 0
-            
+
             if (hasCategories && hasModules) {
                 this.loading = false
                 this.error = null
                 this.initializeOpenIds()
                 return
             }
-            
+
             this.loading = true
             this.error = null
 
@@ -140,7 +140,7 @@ export default {
                 let catModules = modulesByCategory[cat.id] || []
                 // Sort modules by day_number in ascending order
                 catModules = catModules.sort((a, b) => (a.day_number || 0) - (b.day_number || 0))
-                
+
                 const titleWords = cat.title.split(' ')
                 const short = titleWords.slice(0, 2).join(' ')
 
@@ -176,7 +176,13 @@ export default {
         },
 
         goToCourse(module) {
-            this.$router.push({ path: '/course', query: { id: module.id } })
+            if (this.$store.state.guestMode) {
+                // alert('Please log in to access the course content.')
+                this.$message.success('Please log in to access the course content.')
+                return
+            } else {
+                this.$router.push({ path: '/course', query: { id: module.id } })
+            }
         },
 
         completedCount(track) {
@@ -207,7 +213,7 @@ export default {
         getTrackStatusClass(track) {
             const modules = track.modules || []
             if (modules.length === 0) return ''
-            
+
             // If any module is done, show as done (green)
             if (modules.some(m => m.status === 'Done')) {
                 return 'track-done'
