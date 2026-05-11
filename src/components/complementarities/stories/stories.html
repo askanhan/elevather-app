@@ -5,94 +5,207 @@
             <div>
                 <h1 class="h1">Stories</h1>
                 <p class="sub">
-                    Inspiration and real stories from our community. 
+                    Inspiration and real stories from our community.
                 </p>
                 <p class="sub">
-                    Share your own story and connect with others who relate and support you. A safe, anonymous space to express and find solidarity.
+                    Share your own story and connect with others who relate and support you. A safe, anonymous space to
+                    express and find solidarity.
                 </p>
             </div>
 
             <div class="tools" v-if="!isGuest">
                 <input v-model="query" class="search" type="search" placeholder="Search stories, people, topics…" />
-                
-                <button class="filterBtn" :class="{ active: showUserStoriesOnly }" @click="toggleUserStoriesOnly">
+
+                <!-- <button class="filterBtn" :class="{ active: showUserStoriesOnly }" @click="toggleUserStoriesOnly">
                     <span class="filterIcon">👤</span>
                     My Stories
-                </button>
+                </button> -->
             </div>
         </header>
 
         <section class="section" v-if="!isGuest">
 
             <!-- Community tabs: Real Stories / Share your story / Pending Stories -->
+            <!-- Community tabs: Inspirational / Real / Share / Pending -->
             <div class="subtabs">
+                <button class="subtab" :class="{ on: storiesTab === 'inspire' }" @click="storiesTab = 'inspire'">
+                    Inspirational Stories
+                </button>
                 <button class="subtab" :class="{ on: storiesTab === 'real' }" @click="storiesTab = 'real'">
-                    Real Stories
+                    Community Stories
                 </button>
                 <button class="subtab" :class="{ on: storiesTab === 'share' }" @click="storiesTab = 'share'">
                     Share your story
                 </button>
-                <button class="subtab" :class="{ on: storiesTab === 'pending' }" @click="storiesTab = 'pending'">
-                    Pending Stories
-                    <span v-if="pendingStoriesCount > 0" class="badgeCount">{{ pendingStoriesCount }}</span>
-                </button>
             </div>
-
-            <!-- Real Stories feed -->
-            <div v-if="storiesTab === 'real'" class="realStories">
+            <!-- Inspirational Stories feed -->
+            <div v-if="storiesTab === 'inspire'" class="inspireStories">
 
                 <div class="sectionHead">
-                    <h2 class="h2">Real Stories</h2>
-                    <p class="hint">{{ showUserStoriesOnly ? 'Your stories' : 'Anonymous one-liners from real life. No "likes". Only "I relate" and "Support".' }}</p>
+                    <h2 class="h2">Inspirational Stories</h2>
+                    <p class="hint">Curated voices from women who turned obstacles into momentum. Read, reflect, save
+                        the ones that resonate.</p>
                 </div>
 
-                <div class="feed">
-                    <article v-for="p in filteredPool" :key="p.id" class="post">
-                        <div class="postHead">
-                            <div class="anon">
-                                <span class="anonDot"></span>
-                                <span class="anonTxt">{{ p.author || 'Anonymous' }}</span>
+                <!-- Topic filter -->
+                <div class="topicFilter">
+                    <button class="topicChip" :class="{ on: inspireTopic === 'all' }" @click="inspireTopic = 'all'">
+                        All
+                    </button>
+                    <button v-for="topic in inspireTopics" :key="topic" class="topicChip"
+                        :class="{ on: inspireTopic === topic }" @click="inspireTopic = topic">
+                        {{ topic }}
+                    </button>
+                </div>
+
+                <!-- Featured story (big card) -->
+                <article v-if="featuredInspire" class="inspireFeatured">
+                    <div class="inspireFeaturedMedia">
+                        <img :src="featuredInspire.image" :alt="featuredInspire.name" />
+                        <span class="featuredBadge">⭐ Featured</span>
+                    </div>
+                    <div class="inspireFeaturedBody">
+                        <span class="inspireTopic">{{ featuredInspire.topic }}</span>
+                        <h3 class="inspireFeaturedTitle">{{ featuredInspire.title }}</h3>
+                        <div class="inspirePerson">
+                            <div class="inspireName">{{ featuredInspire.name }}</div>
+                            <div class="inspireRole">{{ featuredInspire.role }}</div>
+                        </div>
+                        <p class="inspireExcerpt">{{ featuredInspire.excerpt }}</p>
+                        <button class="readMore" @click="openInspireDetail(featuredInspire)">
+                            Read full story →
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Grid of stories -->
+                <div class="inspireGrid">
+                    <article v-for="s in filteredInspire" :key="s.id" class="inspireCard">
+                        <div class="inspireMedia">
+                            <img :src="s.image" :alt="s.name" />
+                            <span class="inspireTopic">{{ s.topic }}</span>
+                        </div>
+
+                        <div class="inspireBody">
+                            <div class="inspirePerson">
+                                <div class="inspireName">{{ s.name }}</div>
+                                <div class="inspireRole">{{ s.role }}</div>
                             </div>
-                            <div class="postMeta">
-                                <span class="chip">{{ p.track || p.category?.title }}</span>
-                                <span class="chip">{{ getStoryContext(p) }}</span>
-                                <span class="chip">{{ p.when || p.created_at }}</span>
-                                <button v-if="isOwnStory(p)" class="deleteBtn" @click="deleteStory(p.id)" title="Delete story">
-                                    🗑️
+
+                            <h3 class="inspireTitle">{{ s.title }}</h3>
+
+                            <p v-if="!expandedInspire.includes(s.id)" class="inspireExcerpt">
+                                {{ s.excerpt }}
+                            </p>
+
+                            <div v-else class="inspireFull">
+                                <p v-for="(para, i) in s.story" :key="i">{{ para }}</p>
+                                <blockquote v-if="s.quote" class="inspireQuote">
+                                    "{{ s.quote }}"
+                                </blockquote>
+                            </div>
+
+                            <div class="inspireTags">
+                                <span v-for="t in s.tags" :key="t" class="tag">{{ t }}</span>
+                            </div>
+
+                            <div class="inspireActions">
+                                <button class="readMore" @click="toggleInspireExpand(s.id)">
+                                    {{ expandedInspire.includes(s.id) ? '↑ Show less' : '↓ Read full story' }}
                                 </button>
+
+                                <div class="inspireActionRight">
+                                    <button class="pillBtn" :class="{ on: savedInspire.includes(s.id) }"
+                                        @click="toggleSaveInspire(s.id)"
+                                        :title="savedInspire.includes(s.id) ? 'Saved' : 'Save for later'">
+                                        <span class="ic">{{ savedInspire.includes(s.id) ? '🔖' : '📑' }}</span>
+                                        <span>{{ savedInspire.includes(s.id) ? 'Saved' : 'Save' }}</span>
+                                    </button>
+
+                                    <button class="pillBtn" :class="{ on: inspiredBy.includes(s.id) }"
+                                        @click="toggleInspiredBy(s.id)">
+                                        <span class="ic">✨</span>
+                                        <span>Inspired me</span>
+                                        <span class="count">{{ s.inspired_count || 0 }}</span>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="postBody">
-                            <div class="postText">{{ p.content || p.text }}</div>
-
-                            <div v-if="p.tags && p.tags.length" class="tagRow">
-                                <span v-for="t in p.tags" :key="t" class="tag">{{ t }}</span>
-                            </div>
-                        </div>
-
-                        <div class="postActions">
-                            <button class="pillBtn" :class="{ on: reacted(p.id, 'relatable') }"
-                                @click="toggleReaction(p.id, 'relatable')">
-                                <span class="ic">🤝</span>
-                                <span>I relate</span>
-                                <span class="count">{{ p.reactions_count?.relatable || p.relate || 0 }}</span>
-                            </button>
-
-                            <button class="pillBtn" :class="{ on: reacted(p.id, 'support') }"
-                                @click="toggleReaction(p.id, 'support')">
-                                <span class="ic">💗</span>
-                                <span>Support</span>
-                                <span class="count">{{ p.reactions_count?.support || p.support || 0 }}</span>
-                            </button>
                         </div>
                     </article>
                 </div>
 
-                <div class="miniTip">
-                    Tip: later we can connect this feed to Power Simulator outcomes (recommend a model + a course).
+                <div v-if="filteredInspire.length === 0" class="noPendingStories">
+                    <p>No stories in this topic yet.</p>
+                    <p class="sub">Try another filter or check back soon.</p>
                 </div>
             </div>
+            <!-- Real Stories feed -->
+            <div v-if="storiesTab === 'real'" class="realStories">
+
+                <div class="sectionHead">
+                  <h2 class="h2">Real Stories</h2>
+                  <p class="hint">Anonymous one-liners from real life. No "likes". Only "I relate" and "Support".</p>
+                </div>
+              
+                <div class="feed">
+                  <article v-for="p in filteredPool" :key="p.id" class="post">
+              
+                    <!-- Story = hero -->
+                    <p class="postText">{{ p.content || p.text }}</p>
+              
+                    <!-- Tags (if any) -->
+                    <div v-if="p.tags && p.tags.length" class="tagRow">
+                      <span v-for="t in p.tags" :key="t" class="tag">{{ t }}</span>
+                    </div>
+              
+                    <!-- Subtle meta line -->
+                    <div class="postMeta">
+                      <span class="metaItem">
+                        <span class="anonDot"></span>
+                        {{ p.author || 'Anonymous' }}
+                      </span>
+                      <span class="metaSep">·</span>
+                      <span class="metaItem">{{ p.track || p.category?.title }}</span>
+                      <span class="metaSep">·</span>
+                      <span class="metaItem">{{ getStoryContext(p) }}</span>
+                      <span class="metaSep">·</span>
+                      <span class="metaItem">{{ formatStoryDate(p.when || p.created_at) }}</span>
+              
+                      <button
+                        v-if="isOwnStory(p)"
+                        class="deleteBtn"
+                        @click="deleteStory(p.id)"
+                        title="Delete story"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+              
+                    <!-- Reactions -->
+                    <div class="postActions">
+                      <button
+                        class="pillBtn"
+                        :class="{ on: reacted(p.id, 'relatable') }"
+                        @click="toggleReaction(p.id, 'relatable')"
+                      >
+                        <span class="ic">🤝</span>
+                        <span>I relate</span>
+                        <span class="count">{{ p.reactions_count?.relatable || p.relate || 0 }}</span>
+                      </button>
+              
+                      <button
+                        class="pillBtn"
+                        :class="{ on: reacted(p.id, 'support') }"
+                        @click="toggleReaction(p.id, 'support')"
+                      >
+                        <span class="ic">💗</span>
+                        <span>Support</span>
+                        <span class="count">{{ p.reactions_count?.support || p.support || 0 }}</span>
+                      </button>
+                    </div>
+                  </article>
+                </div>
+              </div>
 
             <!-- Share your story -->
             <div v-if="storiesTab === 'share'" class="shareStory">
@@ -100,7 +213,8 @@
                 <div class="sectionHead">
                     <h2 class="h2">Share your story</h2>
                     <p class="hint">
-                        Share brief, real moments from your life. Your story will appear anonymously in the feed for the community to relate to and support.
+                        Share brief, real moments from your life. Your story will appear anonymously in the feed for the
+                        community to relate to and support.
                     </p>
                 </div>
 
@@ -109,7 +223,8 @@
                         <span class="anonShield">🛡️</span>
                         <div class="anonBannerTxt">
                             <div class="anonTitle">Your privacy is protected</div>
-                            <div class="anonDesc">All stories are posted anonymously. You can share freely without worry. We create a safe space for real stories.</div>
+                            <div class="anonDesc">All stories are posted anonymously. You can share freely without
+                                worry. We create a safe space for real stories.</div>
                         </div>
                     </div>
 
@@ -118,15 +233,6 @@
                         placeholder="Share a brief moment..."></textarea>
 
                     <div class="row">
-                        <div class="field">
-                            <label class="lbl">Track</label>
-                            <select v-model="newStory.track" class="select2">
-                                <option value="" disabled>Select a track</option>
-                                <option v-for="cat in trackOptions" :key="cat.id" :value="cat.name || cat.title">
-                                    {{ cat.name || cat.title }}
-                                </option>
-                            </select>
-                        </div>
 
                         <div class="field">
                             <label class="lbl">Context</label>
@@ -137,14 +243,15 @@
                                 <option value="Self">Self</option>
                             </select>
                         </div>
-                    </div>
-
-                    <label class="lbl">Optional tags (up to 3)</label>
-                    <div class="chipsPick">
-                        <button v-for="tag in tagOptions" :key="tag.id" class="pick" :class="{ on: isTagSelected(tag.id) }"
-                            @click="toggleTag(tag)" type="button">
-                            {{ tag.name }}
-                        </button>
+                        <div class="field">
+                            <label class="lbl">About</label>
+                            <select v-model="newStory.track" class="select2">
+                                <option value="" disabled>Select a track</option>
+                                <option v-for="cat in trackOptions" :key="cat.id" :value="cat.name || cat.title">
+                                    {{ cat.name || cat.title }}
+                                </option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="shareBottom">
@@ -153,66 +260,66 @@
                             <button class="send" :disabled="!canSend" @click="submitStory">
                                 Share anonymously
                             </button>
-                            <button class="sendNamed" :disabled="!canSend" @click="submitStoryWithName">
-                                Share with my name
-                            </button>
                         </div>
                     </div>
 
                     <div v-if="sent" class="sent">
-                        ✅ Your story has been submitted! It's now awaiting moderation and will appear in the Real Stories feed once approved.
+                        ✅ Your story has been submitted! It's now awaiting moderation and will appear in the Real
+                        Stories feed once approved.
                     </div>
 
                     <div v-if="storySubmitError" class="error">
                         ❌ {{ storySubmitError }}
                     </div>
                 </div>
+                <!-- Pending Stories tab -->
+                <div class="pendingStories mt-5">
+
+                    <div class="sectionHead">
+                        <h2 class="h2">Your Pending Stories</h2>
+                        <p class="hint">
+                            Stories you've submitted that are awaiting moderation approval. Once approved, they'll
+                            appear in
+                            the Real Stories feed.
+                        </p>
+                    </div>
+
+                    <div v-if="pendingStoriesList.length === 0" class="noPendingStories">
+                        <p>You don't have any pending stories.</p>
+                        <p class="sub">Your submitted stories will appear here while they await publication.</p>
+                    </div>
+
+                    <div v-else class="feed">
+                        <article v-for="p in pendingStoriesList" :key="p.id" class="post pending">
+                            <div class="statusBadge">⏳ Pending</div>
+
+                            <div class="postBody">
+                                <div class="postText">{{ p.content || p.text }}</div>
+
+                                <div v-if="p.tags && p.tags.length" class="tagRow">
+                                    <span v-for="t in p.tags" :key="t" class="tag">{{ t }}</span>
+                                </div>
+                            </div>
+
+                            <div class="postHead">
+                                <div class="anon">
+                                    <span class="anonDot"></span>
+                                    <span class="anonTxt">{{ p.author || 'Anonymous' }}</span>
+                                </div>
+                                <div class="postMeta">
+                                    <span class="chip">{{ p.track || p.category?.title }}</span>
+                                    <span class="chip">{{ getStoryContext(p) }}</span>
+                                    <span class="chip">{{ p.when || p.created_at }}</span>
+                                    <button class="deleteBtn" @click="deleteStory(p.id)" title="Delete story">
+                                        🗑️
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
             </div>
 
-            <!-- Pending Stories tab -->
-            <div v-if="storiesTab === 'pending'" class="pendingStories">
-
-                <div class="sectionHead">
-                    <h2 class="h2">Your Pending Stories</h2>
-                    <p class="hint">
-                        Stories you've submitted that are awaiting moderation approval. Once approved, they'll appear in the Real Stories feed.
-                    </p>
-                </div>
-
-                <div v-if="pendingStoriesList.length === 0" class="noPendingStories">
-                    <p>You don't have any pending stories.</p>
-                    <p class="sub">Your submitted stories will appear here while they await publication.</p>
-                </div>
-
-                <div v-else class="feed">
-                    <article v-for="p in pendingStoriesList" :key="p.id" class="post pending">
-                        <div class="statusBadge">⏳ Pending</div>
-                        
-                        <div class="postHead">
-                            <div class="anon">
-                                <span class="anonDot"></span>
-                                <span class="anonTxt">{{ p.author || 'Anonymous' }}</span>
-                            </div>
-                            <div class="postMeta">
-                                <span class="chip">{{ p.track || p.category?.title }}</span>
-                                <span class="chip">{{ getStoryContext(p) }}</span>
-                                <span class="chip">{{ p.when || p.created_at }}</span>
-                                <button class="deleteBtn" @click="deleteStory(p.id)" title="Delete story">
-                                    🗑️
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="postBody">
-                            <div class="postText">{{ p.content || p.text }}</div>
-
-                            <div v-if="p.tags && p.tags.length" class="tagRow">
-                                <span v-for="t in p.tags" :key="t" class="tag">{{ t }}</span>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
 
         </section>
 

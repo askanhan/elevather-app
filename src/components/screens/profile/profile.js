@@ -239,6 +239,14 @@ export default {
             if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`
             return resultDate.toLocaleDateString()
         },
+        openUrl(url) {
+            if (!url) return
+            try {
+                window.open(url, '_blank')
+            } catch (e) {
+                window.location.href = url
+            }
+        },
 
         goSimulatorHistory() {
             this.$router.push('/simulator-history')
@@ -297,7 +305,7 @@ export default {
         },
 
         openPrivacy() {
-            this.$router.push('/privacy')
+            this.openUrl('https://elevather.eu/privacy-policy-for-elevather-application/')
         },
 
         openSupport() {

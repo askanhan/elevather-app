@@ -1,6 +1,6 @@
 {
-  "appId": "be.visiontree.burada",
-  "appName": "Burada",
+  "appId": "be.visiontree.elevather",
+  "appName": "Elevather",
   "webDir": "dist",
   "plugins": {
     "SplashScreen": {

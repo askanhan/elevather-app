@@ -942,3 +942,82 @@ body.dark-mode .loading-text {
   flex: 0 0 auto !important;
   padding: 10px 14px !important;
 }
+
+
+
+
+
+/* Base professional font family applied to all text elements */
+.h1, .sub, .h2, .qtitle, .badge .label, .badge .value, .scoreLabel, .scoreValue {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+}
+
+/* Main Header ("Power Check") */
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1E293B; /* Deep professional slate */
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+/* Sub-header */
+.sub {
+  font-size: 15px;
+  font-weight: 400;
+  color: #64748B; /* Muted slate for secondary text */
+  line-height: 1.5;
+}
+
+/* Section Header ("Quick check-in") */
+.h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #334155;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+
+/* Question Titles ("I expressed myself", etc.) */
+.qtitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1E293B;
+  margin-bottom: 12px;
+}
+
+/* Hero Badge Over-title ("Today your power is") */
+.badge .label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+}
+
+/* Hero Badge Main Value ("Find your power") */
+.badge .value {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Score Area ("Power score" & "0/100") */
+.scoreLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.scoreValue {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1E293B;
+}
