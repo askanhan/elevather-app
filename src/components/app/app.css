@@ -10,6 +10,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  background-image: url('/static/img/bg.png');
 }
 
 #app.desktop-mode-on {
@@ -97,7 +98,7 @@
 }
 
 .app-scroller.with-header-navbar .view {
-  min-height: calc(100vh - 185px); /* Adjusted for header (135px) + footer (50px) */
+  min-height: calc(100vh - 165px); /* Adjusted for header (135px) + footer (50px) */
 }
 
 /* ===== DARK MODE ===== */
