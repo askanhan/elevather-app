@@ -464,7 +464,7 @@ export const fetchUserStories = async function ({ state }, { userId, viewerId = 
 }
 
 // Fetch stories for a specific user
-export const getGoalsAndMissions = async function ({ state }, { userId, viewerId = null }) {
+export const getGoalsAndMissions = async function ({ state }, { userId }) {
   try {
     const [goalsRes, missionRes] = await Promise.all([
       api.get(`/user/${userId}/goals/`),

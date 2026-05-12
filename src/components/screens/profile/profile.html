@@ -1,186 +1,168 @@
 ﻿<div class="profile">
 
-        <!-- Header -->
-        <header class="head">
-            <div class="left">
-                <div class="avatar">
-                    <span class="avEmoji">
-                      👤
-                    </span>
-                </div>
-                <div class="who">
-                    <div class="name">{{ userName }}</div>
-                    <div class="motto">{{ user.motto }}</div>
-                </div>
-            </div>
-
-            <!-- ============================================
-     REPLACE the Mission section in profile.html with this:
-     ============================================ -->
-
-        <!-- Mission -->
-        <section class="card mission" v-if="mission">
-            <div class="cardHead">
-                <div class="h2">My mission</div>
-                <button class="link" @click="goGoals">Edit</button>
-            </div>
-            <div class="missionBox">
-                <div class="quoteMark">"</div>
-                <div class="missionText">{{ mission }}</div>
-            </div>
-        </section>
-
-        <!-- My Goals -->
-        <section class="card" v-if="myGoals.length">
-            <div class="cardHead">
-                <div class="h2">My goals</div>
-                <button class="link" @click="goGoals">Edit</button>
-            </div>
-
-            <div class="goalsList">
-                <div v-for="g in myGoals" :key="g.id" class="goalItem">
-                    <div class="goalTop">
-                        <span class="goalIcon">{{ g.icon }}</span>
-                        <span class="goalTitle">{{ g.title }}</span>
-                    </div>
-                    <span class="goalStatus" :class="g.status">{{ goalStatusLabel(g.status) }}</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- If no goals yet -->
-        <section class="card" v-if="!myGoals.length && !loading">
-            <div class="cardHead">
-                <div class="h2">My goals</div>
-            </div>
-            <div class="emptyGoals">
-                <p>You haven't set any goals yet.</p>
-                <button class="cta" @click="goGoals">Choose your goals</button>
-            </div>
-        </section>
-        </header>
-
-        <!-- Identity chips -->
-        <section class="chipsRow">
-            <span class="chip strong">
-                Focus: <b>{{ focusTrack }}</b>
+    <!-- Header -->
+    <header class="head">
+      <div class="left">
+        <div class="avatar">
+          <span class="avEmoji">👤</span>
+        </div>
+        <div class="who">
+          <div class="name">{{ userName }}</div>
+          <div class="motto">{{ user.motto }}</div>
+        </div>
+      </div>
+    </header>
+    <!-- /Header -->
+  
+    <!-- Identity chips -->
+    <section class="chipsRow">
+      <span class="chip strong">
+        Focus: <b>{{ focusTrack }}</b>
+      </span>
+      <span class="chip">
+        Streak: <b>{{ user.streakDays }} days</b>
+      </span>
+      <span class="chip" :class="trendClass">
+        Trend: <b>{{ user.trend }}</b>
+      </span>
+    </section>
+  
+    <!-- Mission -->
+    <section class="card mission" v-if="mission">
+      <div class="cardHead">
+        <div class="h2">My mission</div>
+        <button class="link" @click="goGoals">Edit</button>
+      </div>
+      <div class="missionBox">
+        <div class="quoteMark">"</div>
+        <div class="missionText">{{ mission }}</div>
+      </div>
+    </section>
+  
+    <!-- My Goals -->
+    <section class="card" v-if="myGoals.length">
+      <div class="cardHead">
+        <div class="h2">My goals</div>
+        <button class="link" @click="goGoals">Edit</button>
+      </div>
+      <div class="goalsList">
+        <div v-for="g in myGoals" :key="g.id" class="goalItem">
+          <div class="goalTop">
+            <span class="goalIcon">{{ g.icon }}</span>
+            <span class="goalTitle">{{ g.title }}</span>
+          </div>
+          <span class="goalStatus" :class="g.status">{{ goalStatusLabel(g.status) }}</span>
+        </div>
+      </div>
+    </section>
+  
+    <!-- If no goals yet -->
+    <section class="card" v-if="!myGoals.length && !loading">
+      <div class="cardHead">
+        <div class="h2">My goals</div>
+      </div>
+      <div class="emptyGoals">
+        <p>You haven't set any goals yet.</p>
+        <button class="cta" @click="goGoals">Choose your goals</button>
+      </div>
+    </section>
+  
+    <!-- Progress -->
+    <section class="card">
+      <div class="cardHead">
+        <div class="h2">My progress</div>
+        <button class="link" @click="goJourney">Open Tracks</button>
+      </div>
+  
+      <div class="bars">
+        <div
+          v-for="t in tracks"
+          :key="t.id"
+          class="barRow"
+          :style="{ backgroundColor: t.color + '15', borderColor: t.color + '30' }"
+        >
+          <div class="barTop">
+            <span class="barName" :style="{ color: t.color }">{{ t.label }}</span>
+            <span class="barVal" :style="{ backgroundColor: t.color, color: '#fff' }">
+              {{ t.completed }}/{{ t.total }}
             </span>
-            <span class="chip">
-                Streak: <b>{{ user.streakDays }} days</b>
-            </span>
-            <span class="chip" :class="trendClass">
-                Trend: <b>{{ user.trend }}</b>
-            </span>
-        </section>
-
-        <!-- Mission -->
-        <section class="card mission">
-            <div class="cardHead">
-                <div class="h2">My mission</div>
-                <button class="link" @click="editMission">Edit</button>
-            </div>
-
-            <div class="missionBox">
-                <div class="quoteMark">"</div>
-                <div class="missionText">
-                    {{ user.mission }}
-                </div>
-            </div>
-
-            <div class="hint">
-                This one sentence influences your recommendations (mock).
-            </div>
-        </section>
-
-        <!-- Progress -->
-        <section class="card">
-            <div class="cardHead">
-                <div class="h2">My progress</div>
-                <button class="link" @click="goJourney">Open Tracks</button>
-            </div>
-
-            <div class="bars">
-                <div v-for="t in tracks" :key="t.id" class="barRow" :style="{ backgroundColor: t.color + '15', borderColor: t.color + '30' }">
-                    <div class="barTop">
-                        <span class="barName" :style="{ color: t.color }">{{ t.label }}</span>
-                        <span class="barVal" :style="{ backgroundColor: t.color, color: '#fff' }">{{ t.completed }}/{{ t.total }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stats">
-                <div class="stat">
-                    <div class="statVal">{{ stats.completedCourses }}</div>
-                    <div class="statLbl">Completed courses</div>
-                </div>
-                <div class="stat">
-                    <div class="statVal">{{ stats.simulations }}</div>
-                    <div class="statLbl">Completed simulators</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Journal -->
-        <section class="card">
-            <div class="cardHead">
-                <div class="h2">My reflections</div>
-                <button class="link" @click="openJournal">See all</button>
-            </div>
-
-            <div class="journal">
-                <article v-for="j in journal" :key="j.id" class="jItem" @click="openJournal">
-                    <div class="jTop">
-                        <span class="chip">{{ j.date }}</span>
-                        <span class="chip">{{ j.track }}</span>
-                    </div>
-                    <div class="jTitle">{{ j.title }}</div>
-                    <div class="jBody">{{ j.snippet }}</div>
-                </article>
-            </div>
-        </section>
-
-        <!-- Support / Preferences -->
-        <section class="card">
-            <div class="cardHead">
-                <div class="h2">Support & preferences</div>
-            </div>
-
-            <div class="prefList">
-                <button class="pref" @click="openEULA">
-                    <span class="prefLeft"> Terms of Service & EULA</span>
-                    <span class="prefRight"></span>
-                </button>
-                <button class="pref" @click="openPrivacy">
-                    <span class="prefLeft"> Privacy Policy</span>
-                    <span class="prefRight"></span>
-                </button>
-                <button class="pref" @click="openFeedback">
-                    <span class="prefLeft"> Feedback</span>
-                    <span class="prefRight"> </span>
-                </button>
-                <button class="pref" @click="openSupport">
-                    <span class="prefLeft"> Support</span>
-                    <span class="prefRight">Questions & Account deletion </span>
-                </button>
-            </div>
-        </section>
-
-        <!-- Settings -->
-        <section class="card">
-            <div class="cardHead">
-                <div class="h2">Settings</div>
-            </div>
-
-            <div class="prefList">
-                <button class="pref" @click="openNotifications">
-                    <span class="prefLeft"> Notifications</span>
-                    <span class="prefRight">{{ prefs.notifications }} </span>
-                </button>
-                <button class="pref danger" @click="logout">
-                    <span class="prefLeft"> Log out</span>
-                    <span class="prefRight"></span>
-                </button>
-            </div>
-        </section>
-
-    </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="stats">
+        <div class="stat">
+          <div class="statVal">{{ stats.completedCourses }}</div>
+          <div class="statLbl">Completed courses</div>
+        </div>
+        <div class="stat">
+          <div class="statVal">{{ stats.simulations }}</div>
+          <div class="statLbl">Completed simulators</div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Journal -->
+    <section class="card">
+      <div class="cardHead">
+        <div class="h2">My reflections</div>
+        <button class="link" @click="openJournal">See all</button>
+      </div>
+  
+      <div class="journal">
+        <article v-for="j in journal" :key="j.id" class="jItem" @click="openJournal">
+          <div class="jTop">
+            <span class="chip">{{ j.date }}</span>
+            <span class="chip">{{ j.track }}</span>
+          </div>
+          <div class="jTitle">{{ j.title }}</div>
+          <div class="jBody">{{ j.snippet }}</div>
+        </article>
+      </div>
+    </section>
+  
+    <!-- Support / Preferences -->
+    <section class="card">
+      <div class="cardHead">
+        <div class="h2">Support & preferences</div>
+      </div>
+  
+      <div class="prefList">
+        <button class="pref" @click="openEULA">
+          <span class="prefLeft">Terms of Service & EULA</span>
+          <span class="prefRight"></span>
+        </button>
+        <button class="pref" @click="openPrivacy">
+          <span class="prefLeft">Privacy Policy</span>
+          <span class="prefRight"></span>
+        </button>
+        <button class="pref" @click="openFeedback">
+          <span class="prefLeft">Feedback</span>
+          <span class="prefRight"></span>
+        </button>
+        <button class="pref" @click="openSupport">
+          <span class="prefLeft">Support</span>
+          <span class="prefRight">Questions & Account deletion</span>
+        </button>
+      </div>
+    </section>
+  
+    <!-- Settings -->
+    <section class="card">
+      <div class="cardHead">
+        <div class="h2">Settings</div>
+      </div>
+  
+      <div class="prefList">
+        <button class="pref" @click="openNotifications">
+          <span class="prefLeft">Notifications</span>
+          <span class="prefRight">{{ prefs.notifications }}</span>
+        </button>
+        <button class="pref danger" @click="logout">
+          <span class="prefLeft">Log out</span>
+          <span class="prefRight"></span>
+        </button>
+      </div>
+    </section>
+  
+  </div>

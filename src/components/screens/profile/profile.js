@@ -87,7 +87,7 @@ export default {
         },
 
         userId() {
-            return this.$store.state.user?.id 
+            return this.$store.state.user?.id
         },
 
         focusTrack() {
@@ -116,7 +116,7 @@ export default {
         // Watch for changes in userProgress from store and reload data
         'userProgress.length': function (newLen, oldLen) {
             if (newLen !== oldLen) {
-                console.log('User progress array length changed from', oldLen, 'to', newLen, ', refreshing profile data')
+                // console.log('User progress array length changed from', oldLen, 'to', newLen, ', refreshing profile data')
                 this.loadUserProgressData()
             }
         },
@@ -138,9 +138,9 @@ export default {
                 // Fetch user progress
                 await this.$store.dispatch('fetchUserProgress', this.userId)
 
-                console.log('Journey Categories:', this.journeyCategories)
-                console.log('User Progress:', this.userProgress)
-                console.log('Simulator Results:', this.simulatorResults)
+                // console.log('Journey Categories:', this.journeyCategories)
+                // console.log('User Progress:', this.userProgress)
+                // console.log('Simulator Results:', this.simulatorResults)
 
                 // Process and format tracks data from journeyCategories
                 if (this.journeyCategories && Array.isArray(this.journeyCategories)) {
@@ -148,13 +148,13 @@ export default {
                     const journeyModules = this.$store.state.journeyModules || []
 
                     this.tracks = this.journeyCategories.map((category, index) => {
-                        console.log('Processing category:', category, 'at index', index)
+                        // console.log('Processing category:', category, 'at index', index)
 
                         // Assign first 3 colors explicitly: blue, green, purple
                         const categoryColors = ['#2D6CDF', '#1F9D63', '#8B5CF6']
                         let color = categoryColors[index] || colors[index % colors.length]
 
-                        console.log('Assigned color:', color, 'for index:', index)
+                        // console.log('Assigned color:', color, 'for index:', index)
 
                         // Find all modules that belong to this category
                         const modulesInCategory = journeyModules.filter(m => m.module_category_id === category.id)
@@ -167,7 +167,7 @@ export default {
                         )
 
                         // Count completed vs total for this category
-                        console.log('Category progress items for', category.title, ':', categoryProgress)
+                        // console.log('Category progress items for', category.title, ':', categoryProgress)
                         const completed = categoryProgress.filter(p => {
                             const status = String(p.status).toLowerCase().trim()
                             return status === 'completed' || status === 'done'
@@ -178,7 +178,7 @@ export default {
                         const value = total > 0 ? Math.round((completed / total) * 100) : 0
 
                         const trackName = category.name || category.title || category.label || `Track ${index + 1}`
-                        console.log(`Track ${index}: name="${trackName}", completed=${completed}, total=${total}, color=${color}`)
+                        // console.log(`Track ${index}: name="${trackName}", completed=${completed}, total=${total}, color=${color}`)
 
                         return {
                             id: category.id,
@@ -196,8 +196,8 @@ export default {
                     const courseProgress = this.userProgress.filter(p => p.owner_type === 'module')
                     const simulatorProgress = this.userProgress.filter(p => p.owner_type === 'simulator')
 
-                    console.log('All courseProgress items:', courseProgress)
-                    console.log('All status values:', courseProgress.map(p => ({ id: p.id, status: p.status, statusLower: String(p.status).toLowerCase() })))
+                    // console.log('All courseProgress items:', courseProgress)
+                    // console.log('All status values:', courseProgress.map(p => ({ id: p.id, status: p.status, statusLower: String(p.status).toLowerCase() })))
 
                     const completedModules = courseProgress.filter(p => {
                         const status = String(p.status).toLowerCase().trim()
@@ -211,8 +211,8 @@ export default {
                     }).length
                     const totalSimulations = simulatorProgress.length
 
-                    console.log('All simulatorProgress items:', simulatorProgress)
-                    console.log(`Stats: courses=${completedModules}/${totalModules}, simulations=${completedSimulations}/${totalSimulations}`)
+                    // console.log('All simulatorProgress items:', simulatorProgress)
+                    // console.log(`Stats: courses=${completedModules}/${totalModules}, simulations=${completedSimulations}/${totalSimulations}`)
 
                     this.stats = {
                         completedCourses: `${completedModules}/${totalModules}`,
@@ -221,7 +221,7 @@ export default {
                     }
                 }
             } catch (error) {
-                console.error('Error loading user progress data:', error)
+                // console.error('Error loading user progress data:', error)
                 // Fallback: show default empty state
                 this.tracks = []
                 this.stats = {
@@ -256,7 +256,10 @@ export default {
 
         async loadGoalsAndMission() {
             try {
-                const [goalsRes, missionRes] = this.$store.dispatch('getGoalsAndMissions', this.userId)
+                // console.log(this.userId, "Loading goals and mission for userId:", this.userId)
+                let res = this.$store.dispatch('getGoalsAndMissions', { userId: this.userId })
+                // console.log(res, this.userId, "Loading goals and mission for userId:", { userId: this.userId })
+                const [goalsRes, missionRes] = res ? await res : [{ data: [] }, { data: { mission: '' } }]
 
                 this.myGoals = goalsRes.data || []
                 this.mission = missionRes.data?.mission || ''
