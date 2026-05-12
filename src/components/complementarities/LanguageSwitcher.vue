@@ -18,10 +18,43 @@
                 <div class="divider mt-2 mb-0"></div>
 
                 <div class="list-group list-custom-small ps-1">
-                    <a @click="select('tr')">
+
+                    <a @click="select('en')">
                         <span class="lang-left">
-                            <img class="me-3 mt-n1" width="20" :src="flagSrc('tr')">
-                            <span>Türkçe</span>
+                            <img class="me-3 mt-n1" width="20" :src="flagSrc('en')">
+                            <span>English</span>
+                        </span>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+
+                    <a @click="select('pl')">
+                        <span class="lang-left">
+                            <img class="me-3 mt-n1" width="20" :src="flagSrc('pl')">
+                            <span>Polish</span>
+                        </span>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+
+                    <a @click="select('gr')">
+                        <span class="lang-left">
+                            <img class="me-3 mt-n1" width="20" :src="flagSrc('gr')">
+                            <span>Greek</span>
+                        </span>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+
+                    <a @click="select('cz')">
+                        <span class="lang-left">
+                            <img class="me-3 mt-n1" width="20" :src="flagSrc('cz')">
+                            <span>Czech</span>
+                        </span>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+
+                    <a @click="select('ge')">
+                        <span class="lang-left">
+                            <img class="me-3 mt-n1" width="20" :src="flagSrc('ge')">
+                            <span>German</span>
                         </span>
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -34,18 +67,10 @@
                         <i class="fa fa-angle-right"></i>
                     </a>
 
-                    <a @click="select('en')">
+                    <a @click="select('tr')">
                         <span class="lang-left">
-                            <img class="me-3 mt-n1" width="20" :src="flagSrc('en')">
-                            <span>English</span>
-                        </span>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-
-                    <a @click="select('fr')">
-                        <span class="lang-left">
-                            <img class="me-3 mt-n1" width="20" :src="flagSrc('fr')">
-                            <span>Français</span>
+                            <img class="me-3 mt-n1" width="20" :src="flagSrc('tr')">
+                            <span>Türkçe</span>
                         </span>
                         <i class="fa fa-angle-right"></i>
                     </a>
@@ -71,7 +96,7 @@ export default {
         // Flag resimleri için base path (senin kodla aynı default)
         staticBase: { type: String, default: "./static/img/" }
     },
-    
+
     data() {
         return {
             isOpen: false
@@ -93,13 +118,7 @@ export default {
         },
 
         flagSrc(lang) {
-            const file =
-                lang === "tr" ? "Turkey.png" :
-                    lang === "nl" ? "Netherlands.png" :
-                    lang === "en" ? "English.png" :
-                        "France.png"
-
-            return this.staticBase + file
+            return this.staticBase + lang + ".png"
         },
 
         applyLang(code) {
