@@ -14,7 +14,50 @@
                 </div>
             </div>
 
-            <button class="cta" @click="goGoals">Update goals</button>
+            <!-- ============================================
+     REPLACE the Mission section in profile.html with this:
+     ============================================ -->
+
+        <!-- Mission -->
+        <section class="card mission" v-if="mission">
+            <div class="cardHead">
+                <div class="h2">My mission</div>
+                <button class="link" @click="goGoals">Edit</button>
+            </div>
+            <div class="missionBox">
+                <div class="quoteMark">"</div>
+                <div class="missionText">{{ mission }}</div>
+            </div>
+        </section>
+
+        <!-- My Goals -->
+        <section class="card" v-if="myGoals.length">
+            <div class="cardHead">
+                <div class="h2">My goals</div>
+                <button class="link" @click="goGoals">Edit</button>
+            </div>
+
+            <div class="goalsList">
+                <div v-for="g in myGoals" :key="g.id" class="goalItem">
+                    <div class="goalTop">
+                        <span class="goalIcon">{{ g.icon }}</span>
+                        <span class="goalTitle">{{ g.title }}</span>
+                    </div>
+                    <span class="goalStatus" :class="g.status">{{ goalStatusLabel(g.status) }}</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- If no goals yet -->
+        <section class="card" v-if="!myGoals.length && !loading">
+            <div class="cardHead">
+                <div class="h2">My goals</div>
+            </div>
+            <div class="emptyGoals">
+                <p>You haven't set any goals yet.</p>
+                <button class="cta" @click="goGoals">Choose your goals</button>
+            </div>
+        </section>
         </header>
 
         <!-- Identity chips -->
@@ -103,21 +146,21 @@
             </div>
 
             <div class="prefList">
-                <button class="pref" @click="openLanguage">
-                    <span class="prefLeft"> Language</span>
-                    <span class="prefRight">{{ prefs.language }} </span>
-                </button>
-                <button class="pref" @click="openAccessibility">
-                    <span class="prefLeft"> Accessibility</span>
-                    <span class="prefRight">Font / contrast </span>
+                <button class="pref" @click="openEULA">
+                    <span class="prefLeft"> Terms of Service & EULA</span>
+                    <span class="prefRight"></span>
                 </button>
                 <button class="pref" @click="openPrivacy">
                     <span class="prefLeft"> Privacy Policy</span>
-                    <span class="prefRight">Export data </span>
+                    <span class="prefRight"></span>
+                </button>
+                <button class="pref" @click="openFeedback">
+                    <span class="prefLeft"> Feedback</span>
+                    <span class="prefRight"> </span>
                 </button>
                 <button class="pref" @click="openSupport">
                     <span class="prefLeft"> Support</span>
-                    <span class="prefRight">Feedback </span>
+                    <span class="prefRight">Questions & Account deletion </span>
                 </button>
             </div>
         </section>

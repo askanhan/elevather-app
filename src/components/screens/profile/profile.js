@@ -5,6 +5,8 @@ export default {
 
     data() {
         return {
+            mission: '',
+            myGoals: [],
             user: {
                 streakDays: 4,
                 trend: 'Rising',
@@ -18,8 +20,6 @@ export default {
                 minutes: 0,
                 simulations: 0
             },
-
-            userId: 1,
 
             patterns: {
                 blocker: 'Overload',
@@ -86,6 +86,10 @@ export default {
             }
         },
 
+        userId() {
+            return this.$store.state.user?.id 
+        },
+
         focusTrack() {
             const top = (this.tracks || []).slice().sort((a, b) => (b.value || 0) - (a.value || 0))[0]
             return top ? top.label : 'I Dare'
@@ -98,18 +102,19 @@ export default {
         }
     },
 
-    mounted() {
+    async mounted() {
         // Load user profile
         this.$store.dispatch('getMyProfile', this.userId)
             .catch(err => console.error('Error loading profile:', err))
-        
+
         // Load user progress data
         this.loadUserProgressData()
+        await this.loadGoalsAndMission()
     },
 
     watch: {
         // Watch for changes in userProgress from store and reload data
-        'userProgress.length': function(newLen, oldLen) {
+        'userProgress.length': function (newLen, oldLen) {
             if (newLen !== oldLen) {
                 console.log('User progress array length changed from', oldLen, 'to', newLen, ', refreshing profile data')
                 this.loadUserProgressData()
@@ -132,35 +137,35 @@ export default {
                 await this.$store.dispatch('fetchJourneyData')
                 // Fetch user progress
                 await this.$store.dispatch('fetchUserProgress', this.userId)
-                
+
                 console.log('Journey Categories:', this.journeyCategories)
                 console.log('User Progress:', this.userProgress)
                 console.log('Simulator Results:', this.simulatorResults)
-                
+
                 // Process and format tracks data from journeyCategories
                 if (this.journeyCategories && Array.isArray(this.journeyCategories)) {
                     const colors = ['#2D6CDF', '#1F9D63', '#8B5CF6', '#F59E0B', '#EF4444', '#06B6D4']
                     const journeyModules = this.$store.state.journeyModules || []
-                    
+
                     this.tracks = this.journeyCategories.map((category, index) => {
                         console.log('Processing category:', category, 'at index', index)
-                        
+
                         // Assign first 3 colors explicitly: blue, green, purple
                         const categoryColors = ['#2D6CDF', '#1F9D63', '#8B5CF6']
                         let color = categoryColors[index] || colors[index % colors.length]
-                        
+
                         console.log('Assigned color:', color, 'for index:', index)
-                        
+
                         // Find all modules that belong to this category
                         const modulesInCategory = journeyModules.filter(m => m.module_category_id === category.id)
                         const moduleIdsInCategory = modulesInCategory.map(m => m.id)
-                        
+
                         // Find all progress items for modules in this category
-                        const categoryProgress = this.userProgress.filter(p => 
+                        const categoryProgress = this.userProgress.filter(p =>
                             moduleIdsInCategory.includes(p.owner_id) &&
                             p.owner_type === 'module'  // Only count course modules, not other types
                         )
-                        
+
                         // Count completed vs total for this category
                         console.log('Category progress items for', category.title, ':', categoryProgress)
                         const completed = categoryProgress.filter(p => {
@@ -168,13 +173,13 @@ export default {
                             return status === 'completed' || status === 'done'
                         }).length
                         const total = categoryProgress.length
-                        
+
                         // Calculate percentage for progress bar
                         const value = total > 0 ? Math.round((completed / total) * 100) : 0
-                        
+
                         const trackName = category.name || category.title || category.label || `Track ${index + 1}`
                         console.log(`Track ${index}: name="${trackName}", completed=${completed}, total=${total}, color=${color}`)
-                        
+
                         return {
                             id: category.id,
                             label: trackName,
@@ -185,30 +190,30 @@ export default {
                         }
                     })
                 }
-                
+
                 // Calculate stats from userProgress - only count actual course modules
                 if (this.userProgress && Array.isArray(this.userProgress)) {
                     const courseProgress = this.userProgress.filter(p => p.owner_type === 'module')
                     const simulatorProgress = this.userProgress.filter(p => p.owner_type === 'simulator')
-                    
+
                     console.log('All courseProgress items:', courseProgress)
                     console.log('All status values:', courseProgress.map(p => ({ id: p.id, status: p.status, statusLower: String(p.status).toLowerCase() })))
-                    
+
                     const completedModules = courseProgress.filter(p => {
                         const status = String(p.status).toLowerCase().trim()
                         return status === 'completed' || status === 'done'
                     }).length
                     const totalModules = courseProgress.length
-                    
+
                     const completedSimulations = simulatorProgress.filter(p => {
                         const status = String(p.status).toLowerCase().trim()
                         return status === 'completed' || status === 'done'
                     }).length
                     const totalSimulations = simulatorProgress.length
-                    
+
                     console.log('All simulatorProgress items:', simulatorProgress)
                     console.log(`Stats: courses=${completedModules}/${totalModules}, simulations=${completedSimulations}/${totalSimulations}`)
-                    
+
                     this.stats = {
                         completedCourses: `${completedModules}/${totalModules}`,
                         minutes: courseProgress.reduce((sum, p) => sum + (p.minutes_spent || p.duration || 0), 0),
@@ -232,7 +237,7 @@ export default {
             const resultDate = new Date(date)
             const diffMs = now - resultDate
             const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-            
+
             if (diffDays === 0) return 'Today'
             if (diffDays === 1) return 'Yesterday'
             if (diffDays < 7) return `${diffDays} days ago`
@@ -246,6 +251,27 @@ export default {
             } catch (e) {
                 window.location.href = url
             }
+        },
+
+
+        async loadGoalsAndMission() {
+            try {
+                const [goalsRes, missionRes] = this.$store.dispatch('getGoalsAndMissions', this.userId)
+
+                this.myGoals = goalsRes.data || []
+                this.mission = missionRes.data?.mission || ''
+            } catch (e) {
+                console.error('Error loading goals/mission:', e)
+            }
+        },
+
+        goalStatusLabel(status) {
+            const map = {
+                working_on_it: 'Working on it',
+                almost_done: 'Almost done',
+                finished: 'Finished ✓',
+            }
+            return map[status] || status
         },
 
         goSimulatorHistory() {
@@ -296,12 +322,12 @@ export default {
             this.$router.push('/badges')
         },
 
-        openLanguage() {
-            this.$router.push('/language')
+        openFeedback() {
+            this.$router.push('/feedback')
         },
 
-        openAccessibility() {
-            this.$router.push('/accessibility')
+        openEULA() {
+            this.openUrl('https://elevather.eu/terms-of-service-end-user-license-agreement-eula/')
         },
 
         openPrivacy() {
@@ -309,7 +335,7 @@ export default {
         },
 
         openSupport() {
-            this.$router.push('/support')
+            this.openUrl('https://elevather.eu/support-for-elevather-application/')
         },
 
         openNotifications() {

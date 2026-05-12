@@ -128,7 +128,7 @@ export default {
     methods: {
         fetchQuestions() {
             // Get userId from store (from user or profile)
-            const userId = this.$store.state.user?.id || this.$store.state.myProfile?.id || 1
+            const userId = this.$store.state.user?.id 
             
             this.$store.dispatch('fetchDailyCheckinQuestions', userId)
                 .then((response) => {
@@ -167,7 +167,7 @@ export default {
             }
             
             // Get userId from store
-            const userId = this.$store.state.user?.id || this.$store.state.myProfile?.id || 1
+            const userId = this.$store.state.user?.id
             
             console.log('Submitting daily checkin with options:', optionIds, 'userId:', userId)
             

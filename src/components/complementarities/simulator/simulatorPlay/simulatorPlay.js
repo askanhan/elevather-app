@@ -94,7 +94,7 @@ export default {
             this.error = null
             
             // Update progress to "In progress" when starting simulator
-            const userId = this.$store.state.myProfile?.id || 1
+            const userId = this.$store.state.user.id
             this.$store.dispatch('updateUserProgress', {
                 userId: userId,
                 ownerType: 'simulator',
@@ -376,7 +376,7 @@ export default {
             
             try {
                 // Get user ID from store (or use default for testing)
-                const userId = this.$store.state.myProfile?.id || 1
+                const userId = this.$store.state.user?.id
                 
                 // Fetch results from API
                 const response = await this.$store.dispatch('fetchSimulatorResults', {
@@ -410,7 +410,7 @@ export default {
         // Finish and redirect to simulators
         finishAndNavigate() {
             // Update progress to "Done" before navigating
-            const userId = this.$store.state.myProfile?.id || 1
+            const userId = this.$store.state.user?.id || 1
             
             console.log('🟢 finishAndNavigate called')
             console.log('userId:', userId)

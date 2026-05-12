@@ -24,9 +24,7 @@ export default {
       return this.$store.state.flags.loggedIn
     },
     meId() {
-      const s = this.$store?.state;
-      const u = s?.loggedInUserInformation?.UserData || {};
-      return u.userid ?? u.LLinkIDUsername ?? s?.user?.id ?? s?.myProfile?.id ?? 0;
+      return this.$store?.state.user.id;
     }
   },
   methods: {

@@ -50,7 +50,7 @@ export default {
         },
 
         userId() {
-            return this.$store.state.myProfile?.id
+            return this.$store.state.user?.id
         }
     },
 

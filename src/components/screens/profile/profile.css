@@ -587,3 +587,67 @@
 }
 
 
+
+.goalsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.goalItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.goalTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.goalIcon {
+  font-size: 18px;
+}
+
+.goalTitle {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.goalStatus {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.goalStatus.working_on_it {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.goalStatus.almost_done {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.goalStatus.finished {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.emptyGoals {
+  text-align: center;
+  padding: 16px 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.emptyGoals .cta {
+  margin-top: 12px;
+}

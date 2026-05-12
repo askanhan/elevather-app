@@ -6,12 +6,9 @@ import * as globalTypes from '../store/mutation-types.js'
 /* Load Global Components */
 import Home from '@/components/screens/home/home.vue'
 import AfterLoginPage from '@/components/screens/after-login-page/after-login-page.vue'
-import Search from '@/components/screens/search/search.vue'
 import Profile from '@/components/screens/profile/profile.vue'
-import Conversations from '@/components/complementarities/Conversations.vue'
 import Donate from '@/components/complementarities/donate/donate.vue'
 import Notificaties from '@/components/screens/notificaties/notificaties.vue'
-import Chat from '@/components/screens/chat/chat.vue'
 import Login from '@/components/screens/login/login.vue'
 import Register from '@/components/screens/register/register.vue'
 import showIcons from '@/components/utils/_show_icons/_show_icons.vue'
@@ -28,6 +25,7 @@ import Journey from '@/components/complementarities/module/journey/journey.vue'
 import StoriesModels from '../components/complementarities/stories/stories.vue'
 import EmailLogin from '@/components/screens/email-login/email-login.vue'
 import EmailRegister from '@/components/screens/email-register/email-register.vue'
+import Goals from '@/components/complementarities/Goals.vue'
 
 const routes = [
   
@@ -114,15 +112,15 @@ const routes = [
     }
   },
   {
-    path: '/search',
-    name: 'search',
-    component: Search,
+    path: '/goals',
+    name: 'goals',
+    component: Goals,
     meta: {
       keepAlive: true,
-      backButtonAvailable: false,
-      moduleName: 'Search',
-      firstPage: true,
-      showTabs: true
+      backButtonAvailable: true,
+      moduleName: 'Goals',
+      firstPage: false,
+      showTabs: false
     }
   },
   {
@@ -136,19 +134,6 @@ const routes = [
       firstPage: true,
       showHeaderTitle: true,
       showTabs: true
-    }
-  },
-
-  {
-    path: '/chat/:profileID', // 🔥 parametreli chat
-    name: 'chat',
-    component: Chat,
-    meta: {
-      backButtonAvailable: true,
-      moduleName: 'Messages',
-      firstPage: false,
-      showHeaderTitle: true,
-      showHeaderAndNavbar: false
     }
   },
   {
@@ -245,18 +230,6 @@ const routes = [
       backButtonAvailable: true,
       moduleName: 'simulatorplay',
       firstPage: false,
-      showTabs: true
-    }
-  },
-  {
-    path: '/conversations',
-    name: 'conversations',
-    component: Conversations,
-    meta: {
-      keepAlive: false,
-      backButtonAvailable: true,
-      moduleName: 'conversations',
-      firstPage: true,
       showTabs: true
     }
   },

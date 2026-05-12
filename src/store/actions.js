@@ -130,7 +130,7 @@ export const fetchSimulatorMetrics = async function ({ state }, simulatorId) {
 // Reset all simulator scores to 50 when entering a simulator
 export const resetSimulatorMetrics = async function ({ state }, simulatorId) {
   try {
-    const userId = state.myProfile?.id || 1
+    const userId = state.user?.id 
     console.log(`🔄 Resetting metrics for user ${userId}, simulator ${simulatorId}`)
     
     // Call backend endpoint to reset all scores to 50
@@ -457,6 +457,21 @@ export const fetchUserStories = async function ({ state }, { userId, viewerId = 
     const { data } = await api.get(`/stories/?user_id=${userId}${viewerId ? `&viewer_id=${viewerId}` : ''}`)
     store.commit(types.SET_USER_STORIES, data)
     return true
+  } catch (error) {
+    console.error('fetchUserStories error:', error)
+    throw error
+  }
+}
+
+// Fetch stories for a specific user
+export const getGoalsAndMissions = async function ({ state }, { userId, viewerId = null }) {
+  try {
+    const [goalsRes, missionRes] = await Promise.all([
+      api.get(`/user/${userId}/goals/`),
+      api.get(`/user/${userId}/mission/`),
+  ])
+    // store.commit(types.SET_CATEGORY_STORIES, data)
+    return [goalsRes, missionRes]
   } catch (error) {
     console.error('fetchUserStories error:', error)
     throw error
