@@ -5,6 +5,7 @@ export default {
 
     data() {
         return {
+            latestReflections: [],
             mission: '',
             myGoals: [],
             user: {
@@ -110,6 +111,7 @@ export default {
         // Load user progress data
         this.loadUserProgressData()
         await this.loadGoalsAndMission()
+        await this.loadReflections()
     },
 
     watch: {
@@ -131,6 +133,39 @@ export default {
     },
 
     methods: {
+
+        async loadReflections() {
+            try {
+                let res = await this.$store.dispatch('loadReflections', { userId: this.userId })
+                console.log('Reflections response:', res)
+                this.latestReflections = res.reflections || []
+            } catch (e) {
+                console.error('Error loading reflections:', e)
+            }
+        },
+
+        formatReflectionDate(dateStr) {
+            if (!dateStr) return ''
+            const d = new Date(dateStr)
+            const now = new Date()
+            const diffMs = now - d
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+            if (diffDays === 0) return 'Today'
+            if (diffDays === 1) return 'Yesterday'
+            if (diffDays < 7) return `${diffDays} days ago`
+            if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`
+            return d.toLocaleDateString()
+        },
+
+        truncate(text, max) {
+            if (!text) return ''
+            return text.length > max ? text.slice(0, max) + '…' : text
+        },
+
+        // Update openJournal method:
+        openJournal() {
+            this.$router.push({ name: 'reflections' })
+        },
         async loadUserProgressData() {
             try {
                 // Fetch journey data (categories/tracks)
@@ -315,10 +350,6 @@ export default {
 
         openBookmarks() {
             this.$router.push('/bookmarks')
-        },
-
-        openJournal() {
-            this.$router.push('/journal')
         },
 
         goBadges() {

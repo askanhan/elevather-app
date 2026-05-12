@@ -478,6 +478,19 @@ export const getGoalsAndMissions = async function ({ state }, { userId }) {
   }
 }
 
+// Fetch stories for a specific user
+export const loadReflections = async function ({ state }, { userId }) {
+  try {
+    const  data  = await api.get(`/user/${userId}/reflections/`)
+    // store.commit(types.SET_CATEGORY_STORIES, data)
+                    // params: { limit: 3, offset: 0 },
+    return data.data
+  } catch (error) {
+    console.error('fetchUserStories error:', error)
+    throw error
+  }
+}
+
 // Fetch stories by category
 export const fetchStoriesByCategory = async function ({ state }, { categoryId, viewerId = null }) {
   try {

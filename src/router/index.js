@@ -26,6 +26,7 @@ import StoriesModels from '../components/complementarities/stories/stories.vue'
 import EmailLogin from '@/components/screens/email-login/email-login.vue'
 import EmailRegister from '@/components/screens/email-register/email-register.vue'
 import Goals from '@/components/complementarities/Goals.vue'
+import Reflections from '@/components/complementarities/Reflections.vue'
 
 const routes = [
   
@@ -136,6 +137,20 @@ const routes = [
       showTabs: true
     }
   },
+  {
+    path: '/reflections',
+    name: 'reflections',
+    component: Reflections,
+    meta: {
+      keepAlive: false,
+      backButtonAvailable: true,
+      moduleName: 'Reflections',
+      firstPage: false,
+      showHeaderTitle: true,
+      showTabs: true
+    }
+  },
+
   {
     path: '/profile/:profileID/',
     name: 'profile',
