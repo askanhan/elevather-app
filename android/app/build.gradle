@@ -5,7 +5,7 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 android {
-    namespace "be.visiontree.burada.app"
+    namespace "be.visiontree.elevather"
     compileSdk rootProject.ext.compileSdkVersion
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -16,7 +16,7 @@ android {
         exclude group: "org.jetbrains.kotlin", module: "kotlin-stdlib-jdk8"
     }
     defaultConfig {
-        applicationId "be.visiontree.burada.app"
+        applicationId "be.visiontree.elevather"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2

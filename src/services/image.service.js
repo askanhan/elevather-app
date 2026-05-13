@@ -73,7 +73,7 @@ export default class ImageService {
     const basePath = this.basePaths[type] || this.basePaths['default']
 
     // Directly construct and return the image URL
-    return basePath + justFilename
+    return 'https://app.elevather.eu/media/courses_images/' + justFilename
   }
 
   /**

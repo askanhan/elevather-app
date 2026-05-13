@@ -1,4 +1,4 @@
-package be.visiontree.burada.app;
+package be.visiontree.elevather;
 
 import android.os.Bundle;
 import android.webkit.WebView;

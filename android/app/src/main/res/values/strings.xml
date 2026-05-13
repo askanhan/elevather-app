@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Burada</string>
     <string name="title_activity_main">Burada</string>
-    <string name="package_name">be.visiontree.burada.app</string>
-    <string name="custom_url_scheme">be.visiontree.burada.app</string>
+    <string name="package_name">be.visiontree.elevather</string>
+    <string name="custom_url_scheme">be.visiontree.elevather</string>
 </resources>
