@@ -7,16 +7,10 @@ import * as globalTypes from '../store/mutation-types.js'
 import Home from '@/components/screens/home/home.vue'
 import AfterLoginPage from '@/components/screens/after-login-page/after-login-page.vue'
 import Profile from '@/components/screens/profile/profile.vue'
-import Donate from '@/components/complementarities/donate/donate.vue'
 import Notificaties from '@/components/screens/notificaties/notificaties.vue'
 import Login from '@/components/screens/login/login.vue'
 import Register from '@/components/screens/register/register.vue'
-import showIcons from '@/components/utils/_show_icons/_show_icons.vue'
-import dropdownPage from '@/components/utils/dropdown-page/dropdown-page.vue'
-import UpdateProfile from '@/components/screens/update-profile/update-profile.vue'
-import selectTag from '@/components/screens/select-tag/select-tag.vue'
 import splashScreen from '../components/screens/splash-screen/splash-screen.vue'
-import postContainer from '@/components/complementarities/PostContainer.vue'
 import Feedback from '../components/complementarities/Feedback.vue'
 import Course from '../components/complementarities/module/course/course.vue'
 import SimulatorHome from '../components/complementarities/simulator/simulatorHome/simulatorHome.vue'
@@ -165,18 +159,6 @@ const routes = [
     }
   },
   {
-    path: '/donate',
-    name: 'donate',
-    component: Donate,
-    meta: {
-      keepAlive: false,
-      backButtonAvailable: true,
-      moduleName: 'donate',
-      firstPage: true,
-      showTabs: true
-    }
-  },
-  {
     path: '/feedback',
     name: 'feedback',
     component: Feedback,
@@ -246,26 +228,6 @@ const routes = [
       moduleName: 'simulatorplay',
       firstPage: false,
       showTabs: true
-    }
-  },
-  {
-    path: '/update-profile',
-    name: 'updateprofile',
-    component: UpdateProfile,
-    meta: {
-      backButtonAvailable: true,
-      moduleName: 'Profile',
-      firstPage: true
-    }
-  },
-  {
-    path: '/postcontainer/:postID/:specialPostId?',
-    name: 'postcontainer',
-    component: postContainer,
-    meta: {
-      backButtonAvailable: true,
-      moduleName: 'PostContainer',
-      firstPage: true
     }
   }
 ]

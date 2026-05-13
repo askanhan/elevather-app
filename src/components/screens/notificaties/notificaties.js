@@ -126,9 +126,6 @@ export default {
       }
     },
 
-    goToPost (postID) {
-      this.$router.push({ name: 'postcontainer', params: { postID } })
-    },
 
     goToProfile (profileID) {
       this.$router.push({ name: 'profile', params: { profileID } })

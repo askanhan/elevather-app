@@ -349,7 +349,7 @@
       "mailBtn": "Sign in with Email",
       "appleBtn": "Sign in with Apple",
       "googleBtn": "Sign in with Google",
-      "privacyHtml": "Your data is stored securely and not shared with third parties.<br>When you sign in, your data is protected under our <a href='https://burada.be/privacy-policy' target='_blank'>Privacy Policy</a> and <a href='https://burada.be/terms-of-service' target='_blank'>Terms of Service</a>.",
+      "privacyHtml": "Your data is stored securely and not shared with third parties.<br>When you sign in, your data is protected under our <a href='https://elevather.eu/privacy-policy-for-elevather-application/' target='_blank'>Privacy Policy</a> and <a href='https://elevather.eu/terms-of-service-end-user-license-agreement-eula/' target='_blank'>Terms of Service</a>.",
       "subtitle": "To start, just choose your account.",
       "welcome": "Welcome!"
     },

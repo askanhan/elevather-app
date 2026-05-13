@@ -19,6 +19,9 @@ export const mutations = {
   [types.USER_LOGGED_IN_AS_GUEST](state, statuses) {
     state.guestMode = true
   },
+  [types.USER_LOGGED_OUT_AS_GUEST](state, statuses) {
+    state.guestMode = true
+  },
   [types.SET_JOURNEY_STATUSES](state, statuses) {
     state.journeyStatuses = statuses
   },

@@ -89,6 +89,11 @@ export default {
   },
 
   methods: {
+    logoutAsGuest() {
+      try { this.$store.commit('USER_LOGGED_OUT_AS_GUEST') } catch (e) { }
+      this.$router.push({ name: 'login' })
+    },
+
     goToMessages() {
       this.$router.push({ name: 'conversations' })
     },
@@ -129,10 +134,6 @@ export default {
         event.preventDefault()
         item.FUNCTIE_HELP()
       }
-    },
-
-    goToDonate() {
-      this.$router.push({ name: 'donate' })
     },
 
     getTextButtonClass(item) {

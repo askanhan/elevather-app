@@ -6,10 +6,10 @@
     </a>
 
     <div class="header-brand">
-      <img id="logo" :src="'./static/img/elevateher_logo_without_title.png'" alt="Burada logo" />
+      <img id="logo" :src="'./static/img/elevateher_logo_without_title.png'" alt="Elevather logo" />
 
       <div class="header-texts">
-        <!-- Home sayfası: BURADA -->
+        <!-- Home sayfası: elevather -->
         <span v-if="!showHeaderTitle" id="logo-text">
           {{altyazi}}
         </span>
@@ -37,7 +37,12 @@
   </div>
   <div class="header-right" v-if="!backButtonAvailable && !specialButtonAvailable">
 
-    <a @click="goToNotifications()" class="header-icon header-icon--notif" :aria-label="$t('common.notifications')">
+    <a v-if="$store.state.flags.loggedIn && $store.state.guestMode" @click="logoutAsGuest()" class="header-icon header-icon--notif" :aria-label="$t('common.notifications')">
+      <!-- FontAwesome 5: -->
+      <i class="fas fa-sign-out-alt"></i>
+    </a>
+    
+    <a v-if="$store.state.flags.loggedIn &&  !$store.state.guestMode" @click="goToNotifications()" class="header-icon header-icon--notif" :aria-label="$t('common.notifications')">
       <!-- FontAwesome 5: -->
       <i class="far fa-bell"></i>
       <!-- FontAwesome 6: <i class="fa-regular fa-bell"></i> -->

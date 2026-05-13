@@ -476,10 +476,10 @@ async function __applyParsedLink(parsed) {
   }
 
   // 2) post
-  if (parsed.type === 'post') {
-    await router.isReady()
-    return router.replace({ name: 'postcontainer', params: { postID: parsed.postId } })
-  }
+  // if (parsed.type === 'post') {
+  //   await router.isReady()
+  //   return router.replace({ name: 'postcontainer', params: { postID: parsed.postId } })
+  // }
 }
 
 // App açıksa anında uygula, kapalıysa biraz geciktir
