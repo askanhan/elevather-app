@@ -49,71 +49,44 @@ export default {
 
   async mounted() {
     try {
-      console.log("[AfterLoginPage] mounted")
-      // 0) küçük bir bekleme: spinner görünsün
       await new Promise(r => setTimeout(r, 150))
 
-      // 1) session al (native: Preferences, web: hash/query fallback)
       let session = await Preferences.get({ key: "session" })
       session = session?.value || this.readSessionFromUrl()
-      console.log("[AfterLoginPage] session:", session)
 
       if (!session) {
-        this.error = this.$t('auth.afterlogin.errNoLoginData')
-        console.log("[AfterLoginPage] No session found")
+        this.error = 'No session data found'
         return
       }
 
-      console.log("[AfterLoginPage] Session found, processing")
-      // 2) parse et
       const raw = session.includes('%') ? decodeURIComponent(session) : session
-      const data = JSON.parse(raw) // {access, refresh, user}
+      const data = JSON.parse(raw)
 
-      this.step = this.$t('auth.afterlogin.step.stepSavingSession')
-
-      // 3) Tokenları app’in beklediği şekilde yaz
-      // Interceptor Authorization header’ı window.__ACCESS_TOKEN__ ile basıyor
-      window.__ACCESS_TOKEN__ = data.access
-      console.log("[AfterLoginPage] Access token set in window")
-
-      authStore.setItem("access", data.access)
-      authStore.setItem("refresh", data.refresh)
-      authStore.setItem("user", JSON.stringify(data.user))
-
-      // Vuex user state: UI patlamasın
-      try { this.$store.commit("USER_LOGGED_IN", data.user) } catch (_) { }
-
-      // 4) Gerçek “init” (SplashScreen’le aynı mantık)
-      this.step = this.$t('auth.afterlogin.step.stepLoadingProfile')
-      const meOk = await this.$store.dispatch("getUserDetails")
-
-      if (!meOk) {
-        // /auth/me patladıysa bir kere refresh dene (gerekirse)
-        const refresh = authStore.getItem("refresh")
-        if (refresh) {
-          this.step = this.$t('auth.afterlogin.step.stepRefreshingSession')
-          try { await this.$store.dispatch("refreshAccess", refresh) } catch (_) { }
-          this.step = this.$t('auth.afterlogin.step.stepRetryingProfile')
-          const meOk2 = await this.$store.dispatch("getUserDetails")
-          if (!meOk2) throw new Error(this.$t('auth.afterlogin.errUserDetails'))
+      if (!data.access) {
+        if (data.refresh) {
+          await authStore.setItem('refresh', data.refresh)
+          try { await this.$store.dispatch("refreshAccess", data.refresh) } catch (_) { }
         } else {
-          throw new Error(this.$t('auth.afterlogin.errUserDetails'))
+          this.error = 'No tokens in session'
+          return
         }
+      } else {
+        window.__ACCESS_TOKEN__ = data.access
+        await authStore.setItem("access", data.access)
+        await authStore.setItem("refresh", data.refresh)
+        await authStore.setItem("user", JSON.stringify(data.user))
       }
 
-      console.log("[AfterLoginPage] User details loaded")
-      this.step = this.$t('auth.afterlogin.step.stepPreparingApp')
-      await this.$store.dispatch("initializeBasicInfo")
+      // user bilgisi zaten session'da var, commit et
+      if (data.user) {
+        try { this.$store.commit("USER_LOGGED_IN", data.user) } catch (_) { }
+        try { this.$store.commit("SET_MY_PROFILE", data.user) } catch (_) { }
+      }
 
-      // 5) session tek kullanımlık: temizle
       await Preferences.remove({ key: "session" })
-
-      // 6) home’a geç
-      this.step = this.$t('auth.afterlogin.step.stepRedirecting')
       this.$router.replace({ name: "home" })
     } catch (e) {
-      console.error(e)
-      this.error = e?.message || this.$t('auth.afterlogin.errGeneric')
+      this.error = e?.message || 'Unknown error'
     }
   },
 

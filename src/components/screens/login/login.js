@@ -191,21 +191,28 @@ export default {
 
     async googleLogin() {
       const api = this.$store.state.serverLocation.replace(/\/+$/, '')
-
-      const isNative =
-        (Capacitor?.getPlatform && Capacitor.getPlatform() !== 'web') ||
-        !!window.cordova
-
+      const isNative = Capacitor?.getPlatform && Capacitor.getPlatform() !== 'web'
+    
+      if (isNative) {
+        // Browser'dan afterlogin'e dönüşü dinle
+        const listener = await Browser.addListener('browserFinished', async () => {
+          listener.remove()
+          // Browser kapandığında session kontrol et
+          const session = await Preferences.get({ key: 'session' })
+          if (session?.value) {
+            this.$router.replace({ name: 'afterlogin' })
+          }
+        })
+      }
+    
       const appRedirect = isNative
         ? 'elevather://afterlogin'
-        : `${window.location.origin}/#/afterlogin`   // localhost yok
-
+        : `${window.location.origin}/#/afterlogin`
+    
       const next = encodeURIComponent(
         `/auth/sessionLogin?redirect=${encodeURIComponent(appRedirect)}`
       )
-
       const url = `${api}/accounts/google/login/?process=login&next=${next}`
-
       await Browser.open({ url })
     }
   }

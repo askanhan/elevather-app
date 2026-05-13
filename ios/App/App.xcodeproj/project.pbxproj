@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033FA8772FB4F5C20074F29C /* CapApp-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 033FA8762FB4F5C20074F29C /* CapApp-SPM */; };
 		03FF2DC52F11FF100098C76E /* CapApp-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 03FF2DC42F11FF100098C76E /* CapApp-SPM */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
@@ -36,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033FA8772FB4F5C20074F29C /* CapApp-SPM in Frameworks */,
 				03FF2DC52F11FF100098C76E /* CapApp-SPM in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +96,7 @@
 			name = App;
 			packageProductDependencies = (
 				03FF2DC42F11FF100098C76E /* CapApp-SPM */,
+				033FA8762FB4F5C20074F29C /* CapApp-SPM */,
 			);
 			productName = App;
 			productReference = 504EC3041FED79650016851F /* App.app */;
@@ -125,7 +128,7 @@
 			);
 			mainGroup = 504EC2FB1FED79650016851F;
 			packageReferences = (
-				03FF2DC32F11FF100098C76E /* XCLocalSwiftPackageReference "CapApp-SPM" */,
+				033FA8752FB4F5C20074F29C /* XCLocalSwiftPackageReference "../../../burada-v3/ios/App/CapApp-SPM" */,
 			);
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
 			projectDirPath = "";
@@ -364,13 +367,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		03FF2DC32F11FF100098C76E /* XCLocalSwiftPackageReference "CapApp-SPM" */ = {
+		033FA8752FB4F5C20074F29C /* XCLocalSwiftPackageReference "../../../burada-v3/ios/App/CapApp-SPM" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "CapApp-SPM";
+			relativePath = "../../../burada-v3/ios/App/CapApp-SPM";
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		033FA8762FB4F5C20074F29C /* CapApp-SPM */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "CapApp-SPM";
+		};
 		03FF2DC42F11FF100098C76E /* CapApp-SPM */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "CapApp-SPM";

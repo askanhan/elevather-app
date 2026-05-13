@@ -75,7 +75,7 @@ const routes = [
   {
     path: '/email-login',
     name: 'email-login',
-    component: () => EmailLogin,
+    component: EmailLogin,
     meta: {
         backButtonAvailable: false,
         moduleName: 'EmailLogin',
@@ -86,7 +86,7 @@ const routes = [
   {
     path: '/email-register',
     name: 'email-register',
-    component: () => EmailRegister,
+    component: EmailRegister,
     meta: {
         backButtonAvailable: false,
         moduleName: 'EmailRegister',
