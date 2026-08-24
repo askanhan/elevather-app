@@ -1,0 +1,29 @@
+HOW TO USE:
+
+1. Default Mode (RECOMMENDED - Keep user data):
+   python main.py
+
+   - Deletes course and simulator content
+   - KEEPS user progress
+   - KEEPS user answers
+
+2. Full Clean Mode (Delete everything):
+   python main.py --full-clear
+
+   - Deletes ALL data
+   - WARNING: You cannot undo this!
+
+3. Generate SQL Only:
+   python main.py --generate-only
+
+   - Creates SQL files in generated_sql/
+   - Does NOT change the database
+
+4. Import Only:
+   python main.py --run-only
+
+   - Only runs the import
+   - Keeps user data (default)
+
+
+

@@ -22,7 +22,8 @@ export default {
 
     computed: {
         questions() {
-            return this.$store.state.dailyCheckinQuestions || []
+            const questions = this.$store.state.dailyCheckinQuestions || []
+            return questions.sort(() => Math.random() - 0.5).slice(0, 3)
         },
 
         userId() {

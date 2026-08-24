@@ -1,0 +1,421 @@
+// --- MODULE TABLES ---
+
+/*
+  Role : Defines the category for the learning content (module)
+*/
+Table module_category {
+  id integer [primary key, increment]
+  title varchar(255) [not null]
+  description text
+  created_at timestamp
+}
+
+/*
+  Role : Defines the tag for the learning content (module)
+*/
+Table module_tag {
+  id integer [primary key, increment]
+  title varchar(255) [not null]
+  description text
+  created_at timestamp
+}
+
+/*
+  Role : Defines a module into a category
+*/
+Table module {
+  id integer [primary key, increment]
+  module_category_id integer
+  day_number integer [not null]
+  title varchar(255) [not null]
+  description text
+  target_audience varchar(255)
+  estimated_duration integer
+  created_at timestamp
+}
+
+/*
+  Role : Let a module have more than one tag by linking module and module_tag tables (junction table)
+*/
+Table module_contains_tags {
+  id integer [primary key, increment]
+  module_id integer
+  module_tag_id integer
+}
+
+/*
+  Role : Base of a module or simulator, where content will be displayed
+*/
+Table card {
+  id integer [primary key, increment]
+  owner_type ENUM [note: "('module', 'simulator') NOT NULL"]
+  owner_id integer [not null]
+  card_order_index integer [not null]
+  title varchar(255)
+  subtitle varchar(255)
+  end_text text
+  why_this_question text
+}
+
+/*
+  Role : Let a card be flexible by linking a card to its different component
+  ENUM component_type : Tells us which type of component we put inside a card
+*/
+Table card_contains {
+  id integer [primary key, increment]
+  card_id int
+  component_type ENUM [note: "('title', 'subtitle', 'text', 'quote', 'image', 'video', 'mcq', 'open question', 'list', 'last message') NOT NULL"]
+  component_order_index integer [not null]
+  component_id integer [not null]
+}
+
+// --- COMPONENT TABLES (ONE PER TYPE) ---
+
+/*
+  Role : Stores titles
+*/
+Table component_title {
+  id integer [primary key, increment]
+  content varchar(255) [not null]
+}
+
+/*
+  Role : Stores subtitles
+*/
+Table component_subtitle {
+  id integer [primary key, increment]
+  content varchar(255) [not null]
+}
+
+/*
+  Role : Stores texts
+*/
+Table component_text {
+  id integer [primary key, increment]
+  content text [not null]
+}
+
+/*
+  Role : Stores quotes
+*/
+Table component_quote {
+  id integer [primary key, increment]
+  content text [not null]
+  author varchar(255)
+}
+
+/*
+  Role : Stores images for visual reinforcement
+*/
+Table component_image {
+  id integer [primary key, increment]
+  image_url varchar(255) [not null]
+  image_alt varchar(255)
+  image_description text
+}
+
+/*
+  Role : Stores videos for demonstration, real life examples, ...
+*/
+Table component_video {
+  id integer [primary key, increment]
+  video_url varchar(255) [not null]
+  video_duration_est integer
+  video_alt varchar(255)
+  video_description varchar(255)
+}
+
+/*
+  Role : Stores multiple choices questions
+*/
+Table component_mcq {
+  id integer [primary key, increment]
+  question text [not null]
+}
+
+/*
+  Role : Stores open questions
+*/
+Table component_open_questions {
+  id integer [primary key, increment]
+  question text [not null]
+  placeholder varchar(255)
+}
+
+/*
+  Role : Stores lists
+*/
+Table component_list {
+  id integer [primary key, increment]
+  content text [not null]
+}
+
+/*
+  Role : Stores last messages
+*/
+Table component_last_messages {
+  id integer [primary key, increment]
+  content varchar(255) [not null]
+}
+
+/*
+  Role : Stores the different options for the multiple choices question
+*/
+Table multiple_choices_options {
+  id integer [primary key, increment]
+  mcq_id integer
+  option_text varchar(255) [not null]
+  feedback varchar(255)
+}
+
+/*
+  Role : Stores the weight of an option based on metrics 
+*/
+Table multiple_choices_options_weights {
+  id integer [primary key, increment]
+  multiple_choices_options_id int
+  simulator_metric_id int
+  weight int
+}
+
+// --- POWER SIMULATOR ---
+
+/*
+  Role : Defines a simulator
+  ENUM level : Tells us the difficulty of a simulator
+*/
+Table simulator {
+  id integer [primary key, increment]
+  title varchar(255) [not null]
+  description text
+  level ENUM [note: "('intro', 'core', 'advanced')"]
+  localisation varchar(255)
+  estimated_duration integer
+  created_at timestamp
+}
+
+/*
+  Role : Defines the tag for the simulator
+*/
+Table simulator_tag {
+  id integer [primary key, increment]
+  name varchar(255) [not null]
+}
+
+/*
+  Role : Let a simulator have more than one tag by linking simulator and simulator_tag tables (junction table)
+*/
+Table simulator_contains_tag {
+  id integer [primary key, increment]
+  simulator_id integer
+  simulator_tag_id integer
+}
+
+/*
+  Role : Defines the metric for the simulator, For each simulator, we have to create separate metrics
+*/
+Table simulator_metric {
+  id integer [primary key, increment]
+  name varchar(255) [not null]
+}
+
+/*
+  Role : Let a simulator have more than one metric by linking simulator and simulator_metric tables
+*/
+Table simulator_contains_metric {
+  id integer [primary key, increment]
+  simulator_id integer
+  metric_id integer
+}
+
+// --- USER RELATED ---
+
+/*
+  Role : Stores the score of a user for each metrics during a simulator
+*/
+Table user_score_simulator {
+  id integer [primary key, increment]
+  user_id integer
+  metric_id integer
+  score_value integer [default: 50]
+  created_at timestamp
+  updated_at timestamp
+}
+
+/*
+  Role : Stores the user responses to multiple choices questions
+*/
+Table user_response_mcq {
+  id integer [primary key, increment]
+  user_id integer
+  selected_option_id integer
+  created_at timestamp
+}
+
+/*
+  Role : Stores the user responses to open questoins
+*/
+Table user_response_open_questions {
+  id integer [primary key, increment]
+  user_id integer
+  open_question_id integer
+  answer_text text
+  created_at timestamp
+}
+
+/*
+  Role : Tracks the progress of a module or simulator
+  super
+  ENUM owner_type : Tells us which type of card it is
+  ENUM status: Tells us the progress state of a module
+*/
+Table user_progress {
+  id integer [primary key, increment]
+  user_id integer
+  owner_type ENUM [note: "('module', 'simulator') NOT NULL"]
+  owner_id integer [not null]
+  status ENUM [note: "('Not started', 'In progress', 'Done')"]
+  last_accessed_at timestamp
+}
+
+// --- DAILY POWER CHECK MMM ---
+
+/*
+  Role : Defines daily check-in metrics 
+*/
+Table daily_checkin_metric {
+  id integer [primary key, increment]
+  title varchar(255) [not null]
+  description text
+}
+
+/*
+  Role : Stores questions for daily check-in
+*/
+Table daily_checkin_question {
+  id integer [primary key, increment]
+  question_text text [not null]
+  metric_id integer
+}
+
+/*
+  Role : Stores options for each check-in question with their associated scores
+*/
+Table daily_checkin_option {
+  id integer [primary key, increment]
+  question_id integer
+  option_text varchar(255) [not null]
+  score_value integer [not null]
+}
+
+/*
+  Role : Stores the user's daily power check results to track emotional trends
+*/
+Table user_daily_power_check {
+  id integer [primary key, increment]
+  user_id integer
+  total_power_level integer
+  created_at timestamp
+}
+
+/*
+  Role : Stores the specific responses for each question to track detailed insights
+*/
+Table user_daily_checkin_response {
+  id integer [primary key, increment]
+  user_id integer
+  option_id integer
+  created_at timestamp
+}
+
+// --- FEEDBACK LOGIC ---
+
+/*
+  Role : Defines the personalized feedback and recommendations based on the user's score after a simulator 
+*/
+Table simulator_feedback_tiers {
+  id integer [primary key, increment]
+  simulator_id integer
+  metric_id integer
+  min_score integer
+  max_score integer
+  strength_result text
+  risk_result text
+  micro_practice text
+  recommended_module_id integer
+  recommendation_reason text
+}
+
+// --- STORY LOGIC ---
+
+/*
+  Role : Defines a story
+*/
+Table user_story {
+  id integer [primary key, increment]
+  user_id integer [not null]
+  author_name varchar(255) [default: 'Anonymous']
+  category_id integer
+  localisation varchar(255)
+  content text [not null]
+  is_published boolean [default: false]
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+/*
+  Role : Let a user to react to a story
+  ENUM reaction_type : Tells us possible reactions to give to a story
+*/
+Table user_story_reaction {
+  id integer [primary key, increment]
+  story_id integer [not null]
+  user_id integer [not null]
+  reaction_type ENUM [note: "('relatable', 'support', 'powerful', 'inspiring') NOT NULL"]
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+/*
+  Role : Defines the tag for the story (optional)
+*/
+Table user_story_tag {
+  id integer [primary key, increment]
+  name varchar(255) [not null]
+}
+
+/*
+  Role : Let a story have more than one tag by linking user_story and user_story_tag tables (junction table)
+*/
+Table story_contains_tag {
+  id integer [primary key, increment]
+  story_id integer [not null]
+  story_tag_id integer [not null]
+}
+
+// --- RELATIONSHIPS ---
+
+// Once the user table created, all user_id field should be linked to it with [ref: > users.id]
+Ref: module.module_category_id > module_category.id
+Ref: module_contains_tags.module_id > module.id
+Ref: module_contains_tags.module_tag_id > module_tag.id
+Ref: card_contains.card_id > card.id
+Ref: multiple_choices_options.mcq_id > component_mcq.id
+Ref: multiple_choices_options_weights.multiple_choices_options_id > multiple_choices_options.id
+Ref: multiple_choices_options_weights.simulator_metric_id > simulator_metric.id
+Ref: simulator_contains_tag.simulator_id > simulator.id
+Ref: simulator_contains_tag.simulator_tag_id > simulator_tag.id
+Ref: simulator_contains_metric.simulator_id > simulator.id
+Ref: simulator_contains_metric.metric_id > simulator_metric.id
+Ref: user_score_simulator.metric_id > simulator_metric.id
+Ref: user_response_mcq.selected_option_id > multiple_choices_options.id
+Ref: user_response_mcq.user_id > user_daily_power_check.user_id 
+Ref: user_response_open_questions.open_question_id > component_open_questions.id
+Ref: daily_checkin_question.metric_id > daily_checkin_metric.id
+Ref: daily_checkin_option.question_id > daily_checkin_question.id
+Ref: user_daily_checkin_response.option_id > daily_checkin_option.id
+Ref: simulator_feedback_tiers.simulator_id > simulator.id
+Ref: simulator_feedback_tiers.metric_id > simulator_metric.id
+Ref: simulator_feedback_tiers.recommended_module_id > module.id
+Ref: user_story.category_id > module_category.id
+Ref: user_story_reaction.story_id > user_story.id
+Ref: story_contains_tag.story_id > user_story.id
+Ref: story_contains_tag.story_tag_id > user_story_tag.id

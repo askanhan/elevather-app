@@ -1,0 +1,50 @@
+<div class="pc">
+    <header class="head">
+        <div>
+            <h1 class="h1">Power Check</h1>
+            <p class="sub">A 30-second check-in. Know your state, then take one small leverage move.</p>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="heroCenter">
+            <div class="badge" :class="stateClass">
+                <span class="emoji">{{ stateEmoji }}</span>
+                <span class="label">Today your power is</span>
+                <span class="value">{{ stateLabel }}</span>
+            </div>
+        </div>
+        <div class="heroRight">
+            <div class="scoreBox">
+                <div class="scoreTop">
+                    <span class="scoreLabel">Power score</span>
+                    <span class="scoreValue">{{ powerScore }}/100</span>
+                </div>
+                <div class="bar">
+                    <div class="fill" :style="{ width: powerScore + '%' }"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="checkin" v-if="!isCompleted">
+        <h2 class="h2">Quick check-in</h2>
+        <div class="qgrid">
+            <div v-for="q in questions" :key="q.id" class="qcard">
+                <div class="qtitle">{{ q.question_text }}</div>
+                <div class="qsub" v-if="q.subtitle">{{ q.subtitle }}</div>
+                <div class="scale">
+                    <button v-for="opt in q.options" :key="opt.id" class="sbtn" 
+                        :class="{ on: selectedAnswers[q.id] === opt.id }"
+                        @click="setCheck(q.id, opt.id, opt.score)">
+                        {{ opt.text }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="checkin-complete" v-else>
+        <p class="reset-hint">Need to update your energy levels? Reset to start over.</p>
+        <button v-if="isCompleted" class="ghost" @click="resetToday">Reset</button>
+    </section>
+</div>

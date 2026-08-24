@@ -1,0 +1,76 @@
+<transition name="fade">
+  <div v-if="isVisible" class="onboarding-overlay">
+    <!-- Blurred background -->
+    <div class="onboarding-blur-bg"></div>
+
+    <!-- Tour content -->
+    <div class="onboarding-container">
+      <!-- Step content with fade transition -->
+      <transition name="slide-fade" mode="out-in">
+        <div :key="currentStep" class="onboarding-content">
+          <!-- Step icon/visual -->
+          <div class="onboarding-icon">
+            <component :is="getCurrentIcon()" />
+          </div>
+
+          <!-- Step title -->
+          <h2 class="onboarding-title">{{ currentStepData.title }}</h2>
+
+          <!-- Step description -->
+          <p class="onboarding-description">{{ currentStepData.description }}</p>
+
+          <!-- Highlight features (if any) -->
+          <ul v-if="currentStepData.highlights" class="onboarding-highlights">
+            <li v-for="highlight in currentStepData.highlights" :key="highlight">
+              <span class="highlight-dot"></span>
+              {{ highlight }}
+            </li>
+          </ul>
+        </div>
+      </transition>
+
+      <!-- Pagination dots -->
+      <div class="onboarding-pagination">
+        <button
+          v-for="(step, index) in steps"
+          :key="index"
+          :class="['pagination-dot', { active: index === currentStep }]"
+          @click="goToStep(index)"
+          :aria-label="`Go to step ${index + 1}`"
+        ></button>
+      </div>
+
+      <!-- Navigation buttons -->
+      <div class="onboarding-actions">
+        <button
+          v-if="currentStep > 0"
+          class="btn-secondary"
+          @click="previousStep"
+        >
+          Back
+        </button>
+
+        <button
+          v-if="currentStep < steps.length - 1"
+          class="btn-primary"
+          @click="nextStep"
+        >
+          Next
+        </button>
+
+        <button
+          v-else
+          class="btn-primary btn-get-started"
+          @click="completeOnboarding"
+        >
+          Get Started
+        </button>
+      </div>
+
+      <!-- Skip option (subtle) -->
+      <button class="btn-skip" @click="completeOnboarding">
+        Skip for now
+      </button>
+    </div>
+  </div>
+</transition>

@@ -260,7 +260,14 @@ async function restoreAuthenticationFromLocalStorage() {
     if (accessToken || refreshToken || userJson) {
       // Token ou user existe = utilisateur était connecté
       console.log('[auto-restore] Restauration de la session...')
-      
+
+      // Réhydrater le token en mémoire pour éviter un refresh inutile
+      // au premier appel API (sinon l'intercepteur pense qu'il n'y a pas
+      // de token et déclenche un refresh à chaque montage d'écran)
+      if (accessToken) {
+        window.__ACCESS_TOKEN__ = accessToken
+      }
+
       // Restaurer l'objet user d'abord (contient l'ID)
       if (userJson) {
         try {
