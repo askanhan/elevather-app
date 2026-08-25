@@ -1,485 +1,763 @@
+/* ==========================================================================
+   Journey — course overview
+   Layout: one vertical rail per track. Each day is a node on the rail, so the
+   sequence itself carries the "journey" idea instead of a decorative image.
+   ========================================================================== */
+
 .journey {
-    max-width: 1100px;
+    --ink: #16142a;
+    --ink-soft: #605c7a;
+    --ink-faint: #8b87a3;
+    --line: #e8e5f2;
+    --canvas: #faf9fd;
+    --surface: #ffffff;
+
+    --done-bg: #ecfdf3;
+    --done-line: #a6e9c5;
+    --done-ink: #0d7a4b;
+
+    --live-bg: #fff8e8;
+    --live-line: #f7cf7a;
+    --live-ink: #9a6208;
+
+    --todo-bg: #ffffff;
+    --todo-line: #e8e5f2;
+
+    --radius: 16px;
+    --shadow: 0 1px 2px rgba(22, 20, 42, .05), 0 8px 24px rgba(22, 20, 42, .05);
+
+    --track: #2d6cdf;
+
+    max-width: 860px;
     margin: 0 auto;
-    padding: 28px 18px 44px;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
-        "Segoe UI Emoji";
+    padding: 20px 16px 56px;
+    color: var(--ink);
+    background: var(--canvas);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-.top {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
+.journey button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
 }
 
-.title {
-    font-size: 28px;
-    font-weight: 900;
-    margin: 0 0 6px 0;
+.journey :focus-visible {
+    outline: 2px solid var(--track);
+    outline-offset: 2px;
+    border-radius: 10px;
 }
 
-.subtitle {
-    margin: 0;
-    color: #475569;
-    max-width: 640px;
-    line-height: 1.35;
-}
+/* ---------- Header ---------- */
 
-.actions {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.progressBar {
-    width: 100%;
-    height: 10px;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-}
-
-.progressBarFill {
-    height: 100%;
-    background-color: #4caf50;
-    transition: width 0.3s ease;
-}
-
-.filters {
-    display: inline-block;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.filters select{
-    width: 50%;
-}
-
-.search {
-    min-width: 280px;
-    width: 340px;
-    max-width: 100%;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 10px 12px;
-    outline: none;
-    background: #fff;
-}
-
-.search:focus {
-    border-color: #94a3b8;
-}
-
-.select {
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 10px 12px;
-    background: #fff;
-    color: #0f172a;
-}
-
-.loading-message,
-.error-message {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 200px;
-    font-size: 16px;
-    font-weight: 900;
-    color: #475569;
-    text-align: center;
-    padding: 20px;
-}
-
-.error-message {
-    color: #dc2626;
-    background: #fee2e2;
-    border: 1px solid #fecaca;
-    border-radius: 12px;
-    margin: 12px 0;
-}
-
-.progressBlock {
-    width: 100%;
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 20px;
-    margin: 16px 0;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
-}
-
-.progressBlockLabel {
-    font-size: 14px;
-    font-weight: 700;
-    color: #64748b;
-    margin-bottom: 8px;
-    display: block;
-}
-
-.progressBlockValue {
-    font-size: 25px;
-    font-weight: 900;
-    color: #0f172a;
-    margin-bottom: 16px;
-    display: inline;
-}
-
-img.track-img {
-    position: absolute;
-    left: -20px;
-    top: 50px;
-}
-
-.list {
+.jHead {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
 }
 
-.trackCard {
-    border: 1px solid #e2e8f0;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
-    overflow: hidden;
-}
-
-.trackHeader {
-    width: 100%;
-    text-align: left;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    padding: 14px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.left {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    min-width: 0;
-    flex: 1;
-}
-
-.badge {
-    color: #fff;
-    font-weight: 900;
-    border-radius: 12px;
-    padding: 8px 10px;
-    text-align: center;
-    flex: 1;
-    white-space: normal;
-    line-height: 1.3;
-    font-size: 11px;
-    /* word-spacing: 100vw; */
-    margin: 0 auto;
-}
-
-.headText {
-    min-width: 0;
-    flex: 1;
-}
-
-.trackTitle {
-    margin: 0 0 6px 0;
-    font-size: 18px;
-    font-weight: 900;
-    color: #0f172a;
-}
-
-.trackDesc {
+.jEyebrow {
     margin: 0;
-    color: #475569;
-    line-height: 1.35;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
 }
 
-.trackMeta {
-    margin-top: 8px;
+.jTitle {
+    margin: 6px 0 4px;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+    line-height: 1.1;
+}
+
+.jLede {
+    margin: 0;
+    max-width: 46ch;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.jScore {
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
 }
 
-.metaChip {
-    font-size: 12px;
-    color: #0f172a;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    padding: 6px 10px;
-    border-radius: 999px;
+.jRing {
+    width: 56px;
+    height: 56px;
+    flex: 0 0 auto;
+    transform: rotate(-90deg);
+}
+
+.jRingTrack,
+.jRingFill {
+    fill: none;
+    stroke-width: 8;
+}
+
+.jRingTrack {
+    stroke: #eeebf7;
+}
+
+.jRingFill {
+    stroke: var(--track);
+    stroke-linecap: round;
+    transition: stroke-dashoffset .5s ease;
+}
+
+.jScoreText {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.jScoreValue {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.02em;
+}
+
+.jScoreLabel {
+    font-size: 13px;
+    color: var(--ink-soft);
+}
+
+/* ---------- Status summary (also acts as a filter) ---------- */
+
+.jSummary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 16px 0 0;
+}
+
+.jSummaryItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    text-align: left;
+    transition: border-color .15s ease, background .15s ease;
+}
+
+.jSummaryItem.active {
+    border-color: var(--ink);
+    background: #f4f2fb;
+}
+
+.jSummaryNum {
+    font-size: 18px;
     font-weight: 800;
 }
 
-.right {
+.jSummaryLabel {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--ink-soft);
+}
+
+/* ---------- Continue card ---------- */
+
+.jResume {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 12px;
+    padding: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    text-align: left;
+    transition: transform .1s ease, box-shadow .1s ease;
+}
+
+.jResume:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 26px rgba(22, 20, 42, .1);
+}
+
+.jResumeAccent {
+    width: 5px;
+    align-self: stretch;
     flex: 0 0 auto;
 }
 
-.progress {
-    width: 150px;
-    max-width: 38vw;
-    height: 2rem;
-}
-
-.progressTop {
+.jResumeBody {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 6px;
+    flex-direction: column;
+    gap: 3px;
+    padding: 14px 0;
+    min-width: 0;
+    flex: 1;
 }
 
-.progressLabel {
+.jResumeTitle {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.jResumeMeta {
     font-size: 12px;
-    color: #64748b;
+    color: var(--ink-soft);
+}
+
+.jResumeGo {
+    padding-right: 16px;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ink);
+}
+
+/* ---------- Toolbar ---------- */
+
+.jToolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 18px 0 14px;
+}
+
+.jSearch {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.jSearchIcon {
+    position: absolute;
+    left: 12px;
+    font-size: 16px;
+    color: var(--ink-faint);
+    pointer-events: none;
+}
+
+.jSearchInput {
+    width: 100%;
+    padding: 11px 34px 11px 32px;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.jSearchInput::placeholder {
+    color: var(--ink-faint);
+}
+
+.jSearchInput:focus {
+    border-color: var(--ink);
+}
+
+.jSearchClear {
+    position: absolute;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    font-size: 18px;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 0;
+}
+
+.jToolbarRow {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.jSelect {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+}
+
+.jGhostBtn {
+    flex: 0 0 auto;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+.jSolidBtn {
+    margin-top: 12px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    background: var(--ink);
+    border: 0;
+    border-radius: 12px;
+}
+
+/* ---------- Notices ---------- */
+
+.jNotice {
+    padding: 28px 20px;
+    background: var(--surface);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+    text-align: center;
+}
+
+.jNoticeError {
+    border-style: solid;
+    border-color: #f5c2c0;
+    background: #fff5f5;
+}
+
+.jNoticeTitle {
+    margin: 0 0 4px;
+    font-size: 15px;
     font-weight: 800;
 }
 
-.progressValue {
-    font-size: 12px;
-    color: #0f172a;
-    font-weight: 900;
+.jNoticeText {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
 }
 
-.bar {
-    height: 10px;
-    border-radius: 999px;
-    background: #f1f5f9;
+/* ---------- Track list ---------- */
+
+.jList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.jTrack {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
     overflow: hidden;
-    border: 1px solid #e2e8f0;
 }
 
-.barFill {
-    height: 100%;
-    width: 0%;
+.jTrackHeadWrap {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
 }
 
-.chev {
-    font-size: 22px;
-    color: #0f172a;
-    transform: rotate(0deg);
-    transition: transform 0.12s ease;
-    margin-top: 2px;
-}
-
-.chev.open {
-    transform: rotate(180deg);
-}
-
-.trackBody {
-    border-top: 1px solid #e2e8f0;
-    padding: 14px;
-    background: inherit;
-}
-
-.sectionTitle {
-    margin: 0 0 10px;
-    font-size: 14px;
-    font-weight: 900;
-    color: #0f172a;
-}
-
-.module {
-    width: 100%;
-    text-align: left;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 12px;
-    background: #fff;
-    cursor: pointer;
-    margin-bottom: 20px;
-    margin-top: 35px;
-    transition: transform 0.06s ease, box-shadow 0.06s ease, border-color 0.06s ease;
-    position: relative;
-}
-
-.module:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
-    border-color: #cbd5e1;
-}
-
-.module.module-in-progress {
-    background: #fffbeb;
-    border-color: #fcd34d;
-}
-
-.module.module-done {
-    background: #f0fdf4;
-    border-color: #bbf7d0;
-}
-
-.module.module-not-started {
-    background: #fff;
-    border-color: #e2e8f0;
-}
-
-.moduleTop {
-    margin-bottom: 10px;
+.jTrackHead {
     display: flex;
-    gap: 14px;
     align-items: flex-start;
-    position: relative;
+    gap: 12px;
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: 0;
+    border-left: 4px solid var(--track);
+    text-align: left;
 }
 
-.moduleTitleRow {
+.jTrackMain {
+    flex: 1;
+    min-width: 0;
+}
+
+.jTrackTop {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
+    align-items: center;
+    gap: 8px;
+}
+
+.jTrackDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--track);
+    flex: 0 0 auto;
+}
+
+.jTrackTitle {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+}
+
+.jTrackDesc {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+}
+
+.jTrackStats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.jTrackCount,
+.jTrackPct {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .03em;
+    color: var(--ink-soft);
+    white-space: nowrap;
+}
+
+.jBar {
+    flex: 1;
+    height: 6px;
+    border-radius: 999px;
+    background: #efedf7;
+    overflow: hidden;
+}
+
+.jBarFill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--track);
+    transition: width .4s ease;
+}
+
+.jChev {
+    flex: 0 0 auto;
+    width: 10px;
+    height: 10px;
+    margin-top: 8px;
+    border-right: 2px solid var(--ink-soft);
+    border-bottom: 2px solid var(--ink-soft);
+    transform: rotate(45deg);
+    transition: transform .15s ease;
+}
+
+.jChev.open {
+    transform: rotate(-135deg);
+}
+
+/* ---------- Modules on the rail ---------- */
+
+.jModules {
+    list-style: none;
+    margin: 0;
+    padding: 4px 16px 18px 16px;
+    border-top: 1px solid var(--line);
+}
+
+.jModuleRow {
+    position: relative;
+    display: flex;
+    gap: 12px;
+    padding-top: 14px;
+}
+
+/* the rail line runs between the day nodes */
+.jModuleRow::before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: -14px;
+    width: 2px;
+    background: var(--line);
+}
+
+.jModuleRow:last-child::before {
+    bottom: auto;
+    height: 32px;
+}
+
+.jNode {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px; 
-    min-width: 0;
-    margin-top: 25px;
-}
-
-.moduleTitleWrap {
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.dayNumber {
-    display: inline-flex;
-    align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
-    background: #fef3c7;
-    color: #000;
-    font-weight: 900;
-    font-size: 14px;
-    border-radius: 4px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-    transform: rotate(-2deg);
-    text-align: center;
-    border: 1px solid #f5d547;
-    padding: 0;
-    position: absolute;
-    top: -40px;
-    left: -20px;
-    z-index: 2;
+    width: 38px;
+    height: 38px;
+    margin-top: 4px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--ink-soft);
 }
 
-.moduleTitle {
-    display: block;
-    font-weight: 900;
-    color: #0f172a;
-    width: 100%;
-    text-align: center;
+.jNode.is-done {
+    background: var(--done-bg);
+    border-color: var(--done-line);
+    color: var(--done-ink);
 }
 
-.status {
+.jNode.is-progress {
+    background: var(--live-bg);
+    border-color: var(--live-line);
+    color: var(--live-ink);
+    box-shadow: 0 0 0 4px rgba(247, 207, 122, .3);
+}
+
+.jModule {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px;
+    background: var(--todo-bg);
+    border: 1px solid var(--todo-line);
+    border-radius: 14px;
+    text-align: left;
+    transition: transform .1s ease, box-shadow .1s ease, border-color .1s ease;
+}
+
+.jModule:hover {
+    transform: translateY(-1px);
+    border-color: #cfc9e4;
+    box-shadow: 0 8px 20px rgba(22, 20, 42, .07);
+}
+
+.jModule.is-done {
+    background: var(--done-bg);
+    border-color: var(--done-line);
+}
+
+.jModule.is-progress {
+    background: var(--live-bg);
+    border-color: var(--live-line);
+}
+
+.jModuleTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.jModuleDay {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.jStatus {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    font-weight: 900;
-    border: 1px solid #e2e8f0;
-    background: #fff;
-    padding: 6px 12px;
+    gap: 6px;
+    padding: 4px 9px;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
     border-radius: 999px;
-    color: #0f172a;
-    position: absolute; 
-    top: -30px;
-    right: 12px;
-    z-index: 3; 
-    white-space: nowrap; 
+    background: #f5f3fb;
+    color: var(--ink-soft);
 }
 
-.status .dot {
-    width: 9px;
-    height: 9px;
+.jStatusDot {
+    width: 7px;
+    height: 7px;
     border-radius: 999px;
-    background: #94a3b8;
+    background: #b9b4cc;
 }
 
-.status.done {
-    background: #f0fdf4;
-    border-color: #bbf7d0;
+.jStatus.is-done {
+    background: #d9f5e6;
+    color: var(--done-ink);
 }
 
-.status.done .dot {
-    background: #22c55e;
+.jStatus.is-done .jStatusDot {
+    background: var(--done-ink);
 }
 
-.status.in_progress {
-    background: #fffbeb;
-    border-color: #fcd34d;
+.jStatus.is-progress {
+    background: #fdecc6;
+    color: var(--live-ink);
 }
 
-.status.in_progress .dot {
-    background: #f5bf0d;
+.jStatus.is-progress .jStatusDot {
+    background: #e0a52a;
 }
 
-.status.not_started {
-    background: #f8fafc;
-    border-color: #e2e8f0;
+.jModuleTitle {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -.01em;
 }
 
-.moduleDesc {
-    gap: 0;
-    margin: 8px 0 0;
-    color: #475569;
-    line-height: 1.35;
-    width: 100%;
-    text-align: left;
-    display: block;
+.jModuleDesc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.moduleBottom {
+.jModuleFoot {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 10px;
-    flex-wrap: wrap;
+    margin-top: 4px;
 }
 
-.outcomes {
-    max-width: 620px;
+.jTag {
+    padding: 4px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: rgba(22, 20, 42, .04);
+    border-radius: 999px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.outcomesLabel {
-    font-size: 12px;
-    color: #64748b;
-    font-weight: 800;
-    margin-right: 6px;
-}
-
-.outcomesText {
-    color: #334155;
-    font-size: 13px;
-}
-
-.cta {
+.jOpen {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 900;
-    color: #0f172a;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
 }
 
-.arrow {
-    font-size: 16px;
+.jOpenArrow {
+    transition: transform .12s ease;
 }
 
-.note {
-    margin: 6px 0 0;
-    color: #64748b;
-    font-size: 12px;
+.jModule:hover .jOpenArrow {
+    transform: translateX(3px);
+}
+
+/* ---------- Skeleton ---------- */
+
+.jSkeletonCard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.jSkeleton {
+    display: block;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f1eff8 25%, #e7e4f2 37%, #f1eff8 63%);
+    background-size: 400% 100%;
+    animation: jShimmer 1.3s ease infinite;
+}
+
+.jSkeletonBar {
+    height: 18px;
+    width: 45%;
+}
+
+.jSkeletonLine {
+    height: 12px;
+    width: 100%;
+}
+
+.jSkeletonLine.short {
+    width: 70%;
+}
+
+@keyframes jShimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+
+/* ---------- Wider screens ---------- */
+
+@media (min-width: 720px) {
+    .journey {
+        padding: 32px 24px 64px;
+    }
+
+    .jHead {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+    }
+
+    .jScore {
+        flex: 0 0 auto;
+        min-width: 240px;
+    }
+
+    .jToolbar {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .jSearch {
+        flex: 1 1 auto;
+    }
+
+    .jToolbarRow {
+        flex: 0 0 auto;
+    }
+
+    .jSelect {
+        flex: 0 0 auto;
+        min-width: 150px;
+    }
+
+    .jModules {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .journey *,
+    .journey *::before {
+        animation: none !important;
+        transition: none !important;
+    }
 }

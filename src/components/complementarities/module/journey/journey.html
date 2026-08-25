@@ -1,105 +1,173 @@
 <template>
-    <div class="journey">
-        <header class="top">
-            <div>
-                <h1 class="title">Journey</h1>
-                <p class="subtitle">
-                    Pick a track, open it, and choose a module. Progress is visible at a glance.
-                </p>
-            </div>
+  <div class="journey">
 
-            <div class="actions">
-                <input v-model="query" class="search" type="search" placeholder="Search tracks, modules, outcomes…"
-                    aria-label="Search" />
+    <!-- ============ HEADER + OVERALL PROGRESS ============ -->
+    <header class="jHead">
+      <div class="jHeadText">
+        <p class="jEyebrow">Your program</p>
+        <h1 class="jTitle">Journey</h1>
+        <p class="jLede">
+          Each track holds a series of short daily modules. Open a track to see its days,
+          then continue where you left off.
+        </p>
+      </div>
 
-                <div class="filters">
-                    <select v-model="categoryFilter" class="select" aria-label="Category filter">
-                        <option value="all">All categories</option>
-                        <option v-for="category in categories" :key="category.id" :value="category.id">
-                            {{ category.title }}
-                        </option>
-                    </select>
-
-                    <select v-model="statusFilter" class="select" aria-label="Status filter">
-                        <option value="all">All statuses</option>
-                        <option v-for="status in statuses" :key="status.value" :value="status.value">
-                            {{ status.label }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-        </header>
-
-        <!-- Loading state -->
-        <div v-if="loading" class="loading-message">
-            Loading journey...
+      <div class="jScore">
+        <svg class="jRing" viewBox="0 0 72 72" aria-hidden="true">
+          <circle class="jRingTrack" cx="36" cy="36" r="30" />
+          <circle class="jRingFill" cx="36" cy="36" r="30"
+                  :stroke-dasharray="ringCircumference"
+                  :stroke-dashoffset="ringOffset" />
+        </svg>
+        <div class="jScoreText">
+          <strong class="jScoreValue">{{ progressPercentage }}%</strong>
+          <span class="jScoreLabel">{{ counts.done }} of {{ counts.total }} modules done</span>
         </div>
+      </div>
+    </header>
 
-        <!-- Error state -->
-        <div v-if="error" class="error-message">
-            ⚠️ {{ error }}
-        </div>
-
-        <!-- Global Progress Block -->
-        <div class="progressBlock">
-            <div class="progressBlockLabel">Progress
-
-            <div class="progressBlockValue">{{ totalProgression.completed }}/{{ totalProgression.total }}</div>
-            </div>
-            <div class="progressBar">
-                <div class="progressBarFill"
-                    :style="{ width: (totalProgression.completed / totalProgression.total * 100) + '%' }"></div>
-            </div>
-        </div>
-
-        <!-- Content -->
-        <section v-if="!loading" class="list">
-            <article v-for="track in filteredTracks" :key="track.id" class="trackCard"
-                :class="getTrackStatusClass(track)">
-                <button class="trackHeader" @click="toggle(track.id)">
-                    <div class="left">
-                        <div class="badge" :style="{ background: track.color }">{{ track.title }}</div>
-                    </div>
-                    <div class="right">
-                        <div class="chev" :class="{ open: isOpen(track.id) }">⌄</div>
-                    </div>
-                </button>
-
-                <div v-show="isOpen(track.id)" class="trackBody">
-                    <button v-for="m in filteredModules(track)" :key="m.id" class="module"
-                        :class="getModuleStatusClass(m.status)" @click="goToCourse(m)">
-                        <div class="moduleTop">
-                            <div class="dayNumber">Day {{ m.dayNumber }}
-                                <img class="track-img" src="static/img/tracks.png" alt="">
-                            </div>
-                            <div class="moduleTitleRow">
-                                <div class="moduleTitleWrap">
-                                    <span class="moduleTitle">{{ m.title }}</span>
-                                </div>
-
-                                <span class="status" :class="statusClass(m.status)">
-                                    <span class="dot"></span>
-                                    {{ statusLabel(m.status) }}
-                                </span>
-
-                                <p class="moduleDesc">{{ m.summary }}</p>
-                            </div>
-                        </div>
-
-                        <div class="moduleBottom">
-                            <div class="outcomes">
-                                <span class="outcomesLabel">Audience:</span>
-                                <span class="outcomesText">{{ m.outcomes.join(" • ") }}</span>
-                            </div>
-
-                            <div class="cta">
-                                <span>Open course</span>
-                                <span class="arrow">→</span>
-                            </div>
-                        </div>
-                    </button>
-                </div>
-            </article>
-        </section>
+    <!-- ============ STATUS SUMMARY ============ -->
+    <div v-if="!loading && counts.total" class="jSummary">
+      <button class="jSummaryItem" :class="{ active: statusFilter === 'In progress' }"
+              @click="setStatus('In progress')">
+        <span class="jSummaryNum">{{ counts.inProgress }}</span>
+        <span class="jSummaryLabel">In progress</span>
+      </button>
+      <button class="jSummaryItem" :class="{ active: statusFilter === 'Not started' }"
+              @click="setStatus('Not started')">
+        <span class="jSummaryNum">{{ counts.notStarted }}</span>
+        <span class="jSummaryLabel">Not started</span>
+      </button>
+      <button class="jSummaryItem" :class="{ active: statusFilter === 'Done' }"
+              @click="setStatus('Done')">
+        <span class="jSummaryNum">{{ counts.done }}</span>
+        <span class="jSummaryLabel">Done</span>
+      </button>
     </div>
+
+    <!-- ============ CONTINUE CARD ============ -->
+    <button v-if="!loading && resumeModule" class="jResume" @click="goToCourse(resumeModule)">
+      <span class="jResumeAccent" :style="{ background: resumeModule.trackColor }"></span>
+      <span class="jResumeBody">
+        <span class="jEyebrow">Continue where you left off</span>
+        <span class="jResumeTitle">{{ resumeModule.title }}</span>
+        <span class="jResumeMeta">
+          {{ resumeModule.trackTitle }} · Day {{ resumeModule.dayNumber }}
+        </span>
+      </span>
+      <span class="jResumeGo" aria-hidden="true">→</span>
+    </button>
+
+    <!-- ============ TOOLBAR ============ -->
+    <div class="jToolbar">
+      <div class="jSearch">
+        <span class="jSearchIcon" aria-hidden="true">⌕</span>
+        <input v-model="query" type="search" class="jSearchInput"
+               placeholder="Search tracks, modules, audience…" aria-label="Search modules" />
+        <button v-if="query" class="jSearchClear" aria-label="Clear search" @click="query = ''">×</button>
+      </div>
+
+      <div class="jToolbarRow">
+        <select v-model="categoryFilter" class="jSelect" aria-label="Filter by track">
+          <option value="all">All tracks</option>
+          <option v-for="category in categories" :key="category.id" :value="category.id">
+            {{ category.title }}
+          </option>
+        </select>
+
+        <select v-model="statusFilter" class="jSelect" aria-label="Filter by status">
+          <option value="all">All statuses</option>
+          <option v-for="status in statuses" :key="status.value" :value="status.value">
+            {{ status.label }}
+          </option>
+        </select>
+
+        <button class="jGhostBtn" @click="allOpen ? collapseAll() : expandAll()">
+          {{ allOpen ? 'Collapse all' : 'Expand all' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- ============ LOADING ============ -->
+    <div v-if="loading" class="jList" aria-live="polite">
+      <div v-for="n in 3" :key="'sk' + n" class="jSkeletonCard">
+        <span class="jSkeleton jSkeletonBar"></span>
+        <span class="jSkeleton jSkeletonLine"></span>
+        <span class="jSkeleton jSkeletonLine short"></span>
+      </div>
+    </div>
+
+    <!-- ============ ERROR ============ -->
+    <div v-else-if="error" class="jNotice jNoticeError" role="alert">
+      <p class="jNoticeTitle">We couldn’t load your journey</p>
+      <p class="jNoticeText">{{ error }}</p>
+      <button class="jSolidBtn" @click="fetchJourneyData(true)">Try again</button>
+    </div>
+
+    <!-- ============ EMPTY ============ -->
+    <div v-else-if="!filteredTracks.length" class="jNotice">
+      <p class="jNoticeTitle">No modules match these filters</p>
+      <p class="jNoticeText">Change the track or status, or clear the search to see everything again.</p>
+      <button class="jSolidBtn" @click="clearFilters">Clear filters</button>
+    </div>
+
+    <!-- ============ TRACKS ============ -->
+    <section v-else class="jList">
+      <article v-for="track in filteredTracks" :key="track.id" class="jTrack"
+               :style="{ '--track': track.color }">
+        <h2 class="jTrackHeadWrap">
+          <button class="jTrackHead" :aria-expanded="isOpen(track.id) ? 'true' : 'false'"
+                  @click="toggle(track.id)">
+            <span class="jTrackMain">
+              <span class="jTrackTop">
+                <span class="jTrackDot" aria-hidden="true"></span>
+                <span class="jTrackTitle">{{ track.title }}</span>
+              </span>
+              <span class="jTrackDesc">{{ track.description }}</span>
+
+              <span class="jTrackStats">
+                <span class="jTrackCount">
+                  {{ trackStats(track).done }}/{{ trackStats(track).total }} done
+                </span>
+                <span class="jBar" aria-hidden="true">
+                  <span class="jBarFill" :style="{ width: trackStats(track).percent + '%' }"></span>
+                </span>
+                <span class="jTrackPct">{{ trackStats(track).percent }}%</span>
+              </span>
+            </span>
+
+            <span class="jChev" :class="{ open: isOpen(track.id) }" aria-hidden="true"></span>
+          </button>
+        </h2>
+
+        <ul v-show="isOpen(track.id)" class="jModules">
+          <li v-for="m in track.modules" :key="m.id" class="jModuleRow">
+            <span class="jNode" :class="statusKey(m.status)" aria-hidden="true">
+              <span class="jNodeDay">{{ m.dayNumber }}</span>
+            </span>
+
+            <button class="jModule" :class="statusKey(m.status)" @click="goToCourse(m)">
+              <span class="jModuleTop">
+                <span class="jModuleDay">Day {{ m.dayNumber }}</span>
+                <span class="jStatus" :class="statusKey(m.status)">
+                  <span class="jStatusDot" aria-hidden="true"></span>{{ statusLabel(m.status) }}
+                </span>
+              </span>
+
+              <span class="jModuleTitle">{{ m.title }}</span>
+              <span class="jModuleDesc">{{ m.summary }}</span>
+
+              <span class="jModuleFoot">
+                <span class="jTag">{{ m.outcomes.join(' · ') }}</span>
+                <span class="jOpen">
+                  {{ m.status === 'Done' ? 'Review' : m.status === 'In progress' ? 'Continue' : 'Start' }}
+                  <span class="jOpenArrow" aria-hidden="true">→</span>
+                </span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </article>
+    </section>
+  </div>
 </template>

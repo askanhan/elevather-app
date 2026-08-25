@@ -10,6 +10,32 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.conf');
 const config = require('../config');
 
+// vue-loader caches the SFC descriptor for <template src="..."> (external
+// template file) the first time it's read, keyed by the external file's own
+// path (see node_modules/vue-loader/dist/descriptorCache.js: getDescriptor's
+// fallback branch calls descriptorCache.set() after its own disk read, but
+// nothing ever calls setDescriptor() again for that same key — only the
+// *.vue file's main loader does, under a different cache key). Once that
+// fallback fires, edits to the external template file are silently ignored
+// by every following rebuild: watch correctly detects the change and
+// recompiles the module, but the compiled output is generated from the
+// stale cached descriptor, so the emitted bundle never differs and the
+// dev-server has "nothing" to push to the browser. Only killing the process
+// (which resets the in-memory Map) makes new edits visible again.
+// Clearing the cache before each rebuild forces every src-imported template
+// to be re-read from disk, closing that gap.
+class ClearVueTemplateSrcCachePlugin {
+  apply(compiler) {
+    compiler.hooks.watchRun.tap('ClearVueTemplateSrcCachePlugin', () => {
+      try {
+        require('vue-loader/dist/descriptorCache').descriptorCache.clear();
+      } catch (e) {
+        // vue-loader internals changed shape; nothing to clear
+      }
+    });
+  }
+}
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
 
@@ -61,7 +87,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     },
     proxy: config.dev.proxyTable ? config.dev.proxyTable : undefined,
     allowedHosts: 'all',
-    watchFiles: ['src/**/*.vue', 'src/**/*.js', 'src/**/*.html', 'src/**/*.css'],
+    // NOTE: don't set watchFiles for src/**: these files are already part of
+    // webpack's own module graph (via entry/imports), so webpack's compiler
+    // watcher already tracks them and drives HMR. Adding a second watchFiles
+    // watcher on top of that races the compiler: it can fire a full
+    // liveReload before the new compile is ready, reloading the browser to
+    // the stale bundle (looks like "nothing changed" until you restart).
     // watchFiles: config.dev.poll
     //   ? {
     //       paths: ['src/**/*', 'static/**/*'],
@@ -71,6 +102,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   plugins: [
     new webpack.DefinePlugin({ 'process.env': require('../config/dev.env') }),
+    new ClearVueTemplateSrcCachePlugin(),
     // new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',

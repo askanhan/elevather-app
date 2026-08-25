@@ -1113,7 +1113,10 @@ api.interceptors.request.use(async (config) => {
 
   // access yoksa refresh dene (max 3)
   if (!window.__ACCESS_TOKEN__) {
-    const refresh = await authStore.getItem('refresh')
+    // senkron çağrıyı await ETME: await bir microtask yield'i açar ve bu,
+    // eşzamanlı 401'lerin refreshInFlight kontrolünü birbirinin üzerinden
+    // atlamasına (race condition) sebep olur
+    const refresh = authStore.getItem('refresh')
 
     if (refresh) {
       if (!refreshInFlight) {
@@ -1128,6 +1131,8 @@ api.interceptors.request.use(async (config) => {
               return true
             } catch (e) {
               lastErr = e
+              // refresh token geçersiz/süresi dolmuş: tekrar denemek sonucu değiştirmez
+              if (e?.response?.status === 401 || e?.response?.status === 400) break
             }
           }
           throw lastErr
@@ -1172,7 +1177,8 @@ api.interceptors.response.use(
     if (status === 401 && !original.__isRetryRequest) {
       original.__isRetryRequest = true
 
-      const refresh = await authStore.getItem('refresh')
+      // senkron çağrıyı await ETME (bkz. request interceptor'daki not)
+      const refresh = authStore.getItem('refresh')
       if (!refresh) {
         location.href = '/#/login'
         return Promise.reject(error)
@@ -1190,6 +1196,8 @@ api.interceptors.response.use(
               return true
             } catch (e) {
               lastErr = e
+              // refresh token geçersiz/süresi dolmuş: tekrar denemek sonucu değiştirmez
+              if (e?.response?.status === 401 || e?.response?.status === 400) break
             }
           }
           throw lastErr

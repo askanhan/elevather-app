@@ -1,5 +1,8 @@
 const colors = ['#2D6CDF', '#1F9D63', '#8B5CF6', '#F59E0B', '#EF4444', '#06B6D4']
 
+const RING_R = 30
+const RING_C = 2 * Math.PI * RING_R
+
 export default {
     name: 'JourneyHome',
 
@@ -8,9 +11,10 @@ export default {
             query: '',
             statusFilter: 'all',
             categoryFilter: 'all',
-            openIds: new Set(),
+            openIds: [],
             loading: true,
-            error: null
+            error: null,
+            ringCircumference: RING_C.toFixed(2)
         }
     },
 
@@ -45,7 +49,7 @@ export default {
             const c = this.categoryFilter
 
             return this.tracks
-                .filter(t => c === 'all' ? true : (t.id === `category_${c}`))
+                .filter(t => (c === 'all' ? true : t.id === `category_${c}`))
                 .map(t => {
                     const modules = (t.modules || []).filter(m => {
                         const hay = (
@@ -57,7 +61,7 @@ export default {
                         ).toLowerCase()
 
                         const matchesQuery = q ? hay.includes(q) : true
-                        const matchesStatus = s === 'all' ? true : (m.status === s)
+                        const matchesStatus = s === 'all' ? true : m.status === s
                         return matchesQuery && matchesStatus
                     })
 
@@ -66,25 +70,55 @@ export default {
                 .filter(t => (t.modules || []).length > 0)
         },
 
-        totalProgression() {
-            const allModules = this.modules || []
-            const completed = allModules.filter(m => m.status === 'Done').length
-            const total = allModules.length
-            return { completed, total }
+        // Flat list with track context attached — used for counts and the resume card.
+        allModules() {
+            const out = []
+            this.tracks.forEach(t => {
+                (t.modules || []).forEach(m => {
+                    out.push({ ...m, trackTitle: t.title, trackColor: t.color, trackId: t.id })
+                })
+            })
+            return out
+        },
+
+        counts() {
+            const all = this.allModules
+            return {
+                total: all.length,
+                done: all.filter(m => m.status === 'Done').length,
+                inProgress: all.filter(m => m.status === 'In progress').length,
+                notStarted: all.filter(m => m.status === 'Not started').length
+            }
         },
 
         progressPercentage() {
-            const prog = this.totalProgression
-            return prog.total > 0 ? Math.round((prog.completed / prog.total) * 100) : 0
+            const { done, total } = this.counts
+            return total > 0 ? Math.round((done / total) * 100) : 0
+        },
+
+        ringOffset() {
+            return (RING_C * (1 - this.progressPercentage / 100)).toFixed(2)
+        },
+
+        // First module still running; otherwise the next one to start.
+        resumeModule() {
+            const all = this.allModules
+            return all.find(m => m.status === 'In progress') ||
+                all.find(m => m.status === 'Not started') ||
+                null
+        },
+
+        allOpen() {
+            return this.tracks.length > 0 && this.openIds.length === this.tracks.length
         }
     },
 
     methods: {
-        fetchJourneyData() {
+        fetchJourneyData(force) {
             const hasCategories = this.categories.length > 0
             const hasModules = this.modules.length > 0
 
-            if (hasCategories && hasModules) {
+            if (!force && hasCategories && hasModules) {
                 this.loading = false
                 this.error = null
                 this.initializeOpenIds()
@@ -101,7 +135,7 @@ export default {
             ])
                 .then(() => {
                     if (this.categories.length === 0 || this.modules.length === 0) {
-                        this.error = 'Failed to load journey data.'
+                        this.error = 'The journey data came back empty.'
                     } else {
                         this.initializeOpenIds()
                     }
@@ -109,50 +143,43 @@ export default {
                 })
                 .catch(err => {
                     console.error('Error fetching journey data:', err)
-                    this.error = 'Failed to load categories and modules.'
+                    this.error = 'Check your connection and try again.'
                     this.loading = false
                 })
         },
 
+        // Open the track that holds the active module; keep the rest collapsed
+        // so the page opens as an overview instead of a wall of cards.
         initializeOpenIds() {
-            const openIdSet = new Set()
-            this.tracks.forEach(track => {
-                openIdSet.add(track.id)
-            })
-            this.openIds = openIdSet
+            const active = this.tracks.find(t =>
+                (t.modules || []).some(m => m.status === 'In progress')
+            )
+            const first = this.tracks[0]
+            const target = active || first
+            this.openIds = target ? [target.id] : []
         },
 
         transformToTracks(categories, modules) {
             if (!categories || categories.length === 0) return []
 
-            // Map modules by category ID
             const modulesByCategory = {}
             modules.forEach(mod => {
                 const catId = mod.module_category_id
-                if (!modulesByCategory[catId]) {
-                    modulesByCategory[catId] = []
-                }
+                if (!modulesByCategory[catId]) modulesByCategory[catId] = []
                 modulesByCategory[catId].push(mod)
             })
 
-            // Create tracks from categories
             return categories.map((cat, idx) => {
                 let catModules = modulesByCategory[cat.id] || []
-                // Sort modules by day_number in ascending order
-                catModules = catModules.sort((a, b) => (a.day_number || 0) - (b.day_number || 0))
-
-                const titleWords = cat.title.split(' ')
-                const short = titleWords.slice(0, 2).join(' ')
+                catModules = catModules.slice().sort((a, b) => (a.day_number || 0) - (b.day_number || 0))
 
                 return {
                     id: `category_${cat.id}`,
-                    short: short,
+                    categoryId: cat.id,
                     title: cat.title,
                     description: cat.description || 'Learning modules for this category',
-                    pace: '10–15 minutes/day',
-                    focus: 'Core learning',
                     color: colors[idx % colors.length],
-                    modules: catModules.map((mod) => ({
+                    modules: catModules.map(mod => ({
                         id: mod.id,
                         title: mod.title,
                         status: mod.status || 'Not started',
@@ -165,39 +192,40 @@ export default {
         },
 
         toggle(id) {
-            const s = new Set(this.openIds)
-            if (s.has(id)) s.delete(id)
-            else s.add(id)
-            this.openIds = s
+            this.openIds = this.isOpen(id)
+                ? this.openIds.filter(x => x !== id)
+                : this.openIds.concat(id)
         },
 
         isOpen(id) {
-            return this.openIds && this.openIds.has(id)
+            return this.openIds.indexOf(id) !== -1
         },
 
-        goToCourse(module) {
-            if (this.$store.state.guestMode) {
-                // alert('Please log in to access the course content.')
-                this.$message.success('Please log in to access the course content.')
-                return
-            } else {
-                this.$router.push({ path: '/course', query: { id: module.id } })
-            }
+        expandAll() {
+            this.openIds = this.tracks.map(t => t.id)
         },
 
-        completedCount(track) {
+        collapseAll() {
+            this.openIds = []
+        },
+
+        setStatus(status) {
+            this.statusFilter = this.statusFilter === status ? 'all' : status
+            if (this.statusFilter !== 'all') this.expandAll()
+        },
+
+        clearFilters() {
+            this.query = ''
+            this.statusFilter = 'all'
+            this.categoryFilter = 'all'
+            this.initializeOpenIds()
+        },
+
+        trackStats(track) {
             const mods = (track && track.modules) ? track.modules : []
-            return mods.filter(m => m.status === 'done').length
-        },
-
-        completionPercent(track) {
-            const mods = (track && track.modules) ? track.modules : []
-            const total = mods.length || 1
-            return Math.round((this.completedCount(track) / total) * 100)
-        },
-
-        filteredModules(track) {
-            return (track && track.modules) ? track.modules : []
+            const total = mods.length
+            const done = mods.filter(m => m.status === 'Done').length
+            return { done, total, percent: total ? Math.round((done / total) * 100) : 0 }
         },
 
         statusLabel(status) {
@@ -206,29 +234,19 @@ export default {
             return 'Not started'
         },
 
-        statusClass(status) {
-            return { done: status === 'Done', in_progress: status === 'In progress', not_started: status === 'Not started' }
+        // One key drives the pill, the card tint and the rail node.
+        statusKey(status) {
+            if (status === 'Done') return 'is-done'
+            if (status === 'In progress') return 'is-progress'
+            return 'is-todo'
         },
 
-        getTrackStatusClass(track) {
-            const modules = track.modules || []
-            if (modules.length === 0) return ''
-
-            // If any module is done, show as done (green)
-            if (modules.some(m => m.status === 'Done')) {
-                return 'track-done'
+        goToCourse(module) {
+            if (this.$store.state.guestMode) {
+                this.$message.success('Log in to open the course content.')
+                return
             }
-            // If any module is in progress, show as in progress (orange)
-            if (modules.some(m => m.status === 'In progress')) {
-                return 'track-in-progress'
-            }
-            return 'track-not-started'
-        },
-
-        getModuleStatusClass(status) {
-            if (status === 'Done') return 'module-done'
-            if (status === 'In progress') return 'module-in-progress'
-            return 'module-not-started'
+            this.$router.push({ path: '/course', query: { id: module.id } })
         }
     }
 }

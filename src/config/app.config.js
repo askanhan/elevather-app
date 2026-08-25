@@ -1,5 +1,5 @@
 // Utiliser la variable d'environnement si disponible, sinon false pour développement
-const IS_PROD = true //process.env.NODE_ENV === 'production'
+const IS_PROD = false //process.env.NODE_ENV === 'production'
 
 export default {
   IS_PROD,
@@ -10,5 +10,5 @@ export default {
 
   WEB_BASE_URL: IS_PROD
     ? 'https://elevather.eu/'
-    : 'http://127.0.0.1:8080/',
+    : 'http://127.0.0.1:8081/',
 }
