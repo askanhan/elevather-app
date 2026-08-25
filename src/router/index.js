@@ -231,7 +231,7 @@ const routes = [
     }
   }
 ]
-const PERSIST_SCROLL_ROUTES = new Set(['home', 'search', 'newslist'])
+const PERSIST_SCROLL_ROUTES = new Set(['home', 'search', 'newslist', 'journey'])
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -270,17 +270,28 @@ const router = createRouter({
 
 const scrollPositions = new Map()
 
-function getScroller() {
-  return document.getElementById('SCROLLER')
+// #SCROLLER has no height/overflow of its own, and `<body>`'s own
+// `overflow-y: auto` (main.css) clips `<html>` to the viewport, so neither
+// `document.scrollingElement`/`documentElement` nor `window.scrollTo` ever
+// move — `<body>` is the element that actually scrolls. Detect whichever
+// element is truly overflowing instead of hardcoding one, so this keeps
+// working if the layout changes later.
+function getRealScroller() {
+  const candidates = [document.body, document.documentElement, document.getElementById('SCROLLER')]
+  return candidates.find(el => el && el.scrollHeight > el.clientHeight) || document.body
+}
+
+function getScrollY() {
+  return getRealScroller().scrollTop
+}
+
+function setScrollY(top) {
+  getRealScroller().scrollTop = top
 }
 
 router.beforeEach((to, from, next) => {
-  const scroller = getScroller()
-  if (scroller && from?.name && PERSIST_SCROLL_ROUTES.has(from.name)) {
-    scrollPositions.set(from.fullPath, {
-      top: scroller.scrollTop,
-      left: scroller.scrollLeft
-    })
+  if (from?.name && PERSIST_SCROLL_ROUTES.has(from.name)) {
+    scrollPositions.set(from.fullPath, { top: getScrollY() })
   }
   next()
 })
@@ -289,25 +300,14 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to) => {
   // girerken uygula
   requestAnimationFrame(() => {
-    const scroller = getScroller()
-    if (!scroller) return
-
     if (to?.name && PERSIST_SCROLL_ROUTES.has(to.name)) {
       const pos = scrollPositions.get(to.fullPath)
-      if (pos) {
-        scroller.scrollTop = pos.top
-        scroller.scrollLeft = pos.left
-        return
-      }
-      // ilk kez giriyorsa en baş
-      scroller.scrollTop = 0
-      scroller.scrollLeft = 0
+      setScrollY(pos ? pos.top : 0)
       return
     }
 
     // Persist olmayan sayfalar: her zaman başa
-    scroller.scrollTop = 0
-    scroller.scrollLeft = 0
+    setScrollY(0)
   })
 })
 

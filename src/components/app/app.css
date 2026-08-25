@@ -82,6 +82,7 @@
 
 /* ===== SCROLLER MAIN CONTAINER ===== */
 .app-scroller {
+  position: relative;
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -208,4 +209,16 @@ body.dark-mode .view {
 .slide-leave-to {
   transform: translateY(-6px);
   opacity: 0;
+}
+
+/* While enter/leave overlap, the leaving page must not add its height to the
+   document — otherwise the page is briefly taller (or the new content sits
+   lower) than its resting layout, and a scroll restore done during that
+   window lands a few pixels off. Taking it out of flow keeps the incoming
+   page's layout — and scroll height — final from the first frame. */
+.slide-leave-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }

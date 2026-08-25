@@ -24,7 +24,7 @@
   <div id="SCROLLER" class="app-scroller" :class="{ 'with-header-navbar': shouldShowHeaderAndNavbar }">
     <router-view v-slot="{ Component, route }">
       <transition name="slide">
-        <keep-alive :include="['Home','Search','Add','Notificaties','NewsList','AfterLoginPage']">
+        <keep-alive :include="['Home','Search','Add','Notificaties','NewsList','AfterLoginPage','JourneyHome']">
           <component :is="Component" :key="route.fullPath" class="view" />
         </keep-alive>
       </transition>

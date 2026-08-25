@@ -54,7 +54,7 @@
 
                                     <!-- Quote -->
                                     <div v-if="comp.type === 'quote'" class="comp-quote">
-                                        <div class="quote-text">"{{ comp.content }}"</div>
+                                        <div class="quote-text">"{{ comp.content.replace(/"/g, '') }}"</div>
                                         <div class="quote-author">— {{ comp.author }}</div>
                                     </div>
 
