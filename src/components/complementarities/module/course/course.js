@@ -126,13 +126,9 @@ export default {
                     }
 
                     this.loading = false
-                    // Update progress to "In progress" - don't block if it fails
-                    return this.$store.dispatch('updateUserProgress', {
-                        userId: this.userId,
-                        ownerType: 'module',
-                        ownerId: moduleId,
-                        status: 'In progress'
-                    })
+                    if (this.$route.query.done != '1') {
+                        this.updateProgressToInProgress(moduleId)
+                    }
                 })
                 .then(() => {
                     this.progressStarted = true
@@ -149,6 +145,17 @@ export default {
                     }
                     this.loading = false
                 })
+        },
+
+        updateProgressToInProgress(moduleId) {
+
+            // Update progress to "In progress" - don't block if it fails
+            return this.$store.dispatch('updateUserProgress', {
+                userId: this.userId,
+                ownerType: 'module',
+                ownerId: moduleId,
+                status: 'In progress'
+            })
         },
 
         // Transform cards data into slides format

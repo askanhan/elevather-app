@@ -67,13 +67,13 @@
                         <i class="fa fa-angle-right"></i>
                     </a>
 
-                    <a @click="select('tr')">
+                    <!-- <a @click="select('tr')">
                         <span class="lang-left">
                             <img class="me-3 mt-n1" width="20" :src="flagSrc('tr')">
                             <span>Türkçe</span>
                         </span>
                         <i class="fa fa-angle-right"></i>
-                    </a>
+                    </a> -->
                 </div>
 
                 <div class="clear"></div>

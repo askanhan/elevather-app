@@ -246,7 +246,7 @@ export default {
                 this.$message.success('Log in to open the course content.')
                 return
             }
-            this.$router.push({ path: '/course', query: { id: module.id, done: module.status === 'Done' } })
+            this.$router.push({ path: '/course', query: { id: module.id, done: module.status === 'Done' ? '1' : '0' } })
         }
     }
 }
