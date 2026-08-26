@@ -71,7 +71,7 @@
 
                                     <!-- Quote -->
                                     <div v-if="comp.type === 'quote'" class="comp-quote">
-                                        <div class="quote-text">"{{ comp.content.replace(/"/g, '').replace(/“/g, '') }}"</div>
+                                        <div class="quote-text">"{{ comp.content.replace(/"/g, '').replace(/“/g, '').replace(/”/g, '') }}"</div>
                                         <div class="quote-author">— {{ comp.author }}</div>
                                     </div>
 
@@ -85,7 +85,7 @@
                                         
                                         <!-- :source="getVideoUrl(comp.url || comp.video, null, 'course')"  -->
                                         <video-player 
-                                        source="https://www.youtube.com/watch?v=r7dWsJ-mEyI&t=96s" 
+                                        :source="comp.url"
                                             :play-now="false">
                                         </video-player>
                                         <p v-if="comp.description" class="video-desc">{{ comp.description }}</p>

@@ -1,4 +1,5 @@
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 // Icons components - simple SVG elements
 const HomeIcon = {
@@ -23,6 +24,8 @@ const TrendingUpIcon = {
 
 export default {
   setup() {
+    const route = useRoute()
+
     // State - créé DANS setup()
     const isVisible = ref(false)
     const currentStep = ref(0)
@@ -132,10 +135,18 @@ export default {
       isVisible.value = true
     }
 
-    // Lifecycle
-    onMounted(() => {
-      checkAndShowOnboarding()
-    })
+    // Lifecycle - only offer the tour once the user actually lands on the
+    // home page (i.e. after login), not on app boot while still on
+    // splash/login screens.
+    watch(
+      () => route.name,
+      (name) => {
+        if (name === 'home') {
+          checkAndShowOnboarding()
+        }
+      },
+      { immediate: true }
+    )
 
     // Return everything pour le template
     return {

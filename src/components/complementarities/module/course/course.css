@@ -84,7 +84,9 @@
 }
 
 @keyframes courseSpin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ---------- Top bar ---------- */
@@ -542,7 +544,8 @@
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 12px;
+    bottom: 62px;
+    /* clears the app's fixed #navigation-bar (50px tall) + 12px gap */
     width: min(720px, calc(100% - 28px));
     z-index: 9999;
     display: grid;
@@ -641,15 +644,17 @@
 
 @supports (padding: max(0px)) {
     .nav {
-        bottom: max(12px, env(safe-area-inset-bottom));
+        bottom: max(62px, calc(50px + env(safe-area-inset-bottom) + 12px));
     }
 
     .stage {
-        padding-bottom: calc(130px + env(safe-area-inset-bottom));
+        padding-bottom: calc(180px + env(safe-area-inset-bottom));
+        margin-bottom: 100px;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .course *,
     .course *::before {
         animation: none !important;

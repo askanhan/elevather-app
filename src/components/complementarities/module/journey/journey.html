@@ -121,7 +121,7 @@
             <span class="jTrackMain">
               <span class="jTrackTop">
                 <span class="jTrackDot" aria-hidden="true"></span>
-                <span class="jTrackTitle">{{ track.title }}</span>
+                <span class="jTrackTitle">{{ track.title }}</span> <span class="jTrackAudience">Days: {{track.modules.map(m => m.dayNumber).join(', ')}}</span>
               </span>
               <span class="jTrackDesc">{{ track.description }}</span>
 

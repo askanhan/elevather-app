@@ -133,7 +133,11 @@ def extract_all_options(row):
     """
     Dynamically extract all options from columns like Option A, Option B, Option C, etc.
     Handles options from A to Z and beyond (A-Z, AA, AB, etc.)
-    Returns options in order, skipping empty cells
+    Returns options in order, skipping empty cells.
+
+    Falls back to reading positionally (the columns right after "Field" and the
+    content column) when nothing matches the "Option X" header name - the same
+    header-naming drift some templates have for "Example content".
     """
     options = []
     # Try all possible option columns (Option A through Option Z)
@@ -145,6 +149,19 @@ def extract_all_options(row):
             # Stop if we hit a gap (assume options are continuous)
             if len(options) > 0:
                 break
+
+    if options:
+        return options
+
+    # Fallback: no "Option X" header matched - read positionally instead
+    idx = 2
+    while idx < len(row):
+        opt_val = clean_content(row.iloc[idx])
+        if not opt_val:
+            break
+        options.append(opt_val)
+        idx += 1
+
     return options
 
 

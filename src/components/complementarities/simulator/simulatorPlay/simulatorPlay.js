@@ -78,12 +78,23 @@ export default {
         },
 
         needsChoice() {
-            return this.current && this.current.components && 
+            return this.current && this.current.components &&
                    this.current.components.some(c => c.type === 'mcq')
+        },
+
+        progressPercent() {
+            if (!this.steps.length) return 0
+            return Math.round(((this.stepIndex + 1) / this.steps.length) * 100)
         }
     },
 
     methods: {
+        meterTone(value) {
+            if (value >= 70) return 'high'
+            if (value >= 40) return 'mid'
+            return 'low'
+        },
+
         fetchSimulator() {
             if (!this.simulatorId) {
                 this.error = 'No simulator ID provided.'

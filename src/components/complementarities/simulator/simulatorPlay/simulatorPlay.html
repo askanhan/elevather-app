@@ -1,31 +1,51 @@
 <template>
     <div class="simPlay">
         <!-- Error message -->
-        <div v-if="error" class="error-message">
-            ⚠️ {{ error }}
+        <div v-if="error" class="notice notice--error">
+            <div class="noticeIcon">⚠️</div>
+            <div class="noticeText">{{ error }}</div>
         </div>
 
         <!-- Loading message -->
-        <div v-if="loading" class="loading-message">
-            Loading simulator...
+        <div v-if="loading" class="notice">
+            <div class="spinner"></div>
+            <div class="noticeText">Loading simulator…</div>
         </div>
 
         <!-- Content -->
         <template v-if="!loading && !error">
         <header class="topbar">
-            <button class="back" @click="goBack">←</button>
+            <button class="back" @click="goBack" aria-label="Go back">←</button>
+
+            <div class="titleWrap">
+                <div class="simTitle">{{ scenario.title || 'Power Simulator' }}</div>
+                <div class="simMeta">
+                    <span v-if="scenario.level" class="chip">{{ labelLevel(scenario.level) }}</span>
+                    <span class="chip chip--muted">Step {{ stepIndex + 1 }}/{{ steps.length }}</span>
+                </div>
+            </div>
 
             <button class="ghost" @click="restart">Restart</button>
         </header>
 
+        <!-- Step progress -->
+        <div class="progressRow">
+            <div class="progressTrack">
+                <div class="progressFill" :style="{ width: progressPercent + '%' }"></div>
+            </div>
+            <span class="progressLabel">{{ progressPercent }}%</span>
+        </div>
+
+        <!-- Metrics dashboard -->
         <section class="meters">
+            <div class="metersHead">Your metrics</div>
             <div class="meter" v-for="m in meterKeys" :key="m">
                 <div class="meterTop">
                     <span class="meterName">{{ m }}</span>
-                    <span class="meterVal">{{ meters[m] }}/100</span>
+                    <span class="meterVal" :class="meterTone(meters[m])">{{ meters[m] }}</span>
                 </div>
                 <div class="bar">
-                    <div class="fill" :style="{ width: meters[m] + '%' }"></div>
+                    <div class="fill" :class="meterTone(meters[m])" :style="{ width: meters[m] + '%' }"></div>
                 </div>
             </div>
         </section>
@@ -33,16 +53,18 @@
         <section class="stage" :style="{ height: stageHeight }">
             <div class="card">
                 <div class="card-header-wrapper">
-                    <h2 class="kicker">{{ current.title }}</h2>
-                    <audio-button 
+                    <div class="cardHeading">
+                        <span v-if="current.kicker" class="kicker">{{ current.kicker }}</span>
+                        <h2 class="h2">{{ current.title }}</h2>
+                    </div>
+                    <audio-button
                         v-if="current"
-                        :owner-type="'card'" 
-                        :owner-id="current.cardId" 
+                        :owner-type="'card'"
+                        :owner-id="current.cardId"
                         class="card-audio-button">
                     </audio-button>
                 </div>
-                <div v-if="current.kicker" class="h2">{{ current.kicker }}</div>
-                <p class="p">{{ current.text }}</p>
+                <p v-if="current.text" class="p">{{ current.text }}</p>
 
                 <!-- Render card components -->
                 <div v-for="comp in current.components" :key="comp.order" class="component">
@@ -56,8 +78,8 @@
 
                     <!-- Video -->
                     <div v-if="comp.type === 'video'" class="media">
-                        <video-player 
-                            :source="getVideoUrl(comp.url || comp.video, null, 'simulator')" 
+                        <video-player
+                            :source="getVideoUrl(comp.url || comp.video, null, 'simulator')"
                             :play-now="false">
                         </video-player>
                     </div>
@@ -67,10 +89,10 @@
                         <div class="mcq-question">{{ comp.question || 'Select an option:' }}</div>
                         <button v-for="opt in comp.options" :key="opt.id" class="option"
                             :class="{ selected: selectedAnswers[current.id] == opt.id }"
+                            :disabled="locked"
                             @click="choose(opt, comp)">
                             <span class="radio" :class="{ on: selectedAnswers[current.id] == opt.id }"></span>
                             <span class="optText">{{ opt.text }}</span>
-                            
                         </button>
                     </div>
 
@@ -81,13 +103,19 @@
                     </div>
                 </div>
 
-                <div v-if="current.why" class="reveal">
-                    <div class="revealTitle">Why it matters</div>
+                <div v-if="current.why" class="reveal reveal--why">
+                    <div class="revealTitle">
+                        <span class="revealIcon">💡</span>
+                        Why it matters
+                    </div>
                     <p class="p">{{ current.why }}</p>
                 </div>
 
-                <div v-if="feedback" class="reveal">
-                    <div class="revealTitle">Feedback</div>
+                <div v-if="feedback" class="reveal reveal--feedback">
+                    <div class="revealTitle">
+                        <span class="revealIcon">✅</span>
+                        Feedback
+                    </div>
                     <p class="p">{{ feedback }}</p>
                 </div>
 
@@ -96,15 +124,18 @@
                     <div class="whyBody">{{ current.lens }}</div>
                 </details>
             </div>
-
-
         </section>
 
         <!-- Debrief Section -->
         <section class="debrief debriefSection" v-if="showDebrief && debriefData">
             <div class="card">
-                <h2 class="h2">📊 Your Feedback</h2>
-                <p class="p">Here's how you performed on each metric:</p>
+                <div class="debriefHead">
+                    <span class="debriefIcon">📊</span>
+                    <div>
+                        <h2 class="h2 h2--left">Your feedback</h2>
+                        <p class="p">Here's how you performed on each metric.</p>
+                    </div>
+                </div>
 
                 <!-- Feedbacks list -->
                 <div class="feedbacksList">
@@ -113,7 +144,7 @@
                             <h3 class="feedbackTitle">{{ feedback.metric_name }}</h3>
                             <span class="feedbackScore">{{ feedback.score }}%</span>
                         </div>
-                        
+
                         <div v-if="feedback.strength" class="feedbackBox strengthBox">
                             <span class="feedbackIcon">💪</span>
                             <div>
@@ -167,10 +198,10 @@
             </button>
 
             <!-- Next/Show result button -->
-            <button v-else class="navBtn primary" 
-                :disabled="(stepIndex === steps.length - 1 ? debriefLoading : (needsChoice && !feedback))" 
+            <button v-else class="navBtn primary"
+                :disabled="(stepIndex === steps.length - 1 ? debriefLoading : (needsChoice && !feedback))"
                 @click="stepIndex === steps.length - 1 ? showResultsDebrief() : next()">
-                {{ stepIndex === steps.length - 1 ? 'Show result' : 'Next' }}
+                {{ stepIndex === steps.length - 1 ? (debriefLoading ? 'Loading…' : 'Show result') : 'Next' }}
             </button>
         </div>
         </template>
