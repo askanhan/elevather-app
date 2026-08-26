@@ -88,6 +88,8 @@
     },
     "common": {
         "cancel": "Annuler",
+        "decreaseTextSize": "Réduire la taille du texte",
+        "increaseTextSize": "Augmenter la taille du texte",
         "linkCopied": "Lien copié",
         "loading": "Chargement...",
         "messages": "Messages",

@@ -3,6 +3,7 @@ import * as mutationTypes from '@/store/mutation-types.js'
 import { EditPen } from '@element-plus/icons-vue'
 import icons from '@/mixins/icons'
 import basicOperations from '@/mixins/basic-operations'
+import { canIncreaseFontScale, canDecreaseFontScale, increaseFontScale, decreaseFontScale } from '@/mixins/font-scale.js'
 
 export default {
   name: 'Menubar',
@@ -33,7 +34,7 @@ export default {
         return "Log in to access all features."
       }
       const firstName = this.$store?.state?.user?.first_name || ''
-      return "Hello, " + firstName + "." 
+      return "Hi, " + firstName + "." 
     },
 
     allConversations() {
@@ -77,6 +78,14 @@ export default {
 
     rightSideMenuItems() {
       return this.$store.state.menubarItems.rightSideMenuItems
+    },
+
+    canIncreaseFontScale() {
+      return canIncreaseFontScale()
+    },
+
+    canDecreaseFontScale() {
+      return canDecreaseFontScale()
     }
   },
 
@@ -152,6 +161,14 @@ export default {
       if (this.showHeaderTitle) {
         return this.$store.state.headerTitle[this.lang]
       }
+    },
+
+    increaseFontScale() {
+      increaseFontScale()
+    },
+
+    decreaseFontScale() {
+      decreaseFontScale()
     }
   },
 

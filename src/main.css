@@ -138,6 +138,25 @@ html {
     font-size: 12px;
 }
 
+/*
+  App-wide text size control. Uses `zoom` (not `transform: scale`) because
+  #app contains position:fixed children (Menubar, NavigationBar) — a
+  transform would create a new containing block for them and make them
+  drift/scroll with the page instead of staying pinned to the viewport.
+*/
+#app.font-scale-xs:not(:has(.exclude-zoom)) {
+    zoom: 0.85;
+}
+#app.font-scale-sm:not(:has(.exclude-zoom)) {
+    zoom: 0.92;
+}
+#app.font-scale-lg:not(:has(.exclude-zoom)) {
+    zoom: 1.1;
+}
+#app.font-scale-xl:not(:has(.exclude-zoom)) {
+    zoom: 1.2;
+}
+
 .daterangepicker {
     z-index: 9999 !important;
 }

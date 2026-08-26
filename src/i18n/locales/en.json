@@ -88,6 +88,8 @@
   },
   "common": {
     "cancel": "Cancel",
+    "decreaseTextSize": "Decrease text size",
+    "increaseTextSize": "Increase text size",
     "linkCopied": "Link copied",
     "loading": "Loading...",
     "messages": "Messages",

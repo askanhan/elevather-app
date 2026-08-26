@@ -12,7 +12,8 @@ except ImportError:
 from src.database.connection import connect_to_database
 from src.database.repository import (
     clear_all_database_data, reset_all_auto_increment,
-    clear_content_only_data, reset_content_only_auto_increment
+    clear_content_only_data, reset_content_only_auto_increment,
+    seed_module_categories
 )
 from src.database.importer import import_all_courses, import_all_simulators
 from src.utils.file_discovery import discover_excel_files
@@ -106,6 +107,13 @@ def run_database_import(preserve_user_data=True):
             print("\nMODE: Clearing ALL data (including user data)")
             clear_all_database_data()
             reset_all_auto_increment()
+
+        # Seed the fixed module categories before any course references them,
+        # so their ids are deterministic (1-7) regardless of import order
+        print("\n" + "="*60)
+        print("SEEDING MODULE CATEGORIES...")
+        print("="*60)
+        seed_module_categories()
 
         # Import courses
         print("\n" + "="*60)

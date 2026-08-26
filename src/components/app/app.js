@@ -5,6 +5,7 @@ import * as mutationTypes from '@/store/mutation-types.js';
 import icons from '@/mixins/icons.js';
 import globalMixin from '@/mixins/global.js';
 import Darkmode from 'darkmode-js';
+import { fontScaleClass } from '@/mixins/font-scale.js';
 
 export default {
   name: 'app',
@@ -58,6 +59,9 @@ export default {
     },
     isDarkMode() {
       return document.body.classList.contains('dark-mode');
+    },
+    fontScaleClass() {
+      return fontScaleClass();
     },
     shouldShowHeaderAndNavbar() {
       // Vérifier si la route indique qu'on ne doit pas afficher le header/navbar

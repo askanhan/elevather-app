@@ -88,6 +88,8 @@
     },
     "common": {
         "cancel": "Annuleren",
+        "decreaseTextSize": "Tekstgrootte verkleinen",
+        "increaseTextSize": "Tekstgrootte vergroten",
         "linkCopied": "Link gekopieerd",
         "loading": "Laden...",
         "messages": "Berichten",

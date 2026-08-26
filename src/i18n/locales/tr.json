@@ -88,6 +88,8 @@
   },
   "common": {
     "cancel": "İptal",
+    "decreaseTextSize": "Yazı boyutunu küçült",
+    "increaseTextSize": "Yazı boyutunu büyüt",
     "linkCopied": "Link kopyalandı",
     "loading": "Yükleniyor...",
     "messages": "Mesajlar",

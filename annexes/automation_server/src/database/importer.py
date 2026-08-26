@@ -9,7 +9,9 @@ from ..utils.excel_loader import (
     load_data, map_excel_to_db, clean_content, extract_full_card_data,
     extract_simulator_cards, parse_comma_list, safe_int
 )
-from ..utils.excel_mapping import MODULE_TABLE_MAP, SIMULATOR_TABLE_MAP
+from ..utils.excel_mapping import (
+    MODULE_TABLE_MAP, SIMULATOR_TABLE_MAP, DAY_NUMBER_OVERRIDES, TITLE_OVERRIDES, CATEGORY_OVERRIDES
+)
 from ..utils.sql_generator import find_overview_sheet, find_overview_row
 
 
@@ -42,25 +44,29 @@ def import_course(file_info):
         return False
 
     module_data = map_excel_to_db(overview_row, MODULE_TABLE_MAP)
+    module_data['title'] = TITLE_OVERRIDES.get(filename, module_data['title'])
 
-    # Handle empty/NaN category with fallback to "General"
-    category_name = clean_content(overview_row.get("Category"))
-    if not category_name:
-        category_name = "General"
-        print(f"WARNING: Category is empty. Using default category: 'General'")
-
-    # Get category id to add it in module table
-    category_id = safe_int(
-        get_or_create_module_category(
-            category_name,
-            "test description"
+    # Fixed category (module_category is seeded in CATEGORY_OVERRIDES order before
+    # import, so its id matches the override value directly - no DB lookup needed)
+    category_id = CATEGORY_OVERRIDES.get(module_data['title'])
+    if category_id is None:
+        # Fallback for a course not in the fixed mapping: fall back to raw Excel category
+        category_name = clean_content(overview_row.get("Category"))
+        if not category_name:
+            category_name = "General"
+            print(f"WARNING: Category is empty. Using default category: 'General'")
+        category_id = safe_int(
+            get_or_create_module_category(
+                category_name,
+                "test description"
+            )
         )
-    )
 
     # Create a module into db
+    day_number = DAY_NUMBER_OVERRIDES.get(module_data['title'], safe_int(module_data['day_number']))
     module_id = create_module(
         category_id,
-        safe_int(module_data['day_number']),
+        day_number,
         module_data['title'],
         module_data['description'],
         module_data.get('target_audience'),

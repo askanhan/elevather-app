@@ -112,6 +112,20 @@ def map_excel_to_db(df_row, mapping_dict) :
     return data_for_db
 
 
+# Function to get the "Example content" value by position rather than header name
+# - row: the full dataframe row
+# Returns: raw value of the column right after "Field", regardless of its header text
+def get_example_content_value(row):
+    """
+    Some templates repurpose the "Example content" header (e.g. embedding the
+    course/day name in it), while keeping content in the same position - the
+    column right after "Field". Reading positionally makes card parsing
+    resilient to that instead of silently returning nothing.
+    """
+    if len(row) > 1:
+        return row.iloc[1]
+    return None
+
 # Function to extract all dynamic option columns from a row
 # - row: the full dataframe row
 # Returns: list of cleaned option values in order
@@ -170,7 +184,7 @@ def get_component_info(field_name, content, row):
     # Specific logic for List - dynamic options
     elif field_name == "List":
         # For List components, use "Example content" as the intro/first element
-        example_content = clean_content(row.get("Example content"))
+        example_content = clean_content(get_example_content_value(row))
         # Extract all options as list items
         list_items = extract_all_options(row)
         # If Example content is provided, prepend it or use it as content
@@ -201,7 +215,7 @@ def extract_full_card_data(df_card, card_index):
 
     for index, row in df_card.iterrows():
         field_name = str(row['Field']).strip()
-        content = clean_content(row.get('Example content'))
+        content = clean_content(get_example_content_value(row))
 
         # If for a field, content is not empty (for card field)
         if field_name in ["Title", "Card Title"]:

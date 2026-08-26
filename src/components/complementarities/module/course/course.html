@@ -1,23 +1,40 @@
 <template>
     <div class="course">
         <!-- Error message -->
-        <div v-if="error" class="error-message">
-            ⚠️ {{ error }}
+        <div v-if="error" class="notice notice--error">
+            <div class="noticeIcon">⚠️</div>
+            <div class="noticeText">{{ error }}</div>
         </div>
 
         <!-- Loading message -->
-        <div v-if="loading" class="loading-message">
-            Loading course content...
+        <div v-if="loading" class="notice">
+            <div class="spinner"></div>
+            <div class="noticeText">Loading course content…</div>
         </div>
 
         <!-- Course content -->
         <template v-if="!loading && !error">
         <!-- Top bar -->
         <header class="topbar">
-            <button class="back" @click="goBack">←</button>
+            <button class="back" @click="goBack" aria-label="Go back">←</button>
+
+            <div class="titleWrap">
+                <div class="courseTitle">{{ module.title }}</div>
+                <div v-if="dayNumber" class="courseMeta">
+                    <span class="chip">Day {{ dayNumber }}</span>
+                </div>
+            </div>
 
             <button class="ghost" @click="restart">Restart</button>
         </header>
+
+        <!-- Course progress -->
+        <div class="progressRow">
+            <div class="progressTrack">
+                <div class="progressFill" :style="{ width: progressPercent + '%' }"></div>
+            </div>
+            <span class="progressLabel">{{ currentIndex + 1 }}/{{ slides.length }}</span>
+        </div>
 
         <!-- Swipeable stage -->
         <section class="stage" :style="{ height: stageHeight }" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
@@ -54,7 +71,7 @@
 
                                     <!-- Quote -->
                                     <div v-if="comp.type === 'quote'" class="comp-quote">
-                                        <div class="quote-text">"{{ comp.content.replace(/"/g, '') }}"</div>
+                                        <div class="quote-text">"{{ comp.content.replace(/"/g, '').replace(/“/g, '') }}"</div>
                                         <div class="quote-author">— {{ comp.author }}</div>
                                     </div>
 

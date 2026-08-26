@@ -29,6 +29,12 @@
 
   <!-- Sağ: Aksiyon ikonları -->
   <div class="header-right" v-if="backButtonAvailable">
+    <a @click="decreaseFontScale()" v-if="canDecreaseFontScale" class="header-icon" :aria-label="$t('common.decreaseTextSize')" :title="$t('common.decreaseTextSize')">
+      <i class="fas fa-search-minus"></i>
+    </a>
+    <a @click="increaseFontScale()" v-if="canIncreaseFontScale" class="header-icon" :aria-label="$t('common.increaseTextSize')" :title="$t('common.increaseTextSize')">
+      <i class="fas fa-search-plus"></i>
+    </a>
     <a @click="openFeedback()" class="header-icon" :aria-label="$t('common.feedback')" :title="$t('common.feedback')">
       <el-icon>
         <EditPen />
@@ -37,11 +43,18 @@
   </div>
   <div class="header-right" v-if="!backButtonAvailable && !specialButtonAvailable">
 
+    <a @click="decreaseFontScale()" v-if="canDecreaseFontScale" class="header-icon" :aria-label="$t('common.decreaseTextSize')" :title="$t('common.decreaseTextSize')">
+      <i class="fas fa-search-minus"></i>
+    </a>
+    <a @click="increaseFontScale()" v-if="canIncreaseFontScale" class="header-icon" :aria-label="$t('common.increaseTextSize')" :title="$t('common.increaseTextSize')">
+      <i class="fas fa-search-plus"></i>
+    </a>
+
     <a v-if="$store.state.flags.loggedIn && $store.state.guestMode" @click="logoutAsGuest()" class="header-icon header-icon--notif" :aria-label="$t('common.notifications')">
       <!-- FontAwesome 5: -->
       <i class="fas fa-sign-out-alt"></i>
     </a>
-    
+
     <a v-if="$store.state.flags.loggedIn &&  !$store.state.guestMode" @click="goToNotifications()" class="header-icon header-icon--notif" :aria-label="$t('common.notifications')">
       <!-- FontAwesome 5: -->
       <i class="far fa-bell"></i>

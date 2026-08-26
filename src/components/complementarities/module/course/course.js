@@ -49,6 +49,18 @@ export default {
             return this.$store.state.courseCards || []
         },
 
+        courseModule() {
+            return (this.$store.state.journeyModules || []).find(m => m.id === this.moduleId)
+        },
+
+        module() {
+            return this.courseModule || { title: this.course.title }
+        },
+
+        dayNumber() {
+            return this.courseModule ? this.courseModule.day_number : null
+        },
+
         slides() {
             return this.transformCardsToSlides(this.courseCards)
         },
@@ -58,6 +70,11 @@ export default {
             return {
                 transform: 'translateX(-' + pct + '%)'
             }
+        },
+
+        progressPercent() {
+            if (!this.slides.length) return 0
+            return ((this.currentIndex + 1) / this.slides.length) * 100
         },
 
         needsChoice() {
@@ -103,13 +120,12 @@ export default {
                         return
                     }
 
-                    // Set course title
+                    // Fallback title if the module wasn't preloaded (e.g. direct navigation)
                     if (this.courseCards.length > 0) {
                         this.course.title = this.courseCards[0].title || 'Module'
                     }
 
                     this.loading = false
-
                     // Update progress to "In progress" - don't block if it fails
                     return this.$store.dispatch('updateUserProgress', {
                         userId: this.userId,
@@ -408,7 +424,7 @@ export default {
         this.stopReadingTimer()
         // ---> ADD THIS LINE <---
         window.removeEventListener('keydown', this.handleKeydown)
-        
+
         // MODIFIED: Since we imported it at the top, we can just call it directly now
         audioService.stop()
     }

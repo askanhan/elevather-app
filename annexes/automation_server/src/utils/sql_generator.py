@@ -5,7 +5,10 @@ from .excel_loader import (
     load_data, map_excel_to_db, clean_content, extract_full_card_data,
     extract_simulator_cards, parse_comma_list, safe_int
 )
-from .excel_mapping import MODULE_TABLE_MAP, SIMULATOR_TABLE_MAP
+from .excel_mapping import (
+    MODULE_TABLE_MAP, SIMULATOR_TABLE_MAP, DAY_NUMBER_OVERRIDES, TITLE_OVERRIDES,
+    CATEGORY_OVERRIDES, MODULE_CATEGORIES
+)
 
 
 def find_overview_sheet(df_dict, sheet_type="course"):
@@ -389,11 +392,17 @@ def generate_sql_course(file_info, output_file=None):
         return queries
 
     module_data = map_excel_to_db(overview_row, MODULE_TABLE_MAP)
+    module_data['title'] = TITLE_OVERRIDES.get(filename, module_data['title'])
 
-    category_name = clean_content(overview_row.get("Category"))
-    if not category_name:
-        category_name = "General"
-        print(f"WARNING: Category is empty. Using default category: 'General'")
+    category_index = CATEGORY_OVERRIDES.get(module_data['title'])
+    if category_index is not None:
+        category_name, category_description = MODULE_CATEGORIES[category_index - 1]
+    else:
+        category_name = clean_content(overview_row.get("Category"))
+        if not category_name:
+            category_name = "General"
+            print(f"WARNING: Category is empty. Using default category: 'General'")
+        category_description = "test description"
 
     queries.append(f"\n-- ============================================")
     queries.append(f"-- Course: {module_data['title']}")
@@ -401,13 +410,14 @@ def generate_sql_course(file_info, output_file=None):
 
     # Generate category queries (with INSERT IGNORE for existing)
     queries.append(f"\n-- Category: {category_name}")
-    queries.extend(generate_category_query(category_name, "test description"))
+    queries.extend(generate_category_query(category_name, category_description))
 
     # Generate module query with subquery for category_id
     queries.append(f"\n-- Module creation with automatic category lookup")
+    day_number = DAY_NUMBER_OVERRIDES.get(module_data['title'], safe_int(module_data['day_number'], 1))
     queries.append(generate_module_query(
         category_name,  # Will be used in subquery
-        safe_int(module_data['day_number'], 1),
+        day_number,
         module_data['title'],
         module_data['description'],
         module_data.get('target_audience'),

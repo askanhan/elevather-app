@@ -2,6 +2,7 @@
 # Import datetime for created_at field in database
 from .connection import execute_command
 from datetime import datetime
+from ..utils.excel_mapping import MODULE_CATEGORIES
 
 
 # Function to get a category ID by its title, or create it if it doesn't exist - data abstraction
@@ -21,6 +22,20 @@ def get_or_create_module_category(title, description="Default description"):
         print(f"Category '{title}' not found. Creating it...")
         sql_insert = "INSERT INTO module_category (title, description, created_at) VALUES (%s, %s, %s)"
         return execute_command(sql_insert, (title, description, datetime.now()), is_insert=True)
+
+
+# Function to seed the fixed set of module categories in a deterministic order
+# Returns: list of created category IDs, in MODULE_CATEGORIES order (1-7)
+def seed_module_categories():
+    category_ids = []
+    for title, description in MODULE_CATEGORIES:
+        category_id = execute_command(
+            "INSERT INTO module_category (title, description, created_at) VALUES (%s, %s, %s)",
+            (title, description, datetime.now()), is_insert=True
+        )
+        print(f"Category '{title}' seeded with ID: {category_id}")
+        category_ids.append(category_id)
+    return category_ids
 
 
 # Function to create a module

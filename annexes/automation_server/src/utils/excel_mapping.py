@@ -39,3 +39,96 @@ SIMULATOR_OVERALL_RESULTS_MAP = {
     "Score Range (<50 / 50-85 / 85-100)": "score_range",
     "One-Sentence Result Title": "result_title"
 }
+
+# Fixed course title per source file, keyed by filename. Overrides a raw
+# Excel title that's actually a leftover placeholder rather than real content.
+TITLE_OVERRIDES = {
+    "KANE_DAY14_LeadershipANDPersonal Growth.xlsx": "Knowing Yourself as a Leader - Leading your own way",
+}
+
+# Fixed day_number per course, keyed by exact course title. Each country's Excel
+# "Day" column is numbered relative to its own local course order, not the combined
+# platform sequence, so it's overridden here to the canonical 1-30 order across all
+# countries instead of trusting the Excel value.
+DAY_NUMBER_OVERRIDES = {
+    "Discover your inner potential": 1,
+    "Discover Your Personality: The Big Five Model": 2,
+    "Ikigai: Discover your purpose": 3,
+    "Story of me: Rewriting your power narrative": 4,
+    "Self-Care for Strong Leaders": 5,
+    "Breathwork for Focus and Balance": 6,
+    "Mindful Meditation Moments": 7,
+    "Unlocking Creativity & Vision": 8,
+    "Get ready for public speaking": 9,
+    "Public speaking - staying strong in the spotlight": 10,
+    "Digital Courage: Setting Boundaries & Showing Up Safely Online": 11,
+    "Personal Brand Building: Lead With Your Story": 12,
+    "Strategies and Tools to Strengthen Self-Confidence": 13,
+    "Knowing Yourself as a Leader - Leading your own way": 14,
+    "Proactive Leadership in Daily Life": 15,
+    "Believing in Your Growth": 16,
+    "Designing Your Growth Path": 17,
+    "Vision, Confidence & Moving Forward": 18,
+    "Networking: Building Real, Warm Connections": 19,
+    "Partnering: The Power of Building Things with Others": 20,
+    "How to speak to gain allies for your actions?": 21,
+    "Thankfulness: The Quiet Psychological Relief": 22,
+    "Motivational Techniques for Daily Life": 23,
+    "React to discrimination – don’t be indifferent": 24,
+    "Empowerment to... But what does power mean?": 25,
+    "„I want to understand.“ - HANNAH ARENDT": 26,
+    "Pioneer of Computer Science - ADA LOVELACE ": 27,
+    "Silent Heros: The power of listening and the liberation of time": 28,
+    "Day 5: Rebiya Kadeer — Staying Strong Under Pressure": 29,
+    "A Brief Use of AI: What You Can Actually Do With It": 30,
+}
+
+# Fixed set of module categories as (title, description), in this exact order.
+# They're seeded into the database in this order before any course import runs,
+# so their auto-increment id (1-7) matches this list's position deterministically -
+# instead of being created ad hoc from whatever raw Excel "Category" text (or lack
+# of it) each course happens to have.
+MODULE_CATEGORIES = [
+    ("I discover", "Self-Discovery & Inner Strength"),
+    ("I care myself", "Self-Care & Resilience"),
+    ("I'm confident", "Confidence & Communication"),
+    ("I'm leader", "Leadership & Personal Growth"),
+    ("I connect", "Connection & Community"),
+    ("I'm inspired", "Inspiration & Role Models"),
+    ("I catch up", "Tech & AI"),
+]
+
+# Which fixed category each course belongs to, keyed by exact course title.
+# Value is 1-indexed into MODULE_CATEGORIES above.
+CATEGORY_OVERRIDES = {
+    "Discover your inner potential": 1,
+    "Discover Your Personality: The Big Five Model": 1,
+    "Ikigai: Discover your purpose": 2,
+    "Story of me: Rewriting your power narrative": 2,
+    "Self-Care for Strong Leaders": 2,
+    "Breathwork for Focus and Balance": 2,
+    "Mindful Meditation Moments": 2,
+    "Unlocking Creativity & Vision": 2,
+    "Get ready for public speaking": 3,
+    "Public speaking - staying strong in the spotlight": 3,
+    "Digital Courage: Setting Boundaries & Showing Up Safely Online": 3,
+    "Personal Brand Building: Lead With Your Story": 3,
+    "Strategies and Tools to Strengthen Self-Confidence": 4,
+    "Knowing Yourself as a Leader - Leading your own way": 4,
+    "Proactive Leadership in Daily Life": 4,
+    "Believing in Your Growth": 4,
+    "Designing Your Growth Path": 4,
+    "Vision, Confidence & Moving Forward": 4,
+    "Networking: Building Real, Warm Connections": 5,
+    "Partnering: The Power of Building Things with Others": 5,
+    "How to speak to gain allies for your actions?": 5,
+    "Thankfulness: The Quiet Psychological Relief": 5,
+    "Motivational Techniques for Daily Life": 5,
+    "React to discrimination – don’t be indifferent": 5,
+    "Empowerment to... But what does power mean?": 6,
+    "„I want to understand.“ - HANNAH ARENDT": 6,
+    "Pioneer of Computer Science - ADA LOVELACE ": 6,
+    "Silent Heros: The power of listening and the liberation of time": 6,
+    "Day 5: Rebiya Kadeer — Staying Strong Under Pressure": 6,
+    "A Brief Use of AI: What You Can Actually Do With It": 7,
+}
