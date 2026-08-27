@@ -34,7 +34,9 @@ export default {
             userId: 1,
             progressStarted: false,
             loading: false,
-            stageHeight: 'auto'
+            stageHeight: 'auto',
+            resizeObserver: null,
+            stageHeightReleaseTimer: null
         }
     },
 
@@ -89,9 +91,9 @@ export default {
             // Check if there's an MCQ that needs answering
             const hasMCQ = (slide.components || []).some(c => c.type === 'mcq')
             if (hasMCQ && this.answers[slide.id] === undefined) return false
-            // Check if there's an open question that needs answering
-            const hasOpenQ = (slide.components || []).some(c => c.type === 'open question')
-            if (hasOpenQ && !this.openAnswers[slide.id]) return false
+            // Check if there are open questions that need answering
+            const openQuestions = (slide.components || []).filter(c => c.type === 'open question')
+            if (openQuestions.some(c => !this.openAnswers[c.id])) return false
             return true
         }
     },
@@ -132,7 +134,7 @@ export default {
                 })
                 .then(() => {
                     this.progressStarted = true
-                    this.updateStageHeight()
+                    this.observeActiveSlide()
                 })
                 .catch(err => {
                     console.error('Error while fetching module cards:', err)
@@ -227,6 +229,38 @@ export default {
                     const inner = activeSlide.querySelector('.slideInner');
                     this.stageHeight = inner ? (inner.offsetHeight + 'px') : 'auto';
                 }
+
+                // The pinned pixel height above only exists so `.stage` can animate
+                // between slide heights. Content that finishes loading afterwards
+                // (video metadata, images) would otherwise stay clipped by
+                // overflow:hidden forever, since nothing re-measures it. Once the
+                // transition has had time to run, release back to 'auto' so the box
+                // naturally follows its content from then on, with no clipping possible.
+                clearTimeout(this.stageHeightReleaseTimer)
+                this.stageHeightReleaseTimer = setTimeout(() => {
+                    this.stageHeight = 'auto'
+                }, 350)
+            });
+        },
+        // Extra safety net: while the height is pinned (or if a browser doesn't
+        // fire the release in time), keep it in sync with the active slide's real
+        // content size as it changes (e.g. video metadata arriving late).
+        observeActiveSlide() {
+            this.$nextTick(() => {
+                if (!this.resizeObserver) {
+                    this.resizeObserver = new ResizeObserver(() => this.updateStageHeight())
+                } else {
+                    this.resizeObserver.disconnect()
+                }
+
+                const slides = this.$el.querySelectorAll('.slide');
+                const activeSlide = slides[this.currentIndex];
+                const inner = activeSlide && activeSlide.querySelector('.slideInner');
+                if (inner) {
+                    this.resizeObserver.observe(inner)
+                }
+
+                this.updateStageHeight();
             });
         },
         goToTopOfThePage() {
@@ -242,27 +276,26 @@ export default {
             // Save open question response before moving to next slide
             const currentSlide = this.slides[this.currentIndex]
             if (currentSlide && currentSlide.type === 'card') {
-                const hasOpenQuestion = (currentSlide.components || []).some(c => c.type === 'open question')
-                if (hasOpenQuestion && this.openAnswers[currentSlide.id]) {
-                    // Find the open question component
-                    const openQuestionComponent = (currentSlide.components || []).find(c => c.type === 'open question')
-                    if (openQuestionComponent && this.openAnswers[currentSlide.id].trim()) {
+                const openQuestionComponents = (currentSlide.components || []).filter(c => c.type === 'open question')
+                openQuestionComponents.forEach(openQuestionComponent => {
+                    const answerText = this.openAnswers[openQuestionComponent.id]
+                    if (answerText && answerText.trim()) {
                         // Save the open question response
                         this.$store.dispatch('saveOpenQuestionResponse', {
                             userId: this.userId,
                             openQuestionId: openQuestionComponent.id,
-                            answerText: this.openAnswers[currentSlide.id].trim()
+                            answerText: answerText.trim()
                         }).catch((error) => {
                             console.error('Error saving open question:', error)
                         })
                     }
-                }
+                })
             }
 
             if (this.currentIndex < this.slides.length - 1) {
                 this.currentIndex += 1
                 this.syncReadingToSlide()
-                this.updateStageHeight();
+                this.observeActiveSlide();
             } else {
                 // Last slide - finish the course
                 this.reading = false
@@ -278,7 +311,7 @@ export default {
             if (this.currentIndex > 0) {
                 this.currentIndex -= 1
                 this.syncReadingToSlide()
-                this.updateStageHeight();
+                this.observeActiveSlide();
             }
             this.goToTopOfThePage()
         },
@@ -299,7 +332,7 @@ export default {
             audioService.stop()
             this.currentIndex = idx
             this.syncReadingToSlide()
-            this.updateStageHeight();
+            this.observeActiveSlide();
         },
 
         toggleReading() {
@@ -434,5 +467,10 @@ export default {
 
         // MODIFIED: Since we imported it at the top, we can just call it directly now
         audioService.stop()
+
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect()
+        }
+        clearTimeout(this.stageHeightReleaseTimer)
     }
 }

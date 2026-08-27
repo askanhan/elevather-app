@@ -18,7 +18,7 @@ export default {
     return {
       uniqueID: parseInt(Math.random() * 1000000000),
       id: '',
-      fullScreen: false,
+      fullScreen: true,
       videoPaused: false,
       isMuted: false
     }

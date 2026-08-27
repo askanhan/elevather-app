@@ -26,7 +26,7 @@
           :muted="isMuted"
           :class="{'full-screen' : fullScreen, 'fixed-height': !fullScreen, 'paused': videoPaused}" 
           loop 
-          preload="none"
+          preload="metadata"
         >
           <source :src="source" :type="'video/' + getExtension(source)">
           Your browser does not support the video tag.
