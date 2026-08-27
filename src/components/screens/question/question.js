@@ -11,26 +11,12 @@ export default {
   mixins: [basicOperations, icons, UIText],
   data() {
     return {
-      subjects: [{
-          nl: 'Upgrade mijn profiel',
-          tr: 'xxxxxxxxxx'
-        },
-        {
-          nl: 'Vraag over andere producten',
-          tr: 'xxxxxxxxxx'
-        },
-        {
-          nl: 'Vraag over de app',
-          tr: 'xxxxxxxxxx'
-        },
-        {
-          nl: 'Iets foutgelopen?',
-          tr: 'xxxxxxxxxx'
-        },
-        {
-          nl: 'Overige',
-          tr: 'xxxxxxxxxx'
-        },
+      subjects: [
+        { key: 'pages.question.subjects.profileUpgrade' },
+        { key: 'pages.question.subjects.otherProducts' },
+        { key: 'pages.question.subjects.appQuestion' },
+        { key: 'pages.question.subjects.somethingWrong' },
+        { key: 'common.other' },
       ],
     }
   },

@@ -5,31 +5,31 @@
                 <img :src="logo" alt="ElevatHER" class="email-auth-logo" />
             </div>
 
-            <h1 class="email-auth-title">Sign in with Email</h1>
-            <p class="email-auth-sub">Enter your email and password to continue.</p>
+            <h1 class="email-auth-title">{{ $t('pages.emailLogin.title') }}</h1>
+            <p class="email-auth-sub">{{ $t('pages.emailLogin.subtitle') }}</p>
 
             <div class="email-auth-form">
-                <label class="email-auth-label">Email</label>
-                <input v-model="email" type="email" class="email-auth-input" placeholder="you@example.com"
+                <label class="email-auth-label">{{ $t('pages.emailLogin.emailLabel') }}</label>
+                <input v-model="email" type="email" class="email-auth-input" :placeholder="$t('pages.emailLogin.emailPlaceholder')"
                     autocomplete="email" @keyup.enter="$refs.pwdInput.focus()" />
 
-                <label class="email-auth-label">Password</label>
-                <input ref="pwdInput" v-model="password" type="password" class="email-auth-input" placeholder="••••••••"
+                <label class="email-auth-label">{{ $t('pages.emailLogin.passwordLabel') }}</label>
+                <input ref="pwdInput" v-model="password" type="password" class="email-auth-input" :placeholder="$t('pages.emailLogin.passwordPlaceholder')"
                     autocomplete="current-password" @keyup.enter="submit" />
 
                 <div v-if="error" class="email-auth-error">{{ error }}</div>
 
                 <button class="email-auth-btn" :disabled="busy" @click="submit">
-                    {{ busy ? 'Signing in…' : 'Sign in' }}
+                    {{ busy ? $t('pages.emailLogin.signingIn') : $t('pages.emailLogin.signIn') }}
                 </button>
             </div>
 
             <div class="email-auth-footer">
-                <span>Don't have an account?</span>
-                <button class="email-auth-link" @click="goRegister">Create one</button>
+                <span>{{ $t('pages.emailLogin.noAccount') }}</span>
+                <button class="email-auth-link" @click="goRegister">{{ $t('pages.emailLogin.createOne') }}</button>
             </div>
 
-            <button class="email-auth-back" @click="goBack">← Back to login</button>
+            <button class="email-auth-back" @click="goBack">← {{ $t('auth.afterlogin.backToLogin') }}</button>
         </div>
     </div>
 </template>
@@ -54,8 +54,8 @@ export default {
             const email = (this.email || '').trim().toLowerCase()
             const pwd = this.password || ''
 
-            if (!email) { this.error = 'Please enter your email.'; return }
-            if (!pwd) { this.error = 'Please enter your password.'; return }
+            if (!email) { this.error = this.$t('pages.emailLogin.errors.emailRequired'); return }
+            if (!pwd) { this.error = this.$t('pages.emailLogin.errors.passwordRequired'); return }
 
             this.busy = true
             try {
@@ -74,9 +74,9 @@ export default {
             } catch (e) {
                 const status = e?.response?.status
                 if (status === 401) {
-                    this.error = 'Incorrect email or password.'
+                    this.error = this.$t('pages.emailLogin.errors.invalidCredentials')
                 } else {
-                    this.error = e?.response?.data?.detail || 'Login failed. Please try again.'
+                    this.error = e?.response?.data?.detail || this.$t('pages.emailLogin.errors.loginFailed')
                 }
             } finally {
                 this.busy = false

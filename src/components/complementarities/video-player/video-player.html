@@ -29,7 +29,7 @@
           preload="metadata"
         >
           <source :src="source" :type="'video/' + getExtension(source)">
-          Your browser does not support the video tag.
+          {{ $t('components.videoPlayer.unsupported') }}
         </video>
   
         <!-- Custom Controls (Only show for native video) -->

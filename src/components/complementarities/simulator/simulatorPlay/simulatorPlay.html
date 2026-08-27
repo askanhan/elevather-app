@@ -9,23 +9,23 @@
         <!-- Loading message -->
         <div v-if="loading" class="notice">
             <div class="spinner"></div>
-            <div class="noticeText">Loading simulator…</div>
+            <div class="noticeText">{{ $t('components.simulator.play.loading') }}</div>
         </div>
 
         <!-- Content -->
         <template v-if="!loading && !error">
         <header class="topbar">
-            <button class="back" @click="goBack" aria-label="Go back">←</button>
+            <button class="back" @click="goBack" :aria-label="$t('components.simulator.play.goBack')">←</button>
 
             <div class="titleWrap">
-                <div class="simTitle">{{ scenario.title || 'Power Simulator' }}</div>
+                <div class="simTitle">{{ scenario.title || $t('components.simulator.title') }}</div>
                 <div class="simMeta">
                     <span v-if="scenario.level" class="chip">{{ labelLevel(scenario.level) }}</span>
-                    <span class="chip chip--muted">Step {{ stepIndex + 1 }}/{{ steps.length }}</span>
+                    <span class="chip chip--muted">{{ $t('components.simulator.play.stepProgress', { current: stepIndex + 1, total: steps.length }) }}</span>
                 </div>
             </div>
 
-            <button class="ghost" @click="restart">Restart</button>
+            <button class="ghost" @click="restart">{{ $t('components.simulator.play.restart') }}</button>
         </header>
 
         <!-- Step progress -->
@@ -38,7 +38,7 @@
 
         <!-- Metrics dashboard -->
         <section class="meters">
-            <div class="metersHead">Your metrics</div>
+            <div class="metersHead">{{ $t('components.simulator.play.yourMetrics') }}</div>
             <div class="meter" v-for="m in meterKeys" :key="m">
                 <div class="meterTop">
                     <span class="meterName">{{ m }}</span>
@@ -73,7 +73,7 @@
 
                     <!-- Image -->
                     <div v-if="comp.type === 'image'" class="media">
-                        <img :src="getImageUrl(comp.url || comp.image, null, 'simulator')" :alt="comp.alt || 'Image'" />
+                        <img :src="getImageUrl(comp.url || comp.image, null, 'simulator')" :alt="comp.alt || $t('components.simulator.play.imageAlt')" />
                     </div>
 
                     <!-- Video -->
@@ -86,7 +86,7 @@
 
                     <!-- MCQ as options -->
                     <div v-if="comp.type === 'mcq'" class="comp-mcq">
-                        <div class="mcq-question">{{ comp.question || 'Select an option:' }}</div>
+                        <div class="mcq-question">{{ comp.question || $t('components.simulator.play.selectOption') }}</div>
                         <button v-for="opt in comp.options" :key="opt.id" class="option"
                             :class="{ selected: selectedAnswers[current.id] == opt.id }"
                             :disabled="locked"
@@ -106,7 +106,7 @@
                 <div v-if="current.why" class="reveal reveal--why">
                     <div class="revealTitle">
                         <span class="revealIcon">💡</span>
-                        Why it matters
+                        {{ $t('components.simulator.play.whyItMatters') }}
                     </div>
                     <p class="p">{{ current.why }}</p>
                 </div>
@@ -114,13 +114,13 @@
                 <div v-if="feedback" class="reveal reveal--feedback">
                     <div class="revealTitle">
                         <span class="revealIcon">✅</span>
-                        Feedback
+                        {{ $t('components.feedback.title') }}
                     </div>
                     <p class="p">{{ feedback }}</p>
                 </div>
 
                 <details v-if="current.lens" class="lens">
-                    <summary>Power lens</summary>
+                    <summary>{{ $t('components.simulator.play.powerLens') }}</summary>
                     <div class="whyBody">{{ current.lens }}</div>
                 </details>
             </div>
@@ -132,8 +132,8 @@
                 <div class="debriefHead">
                     <span class="debriefIcon">📊</span>
                     <div>
-                        <h2 class="h2 h2--left">Your feedback</h2>
-                        <p class="p">Here's how you performed on each metric.</p>
+                        <h2 class="h2 h2--left">{{ $t('components.simulator.play.debriefTitle') }}</h2>
+                        <p class="p">{{ $t('components.simulator.play.debriefSubtitle') }}</p>
                     </div>
                 </div>
 
@@ -148,7 +148,7 @@
                         <div v-if="feedback.strength" class="feedbackBox strengthBox">
                             <span class="feedbackIcon">💪</span>
                             <div>
-                                <div class="feedbackLabel">Strength</div>
+                                <div class="feedbackLabel">{{ $t('components.simulator.play.strength') }}</div>
                                 <p class="feedbackText">{{ feedback.strength }}</p>
                             </div>
                         </div>
@@ -156,7 +156,7 @@
                         <div v-if="feedback.risk" class="feedbackBox riskBox">
                             <span class="feedbackIcon">⚠️</span>
                             <div>
-                                <div class="feedbackLabel">Area to develop</div>
+                                <div class="feedbackLabel">{{ $t('components.simulator.play.areaToDevelop') }}</div>
                                 <p class="feedbackText">{{ feedback.risk }}</p>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                         <div v-if="feedback.practice" class="feedbackBox practiceBox">
                             <span class="feedbackIcon">🎯</span>
                             <div>
-                                <div class="feedbackLabel">Micro-practice</div>
+                                <div class="feedbackLabel">{{ $t('components.simulator.play.microPractice') }}</div>
                                 <p class="feedbackText">{{ feedback.practice }}</p>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                         <div v-if="feedback.recommendation && feedback.recommendation.reason" class="feedbackBox recommendationBox">
                             <span class="feedbackIcon">📚</span>
                             <div>
-                                <div class="feedbackLabel">Recommended module</div>
+                                <div class="feedbackLabel">{{ $t('components.simulator.play.recommendedModule') }}</div>
                                 <p class="feedbackText">{{ feedback.recommendation.reason }}</p>
                             </div>
                         </div>
@@ -184,7 +184,7 @@
         <!-- Bottom navigation with dots -->
         <div class="nav">
             <button class="navBtn" :disabled="stepIndex === 0 || showDebrief" @click="prev">
-                Prev
+                {{ $t('components.simulator.play.prev') }}
             </button>
 
             <div class="dots">
@@ -194,14 +194,14 @@
 
             <!-- Finish button (debrief page) -->
             <button v-if="showDebrief" class="navBtn primary" @click="finishAndNavigate">
-                Finish →
+                {{ $t('components.simulator.play.finish') }}
             </button>
 
             <!-- Next/Show result button -->
             <button v-else class="navBtn primary"
                 :disabled="(stepIndex === steps.length - 1 ? debriefLoading : (needsChoice && !feedback))"
                 @click="stepIndex === steps.length - 1 ? showResultsDebrief() : next()">
-                {{ stepIndex === steps.length - 1 ? (debriefLoading ? 'Loading…' : 'Show result') : 'Next' }}
+                {{ stepIndex === steps.length - 1 ? (debriefLoading ? $t('components.simulator.play.loadingShort') : $t('components.simulator.play.showResult')) : $t('components.simulator.play.next') }}
             </button>
         </div>
         </template>

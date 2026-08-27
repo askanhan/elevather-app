@@ -5,48 +5,51 @@
                 <img :src="logo" alt="ElevatHER" class="email-auth-logo" />
             </div>
 
-            <h1 class="email-auth-title">Create Account</h1>
-            <p class="email-auth-sub">Sign up with your email to get started.</p>
+            <h1 class="email-auth-title">{{ $t('pages.emailRegister.title') }}</h1>
+            <p class="email-auth-sub">{{ $t('pages.emailRegister.subtitle') }}</p>
 
             <div class="email-auth-form">
                 <div class="email-auth-row">
                     <div class="email-auth-half">
-                        <label class="email-auth-label">First name</label>
-                        <input v-model="firstName" type="text" class="email-auth-input" placeholder="Jane"
+                        <label class="email-auth-label">{{ $t('pages.emailRegister.firstName') }}</label>
+                        <input v-model="firstName" type="text" class="email-auth-input"
+                            :placeholder="$t('pages.emailRegister.firstNamePlaceholder')"
                             autocomplete="given-name" />
                     </div>
                     <div class="email-auth-half">
-                        <label class="email-auth-label">Last name</label>
-                        <input v-model="lastName" type="text" class="email-auth-input" placeholder="Doe"
+                        <label class="email-auth-label">{{ $t('pages.emailRegister.lastName') }}</label>
+                        <input v-model="lastName" type="text" class="email-auth-input"
+                            :placeholder="$t('pages.emailRegister.lastNamePlaceholder')"
                             autocomplete="family-name" />
                     </div>
                 </div>
 
-                <label class="email-auth-label">Email</label>
-                <input v-model="email" type="email" class="email-auth-input" placeholder="you@example.com"
-                    autocomplete="email" />
+                <label class="email-auth-label">{{ $t('pages.emailRegister.email') }}</label>
+                <input v-model="email" type="email" class="email-auth-input"
+                    :placeholder="$t('pages.emailRegister.emailPlaceholder')" autocomplete="email" />
 
-                <label class="email-auth-label">Password</label>
-                <input v-model="password" type="password" class="email-auth-input" placeholder="Min. 6 characters"
-                    autocomplete="new-password" />
+                <label class="email-auth-label">{{ $t('pages.emailRegister.password') }}</label>
+                <input v-model="password" type="password" class="email-auth-input"
+                    :placeholder="$t('pages.emailRegister.passwordPlaceholder')" autocomplete="new-password" />
 
-                <label class="email-auth-label">Confirm password</label>
+                <label class="email-auth-label">{{ $t('pages.emailRegister.confirmPassword') }}</label>
                 <input v-model="passwordConfirm" type="password" class="email-auth-input"
-                    placeholder="Repeat your password" autocomplete="new-password" @keyup.enter="submit" />
+                    :placeholder="$t('pages.emailRegister.confirmPasswordPlaceholder')" autocomplete="new-password"
+                    @keyup.enter="submit" />
 
                 <div v-if="error" class="email-auth-error">{{ error }}</div>
 
                 <button class="email-auth-btn" :disabled="busy" @click="submit">
-                    {{ busy ? 'Creating account…' : 'Create account' }}
+                    {{ busy ? $t('pages.emailRegister.creating') : $t('pages.emailRegister.submit') }}
                 </button>
             </div>
 
             <div class="email-auth-footer">
-                <span>Already have an account?</span>
-                <button class="email-auth-link" @click="goLogin">Sign in</button>
+                <span>{{ $t('pages.emailRegister.hasAccount') }}</span>
+                <button class="email-auth-link" @click="goLogin">{{ $t('pages.emailRegister.signIn') }}</button>
             </div>
 
-            <button class="email-auth-back" @click="goBack">← Back to login</button>
+            <button class="email-auth-back" @click="goBack">← {{ $t('auth.afterlogin.backToLogin') }}</button>
         </div>
     </div>
 </template>
@@ -77,10 +80,10 @@ export default {
             const firstName = (this.firstName || '').trim()
             const lastName = (this.lastName || '').trim()
 
-            if (!firstName) { this.error = 'Please enter your first name.'; return }
-            if (!email) { this.error = 'Please enter your email.'; return }
-            if (pwd.length < 6) { this.error = 'Password must be at least 6 characters.'; return }
-            if (pwd !== pwdConfirm) { this.error = 'Passwords do not match.'; return }
+            if (!firstName) { this.error = this.$t('pages.emailRegister.errors.firstNameRequired'); return }
+            if (!email) { this.error = this.$t('pages.emailRegister.errors.emailRequired'); return }
+            if (pwd.length < 6) { this.error = this.$t('pages.emailRegister.errors.passwordTooShort'); return }
+            if (pwd !== pwdConfirm) { this.error = this.$t('pages.emailRegister.errors.passwordMismatch'); return }
 
             this.busy = true
             try {
@@ -101,9 +104,9 @@ export default {
             } catch (e) {
                 const status = e?.response?.status
                 if (status === 409) {
-                    this.error = 'This email is already registered. Please sign in instead.'
+                    this.error = this.$t('pages.emailRegister.errors.emailTaken')
                 } else {
-                    this.error = e?.response?.data?.detail || 'Registration failed. Please try again.'
+                    this.error = e?.response?.data?.detail || this.$t('pages.emailRegister.errors.registrationFailed')
                 }
             } finally {
                 this.busy = false

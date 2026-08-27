@@ -2,16 +2,16 @@
     <div class="simHome">
         <header class="head">
             <div>
-                <h1 class="h1">Power Simulator</h1>
+                <h1 class="h1">{{ $t('components.simulator.title') }}</h1>
                 <p class="sub">
-                    Practice leadership decisions without real-world risk. Choose a scenario and test your approach.
+                    {{ $t('components.simulator.home.subtitle') }}
                 </p>
             </div>
 
             <div class="tools">
-                <input v-model="query" class="search" type="search" placeholder="Search scenarios…" />
+                <input v-model="query" class="search" type="search" :placeholder="$t('components.simulator.home.searchPlaceholder')" />
                 <select v-model="level" class="select">
-                    <option value="all">All levels</option>
+                    <option value="all">{{ $t('components.simulator.home.allLevels') }}</option>
                     <option v-for="lvl in levels" :key="lvl.value" :value="lvl.value">
                         {{ lvl.label }}
                     </option>
@@ -26,7 +26,7 @@
 
         
         <div v-if="loading" class="loading">
-            Loading simulators...
+            {{ $t('components.simulator.home.loading') }}
         </div>
 
         
@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="tags">
-                            <p class="label">Focus skills</p>
+                            <p class="label">{{ $t('components.simulator.home.focusSkills') }}</p>
                             <div class="tags-list">
                                 <span v-for="t in s.tags" :key="t" class="tag">{{ t }}</span>
                             </div>
@@ -54,14 +54,14 @@
                 </div>
 
                 <div class="bottom">
-                    <button class="btn">Start simulation →</button>
+                    <button class="btn">{{ $t('components.simulator.home.startSimulation') }}</button>
                 </div>
             </article>
         </section>
 
         <!-- if no results -->
         <p v-if="!loading && filtered.length === 0" class="note">
-            Simulators not found. Try adjusting your search or filters.
+            {{ $t('components.simulator.home.noResults') }}
         </p>
     </div>
 </template>

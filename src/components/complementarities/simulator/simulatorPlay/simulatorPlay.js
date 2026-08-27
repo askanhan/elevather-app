@@ -97,7 +97,7 @@ export default {
 
         fetchSimulator() {
             if (!this.simulatorId) {
-                this.error = 'No simulator ID provided.'
+                this.error = this.$t('components.simulator.errors.noSimulatorId')
                 this.loading = false
                 return
             }
@@ -118,7 +118,7 @@ export default {
             const hasCache = this.simulatorCards.length > 0
             if (hasCache) {
                 this.loading = false
-                this.scenario.title = this.simulatorCards[0].title || 'Simulator'
+                this.scenario.title = this.simulatorCards[0].title || this.$t('components.simulator.play.defaultScenarioTitle')
                 this.scenario.level = this.simulatorCards[0].level || 'intro'
             } else {
                 this.loading = true
@@ -136,10 +136,10 @@ export default {
             ])
                 .then(([cardsSuccess]) => {
                     if (cardsSuccess && this.simulatorCards.length > 0) {
-                        this.scenario.title = this.simulatorCards[0].title || 'Simulator'
+                        this.scenario.title = this.simulatorCards[0].title || this.$t('components.simulator.play.defaultScenarioTitle')
                         this.scenario.level = this.simulatorCards[0].level || 'intro'
                     } else if (!cardsSuccess) {
-                        this.error = 'No cards found for this simulator.'
+                        this.error = this.$t('components.simulator.play.errors.noCards')
                     }
                     
                     // Initialize metrics with default values if empty
@@ -159,7 +159,7 @@ export default {
                 })
                 .catch(err => {
                     console.error('Error fetching simulator:', err)
-                    this.error = 'Failed to load simulator. Please try again.'
+                    this.error = this.$t('components.simulator.play.errors.loadFailed')
                     this.loading = false
                 })
         },
@@ -171,7 +171,7 @@ export default {
                     id: `card_${card.id}`,
                     cardId: card.id,  // Store numeric ID separately for audio
                     kicker: card.subtitle || '',
-                    title: card.title || 'Card',
+                    title: card.title || this.$t('components.simulator.play.defaultCardTitle'),
                     text: card.end_text || '',
                     components: card.components || [],
                     why: card.why_this_question,
@@ -208,7 +208,7 @@ export default {
                 
                 if (!userId || !this.simulatorId) {
                     console.error('Missing userId or simulatorId')
-                    this.feedback = 'Error: Could not save response.'
+                    this.feedback = this.$t('components.simulator.play.errors.saveFailed')
                     this.locked = false
                     return
                 }
@@ -251,7 +251,7 @@ export default {
                 })
                 
                 // Use feedback from backend
-                this.feedback = response.feedback || option.feedback || 'Good choice.'
+                this.feedback = response.feedback || option.feedback || this.$t('components.simulator.play.defaultFeedback')
 
                 this.$nextTick(() => {
                     this.updateStageHeight();
@@ -297,7 +297,7 @@ export default {
                 
             } catch (error) {
                 console.error('Error saving MCQ response:', error)
-                this.feedback = 'Error saving response. Please try again.'
+                this.feedback = this.$t('components.simulator.play.errors.saveResponseError')
                 // Revert the answer on error
                 this.selectedAnswers[this.current.id] = previousAnswer
             } finally {
@@ -365,9 +365,9 @@ export default {
         },
 
         labelLevel(level) {
-            if (level === 'intro') return 'Intro'
-            if (level === 'core') return 'Core'
-            return 'Advanced'
+            if (level === 'intro') return this.$t('components.simulator.levels.intro')
+            if (level === 'core') return this.$t('components.simulator.levels.core')
+            return this.$t('components.simulator.levels.advanced')
         },
 
         finishContent() {
@@ -408,11 +408,11 @@ export default {
                         }
                     })
                 } else {
-                    this.feedback = 'Could not load results.'
+                    this.feedback = this.$t('components.simulator.play.errors.loadResultsFailed')
                 }
             } catch (err) {
                 console.error('Error loading debrief:', err)
-                this.feedback = 'Error loading results.'
+                this.feedback = this.$t('components.simulator.play.errors.loadResultsError')
             } finally {
                 this.debriefLoading = false
             }
@@ -455,7 +455,7 @@ export default {
             this.simulatorId = simulatorId
             this.fetchSimulator()
         } else {
-            this.error = 'No simulator ID provided.'
+            this.error = this.$t('components.simulator.errors.noSimulatorId')
             this.loading = false
         }
     },

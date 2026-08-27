@@ -59,27 +59,27 @@ export default {
             this.$store.dispatch('fetchSimulators')
                 .then(() => {
                     if (this.simulators.length === 0) {
-                        this.error = 'No simulators found.'
+                        this.error = this.$t('components.simulator.home.errors.noSimulatorsFound')
                     }
                     this.loading = false
                 })
                 .catch(err => {
                     console.error('Error fetching simulators:', err)
-                    this.error = 'Failed to load simulators.'
+                    this.error = this.$t('components.simulator.home.errors.loadFailed')
                     this.loading = false
                 })
         },
 
         labelLevel(l) {
-            if (l === 'intro') return 'Intro'
-            if (l === 'core') return 'Core'
-            return 'Advanced'
+            if (l === 'intro') return this.$t('components.simulator.levels.intro')
+            if (l === 'core') return this.$t('components.simulator.levels.core')
+            return this.$t('components.simulator.levels.advanced')
         },
 
         goPlay(s) {
             if (this.$store.state.guestMode) {
                 // alert('Please log in to access the course content.')
-                this.$message.success('Please log in to access the course content.')
+                this.$message.success(this.$t('components.simulator.home.loginRequired'))
                 return
             } else {
                 // Reset all metrics to 50 before entering simulator

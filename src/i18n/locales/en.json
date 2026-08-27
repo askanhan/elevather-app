@@ -67,7 +67,8 @@
       "errors": {
         "badSession": "Login data is corrupted. Please try again.",
         "cantFetchUser": "User info could not be fetched.",
-        "noSession": "No login data found."
+        "noSession": "No login data found.",
+        "unknown": "Unknown error"
       },
       "retry": "Retry",
       "step": {
@@ -135,7 +136,7 @@
       "shareBtn": "Share",
       "shareSub": "Help us reach more people.",
       "shareTitle": "Share",
-      "sub": "Vision Tree is a Brussels-based association. It focuses on psychology and technology; develops trainings, workshops and social impact projects for youth, families and different groups. In the BURADA app, it acts as a stakeholder aiming to increase local engagement by making communities and businesses visible, sharing education and event announcements, informative content about public institutions, and news.",
+      "sub": "Vision Tree is a Brussels-based association. It focuses on psychology and technology; develops trainings, workshops and social impact projects for youth, families and different groups. In the ELEVATE HER app, it acts as a stakeholder aiming to increase local engagement by making communities and businesses visible, sharing education and event announcements, informative content about public institutions, and news.",
       "title": "Support Us",
       "webDonate": "Donate on the web"
     },
@@ -169,7 +170,13 @@
       "writeMessage": "Write your message"
     },
     "footer": {
-      "slogan": "A platform that brings together everything you might want to find in Belgium."
+      "slogan": "A platform that brings together everything you might want to find in Belgium.",
+      "madeWith": "Made with",
+      "byTechnoOffice": "by TechnoOffice",
+      "copyright": "Copyright © Elevather {year}. All Rights Reserved.",
+      "privacyPolicy": "Privacy Policy",
+      "termsAndConditions": "Terms and Conditions",
+      "shareMessage": "Download this app that brings all of Belgium together — join us too!"
     },
     "highlightRequest": {
       "btnSend": "Send request",
@@ -193,7 +200,13 @@
       "home": "Home",
       "news": "News",
       "profile": "Profile",
-      "search": "Explore"
+      "search": "Explore",
+      "powerCheck": "Power Check",
+      "journey": "Journey",
+      "powerSimulator": "Power Simulator",
+      "stories": "Stories",
+      "loginRequired": "Please log in to access your profile and your achievements.",
+      "newPostsAvailable": "{n} new posts available"
     },
     "newsTicker": {
       "continue": "Continue",
@@ -235,7 +248,10 @@
         "donate": "Add your pinch of salt to the soup!",
         "conversations": "Check your messages!",
         "default": "Everything is Here {name}"
-      }
+      },
+      "riseTogether": "We Rise Together!",
+      "altyaziGuest": "Log in to access all features.",
+      "altyaziGreeting": "Hi, {name}."
     },
     "postCard": {
       "comments": {
@@ -268,6 +284,321 @@
         "title": "Report post"
       },
       "views": "{n} views"
+    },
+    "course": {
+      "loading": "Loading course content…",
+      "goBack": "Go back",
+      "day": "Day {n}",
+      "restart": "Restart",
+      "imageAlt": "Image",
+      "answerPlaceholder": "Your answer...",
+      "whyThisQuestion": "Why this question",
+      "statusTitle": "Course status",
+      "done": "Done",
+      "journeyUpdateNote": "This would update the Journey page UI.",
+      "prev": "Prev",
+      "next": "Next",
+      "finish": "Finish",
+      "footerHint": "Swipe left/right or use Next/Prev. Content loaded from database.",
+      "defaultTitle": "Module",
+      "defaultCardTitle": "Card",
+      "completedTitle": "Completed",
+      "completedText": "Great! You have completed this module. Your progress has been saved.",
+      "errors": {
+        "noModuleId": "No module ID provided.",
+        "noCards": "No cards found for this module.",
+        "loadFailed": "Impossible to load module. Please try again later.",
+        "saveResponseFailed": "Error saving your response. Please try again."
+      }
+    },
+    "journey": {
+      "eyebrow": "Your program",
+      "title": "Journey",
+      "lede": "Each track holds a series of short daily modules. Open a track to see its days, then continue where you left off.",
+      "scoreLabel": "{done} of {total} modules done",
+      "continueWhereLeftOff": "Continue where you left off",
+      "day": "Day {n}",
+      "searchPlaceholder": "Search tracks, modules, audience…",
+      "searchAriaLabel": "Search modules",
+      "clearSearchAriaLabel": "Clear search",
+      "filterByTrackAriaLabel": "Filter by track",
+      "allTracks": "All tracks",
+      "filterByStatusAriaLabel": "Filter by status",
+      "allStatuses": "All statuses",
+      "collapseAll": "Collapse all",
+      "expandAll": "Expand all",
+      "errorTitle": "We couldn’t load your journey",
+      "tryAgain": "Try again",
+      "emptyTitle": "No modules match these filters",
+      "emptyText": "Change the track or status, or clear the search to see everything again.",
+      "clearFilters": "Clear filters",
+      "daysLabel": "Days: {days}",
+      "doneCount": "{done}/{total} done",
+      "review": "Review",
+      "continueLabel": "Continue",
+      "start": "Start",
+      "status": {
+        "inProgress": "In progress",
+        "notStarted": "Not started",
+        "done": "Done"
+      },
+      "defaultTrackDescription": "Learning modules for this category",
+      "defaultModuleSummary": "Module content",
+      "defaultOutcome": "Learn and practice",
+      "loginToOpenCourse": "Log in to open the course content.",
+      "errors": {
+        "empty": "The journey data came back empty.",
+        "connection": "Check your connection and try again."
+      }
+    },
+    "videoPlayer": {
+      "unsupported": "Your browser does not support the video tag."
+    },
+    "onboardingTour": {
+      "back": "Back",
+      "next": "Next",
+      "getStarted": "Get Started",
+      "skip": "Skip for now",
+      "goToStep": "Go to step {n}",
+      "steps": {
+        "home": {
+          "title": "Daily Power Check",
+          "description": "Every day, take a moment to answer 3 powerful questions. They help you track where you are right now and set the tone for your day.",
+          "highlights": [
+            "Measure your current state",
+            "Build self-awareness",
+            "Start your journey with intention"
+          ]
+        },
+        "track": {
+          "title": "Learning Courses",
+          "description": "Explore courses organized by categories and designed just for you. Each course is unlocked day by day, keeping your learning journey smooth and manageable.",
+          "highlights": [
+            "Organized by categories",
+            "Daily progression system",
+            "Courses unlock at your pace",
+            "Use filters to find what you need"
+          ]
+        },
+        "simulator": {
+          "title": "Real-Life Simulations",
+          "description": "Put your skills to the test with engaging mini-games. Each simulation gives you personalized feedback to help you grow and learn from experience.",
+          "highlights": [
+            "Interactive learning scenarios",
+            "Get instant personalized feedback",
+            "Apply what you've learned"
+          ]
+        },
+        "stories": {
+          "title": "Share Your Story",
+          "description": "Connect with a community of empowered women. Read inspiring stories from others and share your own journey. Share one story per day and watch your impact grow.",
+          "highlights": [
+            "Read inspiring stories",
+            "Share your progress",
+            "Track stories awaiting validation",
+            "Build meaningful connections"
+          ]
+        },
+        "profile": {
+          "title": "Track Your Progress",
+          "description": "Visualize your growth across all categories. See how far you've come, track your simulation scores, and celebrate your achievements.",
+          "highlights": [
+            "View progress by category",
+            "Monitor simulation results",
+            "Celebrate your milestones"
+          ]
+        }
+      }
+    },
+    "kalender": {
+      "daysOfWeek": [
+        "Su",
+        "Mo",
+        "Tu",
+        "We",
+        "Th",
+        "Fr",
+        "Sa"
+      ],
+      "monthNames": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "apply": "Apply"
+    },
+    "simulator": {
+      "title": "Power Simulator",
+      "levels": {
+        "intro": "Intro",
+        "core": "Core",
+        "advanced": "Advanced"
+      },
+      "errors": {
+        "noSimulatorId": "No simulator ID provided."
+      },
+      "home": {
+        "subtitle": "Practice leadership decisions without real-world risk. Choose a scenario and test your approach.",
+        "searchPlaceholder": "Search scenarios…",
+        "allLevels": "All levels",
+        "loading": "Loading simulators...",
+        "focusSkills": "Focus skills",
+        "startSimulation": "Start simulation →",
+        "noResults": "Simulators not found. Try adjusting your search or filters.",
+        "loginRequired": "Please log in to access the course content.",
+        "errors": {
+          "noSimulatorsFound": "No simulators found.",
+          "loadFailed": "Failed to load simulators."
+        }
+      },
+      "play": {
+        "loading": "Loading simulator…",
+        "goBack": "Go back",
+        "stepProgress": "Step {current}/{total}",
+        "restart": "Restart",
+        "yourMetrics": "Your metrics",
+        "selectOption": "Select an option:",
+        "imageAlt": "Image",
+        "whyItMatters": "Why it matters",
+        "powerLens": "Power lens",
+        "debriefTitle": "Your feedback",
+        "debriefSubtitle": "Here's how you performed on each metric.",
+        "strength": "Strength",
+        "areaToDevelop": "Area to develop",
+        "microPractice": "Micro-practice",
+        "recommendedModule": "Recommended module",
+        "prev": "Prev",
+        "finish": "Finish →",
+        "next": "Next",
+        "loadingShort": "Loading…",
+        "showResult": "Show result",
+        "defaultScenarioTitle": "Simulator",
+        "defaultCardTitle": "Card",
+        "defaultFeedback": "Good choice.",
+        "errors": {
+          "noCards": "No cards found for this simulator.",
+          "loadFailed": "Failed to load simulator. Please try again.",
+          "saveFailed": "Error: Could not save response.",
+          "saveResponseError": "Error saving response. Please try again.",
+          "loadResultsFailed": "Could not load results.",
+          "loadResultsError": "Error loading results."
+        }
+      },
+      "result": {
+        "loading": "Loading your results...",
+        "errorTitle": "Unable to Load Results",
+        "goBack": "Go back",
+        "points": "Points",
+        "completedText": "You completed {title}",
+        "yourPerformance": "Your performance",
+        "focusArea": "Focus area",
+        "defaultAdvice": "Complete the recommended practice to strengthen your skills.",
+        "levelLabel": "Level:",
+        "completedLabel": "Completed:",
+        "tryAgain": "Try Again",
+        "saving": "Saving...",
+        "saveAndContinue": "Save & Continue",
+        "defaultTitle": "Simulator Challenge",
+        "defaultLevel": "Intermediate",
+        "feedback": {
+          "excellent": "Excellent! You mastered this challenge.",
+          "great": "Great job! Keep improving.",
+          "good": "Good attempt. Try again to improve."
+        },
+        "errors": {
+          "notAuthenticated": "User not authenticated.",
+          "invalidResponse": "Invalid response format from server.",
+          "loadFailed": "Failed to load results. Please try again.",
+          "noFeedbackData": "No feedback data available.",
+          "saveFailed": "Failed to save results. Please try again."
+        }
+      }
+    },
+    "stories": {
+      "title": "Stories",
+      "subtitle1": "Inspiration and real stories from our community.",
+      "subtitle2": "Share your own story and connect with others who relate and support you. A safe, anonymous space to express and find solidarity.",
+      "searchPlaceholder": "Search stories, people, topics…",
+      "tabs": {
+        "inspire": "Inspirational Stories",
+        "real": "Community Stories",
+        "share": "Share your story"
+      },
+      "inspireHint": "Curated voices from women who turned obstacles into momentum. Read, reflect, save the ones that resonate.",
+      "allTopics": "All",
+      "featured": "Featured",
+      "readFullStory": "Read full story",
+      "showLess": "Show less",
+      "saved": "Saved",
+      "saveForLater": "Save for later",
+      "save": "Save",
+      "inspiredMe": "Inspired me",
+      "emptyTopic": {
+        "title": "No stories in this topic yet.",
+        "sub": "Try another filter or check back soon."
+      },
+      "realSection": {
+        "title": "Real Stories",
+        "hint": "Anonymous one-liners from real life. No \"likes\". Only \"I relate\" and \"Support\"."
+      },
+      "anonymous": "Anonymous",
+      "deleteStoryTitle": "Delete story",
+      "relate": "I relate",
+      "support": "Support",
+      "shareHint": "Share brief, real moments from your life. Your story will appear anonymously in the feed for the community to relate to and support.",
+      "privacyTitle": "Your privacy is protected",
+      "privacyDesc": "All stories are posted anonymously. You can share freely without worry. We create a safe space for real stories.",
+      "yourOneLiner": "Your one-liner",
+      "oneLinerPlaceholder": "Share a brief moment...",
+      "contextLabel": "Context",
+      "aboutLabel": "About",
+      "selectTrack": "Select a track",
+      "shareAnonymously": "Share anonymously",
+      "submittedMessage": "✅ Your story has been submitted! It's now awaiting moderation and will appear in the Real Stories feed once approved.",
+      "pendingSection": {
+        "title": "Your Pending Stories",
+        "hint": "Stories you've submitted that are awaiting moderation approval. Once approved, they'll appear in the Real Stories feed.",
+        "emptyTitle": "You don't have any pending stories.",
+        "emptySub": "Your submitted stories will appear here while they await publication.",
+        "badge": "⏳ Pending"
+      },
+      "errorModal": {
+        "understand": "I Understand"
+      },
+      "deleteModal": {
+        "title": "Delete Story",
+        "body": "Are you sure you want to delete this story?",
+        "warn": "This action cannot be undone."
+      },
+      "context": {
+        "work": "Work",
+        "family": "Family",
+        "community": "Community",
+        "self": "Self",
+        "unknown": "Unknown"
+      },
+      "date": {
+        "justNow": "just now",
+        "minutesAgo": "{n}m ago",
+        "hoursAgo": "{n}h ago",
+        "daysAgo": "{n}d ago",
+        "weeksAgo": "{n}w ago"
+      },
+      "toasts": {
+        "storySubmitted": "✅ Story submitted successfully!",
+        "dailyLimitReached": "✨ One inspiring story per day keeps our community thriving! Come back tomorrow to share your next story.",
+        "submitFailed": "Failed to submit story. Please try again.",
+        "deleteFailed": "Failed to delete story. Please try again."
+      }
     }
   },
   "pages": {
@@ -319,7 +650,7 @@
         "noteRequired": "You can’t send without a short description.",
         "reportReasonRequired": "You can’t send without writing a complaint reason.",
         "sent": "Your request was sent.",
-        "shareText": "Check out the business {name} on Burada!",
+        "shareText": "Check out the business {name} on ELEVATE HER!",
         "shareTitle": "Business Profile"
       },
       "posts": {
@@ -344,6 +675,27 @@
         "events": "Events",
         "general": "General",
         "job": "Job"
+      },
+      "powerCheck": {
+        "introTitle": "How are you feeling today?",
+        "introText": "Answer 3 quick questions to measure your current energy and mindset. Based on your answers, we'll suggest the best next step for you — a module, a reflection, or a goal to focus on.",
+        "introSub": "It takes less than 30 seconds. Your data stays private.",
+        "todayPowerIs": "Today your power is",
+        "powerScoreLabel": "Power score",
+        "quickCheckin": "Quick check-in",
+        "whatNext": "What you can do next",
+        "resetHint": "Need to update your energy levels? Reset to start over.",
+        "reset": "Reset",
+        "last30Days": "Last 30 days",
+        "dayStreak": "{n} day streak",
+        "scoreLabel": "Score: {score}",
+        "noData": "No data",
+        "states": {
+          "findYourPower": "Find your power",
+          "rising": "Rising",
+          "drained": "Drained",
+          "stable": "Stable"
+        }
       }
     },
     "login": {
@@ -353,7 +705,14 @@
       "googleBtn": "Sign in with Google",
       "privacyHtml": "Your data is stored securely and not shared with third parties.<br>When you sign in, your data is protected under our <a href='https://elevather.eu/privacy-policy-for-elevather-application/' target='_blank'>Privacy Policy</a> and <a href='https://elevather.eu/terms-of-service-end-user-license-agreement-eula/' target='_blank'>Terms of Service</a>.",
       "subtitle": "To start, just choose your account.",
-      "welcome": "Welcome!"
+      "welcome": "Welcome!",
+      "errors": {
+        "emailRequired": "Please enter your email.",
+        "emailInvalid": "Please enter a valid email.",
+        "notRegistered": "No account found with this email. Please register first.",
+        "wrongPassword": "Incorrect password.",
+        "unexpected": "Unexpected error. Please check the console."
+      }
     },
     "messages": {
       "empty": "You have no messages yet."
@@ -372,7 +731,16 @@
       "showMore": "Show more"
     },
     "notifications": {
-      "empty": "No notifications to show right now."
+      "empty": "No notifications to show right now.",
+      "title": "My Notifications",
+      "unknownUser": "User",
+      "types": {
+        "like": "liked your post.",
+        "comment": "commented on your post.",
+        "follow": "started following you.",
+        "post": "shared a new post.",
+        "bookmark": "saved your post."
+      }
     },
     "postList": {
       "backToMain": "Go back",
@@ -482,11 +850,70 @@
         "posts": "Posts"
       },
       "viewProfile": "View profile",
-      "views": "Views"
+      "views": "Views",
+      "defaultUserName": "User",
+      "chips": {
+        "focus": "Focus:",
+        "streak": "Streak:",
+        "streakDays": "{n} days",
+        "trend": "Trend:"
+      },
+      "trend": {
+        "rising": "Rising",
+        "drained": "Drained",
+        "stable": "Stable"
+      },
+      "mission": {
+        "title": "My mission"
+      },
+      "goals": {
+        "title": "My goals",
+        "status": {
+          "workingOnIt": "Working on it",
+          "almostDone": "Almost done",
+          "finished": "Finished ✓"
+        },
+        "emptyText": "You haven't set any goals yet.",
+        "chooseGoals": "Choose your goals"
+      },
+      "progress": {
+        "title": "My progress",
+        "openTracks": "Open Tracks",
+        "completedCourses": "Completed courses",
+        "completedSimulators": "Completed simulators"
+      },
+      "reflections": {
+        "title": "My reflections",
+        "seeAll": "See all",
+        "emptyText": "No reflections yet.",
+        "writeFirst": "Write your first",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "daysAgo": "{n} days ago",
+        "weeksAgo": "{n}w ago"
+      },
+      "support": {
+        "title": "Support & preferences",
+        "eula": "Terms of Service & EULA",
+        "privacy": "Privacy Policy",
+        "feedback": "Feedback",
+        "support": "Support",
+        "supportSub": "Questions & Account deletion"
+      },
+      "settingsSection": {
+        "on": "On",
+        "off": "Off"
+      }
     },
     "question": {
       "location": "Location",
-      "message": "Your message"
+      "message": "Your message",
+      "subjects": {
+        "profileUpgrade": "Upgrade my profile",
+        "otherProducts": "Question about other products",
+        "appQuestion": "Question about the app",
+        "somethingWrong": "Something went wrong?"
+      }
     },
     "selectTag": {
       "done": "Done",
@@ -552,6 +979,70 @@
       "uploadPhoto": "Upload profile photo",
       "username": "Username",
       "website": "Website"
+    },
+    "emailLogin": {
+      "title": "Sign in with Email",
+      "subtitle": "Enter your email and password to continue.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "signIn": "Sign in",
+      "signingIn": "Signing in…",
+      "noAccount": "Don't have an account?",
+      "createOne": "Create one",
+      "errors": {
+        "emailRequired": "Please enter your email.",
+        "passwordRequired": "Please enter your password.",
+        "invalidCredentials": "Incorrect email or password.",
+        "loginFailed": "Login failed. Please try again."
+      }
+    },
+    "register": {
+      "title": "Register",
+      "subtitle": "Fill out the form below to join us",
+      "required": "(required)",
+      "email": "Email",
+      "choosePassword": "Choose a password",
+      "repeatPassword": "Repeat password",
+      "submit": "Register",
+      "alreadyRegistered": "Already have an account? Click here to log in",
+      "errors": {
+        "usernameRequired": "Please enter your username.",
+        "usernameTooShort": "Your username must be at least 3 characters.",
+        "emailRequired": "Please enter your email address.",
+        "emailInvalid": "Please enter a valid email address.",
+        "passwordRequired": "Please enter your password.",
+        "passwordTooShort": "Your password must be at least 6 characters.",
+        "passwordMismatch": "Your passwords do not match.",
+        "googleSignInFailed": "Google sign-in failed."
+      }
+    },
+    "emailRegister": {
+      "title": "Create Account",
+      "subtitle": "Sign up with your email to get started.",
+      "firstName": "First name",
+      "firstNamePlaceholder": "Jane",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Doe",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Min. 6 characters",
+      "confirmPassword": "Confirm password",
+      "confirmPasswordPlaceholder": "Repeat your password",
+      "creating": "Creating account…",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "errors": {
+        "firstNameRequired": "Please enter your first name.",
+        "emailRequired": "Please enter your email.",
+        "passwordTooShort": "Password must be at least 6 characters.",
+        "passwordMismatch": "Passwords do not match.",
+        "emailTaken": "This email is already registered. Please sign in instead.",
+        "registrationFailed": "Registration failed. Please try again."
+      }
     }
   },
   "search": {
@@ -568,6 +1059,8 @@
       "noBusinessHint": "You can become visible here by adding your business.",
       "goToMyProfile": "Go to my profile",
       "addBusiness": "Add business"
-    }
+    },
+    "provinceFallback": "Province {id}",
+    "townFallback": "Town {id}"
   }
 }

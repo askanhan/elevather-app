@@ -49,13 +49,11 @@ export default {
               startDate: moment(gevondenDatum).format(formatering),
               locale: {
                 format: formatering,
-                'daysOfWeek': ['Zo', 'Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za'],
-                'monthNames': ['Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November',
-                  'December'
-                ],
+                'daysOfWeek': [0, 1, 2, 3, 4, 5, 6].map(i => dit.$t('components.kalender.daysOfWeek.' + i)),
+                'monthNames': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(i => dit.$t('components.kalender.monthNames.' + i)),
                 'firstDay': 1,
-                'applyLabel': 'Ok',
-                'cancelLabel': 'Annuleer',
+                'applyLabel': dit.$t('components.kalender.apply'),
+                'cancelLabel': dit.$t('common.cancel'),
               }
             })
 

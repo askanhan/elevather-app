@@ -17,7 +17,7 @@ export default {
   methods: {
     shareapp(){
       console.log('shareapp')
-      window.plugins.socialsharing.share('Butun Belçikali Turklerin bir araya geldigi bu platformu siz de indirin!', null, null, 'www.burada.be')
+      window.plugins.socialsharing.share(this.$t('components.footer.shareMessage'), null, null, 'https://elevather.eu/')
     }
   },
   watch: {}

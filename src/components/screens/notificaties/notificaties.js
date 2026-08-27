@@ -6,9 +6,10 @@ export default {
 
   created () {
     this.$store.commit('SET_HEADER_TITLE', {
-      tr: 'Bildirimlerim',
-      nl: 'Mijn notificaties',
-      fr: 'Mes notifications'
+      en: this.$t('pages.notifications.title', {}, { locale: 'en' }),
+      tr: this.$t('pages.notifications.title', {}, { locale: 'tr' }),
+      nl: this.$t('pages.notifications.title', {}, { locale: 'nl' }),
+      fr: this.$t('pages.notifications.title', {}, { locale: 'fr' })
     })
 
     this.$store.dispatch({
@@ -65,10 +66,10 @@ export default {
     },
 
     senderDisplayName (n) {
-      if (!n) return 'Kullanıcı'
+      if (!n) return this.$t('pages.notifications.unknownUser')
       if (n.sender_username) return n.sender_username
       const full = [n.sender_name, n.sender_lastname].filter(Boolean).join(' ')
-      return full || 'Kullanıcı'
+      return full || this.$t('pages.notifications.unknownUser')
     },
 
     senderPhoto (n) {
@@ -94,26 +95,15 @@ export default {
     },
 
     textFor (n) {
-      if (this.lang === 'tr') {
-        if (n.type === 1) return 'senin gönderini beğendi.'
-        if (n.type === 2) return 'senin gönderine yorum yazdı.'
-        if (n.type === 3) return 'seni takip etmeye başladı.'
-        if (n.type === 5) return 'yeni bir paylaşımda bulundu.'
-        if (n.type === 6) return 'gönderini kaydetti.'
-      } else if (this.lang === 'nl') {
-        if (n.type === 1) return 'vond je bericht leuk.'
-        if (n.type === 2) return 'reageerde op je bericht.'
-        if (n.type === 3) return 'is begonnen je te volgen.'
-        if (n.type === 5) return 'deelde een nieuwe post.'
-        if (n.type === 6) return 'heeft je bericht opgeslagen.'
-      } else {
-        if (n.type === 1) return 'a aimé votre message.'
-        if (n.type === 2) return 'a commenté votre message.'
-        if (n.type === 3) return 'a commencé à vous suivre.'
-        if (n.type === 5) return 'a partagé une nouvelle publication.'
-        if (n.type === 6) return 'a enregistré votre publication.'
+      const typeKeys = {
+        1: 'like',
+        2: 'comment',
+        3: 'follow',
+        5: 'post',
+        6: 'bookmark'
       }
-      return ''
+      const key = typeKeys[n.type]
+      return key ? this.$t('pages.notifications.types.' + key) : ''
     },
 
     viewAllNotificationsIfAny () {

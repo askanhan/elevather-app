@@ -26,10 +26,10 @@ export default {
       password: '',
       password2: '',
       email: '',
-      usernameError: 'Lutfen kullanici adi girin',
-      passwordError: 'Lutfen sifrenizi girin',
-      password2Error: 'Lutfen sifrenizi girin',
-      mailError: 'Lutfen mail adresi girin',
+      usernameError: this.$t('pages.register.errors.usernameRequired'),
+      passwordError: this.$t('pages.register.errors.passwordRequired'),
+      password2Error: this.$t('pages.register.errors.passwordRequired'),
+      mailError: this.$t('pages.register.errors.emailRequired'),
       _gsiInited: false // dahili: google init tekrar etmesin
     }
   },
@@ -106,7 +106,7 @@ export default {
         this.$router.push({ name: 'home' })
       } catch (err) {
         console.error(err)
-        this.showError('Google ile giriş başarısız oldu.')
+        this.showError(this.$t('pages.register.errors.googleSignInFailed'))
       }
     },
 
@@ -150,19 +150,19 @@ export default {
   watch: {
     username() {
       this.onceFilledInUsername = true
-      this.usernameError = (this.username && this.username.length > 2) ? '' : 'Kullanici adiniz en az 3 haneli olmalidir'
+      this.usernameError = (this.username && this.username.length > 2) ? '' : this.$t('pages.register.errors.usernameTooShort')
     },
     email() {
       this.onceFilledInEmail = true
-      this.mailError = (this.email && this.email.length > 2 && this.validateEmail(this.email)) ? '' : 'Not valid mail address'
+      this.mailError = (this.email && this.email.length > 2 && this.validateEmail(this.email)) ? '' : this.$t('pages.register.errors.emailInvalid')
     },
     password() {
       this.onceFilledInPwd = true
-      this.passwordError = (this.password && this.password.length > 5) ? '' : 'Sifreniz en az 6 haneli olmali'
+      this.passwordError = (this.password && this.password.length > 5) ? '' : this.$t('pages.register.errors.passwordTooShort')
     },
     password2() {
       this.onceFilledInPwd2 = true
-      this.password2Error = (this.password2 && this.password2 === this.password) ? '' : 'Sifreleriniz birbiriyle uyusmuyor'
+      this.password2Error = (this.password2 && this.password2 === this.password) ? '' : this.$t('pages.register.errors.passwordMismatch')
     }
   }
 }

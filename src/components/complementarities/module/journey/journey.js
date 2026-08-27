@@ -135,7 +135,7 @@ export default {
             ])
                 .then(() => {
                     if (this.categories.length === 0 || this.modules.length === 0) {
-                        this.error = 'The journey data came back empty.'
+                        this.error = this.$t('components.journey.errors.empty')
                     } else {
                         this.initializeOpenIds()
                     }
@@ -143,7 +143,7 @@ export default {
                 })
                 .catch(err => {
                     console.error('Error fetching journey data:', err)
-                    this.error = 'Check your connection and try again.'
+                    this.error = this.$t('components.journey.errors.connection')
                     this.loading = false
                 })
         },
@@ -177,14 +177,14 @@ export default {
                     id: `category_${cat.id}`,
                     categoryId: cat.id,
                     title: cat.title,
-                    description: cat.description || 'Learning modules for this category',
+                    description: cat.description || this.$t('components.journey.defaultTrackDescription'),
                     color: colors[idx % colors.length],
                     modules: catModules.map(mod => ({
                         id: mod.id,
                         title: mod.title,
                         status: mod.status || 'Not started',
-                        summary: mod.description || 'Module content',
-                        outcomes: mod.target_audience ? [mod.target_audience] : ['Learn and practice'],
+                        summary: mod.description || this.$t('components.journey.defaultModuleSummary'),
+                        outcomes: mod.target_audience ? [mod.target_audience] : [this.$t('components.journey.defaultOutcome')],
                         dayNumber: mod.day_number || 0
                     }))
                 }
@@ -229,9 +229,9 @@ export default {
         },
 
         statusLabel(status) {
-            if (status === 'Done') return 'Done'
-            if (status === 'In progress') return 'In progress'
-            return 'Not started'
+            if (status === 'Done') return this.$t('components.journey.status.done')
+            if (status === 'In progress') return this.$t('components.journey.status.inProgress')
+            return this.$t('components.journey.status.notStarted')
         },
 
         // One key drives the pill, the card tint and the rail node.
@@ -243,7 +243,7 @@ export default {
 
         goToCourse(module) {
             if (this.$store.state.guestMode) {
-                this.$message.success('Log in to open the course content.')
+                this.$message.success(this.$t('components.journey.loginToOpenCourse'))
                 return
             }
             this.$router.push({ path: '/course', query: { id: module.id, done: module.status === 'Done' ? '1' : '0' } })

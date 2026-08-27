@@ -17,7 +17,7 @@ export default {
     data() {
         return {
             course: {
-                title: 'Module',
+                title: this.$t('components.course.defaultTitle'),
                 track: 'Module'
             },
             currentIndex: 0,
@@ -105,7 +105,7 @@ export default {
             const moduleId = parseInt(this.$route.query.id, 10)
 
             if (!moduleId || isNaN(moduleId)) {
-                this.error = 'No module ID provided.'
+                this.error = this.$t('components.course.errors.noModuleId')
                 return
             }
 
@@ -117,14 +117,14 @@ export default {
             this.$store.dispatch('fetchCourseCards', moduleId)
                 .then(() => {
                     if (this.courseCards.length === 0) {
-                        this.error = 'No cards found for this module.'
+                        this.error = this.$t('components.course.errors.noCards')
                         this.loading = false
                         return
                     }
 
                     // Fallback title if the module wasn't preloaded (e.g. direct navigation)
                     if (this.courseCards.length > 0) {
-                        this.course.title = this.courseCards[0].title || 'Module'
+                        this.course.title = this.courseCards[0].title || this.$t('components.course.defaultTitle')
                     }
 
                     this.loading = false
@@ -140,7 +140,7 @@ export default {
                     console.error('Error while fetching module cards:', err)
                     // Only show error if cards weren't loaded
                     if (this.courseCards.length === 0) {
-                        this.error = 'Impossible to load module. Please try again later.'
+                        this.error = this.$t('components.course.errors.loadFailed')
                     } else {
                         // Cards loaded but progress update failed - log it but don't block
                         console.warn('Progress update failed but cards loaded:', err)
@@ -172,7 +172,7 @@ export default {
                     id: `card_${card.id}`,
                     cardId: card.id,  // Store numeric ID separately for audio
                     type: 'card',
-                    title: card.title || 'Card',
+                    title: card.title || this.$t('components.course.defaultCardTitle'),
                     subtitle: card.subtitle || '',
                     components: (card.components || []).sort((a, b) => (a.order || 0) - (b.order || 0)),
                     endText: card.end_text,
@@ -186,8 +186,8 @@ export default {
                 slides.push({
                     id: 'done',
                     type: 'done',
-                    title: 'Completed',
-                    text: 'Great! You have completed this module. Your progress has been saved.'
+                    title: this.$t('components.course.completedTitle'),
+                    text: this.$t('components.course.completedText')
                 })
             }
 
@@ -405,7 +405,7 @@ export default {
                 .catch((error) => {
                     console.error('Error saving MCQ response:', error)
                     // Show error message but keep the answer selected
-                    this.$store.commit('SHOW_MESSAGE', ['Error saving your response. Please try again.', 'error'])
+                    this.$store.commit('SHOW_MESSAGE', [this.$t('components.course.errors.saveResponseFailed'), 'error'])
                 })
         },
 

@@ -1,14 +1,14 @@
-// Mapping for localisation IDs to text (backward compatible)
+// Mapping for localisation IDs to i18n key suffixes (backward compatible)
 // Now backend stores text directly (e.g., "Community") but we keep this for legacy data
-const CONTEXT_TEXT_MAP = {
-    1: 'Work',
-    2: 'Family',
-    3: 'Community',
-    4: 'Self',
-    'Work': 'Work',
-    'Family': 'Family',
-    'Community': 'Community',
-    'Self': 'Self'
+const CONTEXT_KEY_MAP = {
+    1: 'work',
+    2: 'family',
+    3: 'community',
+    4: 'self',
+    'Work': 'work',
+    'Family': 'family',
+    'Community': 'community',
+    'Self': 'self'
 }
 
 export default {
@@ -222,12 +222,13 @@ export default {
         },
         // Helper: convert localisation ID to text
         getContextText(localisationId) {
-            return CONTEXT_TEXT_MAP[localisationId] || CONTEXT_TEXT_MAP[parseInt(localisationId)] || 'Unknown'
+            const key = CONTEXT_KEY_MAP[localisationId] || CONTEXT_KEY_MAP[parseInt(localisationId)] || 'unknown'
+            return this.$t(`components.stories.context.${key}`)
         },
 
         // Helper: get context from story (handles multiple field names)
         getStoryContext(story) {
-            if (!story) return 'Unknown'
+            if (!story) return this.$t('components.stories.context.unknown')
 
             // Try different field names for localisation
             const localisationId = story.localisation || story.context || story.context_id
@@ -251,11 +252,11 @@ export default {
             const hr  = Math.floor(diffMs / 3600000);
             const day = Math.floor(diffMs / 86400000);
           
-            if (min < 1)   return 'just now';
-            if (min < 60)  return `${min}m ago`;
-            if (hr  < 24)  return `${hr}h ago`;
-            if (day < 7)   return `${day}d ago`;
-            if (day < 30)  return `${Math.floor(day / 7)}w ago`;
+            if (min < 1)   return this.$t('components.stories.date.justNow');
+            if (min < 60)  return this.$t('components.stories.date.minutesAgo', { n: min });
+            if (hr  < 24)  return this.$t('components.stories.date.hoursAgo', { n: hr });
+            if (day < 7)   return this.$t('components.stories.date.daysAgo', { n: day });
+            if (day < 30)  return this.$t('components.stories.date.weeksAgo', { n: Math.floor(day / 7) });
           
             return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
           }, 
@@ -478,7 +479,7 @@ export default {
             this.$store.dispatch('createStory', storyPayload)
                 .then((createdStory) => {
                     console.log('✅ Story submitted successfully!', createdStory)
-                    this.$message.success('✅ Story submitted successfully!')
+                    this.$message.success(this.$t('components.stories.toasts.storySubmitted'))
 
                     // IMPORTANT: Track the newly created story immediately
                     // if (createdStory && createdStory.id) {
@@ -517,11 +518,11 @@ export default {
 
                     // Check for rate limiting error
                     if (error.response && error.response.status === 429) {
-                        this.errorModalMessage = '✨ One inspiring story per day keeps our community thriving! Come back tomorrow to share your next story.'
+                        this.errorModalMessage = this.$t('components.stories.toasts.dailyLimitReached')
                     } else if (error.response && error.response.data && error.response.data.error) {
                         this.errorModalMessage = error.response.data.error
                     } else {
-                        this.errorModalMessage = 'Failed to submit story. Please try again.'
+                        this.errorModalMessage = this.$t('components.stories.toasts.submitFailed')
                     }
                     this.showErrorModal = true
                 })
@@ -605,11 +606,11 @@ export default {
 
                     // Check for rate limiting error
                     if (error.response && error.response.status === 429) {
-                        this.errorModalMessage = '✨ One inspiring story per day keeps our community thriving! Come back tomorrow to share your next story.'
+                        this.errorModalMessage = this.$t('components.stories.toasts.dailyLimitReached')
                     } else if (error.response && error.response.data && error.response.data.error) {
                         this.errorModalMessage = error.response.data.error
                     } else {
-                        this.errorModalMessage = 'Failed to submit story. Please try again.'
+                        this.errorModalMessage = this.$t('components.stories.toasts.submitFailed')
                     }
                     this.showErrorModal = true
                 })
@@ -650,7 +651,7 @@ export default {
                 this.loadStories()
             } catch (error) {
                 console.error('❌ Error deleting story:', error)
-                alert('Failed to delete story. Please try again.')
+                alert(this.$t('components.stories.toasts.deleteFailed'))
             }
         }
     },

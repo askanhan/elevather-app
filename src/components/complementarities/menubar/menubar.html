@@ -21,7 +21,7 @@
 
         <!-- Hoş geldin – sadece user varsa -->
         <span id="welcome-message" v-if="$store.state.user">
-          We Rise Together!
+          {{ $t('components.menubar.riseTogether') }}
         </span>
       </div>
     </div>
@@ -35,7 +35,7 @@
     <a @click="increaseFontScale()" v-if="canIncreaseFontScale" class="header-icon" :aria-label="$t('common.increaseTextSize')" :title="$t('common.increaseTextSize')">
       <i class="fas fa-search-plus"></i>
     </a>
-    <a @click="openFeedback()" class="header-icon" :aria-label="$t('common.feedback')" :title="$t('common.feedback')">
+    <a @click="openFeedback()" class="header-icon" :aria-label="$t('components.feedback.title')" :title="$t('components.feedback.title')">
       <el-icon>
         <EditPen />
       </el-icon>

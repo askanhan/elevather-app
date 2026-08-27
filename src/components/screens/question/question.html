@@ -7,7 +7,7 @@
 
         <div class="form-group">
             <select class="form-control" id="exampleFormControlSelect1" v-model="selectedLocation">
-                <option :value="subject" v-for="subject in subjects">{{subject['name_' + lang] || subject.name}}
+                <option :value="subject" v-for="subject in subjects">{{ $t(subject.key) }}
                 </option>
             </select>
         </div>

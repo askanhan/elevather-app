@@ -32,7 +32,7 @@ export default {
       if (this.meId && this.meId !== 0) {
         this.$router.push({ name: 'profile', params: { profileID: this.meId } })
       } else {
-        this.$message.success('Please log in to access your profile and your achivements.')
+        this.$message.success(this.$t('components.navigation.loginRequired'))
         console.warn('Profile ID not available')
       }
     },
@@ -40,7 +40,7 @@ export default {
       if (this.current === 'home') {
         let newMessages = await this.$store.dispatch('getNewPosts')
         if (newMessages > 0){
-          this.$message.success('Yeni postlar var: ' + newMessages + ' adet')
+          this.$message.success(this.$t('components.navigation.newPostsAvailable', { n: newMessages }))
         }
         setTimeout(() => {
           this._goToTop("#home-head")

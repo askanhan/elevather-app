@@ -38,11 +38,11 @@ export default {
 
         stateLabel() {
             const hasAnswers = Object.keys(this.selectedAnswers).length > 0
-            if (!hasAnswers) return 'Find your power'
+            if (!hasAnswers) return this.$t('pages.home.powerCheck.states.findYourPower')
             const s = this.powerScore
-            if (s >= 70) return 'Rising'
-            if (s <= 45) return 'Drained'
-            return 'Stable'
+            if (s >= 70) return this.$t('pages.home.powerCheck.states.rising')
+            if (s <= 45) return this.$t('pages.home.powerCheck.states.drained')
+            return this.$t('pages.home.powerCheck.states.stable')
         },
 
         stateEmoji() {

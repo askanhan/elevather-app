@@ -4,11 +4,10 @@
     <!-- ============ HEADER + OVERALL PROGRESS ============ -->
     <header class="jHead">
       <div class="jHeadText">
-        <p class="jEyebrow">Your program</p>
-        <h1 class="jTitle">Journey</h1>
+        <p class="jEyebrow">{{ $t('components.journey.eyebrow') }}</p>
+        <h1 class="jTitle">{{ $t('components.journey.title') }}</h1>
         <p class="jLede">
-          Each track holds a series of short daily modules. Open a track to see its days,
-          then continue where you left off.
+          {{ $t('components.journey.lede') }}
         </p>
       </div>
 
@@ -21,7 +20,7 @@
         </svg>
         <div class="jScoreText">
           <strong class="jScoreValue">{{ progressPercentage }}%</strong>
-          <span class="jScoreLabel">{{ counts.done }} of {{ counts.total }} modules done</span>
+          <span class="jScoreLabel">{{ $t('components.journey.scoreLabel', { done: counts.done, total: counts.total }) }}</span>
         </div>
       </div>
     </header>
@@ -31,17 +30,17 @@
       <button class="jSummaryItem" :class="{ active: statusFilter === 'In progress' }"
               @click="setStatus('In progress')">
         <span class="jSummaryNum">{{ counts.inProgress }}</span>
-        <span class="jSummaryLabel">In progress</span>
+        <span class="jSummaryLabel">{{ $t('components.journey.status.inProgress') }}</span>
       </button>
       <button class="jSummaryItem" :class="{ active: statusFilter === 'Not started' }"
               @click="setStatus('Not started')">
         <span class="jSummaryNum">{{ counts.notStarted }}</span>
-        <span class="jSummaryLabel">Not started</span>
+        <span class="jSummaryLabel">{{ $t('components.journey.status.notStarted') }}</span>
       </button>
       <button class="jSummaryItem" :class="{ active: statusFilter === 'Done' }"
               @click="setStatus('Done')">
         <span class="jSummaryNum">{{ counts.done }}</span>
-        <span class="jSummaryLabel">Done</span>
+        <span class="jSummaryLabel">{{ $t('components.journey.status.done') }}</span>
       </button>
     </div>
 
@@ -49,10 +48,10 @@
     <button v-if="!loading && resumeModule" class="jResume" @click="goToCourse(resumeModule)">
       <span class="jResumeAccent" :style="{ background: resumeModule.trackColor }"></span>
       <span class="jResumeBody">
-        <span class="jEyebrow">Continue where you left off</span>
+        <span class="jEyebrow">{{ $t('components.journey.continueWhereLeftOff') }}</span>
         <span class="jResumeTitle">{{ resumeModule.title }}</span>
         <span class="jResumeMeta">
-          {{ resumeModule.trackTitle }} · Day {{ resumeModule.dayNumber }}
+          {{ resumeModule.trackTitle }} · {{ $t('components.journey.day', { n: resumeModule.dayNumber }) }}
         </span>
       </span>
       <span class="jResumeGo" aria-hidden="true">→</span>
@@ -63,27 +62,27 @@
       <div class="jSearch">
         <span class="jSearchIcon" aria-hidden="true">⌕</span>
         <input v-model="query" type="search" class="jSearchInput"
-               placeholder="Search tracks, modules, audience…" aria-label="Search modules" />
-        <button v-if="query" class="jSearchClear" aria-label="Clear search" @click="query = ''">×</button>
+               :placeholder="$t('components.journey.searchPlaceholder')" :aria-label="$t('components.journey.searchAriaLabel')" />
+        <button v-if="query" class="jSearchClear" :aria-label="$t('components.journey.clearSearchAriaLabel')" @click="query = ''">×</button>
       </div>
 
       <div class="jToolbarRow">
-        <select v-model="categoryFilter" class="jSelect" aria-label="Filter by track">
-          <option value="all">All tracks</option>
+        <select v-model="categoryFilter" class="jSelect" :aria-label="$t('components.journey.filterByTrackAriaLabel')">
+          <option value="all">{{ $t('components.journey.allTracks') }}</option>
           <option v-for="category in categories" :key="category.id" :value="category.id">
             {{ category.title }}
           </option>
         </select>
 
-        <select v-model="statusFilter" class="jSelect" aria-label="Filter by status">
-          <option value="all">All statuses</option>
+        <select v-model="statusFilter" class="jSelect" :aria-label="$t('components.journey.filterByStatusAriaLabel')">
+          <option value="all">{{ $t('components.journey.allStatuses') }}</option>
           <option v-for="status in statuses" :key="status.value" :value="status.value">
             {{ status.label }}
           </option>
         </select>
 
         <button class="jGhostBtn" @click="allOpen ? collapseAll() : expandAll()">
-          {{ allOpen ? 'Collapse all' : 'Expand all' }}
+          {{ allOpen ? $t('components.journey.collapseAll') : $t('components.journey.expandAll') }}
         </button>
       </div>
     </div>
@@ -99,16 +98,16 @@
 
     <!-- ============ ERROR ============ -->
     <div v-else-if="error" class="jNotice jNoticeError" role="alert">
-      <p class="jNoticeTitle">We couldn’t load your journey</p>
+      <p class="jNoticeTitle">{{ $t('components.journey.errorTitle') }}</p>
       <p class="jNoticeText">{{ error }}</p>
-      <button class="jSolidBtn" @click="fetchJourneyData(true)">Try again</button>
+      <button class="jSolidBtn" @click="fetchJourneyData(true)">{{ $t('components.journey.tryAgain') }}</button>
     </div>
 
     <!-- ============ EMPTY ============ -->
     <div v-else-if="!filteredTracks.length" class="jNotice">
-      <p class="jNoticeTitle">No modules match these filters</p>
-      <p class="jNoticeText">Change the track or status, or clear the search to see everything again.</p>
-      <button class="jSolidBtn" @click="clearFilters">Clear filters</button>
+      <p class="jNoticeTitle">{{ $t('components.journey.emptyTitle') }}</p>
+      <p class="jNoticeText">{{ $t('components.journey.emptyText') }}</p>
+      <button class="jSolidBtn" @click="clearFilters">{{ $t('components.journey.clearFilters') }}</button>
     </div>
 
     <!-- ============ TRACKS ============ -->
@@ -121,13 +120,13 @@
             <span class="jTrackMain">
               <span class="jTrackTop">
                 <span class="jTrackDot" aria-hidden="true"></span>
-                <span class="jTrackTitle">{{ track.title }}</span> <span class="jTrackAudience">Days: {{track.modules.map(m => m.dayNumber).join(', ')}}</span>
+                <span class="jTrackTitle">{{ track.title }}</span> <span class="jTrackAudience">{{ $t('components.journey.daysLabel', { days: track.modules.map(m => m.dayNumber).join(', ') }) }}</span>
               </span>
               <span class="jTrackDesc">{{ track.description }}</span>
 
               <span class="jTrackStats">
                 <span class="jTrackCount">
-                  {{ trackStats(track).done }}/{{ trackStats(track).total }} done
+                  {{ $t('components.journey.doneCount', { done: trackStats(track).done, total: trackStats(track).total }) }}
                 </span>
                 <span class="jBar" aria-hidden="true">
                   <span class="jBarFill" :style="{ width: trackStats(track).percent + '%' }"></span>
@@ -148,7 +147,7 @@
 
             <button class="jModule" :class="statusKey(m.status)" @click="goToCourse(m)">
               <span class="jModuleTop">
-                <span class="jModuleDay">Day {{ m.dayNumber }}</span>
+                <span class="jModuleDay">{{ $t('components.journey.day', { n: m.dayNumber }) }}</span>
                 <span class="jStatus" :class="statusKey(m.status)">
                   <span class="jStatusDot" aria-hidden="true"></span>{{ statusLabel(m.status) }}
                 </span>
@@ -160,7 +159,7 @@
               <span class="jModuleFoot">
                 <span class="jTag">{{ m.outcomes.join(' · ') }}</span>
                 <span class="jOpen">
-                  {{ m.status === 'Done' ? 'Review' : m.status === 'In progress' ? 'Continue' : 'Start' }}
+                  {{ m.status === 'Done' ? $t('components.journey.review') : m.status === 'In progress' ? $t('components.journey.continueLabel') : $t('components.journey.start') }}
                   <span class="jOpenArrow" aria-hidden="true">→</span>
                 </span>
               </span>

@@ -9,23 +9,23 @@
         <!-- Loading message -->
         <div v-if="loading" class="notice">
             <div class="spinner"></div>
-            <div class="noticeText">Loading course content…</div>
+            <div class="noticeText">{{ $t('components.course.loading') }}</div>
         </div>
 
         <!-- Course content -->
         <template v-if="!loading && !error">
         <!-- Top bar -->
         <header class="topbar">
-            <button class="back" @click="goBack" aria-label="Go back">←</button>
+            <button class="back" @click="goBack" :aria-label="$t('components.course.goBack')">←</button>
 
             <div class="titleWrap">
                 <div class="courseTitle">{{ module.title }}</div>
                 <div v-if="dayNumber" class="courseMeta">
-                    <span class="chip">Day {{ dayNumber }}</span>
+                    <span class="chip">{{ $t('components.course.day', { n: dayNumber }) }}</span>
                 </div>
             </div>
 
-            <button class="ghost" @click="restart">Restart</button>
+            <button class="ghost" @click="restart">{{ $t('components.course.restart') }}</button>
         </header>
 
         <!-- Course progress -->
@@ -77,7 +77,7 @@
 
                                     <!-- Image -->
                                     <div v-if="comp.type === 'image'" class="comp-image">
-                                        <img :src="getImageUrl(comp.url || comp.image)" :alt="comp.alt || 'Image'" />
+                                        <img :src="getImageUrl(comp.url || comp.image)" :alt="comp.alt || $t('components.course.imageAlt')" />
                                         <p v-if="comp.description" class="image-desc">{{ comp.description }}</p>
                                     </div>
                                     <!-- Video -->
@@ -104,7 +104,7 @@
                                     <!-- Open Question -->
                                     <div v-if="comp.type === 'open question'" class="comp-open-question">
                                         <div class="question-label">{{ comp.question }}</div>
-                                        <textarea class="textarea" :placeholder="comp.placeholder || 'Your answer...'"
+                                        <textarea class="textarea" :placeholder="comp.placeholder || $t('components.course.answerPlaceholder')"
                                             v-model="openAnswers[comp.id]"></textarea>
                                     </div>
 
@@ -130,7 +130,7 @@
 
                                 <!-- Why this question -->
                                 <details v-if="slide.whyThisQuestion" class="why">
-                                    <summary>Why this question</summary>
+                                    <summary>{{ $t('components.course.whyThisQuestion') }}</summary>
                                     <div class="whyBody">{{ slide.whyThisQuestion }}</div>
                                 </details>
                             </div>
@@ -143,10 +143,10 @@
                             <p class="p">{{ slide.text }}</p>
 
                             <div class="panel">
-                                <div class="panelTitle">Course status</div>
+                                <div class="panelTitle">{{ $t('components.course.statusTitle') }}</div>
                                 <div class="statusRow">
-                                    <span class="statusPill done">Done</span>
-                                    <span class="p">This would update the Journey page UI.</span>
+                                    <span class="statusPill done">{{ $t('components.course.done') }}</span>
+                                    <span class="p">{{ $t('components.course.journeyUpdateNote') }}</span>
                                 </div>
                             </div>
 
@@ -162,7 +162,7 @@
         <!-- Bottom navigation -->
         <div class="nav">
             <button class="navBtn" :disabled="currentIndex === 0" @click="prev">
-                Prev
+                {{ $t('components.course.prev') }}
             </button>
 
             <div class="dots">
@@ -171,12 +171,12 @@
             </div>
 
             <button class="navBtn primary" :disabled="needsChoice && !hasAnsweredMCQ" @click="next">
-                {{ currentIndex === slides.length - 1 ? 'Finish' : 'Next' }}
+                {{ currentIndex === slides.length - 1 ? $t('components.course.finish') : $t('components.course.next') }}
             </button>
         </div>
 
         <footer class="footerHint">
-            Swipe left/right or use Next/Prev. Content loaded from database.
+            {{ $t('components.course.footerHint') }}
         </footer>
         </template>
     </div>

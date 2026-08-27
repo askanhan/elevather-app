@@ -1,0 +1,1066 @@
+{
+  "add": {
+    "warning3": "Uwaga: możesz jeszcze opublikować",
+    "warning3_2": "postów w ciągu najbliższych 24 godzin.",
+    "category": {
+      "education": "Edukacja",
+      "event": "Wydarzenie",
+      "general": "Ogólne",
+      "job": "Praca",
+      "title": "Kategoria"
+    },
+    "errors": {
+      "postLimitReached": "Osiągnęłaś maksymalną liczbę postów na dziś. Spróbuj ponownie później.",
+      "emptyPost": "Post nie może być pusty.",
+      "generic": "Coś poszło nie tak. Spróbuj ponownie.",
+      "photoTooLarge": "Zdjęcie nie może być większe niż {mb}MB.",
+      "photoUploadFailed": "Nie udało się przesłać zdjęcia",
+      "videoTooLarge": "Wideo nie może być większe niż {mb}MB.",
+      "videoUploadFailed": "Nie udało się przesłać wideo"
+    },
+    "event": {
+      "dayFrom": "Dzień (początek)",
+      "dayTo": "Dzień (koniec)",
+      "location": "Lokalizacja",
+      "locationPlaceholder": "Adres / miejsce (opcjonalnie)",
+      "timeFrom": "Godzina (początek)",
+      "timeTo": "Godzina (koniec)"
+    },
+    "media": {
+      "photo": {
+        "add": "Dodaj zdjęcie",
+        "title": "Zdjęcie"
+      },
+      "poll": {
+        "add": "Dodaj ankietę",
+        "close": "Zamknij ankietę",
+        "title": "Ankieta"
+      },
+      "video": {
+        "add": "Dodaj wideo",
+        "title": "Wideo"
+      }
+    },
+    "poll": {
+      "addOption": "Dodaj opcję",
+      "option": "Opcja {n}"
+    },
+    "publisher": {
+      "business": "Publikujesz jako firma",
+      "meFallback": "Ja",
+      "user": "Publikujesz jako Ty"
+    },
+    "send": {
+      "fail": "Wystąpił błąd podczas wysyłania.",
+      "send": "Wyślij",
+      "sending": "Wysyłanie…",
+      "success": "Post opublikowany!"
+    },
+    "text": {
+      "pollPlaceholder": "Zadaj pytanie",
+      "postPlaceholder": "Czym chcesz się podzielić?"
+    }
+  },
+  "auth": {
+    "afterlogin": {
+      "backToLogin": "Powrót do logowania",
+      "errors": {
+        "badSession": "Dane logowania są uszkodzone. Spróbuj ponownie.",
+        "cantFetchUser": "Nie udało się pobrać informacji o użytkowniku.",
+        "noSession": "Nie znaleziono danych logowania.",
+        "unknown": "Nieznany błąd"
+      },
+      "retry": "Ponów",
+      "step": {
+        "stepCompleting": "Ładowanie profilu…",
+        "stepLoadingProfile": "Ładowanie profilu…",
+        "stepPreparingApp": "Przygotowywanie aplikacji…",
+        "stepRedirecting": "Przekierowywanie…",
+        "stepRefreshing": "Odświeżanie sesji…",
+        "stepRetryProfile": "Ponowna próba wczytania profilu…",
+        "stepSavingSession": "Zapisywanie sesji…",
+        "stepStart": "Kończenie logowania…"
+      },
+      "subtitleError": "Użyj przycisku poniżej, aby spróbować ponownie.",
+      "subtitleLoading": "Poczekaj chwilę, trwa przekierowanie…",
+      "titleError": "Nie udało się dokończyć logowania",
+      "titleLoading": "Logowanie"
+    }
+  },
+  "common": {
+    "cancel": "Anuluj",
+    "decreaseTextSize": "Zmniejsz rozmiar tekstu",
+    "increaseTextSize": "Zwiększ rozmiar tekstu",
+    "linkCopied": "Link skopiowany",
+    "loading": "Ładowanie...",
+    "messages": "Wiadomości",
+    "noResults": "Brak wyników",
+    "notifications": "Powiadomienia",
+    "other": "Inne",
+    "send": "Wyślij",
+    "supportAssociation": "Wesprzyj stowarzyszenie"
+  },
+  "components": {
+    "chat": {
+      "emptySub": "Napisz pierwszą wiadomość.",
+      "emptyTitle": "Brak wiadomości",
+      "placeholder": "Napisz wiadomość...",
+      "retry": "Ponów",
+      "sending": "Wysyłanie",
+      "started": "Czat rozpoczęty:",
+      "confirmBlockTitle": "Zablokuj użytkownika",
+      "confirmBlockText": "Zablokuj",
+      "confirmCancelText": "Anuluj",
+      "confirmBlockBody": "Czy na pewno chcesz zablokować tego użytkownika?",
+      "confirmDeleteTitle": "Usuń rozmowę",
+      "confirmDeleteText": "Usuń",
+      "confirmDeleteBody": "Ta rozmowa zostanie trwale usunięta. Czy na pewno?"
+    },
+    "conversations": {
+      "emptySub": "Zacznij, wysyłając wiadomość do profilu.",
+      "emptyTitle": "Brak rozmów",
+      "new": "Nowa",
+      "searchPlaceholder": "Szukaj: imię lub wiadomość...",
+      "title": "Wiadomości",
+      "unread": "{n} nieprzeczytanych",
+      "upToDate": "Wszystko przeczytane",
+      "you": "Ty:"
+    },
+    "donate": {
+      "copy": "Kopiuj",
+      "copyLink": "Kopiuj link",
+      "optionsTitle": "Opcje wsparcia",
+      "pill": "Wsparcie wolontariackie",
+      "receiver": "Odbiorca:",
+      "secureNote": "Link do darowizny przekierowuje na bezpieczną stronę płatności.",
+      "shareBtn": "Udostępnij",
+      "shareSub": "Pomóż nam dotrzeć do większej liczby osób.",
+      "shareTitle": "Udostępnij",
+      "sub": "Vision Tree to stowarzyszenie z siedzibą w Brukseli. Skupia się na psychologii i technologii; tworzy szkolenia, warsztaty i projekty społeczne dla młodzieży, rodzin i różnych grup. W aplikacji ELEVATE HER pełni rolę interesariusza, którego celem jest zwiększenie lokalnego zaangażowania poprzez pokazywanie społeczności i firm, udostępnianie ogłoszeń edukacyjnych i wydarzeń, treści informacyjnych o instytucjach publicznych oraz wiadomości.",
+      "title": "Wesprzyj nas",
+      "webDonate": "Przekaż darowiznę online"
+    },
+    "feedback": {
+      "cancel": "Anuluj",
+      "emailLabel": "E-mail (opcjonalnie)",
+      "hint": {
+        "bug": "W przypadku błędów: kroki + ekran + oczekiwany rezultat.",
+        "general": "Napisz krótko i jasno. Zajmiemy się tym.",
+        "suggestion": "W przypadku sugestii: co poprawić i dlaczego?"
+      },
+      "messageLabel": "Wiadomość",
+      "messagePlaceholder": "Co się stało, gdzie, jak możemy to odtworzyć? Jeśli możesz, dodaj zrzut ekranu.",
+      "pill": "Skontaktuj się z nami",
+      "send": "Wyślij",
+      "sending": "Wysyłanie",
+      "sub": "Masz problem, sugestię, a może po prostu chcesz coś skomentować? Napisz, przeczytamy.",
+      "subjects": {
+        "bug": "Zgłoszenie błędu",
+        "business_claim": "Zgłoszenie firmy",
+        "general": "Ogólne",
+        "label": "Temat",
+        "placeholder": "Wybierz temat",
+        "profile_delete": "Usunięcie profilu",
+        "suggestion": "Sugestia"
+      },
+      "success": "Twoja wiadomość została wysłana. Dziękujemy.",
+      "tipText": "Jeśli wybierzesz „Zgłoszenie błędu”: urządzenie, kroki i oczekiwany rezultat pomogą nam mniej płakać.",
+      "tipTitle": "Wskazówka",
+      "title": "Opinia",
+      "writeMessage": "Napisz wiadomość"
+    },
+    "footer": {
+      "slogan": "Platforma, która łączy wszystko, czego możesz szukać w Belgii.",
+      "byTechnoOffice": "od TechnoOffice",
+      "copyright": "Copyright © Elevather {year}. Wszelkie prawa zastrzeżone.",
+      "madeWith": "Stworzone z",
+      "privacyPolicy": "Polityka prywatności",
+      "shareMessage": "Pobierz tę aplikację, która łączy całą Belgię — dołącz do nas!",
+      "termsAndConditions": "Warunki korzystania z usługi"
+    },
+    "highlightRequest": {
+      "btnSend": "Wyślij zgłoszenie",
+      "btnSending": "Wysyłanie…",
+      "emptySub": "Najpierw dodaj firmę ze swojego profilu, a potem będziesz mogła wysłać tutaj zgłoszenie.",
+      "emptyTitle": "Brak firmy",
+      "goToProfile": "Przejdź do mojego profilu",
+      "labelBusiness": "Firma",
+      "labelContact": "Kontakt (opcjonalnie)",
+      "labelDesc": "Krótki opis (wymagany)",
+      "note": "Uwaga: Wysłanie zgłoszenia jest bezpłatne. Zostanie ono ocenione na podstawie odpowiedniości treści i kryteriów jakości.",
+      "placeholderContact": "E-mail lub telefon",
+      "placeholderDesc": "Np.: Otwarcie nowego oddziału, wydarzenie, kampania, nabór wolontariuszy…",
+      "select": "Wybierz…",
+      "sub": "To jest zgłoszenie o wyróżnienie. Po sprawdzeniu odpowiedniości treści może zostać wyróżnione na tablicy.",
+      "success": "Twoje zgłoszenie zostało odebrane. Możemy się z Tobą skontaktować po weryfikacji.",
+      "title": "Wyróżnij swoją firmę"
+    },
+    "navigation": {
+      "add": "Dodaj",
+      "home": "Start",
+      "news": "Aktualności",
+      "profile": "Profil",
+      "search": "Odkrywaj",
+      "journey": "Podróż",
+      "loginRequired": "Zaloguj się, aby uzyskać dostęp do swojego profilu i osiągnięć.",
+      "newPostsAvailable": "{n} nowych postów",
+      "powerCheck": "Sprawdzian Mocy",
+      "powerSimulator": "Symulator Mocy",
+      "stories": "Historie"
+    },
+    "newsTicker": {
+      "continue": "Kontynuuj",
+      "label": "Wydarzenia",
+      "stop": "Zatrzymaj"
+    },
+    "partnerRail": {
+      "badges": {
+        "apply": "Aplikuj",
+        "event": "Wydarzenie",
+        "webshop": "Sklep internetowy"
+      },
+      "defaultLabel": "Partner"
+    },
+    "post": {
+      "comment": "Komentarz",
+      "date": {
+        "daysAgo": " dni temu",
+        "hoursAgo": " godzin temu",
+        "justNow": "Przed chwilą",
+        "minutesAgo": " minut temu",
+        "monthsAgo": " miesięcy temu",
+        "secondsAgo": " sekund temu",
+        "weeksAgo": " tygodni temu",
+        "yearsAgo": " lat temu"
+      },
+      "like": "Polub",
+      "share": "Udostępnij",
+      "testUser": "Użytkownik testowy"
+    },
+    "menubar": {
+      "subtitle": {
+        "home": "Witaj {name}",
+        "search": "Znajdź wszystko, czego szukasz w Belgii!",
+        "add": "Szukaj/znajdź/sprzedaj/zapytaj/udostępnij!",
+        "newslist": "Wydarzenia w Belgii i na świecie!",
+        "profile": "Zobacz i edytuj swój profil!",
+        "business": "Zobacz i zarządzaj firmami!",
+        "donate": "Dodaj swoją szczyptę soli do zupy!",
+        "conversations": "Sprawdź swoje wiadomości!",
+        "default": "Wszystko jest tutaj {name}"
+      },
+      "altyaziGreeting": "Cześć, {name}.",
+      "altyaziGuest": "Zaloguj się, aby uzyskać dostęp do wszystkich funkcji.",
+      "riseTogether": "Wznosimy się razem!"
+    },
+    "postCard": {
+      "comments": {
+        "placeholder": "Napisz komentarz...",
+        "send": "Wyślij"
+      },
+      "hideConfirm": "Czy na pewno chcesz ukryć ten post?\n\nUkryte posty nie będą pojawiać się na tablicy. Możesz je przywrócić tylko poprzez zresetowanie wszystkich ukrytych postów.",
+      "likes": "{n} polubień",
+      "menu": {
+        "cancel": "Anuluj",
+        "delete": "Usuń post",
+        "hide": "Ukryj ten post",
+        "report": "Zgłoś"
+      },
+      "poll": {
+        "badge": "Ankieta",
+        "footer": "Dotknij opcję, aby zagłosować.",
+        "votes": "{n} głosów"
+      },
+      "report": {
+        "cancel": "Anuluj",
+        "reasons": {
+          "inappropriate": "Nieodpowiednie / niepokojące treści",
+          "misleading": "Wprowadzające w błąd informacje",
+          "other": "Inne",
+          "spam": "Spam",
+          "violence": "Mowa nienawiści lub przemoc"
+        },
+        "subtitle": "Wybierz powód:",
+        "title": "Zgłoś post"
+      },
+      "views": "{n} wyświetleń"
+    },
+    "course": {
+      "answerPlaceholder": "Twoja odpowiedź...",
+      "completedText": "Świetnie! Ukończyłaś ten moduł. Twój postęp został zapisany.",
+      "completedTitle": "Ukończono",
+      "day": "Dzień {n}",
+      "defaultCardTitle": "Karta",
+      "defaultTitle": "Moduł",
+      "done": "Gotowe",
+      "errors": {
+        "loadFailed": "Nie można wczytać modułu. Spróbuj ponownie później.",
+        "noCards": "Nie znaleziono kart dla tego modułu.",
+        "noModuleId": "Nie podano identyfikatora modułu.",
+        "saveResponseFailed": "Błąd podczas zapisywania odpowiedzi. Spróbuj ponownie."
+      },
+      "finish": "Zakończ",
+      "footerHint": "Przesuń w lewo/prawo lub użyj Dalej/Wstecz. Treść wczytywana z bazy danych.",
+      "goBack": "Wróć",
+      "imageAlt": "Obraz",
+      "journeyUpdateNote": "To zaktualizowałoby interfejs strony Podróż.",
+      "loading": "Wczytywanie treści kursu…",
+      "next": "Dalej",
+      "prev": "Wstecz",
+      "restart": "Zacznij od nowa",
+      "statusTitle": "Status kursu",
+      "whyThisQuestion": "Dlaczego to pytanie"
+    },
+    "journey": {
+      "allStatuses": "Wszystkie statusy",
+      "allTracks": "Wszystkie ścieżki",
+      "clearFilters": "Wyczyść filtry",
+      "clearSearchAriaLabel": "Wyczyść wyszukiwanie",
+      "collapseAll": "Zwiń wszystko",
+      "continueLabel": "Kontynuuj",
+      "continueWhereLeftOff": "Kontynuuj tam, gdzie skończyłaś",
+      "day": "Dzień {n}",
+      "daysLabel": "Dni: {days}",
+      "defaultModuleSummary": "Treść modułu",
+      "defaultOutcome": "Ucz się i ćwicz",
+      "defaultTrackDescription": "Moduły edukacyjne dla tej kategorii",
+      "doneCount": "{done}/{total} ukończone",
+      "emptyText": "Zmień ścieżkę lub status albo wyczyść wyszukiwanie, aby zobaczyć wszystko ponownie.",
+      "emptyTitle": "Żaden moduł nie pasuje do tych filtrów",
+      "errorTitle": "Nie udało się wczytać Twojej podróży",
+      "errors": {
+        "connection": "Sprawdź swoje połączenie i spróbuj ponownie.",
+        "empty": "Dane podróży wróciły puste."
+      },
+      "expandAll": "Rozwiń wszystko",
+      "eyebrow": "Twój program",
+      "filterByStatusAriaLabel": "Filtruj według statusu",
+      "filterByTrackAriaLabel": "Filtruj według ścieżki",
+      "lede": "Każda ścieżka zawiera serię krótkich, codziennych modułów. Otwórz ścieżkę, aby zobaczyć jej dni, a następnie kontynuuj tam, gdzie skończyłaś.",
+      "loginToOpenCourse": "Zaloguj się, aby otworzyć treść kursu.",
+      "review": "Przejrzyj",
+      "scoreLabel": "{done} z {total} modułów ukończonych",
+      "searchAriaLabel": "Szukaj modułów",
+      "searchPlaceholder": "Szukaj ścieżek, modułów, grupy odbiorców…",
+      "start": "Rozpocznij",
+      "status": {
+        "done": "Ukończone",
+        "inProgress": "W trakcie",
+        "notStarted": "Nierozpoczęte"
+      },
+      "title": "Podróż",
+      "tryAgain": "Spróbuj ponownie"
+    },
+    "kalender": {
+      "apply": "Zastosuj",
+      "daysOfWeek": [
+        "Nd",
+        "Pn",
+        "Wt",
+        "Śr",
+        "Cz",
+        "Pt",
+        "So"
+      ],
+      "monthNames": [
+        "Styczeń",
+        "Luty",
+        "Marzec",
+        "Kwiecień",
+        "Maj",
+        "Czerwiec",
+        "Lipiec",
+        "Sierpień",
+        "Wrzesień",
+        "Październik",
+        "Listopad",
+        "Grudzień"
+      ]
+    },
+    "onboardingTour": {
+      "back": "Wstecz",
+      "getStarted": "Zaczynamy",
+      "goToStep": "Przejdź do kroku {n}",
+      "next": "Dalej",
+      "skip": "Pomiń na razie",
+      "steps": {
+        "home": {
+          "description": "Każdego dnia poświęć chwilę na odpowiedź na 3 ważne pytania. Pomogą Ci określić, gdzie teraz jesteś, i nadać ton Twojemu dniu.",
+          "highlights": [
+            "Zmierz swój obecny stan",
+            "Buduj samoświadomość",
+            "Rozpocznij swoją podróż ze świadomością celu"
+          ],
+          "title": "Codzienny Sprawdzian Mocy"
+        },
+        "profile": {
+          "description": "Zobacz swój rozwój we wszystkich kategoriach. Sprawdź, jak daleko zaszłaś, śledź swoje wyniki symulacji i celebruj swoje osiągnięcia.",
+          "highlights": [
+            "Zobacz postępy według kategorii",
+            "Monitoruj wyniki symulacji",
+            "Celebruj swoje kamienie milowe"
+          ],
+          "title": "Śledź swoje postępy"
+        },
+        "simulator": {
+          "description": "Sprawdź swoje umiejętności w wciągających mini-grach. Każda symulacja daje Ci spersonalizowaną informację zwrotną, która pomoże Ci się rozwijać i uczyć na doświadczeniu.",
+          "highlights": [
+            "Interaktywne scenariusze edukacyjne",
+            "Otrzymuj natychmiastową, spersonalizowaną informację zwrotną",
+            "Zastosuj to, czego się nauczyłaś"
+          ],
+          "title": "Symulacje z życia wzięte"
+        },
+        "stories": {
+          "description": "Połącz się ze społecznością silnych kobiet. Czytaj inspirujące historie innych i dziel się swoją własną podróżą. Udostępniaj jedną historię dziennie i obserwuj, jak rośnie Twój wpływ.",
+          "highlights": [
+            "Czytaj inspirujące historie",
+            "Dziel się swoimi postępami",
+            "Śledź historie oczekujące na zatwierdzenie",
+            "Buduj znaczące relacje"
+          ],
+          "title": "Podziel się swoją historią"
+        },
+        "track": {
+          "description": "Odkrywaj kursy uporządkowane według kategorii i zaprojektowane specjalnie dla Ciebie. Każdy kurs odblokowuje się dzień po dniu, dzięki czemu Twoja nauka przebiega płynnie i w komfortowym tempie.",
+          "highlights": [
+            "Uporządkowane według kategorii",
+            "System codziennych postępów",
+            "Kursy odblokowują się w Twoim tempie",
+            "Użyj filtrów, aby znaleźć to, czego potrzebujesz"
+          ],
+          "title": "Kursy edukacyjne"
+        }
+      }
+    },
+    "simulator": {
+      "errors": {
+        "noSimulatorId": "Nie podano identyfikatora symulatora."
+      },
+      "home": {
+        "allLevels": "Wszystkie poziomy",
+        "errors": {
+          "loadFailed": "Nie udało się wczytać symulatorów.",
+          "noSimulatorsFound": "Nie znaleziono symulatorów."
+        },
+        "focusSkills": "Umiejętności do rozwinięcia",
+        "loading": "Wczytywanie symulatorów...",
+        "loginRequired": "Zaloguj się, aby uzyskać dostęp do treści kursu.",
+        "noResults": "Nie znaleziono symulatorów. Spróbuj zmienić wyszukiwanie lub filtry.",
+        "searchPlaceholder": "Szukaj scenariuszy…",
+        "startSimulation": "Rozpocznij symulację →",
+        "subtitle": "Ćwicz decyzje przywódcze bez ryzyka w prawdziwym świecie. Wybierz scenariusz i sprawdź swoje podejście."
+      },
+      "levels": {
+        "advanced": "Zaawansowany",
+        "core": "Podstawowy",
+        "intro": "Wprowadzenie"
+      },
+      "play": {
+        "areaToDevelop": "Obszar do rozwoju",
+        "debriefSubtitle": "Oto jak poradziłaś sobie w każdym wskaźniku.",
+        "debriefTitle": "Twoja informacja zwrotna",
+        "defaultCardTitle": "Karta",
+        "defaultFeedback": "Dobry wybór.",
+        "defaultScenarioTitle": "Symulator",
+        "errors": {
+          "loadFailed": "Nie udało się wczytać symulatora. Spróbuj ponownie.",
+          "loadResultsError": "Błąd podczas wczytywania wyników.",
+          "loadResultsFailed": "Nie udało się wczytać wyników.",
+          "noCards": "Nie znaleziono kart dla tego symulatora.",
+          "saveFailed": "Błąd: nie udało się zapisać odpowiedzi.",
+          "saveResponseError": "Błąd podczas zapisywania odpowiedzi. Spróbuj ponownie."
+        },
+        "finish": "Zakończ →",
+        "goBack": "Wróć",
+        "imageAlt": "Obraz",
+        "loading": "Wczytywanie symulatora…",
+        "loadingShort": "Wczytywanie…",
+        "microPractice": "Mikro-ćwiczenie",
+        "next": "Dalej",
+        "powerLens": "Pryzmat mocy",
+        "prev": "Wstecz",
+        "recommendedModule": "Polecany moduł",
+        "restart": "Zacznij od nowa",
+        "selectOption": "Wybierz opcję:",
+        "showResult": "Pokaż wynik",
+        "stepProgress": "Krok {current}/{total}",
+        "strength": "Mocna strona",
+        "whyItMatters": "Dlaczego to ważne",
+        "yourMetrics": "Twoje wskaźniki"
+      },
+      "result": {
+        "completedLabel": "Ukończono:",
+        "completedText": "Ukończyłaś {title}",
+        "defaultAdvice": "Ukończ zalecane ćwiczenie, aby wzmocnić swoje umiejętności.",
+        "defaultLevel": "Średniozaawansowany",
+        "defaultTitle": "Wyzwanie symulatora",
+        "errorTitle": "Nie udało się wczytać wyników",
+        "errors": {
+          "invalidResponse": "Nieprawidłowy format odpowiedzi z serwera.",
+          "loadFailed": "Nie udało się wczytać wyników. Spróbuj ponownie.",
+          "noFeedbackData": "Brak dostępnych danych informacji zwrotnej.",
+          "notAuthenticated": "Użytkownik nie jest zalogowany.",
+          "saveFailed": "Nie udało się zapisać wyników. Spróbuj ponownie."
+        },
+        "feedback": {
+          "excellent": "Doskonale! Opanowałaś to wyzwanie.",
+          "good": "Dobra próba. Spróbuj ponownie, aby się poprawić.",
+          "great": "Świetna robota! Tak trzymaj."
+        },
+        "focusArea": "Obszar skupienia",
+        "goBack": "Wróć",
+        "levelLabel": "Poziom:",
+        "loading": "Wczytywanie Twoich wyników...",
+        "points": "Punkty",
+        "saveAndContinue": "Zapisz i kontynuuj",
+        "saving": "Zapisywanie...",
+        "tryAgain": "Spróbuj ponownie",
+        "yourPerformance": "Twój wynik"
+      },
+      "title": "Symulator Mocy"
+    },
+    "stories": {
+      "aboutLabel": "O tym",
+      "allTopics": "Wszystkie",
+      "anonymous": "Anonim",
+      "context": {
+        "community": "Społeczność",
+        "family": "Rodzina",
+        "self": "Osobiste",
+        "unknown": "Nieznany",
+        "work": "Praca"
+      },
+      "contextLabel": "Kontekst",
+      "date": {
+        "daysAgo": "{n} dni temu",
+        "hoursAgo": "{n} godz. temu",
+        "justNow": "przed chwilą",
+        "minutesAgo": "{n} min temu",
+        "weeksAgo": "{n} tyg. temu"
+      },
+      "deleteModal": {
+        "body": "Czy na pewno chcesz usunąć tę historię?",
+        "title": "Usuń historię",
+        "warn": "Tej czynności nie można cofnąć."
+      },
+      "deleteStoryTitle": "Usuń historię",
+      "emptyTopic": {
+        "sub": "Spróbuj innego filtra lub zajrzyj tu wkrótce ponownie.",
+        "title": "Brak historii w tym temacie."
+      },
+      "errorModal": {
+        "understand": "Rozumiem"
+      },
+      "featured": "Wyróżnione",
+      "inspireHint": "Starannie wybrane głosy kobiet, które zamieniły przeszkody w siłę napędową. Czytaj, refleksjonuj i zapisuj te, które do Ciebie przemawiają.",
+      "inspiredMe": "Zainspirowało mnie",
+      "oneLinerPlaceholder": "Podziel się krótkim momentem...",
+      "pendingSection": {
+        "badge": "⏳ Oczekujące",
+        "emptySub": "Twoje przesłane historie pojawią się tutaj, oczekując na publikację.",
+        "emptyTitle": "Nie masz żadnych oczekujących historii.",
+        "hint": "Historie, które przesłałaś i które czekają na zatwierdzenie przez moderację. Po zatwierdzeniu pojawią się w kanale Prawdziwe historie.",
+        "title": "Twoje oczekujące historie"
+      },
+      "privacyDesc": "Wszystkie historie są publikowane anonimowo. Możesz dzielić się nimi swobodnie, bez obaw. Tworzymy bezpieczną przestrzeń dla prawdziwych historii.",
+      "privacyTitle": "Twoja prywatność jest chroniona",
+      "readFullStory": "Przeczytaj całą historię",
+      "realSection": {
+        "hint": "Anonimowe krótkie wpisy z prawdziwego życia. Bez „polubień”. Tylko „Też to znam” i „Wsparcie”.",
+        "title": "Prawdziwe historie"
+      },
+      "relate": "Też to znam",
+      "save": "Zapisz",
+      "saveForLater": "Zapisz na później",
+      "saved": "Zapisano",
+      "searchPlaceholder": "Szukaj historii, osób, tematów…",
+      "selectTrack": "Wybierz ścieżkę",
+      "shareAnonymously": "Udostępnij anonimowo",
+      "shareHint": "Podziel się krótkimi, prawdziwymi chwilami ze swojego życia. Twoja historia pojawi się anonimowo w kanale, aby społeczność mogła się z nią utożsamić i Cię wesprzeć.",
+      "showLess": "Pokaż mniej",
+      "submittedMessage": "✅ Twoja historia została przesłana! Teraz oczekuje na moderację i pojawi się w kanale Prawdziwe historie po zatwierdzeniu.",
+      "subtitle1": "Inspiracja i prawdziwe historie naszej społeczności.",
+      "subtitle2": "Podziel się swoją historią i połącz się z innymi, które Cię rozumieją i wspierają. Bezpieczna, anonimowa przestrzeń, by się wyrazić i znaleźć solidarność.",
+      "support": "Wsparcie",
+      "tabs": {
+        "inspire": "Inspirujące historie",
+        "real": "Historie społeczności",
+        "share": "Podziel się swoją historią"
+      },
+      "title": "Historie",
+      "toasts": {
+        "dailyLimitReached": "✨ Jedna inspirująca historia dziennie utrzymuje naszą społeczność w rozkwicie! Wróć jutro, aby podzielić się kolejną historią.",
+        "deleteFailed": "Nie udało się usunąć historii. Spróbuj ponownie.",
+        "storySubmitted": "✅ Historia została pomyślnie przesłana!",
+        "submitFailed": "Nie udało się przesłać historii. Spróbuj ponownie."
+      },
+      "yourOneLiner": "Twój krótki wpis"
+    },
+    "videoPlayer": {
+      "unsupported": "Twoja przeglądarka nie obsługuje znacznika wideo."
+    }
+  },
+  "pages": {
+    "business": {
+      "actions": {
+        "claim": "Ta firma jest moja",
+        "fixRequest": "Popraw informacje",
+        "follow": "Obserwuj",
+        "followed": "Obserwujesz",
+        "sendMessage": "Wyślij wiadomość"
+      },
+      "contact": {
+        "call": "Zadzwoń",
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "location": "Lokalizacja",
+        "mail": "E-mail",
+        "pinterest": "Pinterest",
+        "twitter": "X",
+        "website": "Strona internetowa",
+        "whatsapp": "WhatsApp"
+      },
+      "dialogs": {
+        "claim": {
+          "noteLabel": "Krótki opis",
+          "notePlaceholder": "Dlaczego ta firma należy do Ciebie? (np. numer firmy / domena e-mail / krótka informacja)",
+          "phoneLabel": "Telefon (opcjonalnie)",
+          "title": "Zgłoś tę firmę jako swoją"
+        },
+        "fix": {
+          "btn": "Wyślij zgłoszenie",
+          "detailsLabel": "Które informacje są błędne?",
+          "detailsPlaceholder": "Np.: zły adres, telefon zostanie zaktualizowany, kategoria się zmieni...",
+          "emailLabel": "E-mail kontaktowy (opcjonalnie)",
+          "title": "Prośba o korektę informacji"
+        },
+        "report": {
+          "btn": "Wyślij skargę",
+          "emailLabel": "E-mail kontaktowy (opcjonalnie)",
+          "reasonLabel": "Powód skargi",
+          "reasonPlaceholder": "Fałszywa firma, błędne informacje, spam, nieodpowiednie treści itp.",
+          "title": "Zgłoś firmę"
+        }
+      },
+      "messages": {
+        "failed": "Nie udało się wysłać. Spróbuj ponownie.",
+        "fixRequired": "Nie możesz wysłać bez podania, co należy poprawić.",
+        "linkCopied": "Link skopiowany!",
+        "noteRequired": "Nie możesz wysłać bez krótkiego opisu.",
+        "reportReasonRequired": "Nie możesz wysłać bez podania powodu skargi.",
+        "sent": "Twoje zgłoszenie zostało wysłane.",
+        "shareText": "Sprawdź firmę {name} na ELEVATE HER!",
+        "shareTitle": "Profil firmy"
+      },
+      "posts": {
+        "private": "To konto jest prywatne.",
+        "title": "Najnowsze posty"
+      },
+      "sidebar": {
+        "claim": "Ta firma jest moja",
+        "fix": "Popraw informacje",
+        "report": "Zgłoś",
+        "request": "Zgłoszenie",
+        "title": "Ustawienia firmy"
+      },
+      "unclaimed": "Ta firma nie jest jeszcze powiązana z żadnym profilem. Jeśli jesteś właścicielką, możesz to potwierdzić za pomocą „Ta firma jest moja” lub wysłać prośbę o korektę informacji.",
+      "views": "Wyświetlenia"
+    },
+    "home": {
+      "loadingMore": "Wczytywanie kolejnych postów...",
+      "noMorePosts": "To wszystko 👌 Dotarłaś aż tutaj, gratulacje!<br>Nagraj ekran, wyślij nam, a zostaniesz naszą gościnią na kolejnym wydarzeniu! 🎁",
+      "tabs": {
+        "education": "Edukacja",
+        "events": "Wydarzenia",
+        "general": "Ogólne",
+        "job": "Praca"
+      },
+      "powerCheck": {
+        "dayStreak": "{n}-dniowa seria",
+        "introSub": "Zajmie to mniej niż 30 sekund. Twoje dane pozostają prywatne.",
+        "introText": "Odpowiedz na 3 krótkie pytania, aby zmierzyć swoją obecną energię i nastawienie. Na podstawie Twoich odpowiedzi zaproponujemy Ci najlepszy następny krok — moduł, refleksję lub cel, na którym warto się skupić.",
+        "introTitle": "Jak się dziś czujesz?",
+        "last30Days": "Ostatnie 30 dni",
+        "noData": "Brak danych",
+        "powerScoreLabel": "Wynik mocy",
+        "quickCheckin": "Szybki check-in",
+        "reset": "Zresetuj",
+        "resetHint": "Chcesz zaktualizować poziom swojej energii? Zresetuj, aby zacząć od nowa.",
+        "scoreLabel": "Wynik: {score}",
+        "states": {
+          "drained": "Wyczerpana",
+          "findYourPower": "Znajdź swoją moc",
+          "rising": "Rosnąca",
+          "stable": "Stabilna"
+        },
+        "todayPowerIs": "Dziś Twoja moc jest",
+        "whatNext": "Co możesz zrobić dalej"
+      }
+    },
+    "login": {
+      "explore": "Eksploruj aplikację bez konta",
+      "mailBtn": "Zaloguj się przez e-mail",
+      "appleBtn": "Zaloguj się przez Apple",
+      "googleBtn": "Zaloguj się przez Google",
+      "privacyHtml": "Twoje dane są przechowywane bezpiecznie i nie są udostępniane osobom trzecim.<br>Logując się, Twoje dane są chronione zgodnie z naszą <a href='https://elevather.eu/privacy-policy-for-elevather-application/' target='_blank'>Polityką prywatności</a> i <a href='https://elevather.eu/terms-of-service-end-user-license-agreement-eula/' target='_blank'>Warunkami korzystania z usługi</a>.",
+      "subtitle": "Aby zacząć, wybierz swoje konto.",
+      "welcome": "Witaj!",
+      "errors": {
+        "emailInvalid": "Podaj prawidłowy adres e-mail.",
+        "emailRequired": "Podaj swój adres e-mail.",
+        "notRegistered": "Nie znaleziono konta powiązanego z tym adresem e-mail. Najpierw się zarejestruj.",
+        "unexpected": "Nieoczekiwany błąd. Sprawdź konsolę.",
+        "wrongPassword": "Nieprawidłowe hasło."
+      }
+    },
+    "messages": {
+      "empty": "Nie masz jeszcze żadnych wiadomości."
+    },
+    "newsDetails": {
+      "back": "Wstecz",
+      "notFound": "Nie znaleziono wiadomości.",
+      "openOriginal": "Otwórz oryginalną wiadomość",
+      "otherNews": "Inne wiadomości",
+      "share": "Udostępnij",
+      "source": "Źródło:"
+    },
+    "newsList": {
+      "defaultSource": "Aktualności",
+      "empty": "Obecnie brak wiadomości.",
+      "showMore": "Pokaż więcej"
+    },
+    "notifications": {
+      "empty": "Brak powiadomień do wyświetlenia.",
+      "title": "Moje powiadomienia",
+      "types": {
+        "bookmark": "zapisała Twój post.",
+        "comment": "skomentowała Twój post.",
+        "follow": "zaczęła Cię obserwować.",
+        "like": "polubiła Twój post.",
+        "post": "udostępniła nowy post."
+      },
+      "unknownUser": "Użytkowniczka"
+    },
+    "postList": {
+      "backToMain": "Wróć",
+      "everywhere": "Wszędzie"
+    },
+    "profile": {
+      "addBusiness": "Dodaj swoją firmę lub miejsce pracy",
+      "businessSidebar": {
+        "address": "Adres (opcjonalnie)",
+        "addressPlaceholder": "Np.: Ossenstraat 1, Gandawa",
+        "category": "Kategoria",
+        "categoryPlaceholder": "Wybierz kategorię",
+        "descLabel": "Krótki opis (opcjonalnie)",
+        "descPlaceholder": "Krótko przedstaw swoją firmę",
+        "email": "E-mail (opcjonalnie)",
+        "emailPlaceholder": "przyklad{'@'}firma.be",
+        "logoLabel": "Logo / zdjęcie okładkowe (opcjonalnie)",
+        "logoText": "Wybierz logo",
+        "name": "Nazwa firmy",
+        "namePlaceholder": "Np.: Mavzer Consulting",
+        "phone": "Telefon (opcjonalnie)",
+        "phonePlaceholder": "Np.: 0487 246 846",
+        "province": "Prowincja (opcjonalnie)",
+        "provincePlaceholder": "Wybierz prowincję",
+        "tag": "Tag (opcjonalnie)",
+        "tagPlaceholder": "Wybierz tag",
+        "title": "Dodaj firmę",
+        "town": "Miasto (opcjonalnie)",
+        "townPlaceholder": "Wybierz miasto",
+        "visibilitySub": "Jeśli to wyłączysz, profil będzie widoczny tylko dla osób z linkiem.",
+        "visibilityTitle": "Udostępnij firmę publicznie",
+        "website": "Strona internetowa (opcjonalnie)",
+        "whatsapp": "WhatsApp (opcjonalnie)",
+        "whatsappPlaceholder": "Same cyfry (z numerem kierunkowym kraju)"
+      },
+      "deleteDialog": {
+        "cancel": "Anuluj",
+        "confirm": "Tak, usuń",
+        "confirmLabel": "Wpisz „DELETE”, aby potwierdzić",
+        "confirmPlaceholder": "DELETE",
+        "reasonLabel": "Powód usunięcia",
+        "reasonPlaceholder": "Krótko dlaczego?",
+        "title": "Trwale usuń swój profil",
+        "warningText": "Twój profil, posty i połączenia zostaną usunięte. Jeśli chcesz kontynuować, wpisz poniżej powód i wpisz <b>DELETE</b>, aby potwierdzić.",
+        "warningTitle": "Tej czynności nie można cofnąć."
+      },
+      "donateSub": "Darowizna wolontariacka",
+      "donateTitle": "Wesprzyj nas",
+      "edit": "Edytuj",
+      "editProfile": "Edytuj swój profil",
+      "empty": {
+        "noBiz": "Brak firmy.",
+        "noBookmarks": "Brak zapisanych postów.",
+        "noPosts": "Brak postów.",
+        "private": "To konto jest prywatne."
+      },
+      "follow": "Obserwuj",
+      "followers": "Obserwujący",
+      "followingState": "Obserwujesz",
+      "hidden": "Ukryte",
+      "message": "Wyślij wiadomość",
+      "messages": {
+        "bizAdded": "Firma została dodana pomyślnie",
+        "bizFailed": "Nie udało się zapisać firmy",
+        "bizNameMin": "Musi mieć co najmniej 2 znaki",
+        "bizNameRequired": "Nazwa firmy jest wymagana",
+        "bizUpdated": "Firma zaktualizowana",
+        "categoryRequired": "Musisz wybrać kategorię",
+        "deleteFailed": "Usuwanie nie powiodło się. Spróbuj ponownie.",
+        "deleteProcessed": "Twoje zgłoszenie usunięcia profilu zostało przetworzone.",
+        "emailInvalid": "Podaj prawidłowy adres e-mail",
+        "hiddenUpdated": "Ukryte posty zaktualizowane. Pojawią się ponownie po następnym zalogowaniu.",
+        "imgError": "Nie udało się przesłać obrazu",
+        "nameMin": "Imię musi mieć co najmniej 2 znaki",
+        "nameRequired": "Imię jest wymagane",
+        "profileUpdateFailed": "Nie udało się zaktualizować profilu",
+        "profileUpdated": "Profil zaktualizowany pomyślnie",
+        "reasonRequired": "Podaj powód usunięcia.",
+        "typeDelete": "Aby kontynuować, musisz wpisać „DELETE”.",
+        "urlInvalid": "Podaj prawidłowy adres URL"
+      },
+      "myBizSub": "Te firmy są powiązane z Tobą. Dotknij ikonę ołówka po prawej, aby edytować.",
+      "public": "Publiczny",
+      "sidebar": {
+        "bioLabel": "Krótki opis o Tobie",
+        "bioPlaceholder": "Na przykład: Jesteśmy stowarzyszeniem działającym w obszarze psychologii i technologii...",
+        "cancel": "Anuluj",
+        "deleteProfile": "!Usuń mój profil całkowicie!",
+        "lastName": "Twoje nazwisko",
+        "logout": "Wyloguj się",
+        "name": "Twoje imię",
+        "province": "Prowincja (opcjonalnie)",
+        "provincePlaceholder": "Wybierz prowincję",
+        "resetHiddenPosts": "Zresetuj ukryte posty",
+        "other": "Inne",
+        "save": "Zapisz",
+        "title": "Edytuj profil",
+        "username": "Twoja nazwa użytkownika (publiczna)",
+        "visibilitySub": "Jeśli to wyłączysz, Twój profil będzie widoczny tylko dla osób z linkiem.",
+        "visibilityTitle": "Udostępnij profil publicznie"
+      },
+      "tabs": {
+        "bookmarks": "Zapisane",
+        "myBiz": "Moje firmy",
+        "myPosts": "Moje posty",
+        "otherBiz": "Firmy",
+        "posts": "Posty"
+      },
+      "viewProfile": "Zobacz profil",
+      "views": "Wyświetlenia",
+      "chips": {
+        "focus": "Skupienie:",
+        "streak": "Seria:",
+        "streakDays": "{n} dni",
+        "trend": "Trend:"
+      },
+      "defaultUserName": "Użytkowniczka",
+      "goals": {
+        "chooseGoals": "Wybierz swoje cele",
+        "emptyText": "Nie ustawiłaś jeszcze żadnych celów.",
+        "status": {
+          "almostDone": "Prawie gotowe",
+          "finished": "Ukończone ✓",
+          "workingOnIt": "W trakcie realizacji"
+        },
+        "title": "Moje cele"
+      },
+      "mission": {
+        "title": "Moja misja"
+      },
+      "progress": {
+        "completedCourses": "Ukończone kursy",
+        "completedSimulators": "Ukończone symulatory",
+        "openTracks": "Otwarte ścieżki",
+        "title": "Moje postępy"
+      },
+      "reflections": {
+        "daysAgo": "{n} dni temu",
+        "emptyText": "Brak refleksji.",
+        "seeAll": "Zobacz wszystkie",
+        "title": "Moje refleksje",
+        "today": "Dziś",
+        "weeksAgo": "{n} tyg. temu",
+        "writeFirst": "Napisz swoją pierwszą",
+        "yesterday": "Wczoraj"
+      },
+      "settingsSection": {
+        "off": "Wyłączone",
+        "on": "Włączone"
+      },
+      "support": {
+        "eula": "Warunki korzystania z usługi i EULA",
+        "feedback": "Opinia",
+        "privacy": "Polityka prywatności",
+        "support": "Wsparcie",
+        "supportSub": "Pytania i usunięcie konta",
+        "title": "Wsparcie i preferencje"
+      },
+      "trend": {
+        "drained": "Wyczerpana",
+        "rising": "Rosnąca",
+        "stable": "Stabilna"
+      }
+    },
+    "question": {
+      "location": "Lokalizacja",
+      "message": "Twoja wiadomość",
+      "subjects": {
+        "appQuestion": "Pytanie o aplikację",
+        "otherProducts": "Pytanie o inne produkty",
+        "profileUpgrade": "Ulepsz mój profil",
+        "somethingWrong": "Coś poszło nie tak?"
+      }
+    },
+    "selectTag": {
+      "done": "Gotowe",
+      "select": "Wybierz co najmniej jeden tag"
+    },
+    "settings": {
+      "language": "Ustawienia języka",
+      "logout": "Wyloguj się",
+      "privateAccount": "Ukryj konto",
+      "privateInfo": "Twoje konto zostało ustawione jako prywatne, Twoje posty są ukryte.",
+      "title": "Ustawienia"
+    },
+    "splash": {
+      "join": "DOŁĄCZ DO NAS",
+      "languageSettings": "Ustawienia języka",
+      "next": "Dalej",
+      "prev": "Wstecz",
+      "selectLanguage": "Wybierz preferowany język",
+      "slides": {
+        "1": {
+          "sub": "Wznosimy się razem!",
+          "text": "Przestrzeń stworzona dla kobiet, by rozwijały pewność siebie, przywództwo i dobre samopoczucie — inspirowana psychologią, napędzana przez społeczność.",
+          "title": "Witaj w ELEVATE HER"
+        },
+        "2": {
+          "sub": "Odkryj, w którym miejscu jesteś dzisiaj.",
+          "text": "Skorzystaj z Symulatora Mocy, aby poznać swoje mocne strony i punkty ślepe, a następnie podążaj spersonalizowaną ścieżką nauki złożoną z krótkich, codziennych modułów.",
+          "title": "Poznaj swoją moc!"
+        },
+        "3": {
+          "sub": "Rozwijaj się z kobietami, które to rozumieją.",
+          "text": "Śledź swoje postępy dzięki codziennym check-inom, dziel się swoim doświadczeniem i czerp siłę z historii innych.",
+          "title": "Twoja historia ma znaczenie"
+        }
+      }
+    },
+    "updateProfile": {
+      "address": "Adres",
+      "addressText": "Możesz zaktualizować informacje o swoim adresie.",
+      "basicInfo": "Podstawowe informacje",
+      "basicInfoText": "Te dane są widoczne na Twoim profilu.",
+      "bio": "Bio",
+      "bus": "Klatka / mieszkanie",
+      "companyInfo": "Informacje o firmie",
+      "companyInfoText": "Tutaj możesz wybrać kategorie i tagi, w których pojawi się Twoja firma.",
+      "contact": "Kontakt",
+      "contactText": "Podaj dane kontaktowe, aby inni mogli się z Tobą skontaktować.",
+      "gsm": "Telefon komórkowy / WhatsApp",
+      "lastname": "Nazwisko",
+      "name": "Imię",
+      "number": "Numer",
+      "phone": "Telefon",
+      "save": "Zapisz zmiany",
+      "showMail": "Pokaż mój e-mail na moim profilu",
+      "social": {
+        "facebook": "Adres URL Facebooka",
+        "instagram": "Adres URL Instagrama",
+        "pinterest": "Adres URL Pinteresta",
+        "twitter": "Adres URL X (Twitter)"
+      },
+      "street": "Ulica",
+      "tagsPlaceholder": "Wybierz tagi i kategorie",
+      "uploadPhoto": "Prześlij zdjęcie profilowe",
+      "username": "Nazwa użytkownika",
+      "website": "Strona internetowa"
+    },
+    "emailLogin": {
+      "createOne": "Utwórz je",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "ty@przyklad.pl",
+      "errors": {
+        "emailRequired": "Podaj swój adres e-mail.",
+        "invalidCredentials": "Nieprawidłowy e-mail lub hasło.",
+        "loginFailed": "Logowanie nie powiodło się. Spróbuj ponownie.",
+        "passwordRequired": "Podaj swoje hasło."
+      },
+      "noAccount": "Nie masz konta?",
+      "passwordLabel": "Hasło",
+      "passwordPlaceholder": "••••••••",
+      "signIn": "Zaloguj się",
+      "signingIn": "Logowanie…",
+      "subtitle": "Podaj swój e-mail i hasło, aby kontynuować.",
+      "title": "Zaloguj się przez e-mail"
+    },
+    "emailRegister": {
+      "confirmPassword": "Potwierdź hasło",
+      "confirmPasswordPlaceholder": "Powtórz hasło",
+      "creating": "Tworzenie konta…",
+      "email": "E-mail",
+      "emailPlaceholder": "ty@przyklad.pl",
+      "errors": {
+        "emailRequired": "Podaj swój adres e-mail.",
+        "emailTaken": "Ten adres e-mail jest już zarejestrowany. Zaloguj się zamiast tego.",
+        "firstNameRequired": "Podaj swoje imię.",
+        "passwordMismatch": "Hasła nie są takie same.",
+        "passwordTooShort": "Hasło musi mieć co najmniej 6 znaków.",
+        "registrationFailed": "Rejestracja nie powiodła się. Spróbuj ponownie."
+      },
+      "firstName": "Imię",
+      "firstNamePlaceholder": "Anna",
+      "hasAccount": "Masz już konto?",
+      "lastName": "Nazwisko",
+      "lastNamePlaceholder": "Kowalska",
+      "password": "Hasło",
+      "passwordPlaceholder": "Min. 6 znaków",
+      "signIn": "Zaloguj się",
+      "submit": "Utwórz konto",
+      "subtitle": "Zarejestruj się za pomocą e-maila, aby zacząć.",
+      "title": "Utwórz konto"
+    },
+    "register": {
+      "alreadyRegistered": "Masz już konto? Kliknij tutaj, aby się zalogować",
+      "choosePassword": "Wybierz hasło",
+      "email": "E-mail",
+      "errors": {
+        "emailInvalid": "Podaj prawidłowy adres e-mail.",
+        "emailRequired": "Podaj swój adres e-mail.",
+        "googleSignInFailed": "Logowanie przez Google nie powiodło się.",
+        "passwordMismatch": "Twoje hasła nie są takie same.",
+        "passwordRequired": "Podaj swoje hasło.",
+        "passwordTooShort": "Twoje hasło musi mieć co najmniej 6 znaków.",
+        "usernameRequired": "Podaj swoją nazwę użytkownika.",
+        "usernameTooShort": "Twoja nazwa użytkownika musi mieć co najmniej 3 znaki."
+      },
+      "repeatPassword": "Powtórz hasło",
+      "required": "(wymagane)",
+      "submit": "Zarejestruj się",
+      "subtitle": "Wypełnij poniższy formularz, aby do nas dołączyć",
+      "title": "Rejestracja"
+    }
+  },
+  "search": {
+    "chooseCategory": "Wybierz kategorię",
+    "subcategories": "Podkategorie",
+    "showAllInThisCategory": "Wszystkie",
+    "chooseLocation": "Wybierz lokalizację",
+    "resetFilters": "Zresetuj filtry",
+    "foundProfiles": "Znalezione profile",
+    "goToBusinessDetails": "Zobacz szczegóły",
+    "empty": {
+      "noBusinessMatch": "Żadna firma nie spełnia wybranych kryteriów.",
+      "haveBusinessHint": "Jeśli masz firmę, możesz ją dodać ze swojego profilu, aby stać się widoczną.",
+      "noBusinessHint": "Możesz stać się tutaj widoczna, dodając swoją firmę.",
+      "goToMyProfile": "Przejdź do mojego profilu",
+      "addBusiness": "Dodaj firmę"
+    },
+    "provinceFallback": "Prowincja {id}",
+    "townFallback": "Miasto {id}"
+  }
+}

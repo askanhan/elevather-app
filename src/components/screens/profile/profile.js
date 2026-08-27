@@ -1,7 +1,12 @@
 ﻿import { mapState } from 'vuex'
+import LanguageSwitcher from '@/components/complementarities/LanguageSwitcher.vue'
 
 export default {
     name: 'ProfileMock',
+
+    components: {
+        LanguageSwitcher
+    },
 
     data() {
         return {
@@ -78,7 +83,7 @@ export default {
         userName() {
             const user = this.$store.state.user
             if (user) {
-                let name = user.first_name || user.firstName || user.name || user.username || 'User'
+                let name = user.first_name || user.firstName || user.name || user.username || this.$t('pages.profile.defaultUserName')
                 // If it contains a space, take only first name
                 if (name && name.includes(' ')) {
                     name = name.split(' ')[0]
@@ -100,6 +105,21 @@ export default {
             if (this.user.trend === 'Rising') return 'trendRising'
             if (this.user.trend === 'Drained') return 'trendDrained'
             return 'trendStable'
+        },
+
+        trendLabel() {
+            const map = {
+                Rising: this.$t('pages.profile.trend.rising'),
+                Drained: this.$t('pages.profile.trend.drained'),
+                Stable: this.$t('pages.profile.trend.stable'),
+            }
+            return map[this.user.trend] || this.user.trend
+        },
+
+        notificationsLabel() {
+            return this.prefs.notifications === 'On'
+                ? this.$t('pages.profile.settingsSection.on')
+                : this.$t('pages.profile.settingsSection.off')
         }
     },
 
@@ -150,10 +170,10 @@ export default {
             const now = new Date()
             const diffMs = now - d
             const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-            if (diffDays === 0) return 'Today'
-            if (diffDays === 1) return 'Yesterday'
-            if (diffDays < 7) return `${diffDays} days ago`
-            if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`
+            if (diffDays === 0) return this.$t('pages.profile.reflections.today')
+            if (diffDays === 1) return this.$t('pages.profile.reflections.yesterday')
+            if (diffDays < 7) return this.$t('pages.profile.reflections.daysAgo', { n: diffDays })
+            if (diffDays < 30) return this.$t('pages.profile.reflections.weeksAgo', { n: Math.floor(diffDays / 7) })
             return d.toLocaleDateString()
         },
 
@@ -305,9 +325,9 @@ export default {
 
         goalStatusLabel(status) {
             const map = {
-                working_on_it: 'Working on it',
-                almost_done: 'Almost done',
-                finished: 'Finished ✓',
+                working_on_it: this.$t('pages.profile.goals.status.workingOnIt'),
+                almost_done: this.$t('pages.profile.goals.status.almostDone'),
+                finished: this.$t('pages.profile.goals.status.finished'),
             }
             return map[status] || status
         },

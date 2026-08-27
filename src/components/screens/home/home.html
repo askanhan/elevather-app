@@ -3,13 +3,11 @@
     <!-- Context intro — only before first check-in -->
     <section v-if="!isCompleted && Object.keys(selectedAnswers).length === 0" class="intro-card">
         <div class="intro-emoji">✨</div>
-        <h2 class="intro-title">How are you feeling today?</h2>
+        <h2 class="intro-title">{{ $t('pages.home.powerCheck.introTitle') }}</h2>
         <p class="intro-text">
-            Answer 3 quick questions to measure your current energy and mindset.
-            Based on your answers, we'll suggest the best next step for you —
-            a module, a reflection, or a goal to focus on.
+            {{ $t('pages.home.powerCheck.introText') }}
         </p>
-        <p class="intro-sub">It takes less than 30 seconds. Your data stays private.</p>
+        <p class="intro-sub">{{ $t('pages.home.powerCheck.introSub') }}</p>
     </section>
 
     <!-- Hero badge -->
@@ -17,14 +15,14 @@
         <div class="heroCenter">
             <div class="badge" :class="stateClass">
                 <span class="emoji">{{ stateEmoji }}</span>
-                <span class="label">Today your power is</span>
+                <span class="label">{{ $t('pages.home.powerCheck.todayPowerIs') }}</span>
                 <span class="value">{{ stateLabel }}</span>
             </div>
         </div>
         <div class="heroRight">
             <div class="scoreBox">
                 <div class="scoreTop">
-                    <span class="scoreLabel">Power score</span>
+                    <span class="scoreLabel">{{ $t('pages.home.powerCheck.powerScoreLabel') }}</span>
                     <span class="scoreValue">{{ powerScore }}/100</span>
                 </div>
                 <div class="bar">
@@ -36,7 +34,7 @@
 
     <!-- Quick check-in questions -->
     <section class="checkin" v-if="!isCompleted">
-        <h2 class="h2">Quick check-in</h2>
+        <h2 class="h2">{{ $t('pages.home.powerCheck.quickCheckin') }}</h2>
         <div class="qgrid">
             <div v-for="q in questions" :key="q.id" class="qcard">
                 <div class="qtitle">{{ q.question_text }}</div>
@@ -54,7 +52,7 @@
 
     <!-- After check-in: recommendations -->
     <section v-if="isCompleted && recommendations.length" class="recs">
-        <h2 class="h2">What you can do next</h2>
+        <h2 class="h2">{{ $t('pages.home.powerCheck.whatNext') }}</h2>
         <div class="recs-grid">
             <button v-for="r in recommendations" :key="r.title" class="rec-card" @click="goToAction(r.action)">
                 <span class="rec-icon">{{ r.icon }}</span>
@@ -69,28 +67,28 @@
 
     <!-- After check-in: reset -->
     <section class="checkin-complete" v-if="isCompleted">
-        <p class="reset-hint">Need to update your energy levels? Reset to start over.</p>
-        <button class="ghost" @click="resetToday">Reset</button>
+        <p class="reset-hint">{{ $t('pages.home.powerCheck.resetHint') }}</p>
+        <button class="ghost" @click="resetToday">{{ $t('pages.home.powerCheck.reset') }}</button>
     </section>
 
     <!-- 30-day history grid -->
     <section class="history" v-if="historyDays.length">
         <div class="history-head">
-            <h2 class="h2">Last 30 days</h2>
-            <span class="history-streak" v-if="streak > 0">🔥 {{ streak }} day streak</span>
+            <h2 class="h2">{{ $t('pages.home.powerCheck.last30Days') }}</h2>
+            <span class="history-streak" v-if="streak > 0">🔥 {{ $t('pages.home.powerCheck.dayStreak', { n: streak }) }}</span>
         </div>
         <div class="history-grid">
             <div v-for="day in historyDays" :key="day.date"
                 class="history-cell" :class="day.state"
-                :title="day.date + (day.score !== null ? ' — Score: ' + day.score : '')">
+                :title="day.date + (day.score !== null ? ' — ' + $t('pages.home.powerCheck.scoreLabel', { score: day.score }) : '')">
                 <span class="history-num">{{ day.day_number }}</span>
             </div>
         </div>
         <div class="history-legend">
-            <span class="legend-item"><span class="legend-dot rising"></span> Rising</span>
-            <span class="legend-item"><span class="legend-dot stable"></span> Stable</span>
-            <span class="legend-item"><span class="legend-dot drained"></span> Drained</span>
-            <span class="legend-item"><span class="legend-dot empty"></span> No data</span>
+            <span class="legend-item"><span class="legend-dot rising"></span> {{ $t('pages.home.powerCheck.states.rising') }}</span>
+            <span class="legend-item"><span class="legend-dot stable"></span> {{ $t('pages.home.powerCheck.states.stable') }}</span>
+            <span class="legend-item"><span class="legend-dot drained"></span> {{ $t('pages.home.powerCheck.states.drained') }}</span>
+            <span class="legend-item"><span class="legend-dot empty"></span> {{ $t('pages.home.powerCheck.noData') }}</span>
         </div>
     </section>
 

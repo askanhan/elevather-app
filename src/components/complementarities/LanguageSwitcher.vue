@@ -1,5 +1,5 @@
 <template>
-    <span class="change-lang" @click="open" role="button">
+    <span class="change-lang" :class="variant" @click="open" role="button">
         <span>
             <img class="me-3 mt-n1" width="20" :src="flagSrc(currentLang)" alt="">
             {{ $t(labelKey) }}
@@ -19,61 +19,14 @@
 
                 <div class="list-group list-custom-small ps-1">
 
-                    <a @click="select('en')">
+                    <a v-for="lang in languages" :key="lang.code" @click="select(lang.code)">
                         <span class="lang-left">
-                            <img class="me-3 mt-n1" width="20" :src="flagSrc('en')">
-                            <span>English</span>
+                            <img class="me-3 mt-n1" width="20" :src="flagSrc(lang.code)" alt="">
+                            <span>{{ lang.label }}</span>
                         </span>
-                        <i class="fa fa-angle-right"></i>
+                        <i v-if="lang.code === currentLang" class="fa fa-check"></i>
+                        <i v-else class="fa fa-angle-right"></i>
                     </a>
-
-                    <a @click="select('pl')">
-                        <span class="lang-left">
-                            <img class="me-3 mt-n1" width="20" :src="flagSrc('pl')">
-                            <span>Polish</span>
-                        </span>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-
-                    <a @click="select('gr')">
-                        <span class="lang-left">
-                            <img class="me-3 mt-n1" width="20" :src="flagSrc('gr')">
-                            <span>Greek</span>
-                        </span>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-
-                    <a @click="select('cz')">
-                        <span class="lang-left">
-                            <img class="me-3 mt-n1" width="20" :src="flagSrc('cz')">
-                            <span>Czech</span>
-                        </span>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-
-                    <a @click="select('ge')">
-                        <span class="lang-left">
-                            <img class="me-3 mt-n1" width="20" :src="flagSrc('ge')">
-                            <span>German</span>
-                        </span>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-
-                    <a @click="select('nl')">
-                        <span class="lang-left">
-                            <img class="me-3 mt-n1" width="20" :src="flagSrc('nl')">
-                            <span>Nederlands</span>
-                        </span>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-
-                    <!-- <a @click="select('tr')">
-                        <span class="lang-left">
-                            <img class="me-3 mt-n1" width="20" :src="flagSrc('tr')">
-                            <span>Türkçe</span>
-                        </span>
-                        <i class="fa fa-angle-right"></i>
-                    </a> -->
                 </div>
 
                 <div class="clear"></div>
@@ -94,18 +47,28 @@ export default {
         subtitleKey: { type: String, default: "pages.splash.selectLanguage" },
 
         // Flag resimleri için base path (senin kodla aynı default)
-        staticBase: { type: String, default: "./static/img/" }
+        staticBase: { type: String, default: "./static/img/" },
+
+        // "pill": absolute-positioned floating badge (splash screen). "inline": static chip for embedding in page flow (e.g. profile header)
+        variant: { type: String, default: "pill" }
     },
 
     data() {
         return {
-            isOpen: false
+            isOpen: false,
+            languages: [
+                { code: "en", label: "English" },
+                { code: "de", label: "Deutsch" },
+                { code: "nl", label: "Nederlands" },
+                { code: "cs", label: "Čeština" },
+                { code: "pl", label: "Polski" }
+            ]
         }
     },
 
     computed: {
         currentLang() {
-            return this.$store?.state?.lang || "tr"
+            return this.$store?.state?.lang || "en"
         }
     },
 
@@ -129,7 +92,7 @@ export default {
             try { authStore.setItem("lang", code) } catch (e) { }
 
             // Moment locale
-            const momentLocale = { tr: "tr", nl: "nl-be", fr: "fr", en: "en" }[code] || "tr"
+            const momentLocale = { en: "en", de: "de", nl: "nl-be", cs: "cs", pl: "pl" }[code] || "en"
             try { this.moment?.locale?.(momentLocale) } catch (e) { }
         },
 
@@ -183,16 +146,26 @@ export default {
 }
 
 .change-lang {
-    display: block;
-    right: 0.6em;
-    position: absolute;
-    top: 2.3em;
+    display: inline-block;
     border: 1px solid #4a89dc;
     padding: 0.2em 0.7em;
     border-radius: 1em;
     background-color: #4a89dc;
     color: white;
+    cursor: pointer;
+}
+
+.change-lang.pill {
+    display: block;
+    right: 0.6em;
+    position: absolute;
+    top: 2.3em;
     z-index: 999;
+}
+
+.change-lang.inline {
+    position: static;
+    font-size: 0.85em;
 }
 
 .list-group a {

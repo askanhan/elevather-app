@@ -55,7 +55,7 @@ export default {
       session = session?.value || this.readSessionFromUrl()
 
       if (!session) {
-        this.error = 'No session data found'
+        this.error = this.$t('auth.afterlogin.errors.noSession')
         return
       }
 
@@ -67,7 +67,7 @@ export default {
           await authStore.setItem('refresh', data.refresh)
           try { await this.$store.dispatch("refreshAccess", data.refresh) } catch (_) { }
         } else {
-          this.error = 'No tokens in session'
+          this.error = this.$t('auth.afterlogin.errors.badSession')
           return
         }
       } else {
@@ -86,7 +86,7 @@ export default {
       await Preferences.remove({ key: "session" })
       this.$router.replace({ name: "home" })
     } catch (e) {
-      this.error = e?.message || 'Unknown error'
+      this.error = e?.message || this.$t('auth.afterlogin.errors.unknown')
     }
   },
 

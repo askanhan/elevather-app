@@ -2,3 +2,5 @@ node_modules
 dist
 android/keystore/*
 android copy
+annexes/back-end/audios/*
+annexes/back-end/.venv/*

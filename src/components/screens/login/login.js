@@ -51,11 +51,11 @@ export default {
         const inputPwd = (this.password || '')
 
         if (!inputEmail) {
-          alert('E-posta gir.')
+          alert(this.$t('pages.login.errors.emailRequired'))
           return
         }
         if (!this.validateEmail(inputEmail)) {
-          alert('Geçerli bir e-posta gir.')
+          alert(this.$t('pages.login.errors.emailInvalid'))
           return
         }
 
@@ -89,7 +89,7 @@ export default {
 
         // Eğer kayıt yoksa: girişe izin verme
         if (!storedUser) {
-          alert('Bu e-posta ile kayıt bulunamadı. Lütfen önce kayıt olun.')
+          alert(this.$t('pages.login.errors.notRegistered'))
           return
         }
 
@@ -99,7 +99,7 @@ export default {
 
         if (enforcePasswordCheck && storedPwd) {
           if (storedPwd !== inputPwd) {
-            alert('Şifre yanlış.')
+            alert(this.$t('pages.login.errors.wrongPassword'))
             return
           }
         }
@@ -131,7 +131,7 @@ export default {
         }
       } catch (err) {
         console.error('login fallback hata:', err)
-        alert('Beklenmeyen hata. Konsola bak.')
+        alert(this.$t('pages.login.errors.unexpected'))
       }
     },
 

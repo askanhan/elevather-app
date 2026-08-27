@@ -114,7 +114,7 @@ export default {
           p.pr_name_tr ||
           p.pr_name ||
           p.name ||
-          `İl ${id}`
+          this.$t('search.provinceFallback', { id })
 
         out.push({ type: 'province', id, value: `prov-${id}`, label })
       }
@@ -127,7 +127,7 @@ export default {
           t.town_name_tr ||
           t.town_name ||
           t.name ||
-          `İlçe ${id}`
+          this.$t('search.townFallback', { id })
 
         out.push({
           type: 'town',

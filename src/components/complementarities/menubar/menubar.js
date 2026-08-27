@@ -31,10 +31,10 @@ export default {
 
     altyazi() {
       if (this.$store.state.guestMode) {
-        return "Log in to access all features."
+        return this.$t('components.menubar.altyaziGuest')
       }
       const firstName = this.$store?.state?.user?.first_name || ''
-      return "Hi, " + firstName + "." 
+      return this.$t('components.menubar.altyaziGreeting', { name: firstName })
     },
 
     allConversations() {

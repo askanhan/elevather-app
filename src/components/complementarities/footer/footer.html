@@ -1,7 +1,6 @@
 <div class="footer card card-style">
-    <a @click="_openWebsite('https://burada.be/')" class="footer-title"><span class="color-blue-dark">Burada</span></a>
-    <p class="footer-text"><span>Made with <i class="fa fa-heart color-blue-dark font-16 ps-2 pe-2"></i> by
-            TechnoOffice</span><br><br>
+    <a @click="_openWebsite('https://elevather.eu/')" class="footer-title"><span class="color-blue-dark">ELEVATE HER</span></a>
+    <p class="footer-text"><span>{{ $t('components.footer.madeWith') }} <i class="fa fa-heart color-blue-dark font-16 ps-2 pe-2"></i> {{ $t('components.footer.byTechnoOffice') }}</span><br><br>
         <span v-html="$t('components.footer.slogan')"></span>
     </p>
     <div class="text-center mb-3">
@@ -14,9 +13,8 @@
         <a @click="shareapp" data-menu="menu-share" class="icon icon-xs rounded-sm me-1 shadow-l bg-red-dark"><i
                 class="fa fa-share-alt"></i></a>
     </div>
-    <p class="footer-copyright">Copyright &copy; Elevather <span id="copyright-year">2021-2022</span>. All Rights Reserved.
+    <p class="footer-copyright">{{ $t('components.footer.copyright', { year: '2021-2022' }) }}
     </p>
-    <p class="footer-links"><a class="color-highlight">Privacy Policy</a> | <a href="#" class="color-highlight">Terms
-            and Conditions</a></p>
+    <p class="footer-links"><a class="color-highlight">{{ $t('components.footer.privacyPolicy') }}</a> | <a href="#" class="color-highlight">{{ $t('components.footer.termsAndConditions') }}</a></p>
     <div class="clear"></div>
 </div>

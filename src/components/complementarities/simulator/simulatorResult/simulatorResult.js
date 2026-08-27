@@ -22,7 +22,7 @@ export default {
             simulatorTitle: '',
             score: 0,
             maxScore: 100,
-            level: 'Intermediate',
+            level: this.$t('components.simulator.result.defaultLevel'),
             completedAt: new Date(),
             feedback: '',
             advice: '',
@@ -40,13 +40,13 @@ export default {
         },
 
         feedbackMessage() {
-            if (this.scorePercentage >= 80) return 'Excellent! You mastered this challenge.'
-            if (this.scorePercentage >= 60) return 'Great job! Keep improving.'
-            return 'Good attempt. Try again to improve.'
+            if (this.scorePercentage >= 80) return this.$t('components.simulator.result.feedback.excellent')
+            if (this.scorePercentage >= 60) return this.$t('components.simulator.result.feedback.great')
+            return this.$t('components.simulator.result.feedback.good')
         },
 
         adviceText() {
-            return this.advice || 'Complete the recommended practice to strengthen your skills.'
+            return this.advice || this.$t('components.simulator.result.defaultAdvice')
         },
 
         userId() {
@@ -59,13 +59,13 @@ export default {
         this.simulatorId = this.simulatorIdProp || this.$route.query.id
         
         if (!this.simulatorId) {
-            this.error = 'No simulator ID provided.'
+            this.error = this.$t('components.simulator.errors.noSimulatorId')
             this.loading = false
             return
         }
 
         if (!this.userId) {
-            this.error = 'User not authenticated.'
+            this.error = this.$t('components.simulator.result.errors.notAuthenticated')
             this.loading = false
             return
         }
@@ -94,11 +94,11 @@ export default {
                 if (response && response.feedbacks) {
                     this.processResultsData(response)
                 } else {
-                    this.error = 'Invalid response format from server.'
+                    this.error = this.$t('components.simulator.result.errors.invalidResponse')
                 }
             } catch (err) {
                 console.error('Error fetching results:', err)
-                this.error = 'Failed to load results. Please try again.'
+                this.error = this.$t('components.simulator.result.errors.loadFailed')
             } finally {
                 this.loading = false
             }
@@ -109,7 +109,7 @@ export default {
             this.apiResponse = response
             
             if (!response.feedbacks || response.feedbacks.length === 0) {
-                this.error = 'No feedback data available.'
+                this.error = this.$t('components.simulator.result.errors.noFeedbackData')
                 return
             }
 
@@ -134,7 +134,7 @@ export default {
             }
 
             // Get simulator title from route or default
-            this.simulatorTitle = this.$route.query.title || 'Simulator Challenge'
+            this.simulatorTitle = this.$route.query.title || this.$t('components.simulator.result.defaultTitle')
             this.completedAt = new Date()
         },
 
@@ -157,7 +157,7 @@ export default {
                 }
             } catch (err) {
                 console.error('Error saving result:', err)
-                this.error = 'Failed to save results. Please try again.'
+                this.error = this.$t('components.simulator.result.errors.saveFailed')
                 this.saveInProgress = false
             }
         },

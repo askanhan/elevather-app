@@ -1,0 +1,1066 @@
+{
+  "add": {
+    "warning3": "Upozornění: Ještě můžeš zveřejnit",
+    "warning3_2": "příspěvků v příštích 24 hodinách.",
+    "category": {
+      "education": "Vzdělávání",
+      "event": "Akce",
+      "general": "Obecné",
+      "job": "Práce",
+      "title": "Kategorie"
+    },
+    "errors": {
+      "postLimitReached": "Dosáhla jsi dnešního maximálního počtu příspěvků. Zkus to prosím později znovu.",
+      "emptyPost": "Příspěvek nemůže být prázdný.",
+      "generic": "Něco se pokazilo. Zkus to prosím znovu.",
+      "photoTooLarge": "Fotka nesmí být větší než {mb} MB.",
+      "photoUploadFailed": "Nahrání fotky se nezdařilo",
+      "videoTooLarge": "Video nesmí být větší než {mb} MB.",
+      "videoUploadFailed": "Nahrání videa se nezdařilo"
+    },
+    "event": {
+      "dayFrom": "Den (začátek)",
+      "dayTo": "Den (konec)",
+      "location": "Místo",
+      "locationPlaceholder": "Adresa / místo (volitelné)",
+      "timeFrom": "Čas (začátek)",
+      "timeTo": "Čas (konec)"
+    },
+    "media": {
+      "photo": {
+        "add": "Přidat fotku",
+        "title": "Fotka"
+      },
+      "poll": {
+        "add": "Přidat anketu",
+        "close": "Ukončit anketu",
+        "title": "Anketa"
+      },
+      "video": {
+        "add": "Přidat video",
+        "title": "Video"
+      }
+    },
+    "poll": {
+      "addOption": "Přidat možnost",
+      "option": "Možnost {n}"
+    },
+    "publisher": {
+      "business": "Přidáváš jako firma",
+      "meFallback": "Já",
+      "user": "Přidáváš jako ty sama"
+    },
+    "send": {
+      "fail": "Při odesílání došlo k chybě.",
+      "send": "Odeslat",
+      "sending": "Odesílání…",
+      "success": "Příspěvek byl sdílen!"
+    },
+    "text": {
+      "pollPlaceholder": "Polož otázku",
+      "postPlaceholder": "Co chceš sdílet?"
+    }
+  },
+  "auth": {
+    "afterlogin": {
+      "backToLogin": "Zpět na přihlášení",
+      "errors": {
+        "badSession": "Přihlašovací údaje jsou poškozené. Zkus to prosím znovu.",
+        "cantFetchUser": "Informace o uživateli se nepodařilo načíst.",
+        "noSession": "Nenalezena žádná přihlašovací data.",
+        "unknown": "Neznámá chyba"
+      },
+      "retry": "Zkusit znovu",
+      "step": {
+        "stepCompleting": "Načítání profilu…",
+        "stepLoadingProfile": "Načítání profilu…",
+        "stepPreparingApp": "Připravujeme aplikaci…",
+        "stepRedirecting": "Přesměrování…",
+        "stepRefreshing": "Obnovování relace…",
+        "stepRetryProfile": "Opakovaný pokus o načtení profilu…",
+        "stepSavingSession": "Ukládání relace…",
+        "stepStart": "Dokončujeme přihlášení…"
+      },
+      "subtitleError": "Zkus to znovu pomocí tlačítka níže.",
+      "subtitleLoading": "Počkej prosím, přesměrováváme tě…",
+      "titleError": "Přihlášení se nepodařilo dokončit",
+      "titleLoading": "Přihlašování"
+    }
+  },
+  "common": {
+    "cancel": "Zrušit",
+    "decreaseTextSize": "Zmenšit velikost textu",
+    "increaseTextSize": "Zvětšit velikost textu",
+    "linkCopied": "Odkaz zkopírován",
+    "loading": "Načítání...",
+    "messages": "Zprávy",
+    "noResults": "Žádné výsledky",
+    "notifications": "Oznámení",
+    "other": "Jiné",
+    "send": "Odeslat",
+    "supportAssociation": "Podpoř sdružení"
+  },
+  "components": {
+    "chat": {
+      "emptySub": "Napiš první zprávu.",
+      "emptyTitle": "Zatím žádné zprávy",
+      "placeholder": "Napiš zprávu...",
+      "retry": "Zkusit znovu",
+      "sending": "Odesílání",
+      "started": "Konverzace zahájena:",
+      "confirmBlockTitle": "Zablokovat uživatele",
+      "confirmBlockText": "Zablokovat",
+      "confirmCancelText": "Zrušit",
+      "confirmBlockBody": "Opravdu chceš tohoto uživatele zablokovat?",
+      "confirmDeleteTitle": "Smazat konverzaci",
+      "confirmDeleteText": "Smazat",
+      "confirmDeleteBody": "Tato konverzace bude trvale smazána. Opravdu si to přeješ?"
+    },
+    "conversations": {
+      "emptySub": "Začni tím, že napíšeš zprávu nějakému profilu.",
+      "emptyTitle": "Zatím žádné konverzace",
+      "new": "Nová",
+      "searchPlaceholder": "Hledat: jméno nebo zpráva...",
+      "title": "Zprávy",
+      "unread": "{n} nepřečtených",
+      "upToDate": "Máš vše přečteno",
+      "you": "Ty:"
+    },
+    "donate": {
+      "copy": "Kopírovat",
+      "copyLink": "Kopírovat odkaz",
+      "optionsTitle": "Možnosti podpory",
+      "pill": "Dobrovolnická podpora",
+      "receiver": "Příjemce:",
+      "secureNote": "Odkaz na darování tě přesměruje na zabezpečenou platební stránku.",
+      "shareBtn": "Sdílet",
+      "shareSub": "Pomoz nám oslovit více lidí.",
+      "shareTitle": "Sdílet",
+      "sub": "Vision Tree je bruselské sdružení. Zaměřuje se na psychologii a technologie; vytváří školení, workshopy a projekty se sociálním dopadem pro mládež, rodiny a různé skupiny. V aplikaci ELEVATE HER vystupuje jako partner, jehož cílem je zvýšit místní angažovanost tím, že zviditelňuje komunity a firmy, sdílí oznámení o vzdělávání a akcích, informativní obsah o veřejných institucích a novinky.",
+      "title": "Podpoř nás",
+      "webDonate": "Darovat online"
+    },
+    "feedback": {
+      "cancel": "Zrušit",
+      "emailLabel": "E-mail (volitelné)",
+      "hint": {
+        "bug": "U chyb: kroky + obrazovka + očekávaný výsledek.",
+        "general": "Napiš to stručně a jasně. My se o to postaráme.",
+        "suggestion": "U návrhů: co zlepšit a proč?"
+      },
+      "messageLabel": "Zpráva",
+      "messagePlaceholder": "Co se stalo, kde, jak to můžeme zopakovat? Přidej screenshot, pokud je to možné.",
+      "pill": "Kontaktuj nás",
+      "send": "Odeslat",
+      "sending": "Odesílání",
+      "sub": "Máš problém, nápad, nebo se prostě potřebuješ vypovídat? Napiš nám, přečteme si to.",
+      "subjects": {
+        "bug": "Nahlášení chyby",
+        "business_claim": "Ověření firmy",
+        "general": "Obecné",
+        "label": "Předmět",
+        "placeholder": "Vyber předmět",
+        "profile_delete": "Smazání profilu",
+        "suggestion": "Návrh"
+      },
+      "success": "Tvá zpráva byla odeslána. Děkujeme.",
+      "tipText": "Pokud zvolíš „Nahlášení chyby“: zařízení, kroky a očekávaný výsledek nám pomůžou méně naříkat.",
+      "tipTitle": "Tip",
+      "title": "Zpětná vazba",
+      "writeMessage": "Napiš svou zprávu"
+    },
+    "footer": {
+      "slogan": "Platforma, která spojuje vše, co bys mohla chtít najít v Belgii.",
+      "byTechnoOffice": "od TechnoOffice",
+      "copyright": "Copyright © Elevather {year}. Všechna práva vyhrazena.",
+      "madeWith": "Vytvořeno s",
+      "privacyPolicy": "Zásady ochrany osobních údajů",
+      "shareMessage": "Stáhni si aplikaci, která spojuje celou Belgii — přidej se k nám také!",
+      "termsAndConditions": "Podmínky použití"
+    },
+    "highlightRequest": {
+      "btnSend": "Odeslat žádost",
+      "btnSending": "Odesílání…",
+      "emptySub": "Nejdřív přidej firmu ze svého profilu, pak sem můžeš poslat žádost.",
+      "emptyTitle": "Zatím žádná firma",
+      "goToProfile": "Přejít na můj profil",
+      "labelBusiness": "Firma",
+      "labelContact": "Kontakt (volitelné)",
+      "labelDesc": "Krátký popis (povinné)",
+      "note": "Poznámka: Odeslání žádosti je zdarma. Bude posouzena podle vhodnosti obsahu a kritérií kvality.",
+      "placeholderContact": "E-mail nebo telefon",
+      "placeholderDesc": "Např.: Otevření nové pobočky, akce, kampaň, výzva k dobrovolnictví…",
+      "select": "Vyber…",
+      "sub": "Toto je žádost o zviditelnění. Po kontrole vhodnosti obsahu může být zvýrazněna ve feedu.",
+      "success": "Tvá žádost byla přijata. Po posouzení tě možná budeme kontaktovat.",
+      "title": "Zviditelni svou firmu"
+    },
+    "navigation": {
+      "add": "Přidat",
+      "home": "Domů",
+      "news": "Novinky",
+      "profile": "Profil",
+      "search": "Objevuj",
+      "journey": "Cesta",
+      "loginRequired": "Přihlas se prosím, abys měla přístup ke svému profilu a svým úspěchům.",
+      "newPostsAvailable": "{n} nových příspěvků k dispozici",
+      "powerCheck": "Kontrola síly",
+      "powerSimulator": "Simulátor síly",
+      "stories": "Příběhy"
+    },
+    "newsTicker": {
+      "continue": "Pokračovat",
+      "label": "Agenda",
+      "stop": "Zastavit"
+    },
+    "partnerRail": {
+      "badges": {
+        "apply": "Přihlásit se",
+        "event": "Akce",
+        "webshop": "Webshop"
+      },
+      "defaultLabel": "Partner"
+    },
+    "post": {
+      "comment": "Komentář",
+      "date": {
+        "daysAgo": " dny/dnů zpět",
+        "hoursAgo": " hodinami zpět",
+        "justNow": "Právě teď",
+        "minutesAgo": " minutami zpět",
+        "monthsAgo": " měsíci zpět",
+        "secondsAgo": " sekundami zpět",
+        "weeksAgo": " týdny zpět",
+        "yearsAgo": " lety zpět"
+      },
+      "like": "Líbí se mi",
+      "share": "Sdílet",
+      "testUser": "Testovací uživatel"
+    },
+    "menubar": {
+      "subtitle": {
+        "home": "Vítej, {name}",
+        "search": "Najdi v Belgii vše, co potřebuješ!",
+        "add": "Hledej/najdi/prodej/zeptej se/sdílej!",
+        "newslist": "Agenda Belgie i světa!",
+        "profile": "Zobraz a uprav svůj profil!",
+        "business": "Zobraz a spravuj firmy!",
+        "donate": "Přidej svou špetku soli do polévky!",
+        "conversations": "Zkontroluj své zprávy!",
+        "default": "Tady najdeš vše, {name}"
+      },
+      "altyaziGreeting": "Ahoj, {name}.",
+      "altyaziGuest": "Přihlas se, abys měla přístup ke všem funkcím.",
+      "riseTogether": "Rosteme společně!"
+    },
+    "postCard": {
+      "comments": {
+        "placeholder": "Napiš komentář...",
+        "send": "Odeslat"
+      },
+      "hideConfirm": "Opravdu chceš tento příspěvek skrýt?\n\nSkryté příspěvky se ve feedu nezobrazí. Vrátit je můžeš pouze obnovením všech skrytých příspěvků.",
+      "likes": "{n} to má rád(a)",
+      "menu": {
+        "cancel": "Zrušit",
+        "delete": "Smazat příspěvek",
+        "hide": "Skrýt tento příspěvek",
+        "report": "Nahlásit"
+      },
+      "poll": {
+        "badge": "Anketa",
+        "footer": "Klepnutím na možnost hlasuj.",
+        "votes": "{n} hlasů"
+      },
+      "report": {
+        "cancel": "Zrušit",
+        "reasons": {
+          "inappropriate": "Nevhodný / znepokojivý obsah",
+          "misleading": "Zavádějící informace",
+          "other": "Jiné",
+          "spam": "Spam",
+          "violence": "Nenávistné projevy nebo násilí"
+        },
+        "subtitle": "Vyber důvod:",
+        "title": "Nahlásit příspěvek"
+      },
+      "views": "{n} zobrazení"
+    },
+    "course": {
+      "answerPlaceholder": "Tvoje odpověď...",
+      "completedText": "Skvělé! Tento modul jsi dokončila. Tvůj postup byl uložen.",
+      "completedTitle": "Dokončeno",
+      "day": "Den {n}",
+      "defaultCardTitle": "Karta",
+      "defaultTitle": "Modul",
+      "done": "Hotovo",
+      "errors": {
+        "loadFailed": "Modul se nepodařilo načíst. Zkus to prosím později znovu.",
+        "noCards": "Pro tento modul nebyly nalezeny žádné karty.",
+        "noModuleId": "Nebylo zadáno ID modulu.",
+        "saveResponseFailed": "Chyba při ukládání tvé odpovědi. Zkus to prosím znovu."
+      },
+      "finish": "Dokončit",
+      "footerHint": "Přejeď doleva/doprava nebo použij Další/Předchozí. Obsah je načten z databáze.",
+      "goBack": "Zpět",
+      "imageAlt": "Obrázek",
+      "journeyUpdateNote": "Tímto by se aktualizovalo rozhraní stránky Cesta.",
+      "loading": "Načítání obsahu kurzu…",
+      "next": "Další",
+      "prev": "Předchozí",
+      "restart": "Restartovat",
+      "statusTitle": "Stav kurzu",
+      "whyThisQuestion": "Proč tato otázka"
+    },
+    "journey": {
+      "allStatuses": "Všechny stavy",
+      "allTracks": "Všechny okruhy",
+      "clearFilters": "Vymazat filtry",
+      "clearSearchAriaLabel": "Vymazat hledání",
+      "collapseAll": "Sbalit vše",
+      "continueLabel": "Pokračovat",
+      "continueWhereLeftOff": "Pokračuj tam, kde jsi skončila",
+      "day": "Den {n}",
+      "daysLabel": "Dny: {days}",
+      "defaultModuleSummary": "Obsah modulu",
+      "defaultOutcome": "Uč se a procvičuj",
+      "defaultTrackDescription": "Vzdělávací moduly pro tuto kategorii",
+      "doneCount": "{done}/{total} hotovo",
+      "emptyText": "Změň okruh nebo stav, nebo vymaž hledání a zobraz si vše znovu.",
+      "emptyTitle": "Žádné moduly neodpovídají zadaným filtrům",
+      "errorTitle": "Tvou cestu se nepodařilo načíst",
+      "errors": {
+        "connection": "Zkontroluj své připojení a zkus to znovu.",
+        "empty": "Data cesty se vrátila prázdná."
+      },
+      "expandAll": "Rozbalit vše",
+      "eyebrow": "Tvůj program",
+      "filterByStatusAriaLabel": "Filtrovat podle stavu",
+      "filterByTrackAriaLabel": "Filtrovat podle okruhu",
+      "lede": "Každý okruh obsahuje sérii krátkých denních modulů. Otevři okruh a zobraz si jeho dny, pak pokračuj tam, kde jsi skončila.",
+      "loginToOpenCourse": "Přihlas se, abys mohla otevřít obsah kurzu.",
+      "review": "Zopakovat",
+      "scoreLabel": "{done} z {total} modulů hotovo",
+      "searchAriaLabel": "Hledat moduly",
+      "searchPlaceholder": "Hledej okruhy, moduly, cílovou skupinu…",
+      "start": "Začít",
+      "status": {
+        "done": "Hotovo",
+        "inProgress": "Probíhá",
+        "notStarted": "Nezačato"
+      },
+      "title": "Cesta",
+      "tryAgain": "Zkusit znovu"
+    },
+    "kalender": {
+      "apply": "Použít",
+      "daysOfWeek": [
+        "Ne",
+        "Po",
+        "Út",
+        "St",
+        "Čt",
+        "Pá",
+        "So"
+      ],
+      "monthNames": [
+        "Leden",
+        "Únor",
+        "Březen",
+        "Duben",
+        "Květen",
+        "Červen",
+        "Červenec",
+        "Srpen",
+        "Září",
+        "Říjen",
+        "Listopad",
+        "Prosinec"
+      ]
+    },
+    "onboardingTour": {
+      "back": "Zpět",
+      "getStarted": "Začít",
+      "goToStep": "Přejít na krok {n}",
+      "next": "Další",
+      "skip": "Zatím přeskočit",
+      "steps": {
+        "home": {
+          "description": "Každý den si najdi chvilku na zodpovězení 3 zásadních otázek. Pomůžou ti sledovat, kde právě jsi, a nastavit tón pro tvůj den.",
+          "highlights": [
+            "Změř svůj aktuální stav",
+            "Buduj sebeuvědomění",
+            "Začni svou cestu se záměrem"
+          ],
+          "title": "Denní kontrola síly"
+        },
+        "profile": {
+          "description": "Sleduj svůj růst napříč všemi kategoriemi. Podívej se, jak daleko jsi došla, sleduj výsledky simulací a oslavuj své úspěchy.",
+          "highlights": [
+            "Zobraz postup podle kategorií",
+            "Sleduj výsledky simulací",
+            "Oslavuj své milníky"
+          ],
+          "title": "Sleduj svůj postup"
+        },
+        "simulator": {
+          "description": "Otestuj své dovednosti v poutavých mini-hrách. Každá simulace ti dá osobní zpětnou vazbu, díky které se posuneš dál a poučíš se ze zkušenosti.",
+          "highlights": [
+            "Interaktivní vzdělávací scénáře",
+            "Získej okamžitou osobní zpětnou vazbu",
+            "Uplatni to, co ses naučila"
+          ],
+          "title": "Simulace ze skutečného života"
+        },
+        "stories": {
+          "description": "Spoj se s komunitou silných žen. Čti inspirativní příběhy ostatních a sdílej svou vlastní cestu. Sdílej jeden příběh denně a sleduj, jak roste tvůj dopad.",
+          "highlights": [
+            "Čti inspirativní příběhy",
+            "Sdílej svůj postup",
+            "Sleduj příběhy čekající na schválení",
+            "Buduj smysluplná spojení"
+          ],
+          "title": "Sdílej svůj příběh"
+        },
+        "track": {
+          "description": "Prozkoumej kurzy uspořádané podle kategorií a vytvořené přímo pro tebe. Každý kurz se odemyká den po dni, takže tvá vzdělávací cesta zůstává přehledná a zvládnutelná.",
+          "highlights": [
+            "Uspořádáno podle kategorií",
+            "Systém denního postupu",
+            "Kurzy se odemykají tvým tempem",
+            "Použij filtry k nalezení toho, co potřebuješ"
+          ],
+          "title": "Vzdělávací kurzy"
+        }
+      }
+    },
+    "simulator": {
+      "errors": {
+        "noSimulatorId": "Nebylo zadáno ID simulátoru."
+      },
+      "home": {
+        "allLevels": "Všechny úrovně",
+        "errors": {
+          "loadFailed": "Simulátory se nepodařilo načíst.",
+          "noSimulatorsFound": "Nebyly nalezeny žádné simulátory."
+        },
+        "focusSkills": "Klíčové dovednosti",
+        "loading": "Načítání simulátorů...",
+        "loginRequired": "Přihlas se prosím, abys měla přístup k obsahu kurzu.",
+        "noResults": "Simulátory nenalezeny. Zkus upravit hledání nebo filtry.",
+        "searchPlaceholder": "Hledej scénáře…",
+        "startSimulation": "Spustit simulaci →",
+        "subtitle": "Procvič si vedoucí rozhodování bez skutečného rizika. Vyber si scénář a otestuj svůj přístup."
+      },
+      "levels": {
+        "advanced": "Pokročilá",
+        "core": "Základní",
+        "intro": "Úvod"
+      },
+      "play": {
+        "areaToDevelop": "Oblast k rozvoji",
+        "debriefSubtitle": "Tady je, jak sis vedla v jednotlivých metrikách.",
+        "debriefTitle": "Tvá zpětná vazba",
+        "defaultCardTitle": "Karta",
+        "defaultFeedback": "Dobrá volba.",
+        "defaultScenarioTitle": "Simulátor",
+        "errors": {
+          "loadFailed": "Simulátor se nepodařilo načíst. Zkus to prosím znovu.",
+          "loadResultsError": "Chyba při načítání výsledků.",
+          "loadResultsFailed": "Výsledky se nepodařilo načíst.",
+          "noCards": "Pro tento simulátor nebyly nalezeny žádné karty.",
+          "saveFailed": "Chyba: odpověď se nepodařilo uložit.",
+          "saveResponseError": "Chyba při ukládání odpovědi. Zkus to prosím znovu."
+        },
+        "finish": "Dokončit →",
+        "goBack": "Zpět",
+        "imageAlt": "Obrázek",
+        "loading": "Načítání simulátoru…",
+        "loadingShort": "Načítání…",
+        "microPractice": "Mikro-cvičení",
+        "next": "Další",
+        "powerLens": "Pohled na sílu",
+        "prev": "Předchozí",
+        "recommendedModule": "Doporučený modul",
+        "restart": "Restartovat",
+        "selectOption": "Vyber možnost:",
+        "showResult": "Zobrazit výsledek",
+        "stepProgress": "Krok {current}/{total}",
+        "strength": "Silná stránka",
+        "whyItMatters": "Proč na tom záleží",
+        "yourMetrics": "Tvé metriky"
+      },
+      "result": {
+        "completedLabel": "Dokončeno:",
+        "completedText": "Dokončila jsi {title}",
+        "defaultAdvice": "Dokonči doporučené cvičení a posilni své dovednosti.",
+        "defaultLevel": "Střední",
+        "defaultTitle": "Výzva simulátoru",
+        "errorTitle": "Výsledky se nepodařilo načíst",
+        "errors": {
+          "invalidResponse": "Neplatný formát odpovědi ze serveru.",
+          "loadFailed": "Výsledky se nepodařilo načíst. Zkus to prosím znovu.",
+          "noFeedbackData": "Nejsou k dispozici žádná data zpětné vazby.",
+          "notAuthenticated": "Uživatel není přihlášen.",
+          "saveFailed": "Výsledky se nepodařilo uložit. Zkus to prosím znovu."
+        },
+        "feedback": {
+          "excellent": "Výborně! Tuto výzvu zvládáš na jedničku.",
+          "good": "Dobrý pokus. Zkus to znovu a zlepši se.",
+          "great": "Skvělá práce! Pokračuj ve zlepšování."
+        },
+        "focusArea": "Oblast zaměření",
+        "goBack": "Zpět",
+        "levelLabel": "Úroveň:",
+        "loading": "Načítání tvých výsledků...",
+        "points": "Body",
+        "saveAndContinue": "Uložit a pokračovat",
+        "saving": "Ukládání...",
+        "tryAgain": "Zkusit znovu",
+        "yourPerformance": "Tvůj výkon"
+      },
+      "title": "Simulátor síly"
+    },
+    "stories": {
+      "aboutLabel": "O čem",
+      "allTopics": "Vše",
+      "anonymous": "Anonymní",
+      "context": {
+        "community": "Komunita",
+        "family": "Rodina",
+        "self": "Já sama",
+        "unknown": "Neznámé",
+        "work": "Práce"
+      },
+      "contextLabel": "Kontext",
+      "date": {
+        "daysAgo": "před {n} dny",
+        "hoursAgo": "před {n} h",
+        "justNow": "právě teď",
+        "minutesAgo": "před {n} min",
+        "weeksAgo": "před {n} týdny"
+      },
+      "deleteModal": {
+        "body": "Opravdu chceš tento příběh smazat?",
+        "title": "Smazat příběh",
+        "warn": "Tuto akci nelze vrátit zpět."
+      },
+      "deleteStoryTitle": "Smazat příběh",
+      "emptyTopic": {
+        "sub": "Zkus jiný filtr nebo se vrať později.",
+        "title": "V tomto tématu zatím nejsou žádné příběhy."
+      },
+      "errorModal": {
+        "understand": "Rozumím"
+      },
+      "featured": "Doporučené",
+      "inspireHint": "Vybrané hlasy žen, které proměnily překážky v posun vpřed. Čti, přemýšlej a ulož si ty, které tě osloví.",
+      "inspiredMe": "Inspirovalo mě to",
+      "oneLinerPlaceholder": "Sdílej krátký okamžik...",
+      "pendingSection": {
+        "badge": "⏳ Čeká na schválení",
+        "emptySub": "Tvé odeslané příběhy se tu zobrazí, dokud čekají na zveřejnění.",
+        "emptyTitle": "Nemáš žádné příběhy čekající na schválení.",
+        "hint": "Příběhy, které jsi odeslala a čekají na schválení moderátorem. Jakmile budou schváleny, objeví se ve feedu Skutečné příběhy.",
+        "title": "Tvé příběhy čekající na schválení"
+      },
+      "privacyDesc": "Všechny příběhy jsou zveřejněny anonymně. Můžeš je sdílet zcela bez obav. Vytváříme bezpečný prostor pro skutečné příběhy.",
+      "privacyTitle": "Tvé soukromí je chráněné",
+      "readFullStory": "Přečíst celý příběh",
+      "realSection": {
+        "hint": "Anonymní krátké postřehy ze skutečného života. Žádné „lajky“. Jen „Ztotožňuji se“ a „Podpora“.",
+        "title": "Skutečné příběhy"
+      },
+      "relate": "Ztotožňuji se",
+      "save": "Uložit",
+      "saveForLater": "Uložit na později",
+      "saved": "Uloženo",
+      "searchPlaceholder": "Hledej příběhy, lidi, témata…",
+      "selectTrack": "Vyber okruh",
+      "shareAnonymously": "Sdílet anonymně",
+      "shareHint": "Sdílej krátké, skutečné okamžiky ze svého života. Tvůj příběh se objeví ve feedu anonymně, aby se s ním komunita mohla ztotožnit a podpořit tě.",
+      "showLess": "Zobrazit méně",
+      "submittedMessage": "✅ Tvůj příběh byl odeslán! Nyní čeká na schválení moderátorem a po schválení se objeví ve feedu Skutečné příběhy.",
+      "subtitle1": "Inspirace a skutečné příběhy z naší komunity.",
+      "subtitle2": "Sdílej svůj vlastní příběh a spoj se s ostatními, kteří se s tebou ztotožní a podpoří tě. Bezpečný, anonymní prostor pro vyjádření a sounáležitost.",
+      "support": "Podpora",
+      "tabs": {
+        "inspire": "Inspirativní příběhy",
+        "real": "Příběhy komunity",
+        "share": "Sdílej svůj příběh"
+      },
+      "title": "Příběhy",
+      "toasts": {
+        "dailyLimitReached": "✨ Jeden inspirativní příběh denně udržuje naši komunitu naživu! Vrať se zítra a sdílej další příběh.",
+        "deleteFailed": "Příběh se nepodařilo smazat. Zkus to prosím znovu.",
+        "storySubmitted": "✅ Příběh byl úspěšně odeslán!",
+        "submitFailed": "Příběh se nepodařilo odeslat. Zkus to prosím znovu."
+      },
+      "yourOneLiner": "Tvůj krátký postřeh"
+    },
+    "videoPlayer": {
+      "unsupported": "Tvůj prohlížeč nepodporuje přehrávání videa."
+    }
+  },
+  "pages": {
+    "business": {
+      "actions": {
+        "claim": "Tato firma je moje",
+        "fixRequest": "Opravit údaje",
+        "follow": "Sledovat",
+        "followed": "Sledováno",
+        "sendMessage": "Poslat zprávu"
+      },
+      "contact": {
+        "call": "Zavolat",
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "location": "Poloha",
+        "mail": "E-mail",
+        "pinterest": "Pinterest",
+        "twitter": "X",
+        "website": "Web",
+        "whatsapp": "WhatsApp"
+      },
+      "dialogs": {
+        "claim": {
+          "noteLabel": "Krátký popis",
+          "notePlaceholder": "Proč ti tato firma patří? (např. IČO / doména e-mailu / krátká informace)",
+          "phoneLabel": "Telefon (volitelné)",
+          "title": "Nárokovat tuto firmu"
+        },
+        "fix": {
+          "btn": "Odeslat žádost",
+          "detailsLabel": "Které informace jsou špatně?",
+          "detailsPlaceholder": "Např.: špatná adresa, telefon se změní, kategorie se změní...",
+          "emailLabel": "Kontaktní e-mail (volitelné)",
+          "title": "Žádost o opravu informací"
+        },
+        "report": {
+          "btn": "Odeslat stížnost",
+          "emailLabel": "Kontaktní e-mail (volitelné)",
+          "reasonLabel": "Důvod stížnosti",
+          "reasonPlaceholder": "Falešná firma, špatné údaje, spam, nevhodný obsah atd.",
+          "title": "Nahlásit firmu"
+        }
+      },
+      "messages": {
+        "failed": "Nepodařilo se odeslat. Zkus to znovu.",
+        "fixRequired": "Bez napsání toho, co se má opravit, nemůžeš odeslat.",
+        "linkCopied": "Odkaz zkopírován!",
+        "noteRequired": "Bez krátkého popisu nemůžeš odeslat.",
+        "reportReasonRequired": "Bez napsání důvodu stížnosti nemůžeš odeslat.",
+        "sent": "Tvá žádost byla odeslána.",
+        "shareText": "Podívej se na firmu {name} v aplikaci ELEVATE HER!",
+        "shareTitle": "Profil firmy"
+      },
+      "posts": {
+        "private": "Tento účet je soukromý.",
+        "title": "Nejnovější příspěvky"
+      },
+      "sidebar": {
+        "claim": "Tato firma je moje",
+        "fix": "Opravit údaje",
+        "report": "Nahlásit",
+        "request": "Žádost",
+        "title": "Nastavení firmy"
+      },
+      "unclaimed": "Tato firma zatím není propojena s žádným profilem. Pokud jsi majitelka, můžeš to ověřit přes „Tato firma je moje“ nebo odeslat žádost o opravu údajů.",
+      "views": "Zobrazení"
+    },
+    "home": {
+      "loadingMore": "Načítání dalších příspěvků...",
+      "noMorePosts": "To je vše 👌 Dočetla jsi až sem, gratulujeme!<br>Nahraj si obrazovku, pošli nám ji a staň se naším hostem na příští akci! 🎁",
+      "tabs": {
+        "education": "Vzdělávání",
+        "events": "Akce",
+        "general": "Obecné",
+        "job": "Práce"
+      },
+      "powerCheck": {
+        "dayStreak": "{n} dní v řadě",
+        "introSub": "Zabere to méně než 30 sekund. Tvá data zůstávají soukromá.",
+        "introText": "Zodpověz 3 rychlé otázky a změř svou aktuální energii a naladění. Na základě tvých odpovědí ti navrhneme nejlepší další krok — modul, reflexi nebo cíl, na který se zaměřit.",
+        "introTitle": "Jak se dnes cítíš?",
+        "last30Days": "Posledních 30 dní",
+        "noData": "Žádná data",
+        "powerScoreLabel": "Skóre síly",
+        "quickCheckin": "Rychlá kontrola",
+        "reset": "Resetovat",
+        "resetHint": "Potřebuješ aktualizovat úroveň své energie? Resetuj a začni znovu.",
+        "scoreLabel": "Skóre: {score}",
+        "states": {
+          "drained": "Vyčerpaná",
+          "findYourPower": "Najdi svou sílu",
+          "rising": "Rostoucí",
+          "stable": "Stabilní"
+        },
+        "todayPowerIs": "Dnes je tvá síla",
+        "whatNext": "Co můžeš udělat dál"
+      }
+    },
+    "login": {
+      "explore": "Prozkoumej aplikaci bez účtu",
+      "mailBtn": "Přihlásit se e-mailem",
+      "appleBtn": "Přihlásit se přes Apple",
+      "googleBtn": "Přihlásit se přes Google",
+      "privacyHtml": "Tvá data jsou bezpečně uložena a nesdílíme je s třetími stranami.<br>Přihlášením souhlasíš s ochranou svých údajů podle našich <a href='https://elevather.eu/privacy-policy-for-elevather-application/' target='_blank'>Zásad ochrany osobních údajů</a> a <a href='https://elevather.eu/terms-of-service-end-user-license-agreement-eula/' target='_blank'>Podmínek použití</a>.",
+      "subtitle": "Pro začátek si stačí vybrat účet.",
+      "welcome": "Vítej!",
+      "errors": {
+        "emailInvalid": "Zadej prosím platný e-mail.",
+        "emailRequired": "Zadej prosím svůj e-mail.",
+        "notRegistered": "S tímto e-mailem nebyl nalezen žádný účet. Nejprve se prosím zaregistruj.",
+        "unexpected": "Neočekávaná chyba. Zkontroluj prosím konzoli.",
+        "wrongPassword": "Nesprávné heslo."
+      }
+    },
+    "messages": {
+      "empty": "Zatím nemáš žádné zprávy."
+    },
+    "newsDetails": {
+      "back": "Zpět",
+      "notFound": "Novinka nenalezena.",
+      "openOriginal": "Otevřít původní novinku",
+      "otherNews": "Další novinky",
+      "share": "Sdílet",
+      "source": "Zdroj:"
+    },
+    "newsList": {
+      "defaultSource": "Novinky",
+      "empty": "Momentálně žádné novinky.",
+      "showMore": "Zobrazit více"
+    },
+    "notifications": {
+      "empty": "Momentálně nejsou žádná oznámení k zobrazení.",
+      "title": "Moje oznámení",
+      "types": {
+        "bookmark": "uložila si tvůj příspěvek.",
+        "comment": "okomentovala tvůj příspěvek.",
+        "follow": "tě začala sledovat.",
+        "like": "má ráda tvůj příspěvek.",
+        "post": "sdílela nový příspěvek."
+      },
+      "unknownUser": "Uživatelka"
+    },
+    "postList": {
+      "backToMain": "Zpět",
+      "everywhere": "Všude"
+    },
+    "profile": {
+      "addBusiness": "Přidej svou firmu nebo pracoviště",
+      "businessSidebar": {
+        "address": "Adresa (volitelné)",
+        "addressPlaceholder": "Např.: Ossenstraat 1, Gent",
+        "category": "Kategorie",
+        "categoryPlaceholder": "Vyber kategorii",
+        "descLabel": "Krátký popis (volitelné)",
+        "descPlaceholder": "Krátce představ svou firmu",
+        "email": "E-mail (volitelné)",
+        "emailPlaceholder": "priklad{'@'}firma.be",
+        "logoLabel": "Logo / titulní obrázek (volitelné)",
+        "logoText": "Vybrat logo",
+        "name": "Název firmy",
+        "namePlaceholder": "Např.: Mavzer Consulting",
+        "phone": "Telefon (volitelné)",
+        "phonePlaceholder": "Např.: 0487 246 846",
+        "province": "Provincie (volitelné)",
+        "provincePlaceholder": "Vyber provincii",
+        "tag": "Štítek (volitelné)",
+        "tagPlaceholder": "Vyber štítek",
+        "title": "Přidat firmu",
+        "town": "Město (volitelné)",
+        "townPlaceholder": "Vyber město",
+        "visibilitySub": "Pokud to vypneš, profil bude viditelný jen lidem s odkazem.",
+        "visibilityTitle": "Zveřejnit firmu",
+        "website": "Web (volitelné)",
+        "whatsapp": "WhatsApp (volitelné)",
+        "whatsappPlaceholder": "Pouze čísla (s předvolbou země)"
+      },
+      "deleteDialog": {
+        "cancel": "Zrušit",
+        "confirm": "Ano, smazat",
+        "confirmLabel": "Napiš „DELETE“ pro potvrzení",
+        "confirmPlaceholder": "DELETE",
+        "reasonLabel": "Tvůj důvod smazání",
+        "reasonPlaceholder": "Stručně proč?",
+        "title": "Trvale smazat svůj profil",
+        "warningText": "Tvůj profil, příspěvky a spojení budou odstraněny. Pokud chceš pokračovat, napiš níže svůj důvod a pro potvrzení napiš <b>DELETE</b>.",
+        "warningTitle": "Tuto akci nelze vrátit zpět."
+      },
+      "donateSub": "Dobrovolnický dar",
+      "donateTitle": "Podpoř nás",
+      "edit": "Upravit",
+      "editProfile": "Uprav svůj profil",
+      "empty": {
+        "noBiz": "Žádná firma.",
+        "noBookmarks": "Zatím žádné uložené příspěvky.",
+        "noPosts": "Zatím žádné příspěvky.",
+        "private": "Tento účet je soukromý."
+      },
+      "follow": "Sledovat",
+      "followers": "Sledující",
+      "followingState": "Sleduješ",
+      "hidden": "Skryté",
+      "message": "Poslat zprávu",
+      "messages": {
+        "bizAdded": "Firma byla úspěšně přidána",
+        "bizFailed": "Firmu se nepodařilo uložit",
+        "bizNameMin": "Musí mít alespoň 2 znaky",
+        "bizNameRequired": "Název firmy je povinný",
+        "bizUpdated": "Firma byla aktualizována",
+        "categoryRequired": "Musíš vybrat kategorii",
+        "deleteFailed": "Smazání se nezdařilo. Zkus to znovu.",
+        "deleteProcessed": "Tvá žádost o smazání profilu byla zpracována.",
+        "emailInvalid": "Zadej platný e-mail",
+        "hiddenUpdated": "Skryté příspěvky byly aktualizovány. Zobrazí se po opětovném přihlášení.",
+        "imgError": "Obrázek se nepodařilo nahrát",
+        "nameMin": "Jméno musí mít alespoň 2 znaky",
+        "nameRequired": "Jméno je povinné",
+        "profileUpdateFailed": "Profil se nepodařilo aktualizovat",
+        "profileUpdated": "Profil byl úspěšně aktualizován",
+        "reasonRequired": "Napiš prosím svůj důvod pro smazání.",
+        "typeDelete": "Pro pokračování musíš napsat „DELETE“.",
+        "urlInvalid": "Zadej platnou URL adresu"
+      },
+      "myBizSub": "Tyto firmy jsou propojené s tebou. Klepnutím na tužku vpravo je uprav.",
+      "public": "Veřejné",
+      "sidebar": {
+        "bioLabel": "Krátký popis o sobě",
+        "bioPlaceholder": "Například: Jsme sdružení působící v oblasti psychologie a technologií...",
+        "cancel": "Zrušit",
+        "deleteProfile": "!Smazat můj profil úplně!",
+        "lastName": "Tvé příjmení",
+        "logout": "Odhlásit se",
+        "name": "Tvé jméno",
+        "province": "Provincie (volitelné)",
+        "provincePlaceholder": "Vyber provincii",
+        "resetHiddenPosts": "Obnovit skryté příspěvky",
+        "other": "Jiné",
+        "save": "Uložit",
+        "title": "Upravit profil",
+        "username": "Tvé uživatelské jméno (veřejné)",
+        "visibilitySub": "Pokud to vypneš, tvůj profil uvidí jen lidé s odkazem.",
+        "visibilityTitle": "Zveřejnit profil"
+      },
+      "tabs": {
+        "bookmarks": "Uložené",
+        "myBiz": "Moje firmy",
+        "myPosts": "Moje příspěvky",
+        "otherBiz": "Firmy",
+        "posts": "Příspěvky"
+      },
+      "viewProfile": "Zobrazit profil",
+      "views": "Zobrazení",
+      "chips": {
+        "focus": "Zaměření:",
+        "streak": "Série:",
+        "streakDays": "{n} dní",
+        "trend": "Trend:"
+      },
+      "defaultUserName": "Uživatelka",
+      "goals": {
+        "chooseGoals": "Vyber si své cíle",
+        "emptyText": "Zatím jsi nenastavila žádné cíle.",
+        "status": {
+          "almostDone": "Skoro hotovo",
+          "finished": "Dokončeno ✓",
+          "workingOnIt": "Pracuje se na tom"
+        },
+        "title": "Moje cíle"
+      },
+      "mission": {
+        "title": "Moje mise"
+      },
+      "progress": {
+        "completedCourses": "Dokončené kurzy",
+        "completedSimulators": "Dokončené simulátory",
+        "openTracks": "Otevřené okruhy",
+        "title": "Můj postup"
+      },
+      "reflections": {
+        "daysAgo": "před {n} dny",
+        "emptyText": "Zatím žádné reflexe.",
+        "seeAll": "Zobrazit vše",
+        "title": "Moje reflexe",
+        "today": "Dnes",
+        "weeksAgo": "před {n} týdny",
+        "writeFirst": "Napiš svou první",
+        "yesterday": "Včera"
+      },
+      "settingsSection": {
+        "off": "Vypnuto",
+        "on": "Zapnuto"
+      },
+      "support": {
+        "eula": "Podmínky služby a licenční ujednání (EULA)",
+        "feedback": "Zpětná vazba",
+        "privacy": "Zásady ochrany osobních údajů",
+        "support": "Podpora",
+        "supportSub": "Dotazy a smazání účtu",
+        "title": "Podpora a předvolby"
+      },
+      "trend": {
+        "drained": "Vyčerpaná",
+        "rising": "Rostoucí",
+        "stable": "Stabilní"
+      }
+    },
+    "question": {
+      "location": "Místo",
+      "message": "Tvá zpráva",
+      "subjects": {
+        "appQuestion": "Dotaz k aplikaci",
+        "otherProducts": "Dotaz k jiným produktům",
+        "profileUpgrade": "Vylepšit můj profil",
+        "somethingWrong": "Něco se pokazilo?"
+      }
+    },
+    "selectTag": {
+      "done": "Hotovo",
+      "select": "Vyber alespoň jeden štítek"
+    },
+    "settings": {
+      "language": "Nastavení jazyka",
+      "logout": "Odhlásit se",
+      "privateAccount": "Skrýt účet",
+      "privateInfo": "Tvůj účet byl nastaven jako soukromý, tvé příspěvky jsou skryté.",
+      "title": "Nastavení"
+    },
+    "splash": {
+      "join": "PŘIDEJ SE K NÁM",
+      "languageSettings": "Nastavení jazyka",
+      "next": "Další",
+      "prev": "Zpět",
+      "selectLanguage": "Vyber svůj preferovaný jazyk",
+      "slides": {
+        "1": {
+          "sub": "Rosteme společně!",
+          "text": "Prostor vytvořený pro ženy, aby rostly v sebedůvěře, vedení a well-being — pod vedením psychologie, s podporou komunity.",
+          "title": "Vítej v ELEVATE HER"
+        },
+        "2": {
+          "sub": "Zjisti, kde dnes stojíš.",
+          "text": "Vyzkoušej Power Simulator, který ti ukáže tvé silné stránky a slepá místa, a pak sleduj osobní vzdělávací cestu složenou z krátkých denních modulů.",
+          "title": "Poznej svou sílu!"
+        },
+        "3": {
+          "sub": "Rosti s ženami, které to chápou.",
+          "text": "Sleduj svůj pokrok pomocí denních check-inů, sdílej své zkušenosti a najdi sílu v příbězích ostatních.",
+          "title": "Na tvém příběhu záleží"
+        }
+      }
+    },
+    "updateProfile": {
+      "address": "Adresa",
+      "addressText": "Můžeš aktualizovat své adresní údaje.",
+      "basicInfo": "Základní informace",
+      "basicInfoText": "Tyto údaje jsou viditelné na tvém profilu.",
+      "bio": "Bio",
+      "bus": "Vchod / byt",
+      "companyInfo": "Informace o firmě",
+      "companyInfoText": "Zde můžeš vybrat, v jakých kategoriích a štítcích se tvá firma zobrazuje.",
+      "contact": "Kontakt",
+      "contactText": "Zadej kontaktní údaje, aby tě lidé mohli oslovit.",
+      "gsm": "Mobilní telefon / WhatsApp",
+      "lastname": "Příjmení",
+      "name": "Jméno",
+      "number": "Číslo",
+      "phone": "Telefon",
+      "save": "Uložit změny",
+      "showMail": "Zobrazit můj e-mail na profilu",
+      "social": {
+        "facebook": "URL Facebooku",
+        "instagram": "URL Instagramu",
+        "pinterest": "URL Pinterestu",
+        "twitter": "URL X (Twitter)"
+      },
+      "street": "Ulice",
+      "tagsPlaceholder": "Vyber štítky a kategorie",
+      "uploadPhoto": "Nahrát profilovou fotku",
+      "username": "Uživatelské jméno",
+      "website": "Web"
+    },
+    "emailLogin": {
+      "createOne": "Vytvořit účet",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "ty@priklad.cz",
+      "errors": {
+        "emailRequired": "Zadej prosím svůj e-mail.",
+        "invalidCredentials": "Nesprávný e-mail nebo heslo.",
+        "loginFailed": "Přihlášení se nezdařilo. Zkus to prosím znovu.",
+        "passwordRequired": "Zadej prosím své heslo."
+      },
+      "noAccount": "Nemáš účet?",
+      "passwordLabel": "Heslo",
+      "passwordPlaceholder": "••••••••",
+      "signIn": "Přihlásit se",
+      "signingIn": "Přihlašování…",
+      "subtitle": "Pro pokračování zadej svůj e-mail a heslo.",
+      "title": "Přihlásit se e-mailem"
+    },
+    "emailRegister": {
+      "confirmPassword": "Potvrď heslo",
+      "confirmPasswordPlaceholder": "Zopakuj své heslo",
+      "creating": "Vytváření účtu…",
+      "email": "E-mail",
+      "emailPlaceholder": "ty@priklad.cz",
+      "errors": {
+        "emailRequired": "Zadej prosím svůj e-mail.",
+        "emailTaken": "Tento e-mail je již zaregistrován. Zkus se místo toho přihlásit.",
+        "firstNameRequired": "Zadej prosím své jméno.",
+        "passwordMismatch": "Hesla se neshodují.",
+        "passwordTooShort": "Heslo musí mít alespoň 6 znaků.",
+        "registrationFailed": "Registrace se nezdařila. Zkus to prosím znovu."
+      },
+      "firstName": "Jméno",
+      "firstNamePlaceholder": "Jana",
+      "hasAccount": "Už máš účet?",
+      "lastName": "Příjmení",
+      "lastNamePlaceholder": "Nováková",
+      "password": "Heslo",
+      "passwordPlaceholder": "Min. 6 znaků",
+      "signIn": "Přihlásit se",
+      "submit": "Vytvořit účet",
+      "subtitle": "Zaregistruj se e-mailem a začni.",
+      "title": "Vytvořit účet"
+    },
+    "register": {
+      "alreadyRegistered": "Už máš účet? Klikni sem pro přihlášení",
+      "choosePassword": "Zvol si heslo",
+      "email": "E-mail",
+      "errors": {
+        "emailInvalid": "Zadej prosím platnou e-mailovou adresu.",
+        "emailRequired": "Zadej prosím svou e-mailovou adresu.",
+        "googleSignInFailed": "Přihlášení přes Google se nezdařilo.",
+        "passwordMismatch": "Tvá hesla se neshodují.",
+        "passwordRequired": "Zadej prosím své heslo.",
+        "passwordTooShort": "Tvé heslo musí mít alespoň 6 znaků.",
+        "usernameRequired": "Zadej prosím své uživatelské jméno.",
+        "usernameTooShort": "Tvé uživatelské jméno musí mít alespoň 3 znaky."
+      },
+      "repeatPassword": "Zopakuj heslo",
+      "required": "(povinné)",
+      "submit": "Zaregistrovat se",
+      "subtitle": "Vyplň níže uvedený formulář a přidej se k nám",
+      "title": "Registrace"
+    }
+  },
+  "search": {
+    "chooseCategory": "Vyber kategorii",
+    "subcategories": "Podkategorie",
+    "showAllInThisCategory": "Vše",
+    "chooseLocation": "Vyber místo",
+    "resetFilters": "Obnovit filtry",
+    "foundProfiles": "Nalezené profily",
+    "goToBusinessDetails": "Zobrazit podrobnosti",
+    "empty": {
+      "noBusinessMatch": "Žádné firmy neodpovídají zvoleným kritériím.",
+      "haveBusinessHint": "Pokud máš firmu, můžeš ji přidat ve svém profilu a stát se viditelnou.",
+      "noBusinessHint": "Zde se můžeš stát viditelnou přidáním své firmy.",
+      "goToMyProfile": "Přejít na můj profil",
+      "addBusiness": "Přidat firmu"
+    },
+    "provinceFallback": "Provincie {id}",
+    "townFallback": "Město {id}"
+  }
+}

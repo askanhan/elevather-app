@@ -1,5 +1,6 @@
 import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 // Icons components - simple SVG elements
 const HomeIcon = {
@@ -25,69 +26,33 @@ const TrendingUpIcon = {
 export default {
   setup() {
     const route = useRoute()
+    const { t } = useI18n()
 
     // State - créé DANS setup()
     const isVisible = ref(false)
     const currentStep = ref(0)
 
-    // Onboarding steps with engaging copy
+    // Onboarding steps - copy (title/description/highlights) lives in the
+    // i18n messages under components.onboardingTour.steps.<id>
     const steps = ref([
-      {
-        id: 'home',
-        title: 'Daily Power Check',
-        description: 'Every day, take a moment to answer 3 powerful questions. They help you track where you are right now and set the tone for your day.',
-        highlights: [
-          'Measure your current state',
-          'Build self-awareness',
-          'Start your journey with intention'
-        ]
-      },
-      {
-        id: 'track',
-        title: 'Learning Courses',
-        description: 'Explore courses organized by categories and designed just for you. Each course is unlocked day by day, keeping your learning journey smooth and manageable.',
-        highlights: [
-          'Organized by categories',
-          'Daily progression system',
-          'Courses unlock at your pace',
-          'Use filters to find what you need'
-        ]
-      },
-      {
-        id: 'simulator',
-        title: 'Real-Life Simulations',
-        description: 'Put your skills to the test with engaging mini-games. Each simulation gives you personalized feedback to help you grow and learn from experience.',
-        highlights: [
-          'Interactive learning scenarios',
-          'Get instant personalized feedback',
-          'Apply what you\'ve learned'
-        ]
-      },
-      {
-        id: 'stories',
-        title: 'Share Your Story',
-        description: 'Connect with a community of empowered women. Read inspiring stories from others and share your own journey. Share one story per day and watch your impact grow.',
-        highlights: [
-          'Read inspiring stories',
-          'Share your progress',
-          'Track stories awaiting validation',
-          'Build meaningful connections'
-        ]
-      },
-      {
-        id: 'profile',
-        title: 'Track Your Progress',
-        description: 'Visualize your growth across all categories. See how far you\'ve come, track your simulation scores, and celebrate your achievements.',
-        highlights: [
-          'View progress by category',
-          'Monitor simulation results',
-          'Celebrate your milestones'
-        ]
-      }
+      { id: 'home', highlightsCount: 3 },
+      { id: 'track', highlightsCount: 4 },
+      { id: 'simulator', highlightsCount: 3 },
+      { id: 'stories', highlightsCount: 4 },
+      { id: 'profile', highlightsCount: 3 }
     ])
 
     // Computed property for current step data
-    const currentStepData = computed(() => steps.value[currentStep.value])
+    const currentStepData = computed(() => {
+      const step = steps.value[currentStep.value]
+      const base = `components.onboardingTour.steps.${step.id}`
+      return {
+        id: step.id,
+        title: t(`${base}.title`),
+        description: t(`${base}.description`),
+        highlights: Array.from({ length: step.highlightsCount }, (_, i) => t(`${base}.highlights.${i}`))
+      }
+    })
 
     // Methods
     const getCurrentIcon = () => {

@@ -11,27 +11,30 @@
                 <div class="motto">{{ user.motto }}</div>
             </div>
         </div>
+        <div class="right">
+            <LanguageSwitcher variant="inline" />
+        </div>
     </header>
     <!-- /Header -->
 
     <!-- Identity chips -->
     <section class="chipsRow">
         <span class="chip strong">
-            Focus: <b>{{ focusTrack }}</b>
+            {{ $t('pages.profile.chips.focus') }} <b>{{ focusTrack }}</b>
         </span>
         <span class="chip">
-            Streak: <b>{{ user.streakDays }} days</b>
+            {{ $t('pages.profile.chips.streak') }} <b>{{ $t('pages.profile.chips.streakDays', { n: user.streakDays }) }}</b>
         </span>
         <span class="chip" :class="trendClass">
-            Trend: <b>{{ user.trend }}</b>
+            {{ $t('pages.profile.chips.trend') }} <b>{{ trendLabel }}</b>
         </span>
     </section>
 
     <!-- Mission -->
     <section class="card mission" v-if="mission">
         <div class="cardHead">
-            <div class="h2">My mission</div>
-            <button class="link" @click="goGoals">Edit</button>
+            <div class="h2">{{ $t('pages.profile.mission.title') }}</div>
+            <button class="link" @click="goGoals">{{ $t('pages.profile.edit') }}</button>
         </div>
         <div class="missionBox">
             <div class="quoteMark">"</div>
@@ -42,8 +45,8 @@
     <!-- My Goals -->
     <section class="card" v-if="myGoals.length">
         <div class="cardHead">
-            <div class="h2">My goals</div>
-            <button class="link" @click="goGoals">Edit</button>
+            <div class="h2">{{ $t('pages.profile.goals.title') }}</div>
+            <button class="link" @click="goGoals">{{ $t('pages.profile.edit') }}</button>
         </div>
         <div class="goalsList">
             <div v-for="g in myGoals" :key="g.id" class="goalItem">
@@ -59,19 +62,19 @@
     <!-- If no goals yet -->
     <section class="card" v-if="!myGoals.length && !loading">
         <div class="cardHead">
-            <div class="h2">My goals</div>
+            <div class="h2">{{ $t('pages.profile.goals.title') }}</div>
         </div>
         <div class="emptyGoals">
-            <p>You haven't set any goals yet.</p>
-            <button class="cta" @click="goGoals">Choose your goals</button>
+            <p>{{ $t('pages.profile.goals.emptyText') }}</p>
+            <button class="cta" @click="goGoals">{{ $t('pages.profile.goals.chooseGoals') }}</button>
         </div>
     </section>
 
     <!-- Progress -->
     <section class="card">
         <div class="cardHead">
-            <div class="h2">My progress</div>
-            <button class="link" @click="goJourney">Open Tracks</button>
+            <div class="h2">{{ $t('pages.profile.progress.title') }}</div>
+            <button class="link" @click="goJourney">{{ $t('pages.profile.progress.openTracks') }}</button>
         </div>
 
         <div class="bars">
@@ -89,11 +92,11 @@
         <div class="stats">
             <div class="stat">
                 <div class="statVal">{{ stats.completedCourses }}</div>
-                <div class="statLbl">Completed courses</div>
+                <div class="statLbl">{{ $t('pages.profile.progress.completedCourses') }}</div>
             </div>
             <div class="stat">
                 <div class="statVal">{{ stats.simulations }}</div>
-                <div class="statLbl">Completed simulators</div>
+                <div class="statLbl">{{ $t('pages.profile.progress.completedSimulators') }}</div>
             </div>
         </div>
     </section>
@@ -106,8 +109,8 @@
     <!-- Reflections -->
     <section class="card">
         <div class="cardHead">
-            <div class="h2">My reflections</div>
-            <button class="link" @click="openJournal">See all</button>
+            <div class="h2">{{ $t('pages.profile.reflections.title') }}</div>
+            <button class="link" @click="openJournal">{{ $t('pages.profile.reflections.seeAll') }}</button>
         </div>
 
         <div v-if="latestReflections.length" class="journal">
@@ -122,8 +125,8 @@
         </div>
 
         <div v-else class="emptyGoals">
-            <p>No reflections yet.</p>
-            <button class="cta" @click="openJournal">Write your first</button>
+            <p>{{ $t('pages.profile.reflections.emptyText') }}</p>
+            <button class="cta" @click="openJournal">{{ $t('pages.profile.reflections.writeFirst') }}</button>
         </div>
     </section>
 
@@ -131,25 +134,25 @@
     <!-- Support / Preferences -->
     <section class="card">
         <div class="cardHead">
-            <div class="h2">Support & preferences</div>
+            <div class="h2">{{ $t('pages.profile.support.title') }}</div>
         </div>
 
         <div class="prefList">
             <button class="pref" @click="openEULA">
-                <span class="prefLeft">Terms of Service & EULA</span>
+                <span class="prefLeft">{{ $t('pages.profile.support.eula') }}</span>
                 <span class="prefRight"></span>
             </button>
             <button class="pref" @click="openPrivacy">
-                <span class="prefLeft">Privacy Policy</span>
+                <span class="prefLeft">{{ $t('pages.profile.support.privacy') }}</span>
                 <span class="prefRight"></span>
             </button>
             <button class="pref" @click="openFeedback">
-                <span class="prefLeft">Feedback</span>
+                <span class="prefLeft">{{ $t('pages.profile.support.feedback') }}</span>
                 <span class="prefRight"></span>
             </button>
             <button class="pref" @click="openSupport">
-                <span class="prefLeft">Support</span>
-                <span class="prefRight">Questions & Account deletion</span>
+                <span class="prefLeft">{{ $t('pages.profile.support.support') }}</span>
+                <span class="prefRight">{{ $t('pages.profile.support.supportSub') }}</span>
             </button>
         </div>
     </section>
@@ -157,16 +160,16 @@
     <!-- Settings -->
     <section class="card">
         <div class="cardHead">
-            <div class="h2">Settings</div>
+            <div class="h2">{{ $t('pages.settings.title') }}</div>
         </div>
 
         <div class="prefList">
             <button class="pref" @click="openNotifications">
-                <span class="prefLeft">Notifications</span>
-                <span class="prefRight">{{ prefs.notifications }}</span>
+                <span class="prefLeft">{{ $t('common.notifications') }}</span>
+                <span class="prefRight">{{ notificationsLabel }}</span>
             </button>
             <button class="pref danger" @click="logout">
-                <span class="prefLeft">Log out</span>
+                <span class="prefLeft">{{ $t('pages.settings.logout') }}</span>
                 <span class="prefRight"></span>
             </button>
         </div>

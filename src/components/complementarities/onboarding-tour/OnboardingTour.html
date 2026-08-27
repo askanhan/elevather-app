@@ -36,7 +36,7 @@
           :key="index"
           :class="['pagination-dot', { active: index === currentStep }]"
           @click="goToStep(index)"
-          :aria-label="`Go to step ${index + 1}`"
+          :aria-label="$t('components.onboardingTour.goToStep', { n: index + 1 })"
         ></button>
       </div>
 
@@ -47,7 +47,7 @@
           class="btn-secondary"
           @click="previousStep"
         >
-          Back
+          {{ $t('components.onboardingTour.back') }}
         </button>
 
         <button
@@ -55,7 +55,7 @@
           class="btn-primary"
           @click="nextStep"
         >
-          Next
+          {{ $t('components.onboardingTour.next') }}
         </button>
 
         <button
@@ -63,13 +63,13 @@
           class="btn-primary btn-get-started"
           @click="completeOnboarding"
         >
-          Get Started
+          {{ $t('components.onboardingTour.getStarted') }}
         </button>
       </div>
 
       <!-- Skip option (subtle) -->
       <button class="btn-skip" @click="completeOnboarding">
-        Skip for now
+        {{ $t('components.onboardingTour.skip') }}
       </button>
     </div>
   </div>

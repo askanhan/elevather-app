@@ -1,26 +1,26 @@
 <div id="footer-bar" class="footer-bar-1" v-if="current !== '/' && current !== 'chat' && loggedIn">
     <a :class="current === 'home' ? 'active-nav' : ''" @click="goPowerCheck()">
         <i class="fa fa-bolt"></i>
-        <span>Power Check</span>
+        <span>{{ $t('components.navigation.powerCheck') }}</span>
       </a>
-    
+
       <a :class="current === 'journey' ? 'active-nav' : ''" @click="goTracks()">
         <i class="fa fa-road"></i>
-        <span>Journey</span>
+        <span>{{ $t('components.navigation.journey') }}</span>
       </a>
-    
+
       <a :class="current === 'simulator' ? 'active-nav' : ''" @click="goPowerSimulator()">
         <i class="fa fa-gamepad"></i>
-        <span>Power Simulator</span>
+        <span>{{ $t('components.navigation.powerSimulator') }}</span>
       </a>
-    
+
       <a :class="current === 'stories' ? 'active-nav' : ''" @click="goStoriesModels()">
         <i class="fa fa-book-open"></i>
-        <span>Stories</span>
+        <span>{{ $t('components.navigation.stories') }}</span>
       </a>
-    
+
       <a :class="current === 'profile' ? 'active-nav' : ''" @click="profileTo()">
         <i class="fa fa-user-circle"></i>
-        <span>Profile</span>
+        <span>{{ $t('components.navigation.profile') }}</span>
       </a>
 </div>

@@ -2,69 +2,69 @@
     <div class="card card-style">
         <div class="content mb-0">
             <h1 class="text-center font-900 font-40 text-uppercase mb-0">
-                {{UIText.regmeg.register[lang]}}
+                {{ $t('pages.register.title') }}
             </h1>
             <p class="text-center color-highlight font-11">
-                {{UIText.regmeg.registerHere[lang]}}
+                {{ $t('pages.register.subtitle') }}
             </p>
 
-           
+
 
             <div class="input-style no-borders has-icon validate-field">
                 <i class="fa fa-user"></i>
                 <input type="name" v-model="username" class="form-control validate-name" id="form1a"
-                    :placeholder="UIText.regmeg.username[lang]">
+                    :placeholder="$t('pages.updateProfile.username')">
                 <label for="form1a" class="color-blue-dark font-10 mt-1">
-                    {{UIText.regmeg.username[lang]}}
+                    {{ $t('pages.updateProfile.username') }}
                 </label>
                 <i v-if="onceFilledInUsername && usernameError !== ''"
                     class="fa fa-times invalid color-red-dark"></i>
                 <i v-if="onceFilledInUsername && usernameError == ''" class="fa fa-check valid color-green-dark"></i>
-                <em v-if="!onceFilledInUsername">{{UIText.regmeg.required[lang]}}</em>
+                <em v-if="!onceFilledInUsername">{{ $t('pages.register.required') }}</em>
             </div>
             <div class="input-style no-borders has-icon validate-field mt-2">
                 <i class="fa fa-at"></i>
                 <input type="email" v-model="email" class="form-control validate-email" id="form1aa"
-                :placeholder="UIText.regmeg.email[lang]">
+                :placeholder="$t('pages.register.email')">
                 <label for="form1aa" class="color-blue-dark font-10 mt-1">
-                    {{UIText.regmeg.email[lang]}}
+                    {{ $t('pages.register.email') }}
                 </label>
                 <i v-if="onceFilledInEmail && mailError !== ''" class="fa fa-times invalid color-red-dark"></i>
                 <i v-if="onceFilledInEmail && mailError == ''" class="fa fa-check valid color-green-dark"></i>
-                <em v-if="!onceFilledInEmail">{{UIText.regmeg.required[lang]}}</em>
+                <em v-if="!onceFilledInEmail">{{ $t('pages.register.required') }}</em>
             </div>
             <div class="input-style no-borders has-icon validate-field mt-2">
                 <i class="fa fa-lock"></i>
                 <input type="password" class="form-control validate-password" id="form3a" v-model="password"
-                :placeholder="UIText.regmeg.choosePwd[lang]">
+                :placeholder="$t('pages.register.choosePassword')">
                 <label for="form3a" class="color-blue-dark font-10 mt-1">
-                    {{UIText.regmeg.choosePwd[lang]}}
+                    {{ $t('pages.register.choosePassword') }}
                 </label>
                 <i v-if="onceFilledInPwd && passwordError !== ''" class="fa fa-times invalid color-red-dark"></i>
                 <i v-if="onceFilledInPwd && passwordError == ''" class="fa fa-check valid color-green-dark"></i>
-                <em v-if="!onceFilledInPwd">{{UIText.regmeg.required[lang]}}</em>
+                <em v-if="!onceFilledInPwd">{{ $t('pages.register.required') }}</em>
             </div>
             <div class="input-style no-borders has-icon validate-field mt-2">
                 <i class="fa fa-lock"></i>
                 <input type="password" class="form-control validate-password" id="form3a1" v-model="password2"
-                :placeholder="UIText.regmeg.repeatPwd[lang]">
+                :placeholder="$t('pages.register.repeatPassword')">
                 <label for="form3a1" class="color-blue-dark font-10 mt-1">
-                    {{UIText.regmeg.repeatPwd[lang]}}
+                    {{ $t('pages.register.repeatPassword') }}
                 </label>
                 <i v-if="onceFilledInPwd2 && password2Error !== ''" class="fa fa-times invalid color-red-dark"></i>
                 <i v-if="onceFilledInPwd2 && password2Error == ''" class="fa fa-check valid color-green-dark"></i>
-                <em v-if="!onceFilledInPwd2">{{UIText.regmeg.required[lang]}}</em>
+                <em v-if="!onceFilledInPwd2">{{ $t('pages.register.required') }}</em>
             </div>
 
             <a @click="createAccount" class="btn btn-m btn-full rounded-s shadow-l bg-green-dark text-uppercase font-900 mt-4">
-                {{UIText.regmeg.login[lang]}}    
+                {{ $t('pages.register.submit') }}
             </a>
 
             <div class="divider"></div>
              <div id="gsi-btn" style="margin-top:10px; "></div>
 
             <p class="text-center" @click="goToLogin">
-                <a class="color-theme opacity-50 font-12">{{UIText.regmeg.alreadyRegistered[lang]}}</a>
+                <a class="color-theme opacity-50 font-12">{{ $t('pages.register.alreadyRegistered') }}</a>
             </p>
         </div>
     </div>
