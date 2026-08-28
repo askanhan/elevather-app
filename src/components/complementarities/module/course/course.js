@@ -31,7 +31,6 @@ export default {
             openAnswers: {},
             error: null,
             moduleId: null,
-            userId: 1,
             progressStarted: false,
             loading: false,
             stageHeight: 'auto',
@@ -46,6 +45,10 @@ export default {
     },
 
     computed: {
+
+        userId() {
+            return this.$store.state.user?.id
+        },
 
         courseCards() {
             return this.$store.state.courseCards || []

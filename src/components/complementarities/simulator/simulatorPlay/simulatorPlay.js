@@ -202,10 +202,8 @@ export default {
             this.selectedAnswers[this.current.id] = option.id
             
             try {
-                // TODO: Replace with actual auth when available
-                // For now, use fixed userId for testing
-                const userId = 1
-                
+                const userId = this.$store.state.user?.id
+
                 if (!userId || !this.simulatorId) {
                     console.error('Missing userId or simulatorId')
                     this.feedback = this.$t('components.simulator.play.errors.saveFailed')
@@ -421,12 +419,18 @@ export default {
         // Finish and redirect to simulators
         finishAndNavigate() {
             // Update progress to "Done" before navigating
-            const userId = this.$store.state.user?.id || 1
-            
+            const userId = this.$store.state.user?.id
+
             console.log('🟢 finishAndNavigate called')
             console.log('userId:', userId)
             console.log('simulatorId:', this.simulatorId)
-            
+
+            if (!userId) {
+                console.error('❌ Missing userId, skipping progress update')
+                this.$router.push('/simulator')
+                return
+            }
+
             this.$store.dispatch('updateUserProgress', {
                 userId: userId,
                 ownerType: 'simulator',

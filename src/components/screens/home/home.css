@@ -1241,3 +1241,140 @@ body.dark-mode .loading-text {
 .legend-dot.empty {
   background: rgba(230, 238, 247, 0.8);
 }
+
+/* --- Per-metric breakdown --- */
+.metrics {
+  margin-top: 20px;
+}
+
+.metrics-head {
+  margin-bottom: 12px;
+}
+
+.metrics-head .h2 {
+  margin-bottom: 4px;
+}
+
+.metrics-hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+  max-width: 480px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.metric-card {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  border-left: 3px solid var(--line);
+}
+
+.metric-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.metric-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.metric-value {
+  font-weight: 900;
+  font-size: 15px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.metric-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(230, 238, 247, 0.9);
+  border: 1px solid rgba(230, 238, 247, 1);
+  overflow: hidden;
+}
+
+.metric-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--brand-blue), var(--brand-pink));
+  transition: width 0.3s ease;
+}
+
+.metric-desc {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.metric-meta {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.metric-card.rising {
+  border-left-color: rgba(16, 185, 129, 0.7);
+}
+
+.metric-card.rising .metric-value {
+  color: #059669;
+}
+
+.metric-card.rising .metric-fill {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.metric-card.stable {
+  border-left-color: rgba(59, 130, 246, 0.7);
+}
+
+.metric-card.stable .metric-value {
+  color: #2563eb;
+}
+
+.metric-card.stable .metric-fill {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+}
+
+.metric-card.drained {
+  border-left-color: rgba(245, 158, 11, 0.7);
+}
+
+.metric-card.drained .metric-value {
+  color: #d97706;
+}
+
+.metric-card.drained .metric-fill {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.metric-card.empty {
+  opacity: 0.6;
+}
+
+.metric-card.empty .metric-value {
+  color: #cbd5e1;
+}
+
+@media (min-width: 860px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -690,6 +690,10 @@
         "dayStreak": "{n} day streak",
         "scoreLabel": "Score: {score}",
         "noData": "No data",
+        "metricsTitle": "Your strengths & growth areas",
+        "metricsHint": "Built from your check-in answers over time. Each check-in covers 3 of these 8 areas, so this fills in gradually.",
+        "metricResponses": "{n} check-ins",
+        "metricNoData": "No check-ins yet",
         "states": {
           "findYourPower": "Find your power",
           "rising": "Rising",

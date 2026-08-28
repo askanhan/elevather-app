@@ -23,6 +23,10 @@ export default {
     },
 
     computed: {
+        userId() {
+            return this.$store.state.user?.id
+        },
+
         statuses() {
             return this.$store.state.journeyStatuses || []
         },
@@ -128,11 +132,15 @@ export default {
             this.loading = true
             this.error = null
 
+            // fetchUserProgress merges into journeyModules by id (UPDATE_MODULE_STATUS), so it
+            // must not run until journeyModules is populated - otherwise the merge silently
+            // no-ops and every module falls back to "Not started". Awaiting fetchJourneyData
+            // first removes that ordering race regardless of relative network timing.
             Promise.all([
                 this.$store.dispatch('fetchJourneyProgressStatuses'),
-                this.$store.dispatch('fetchJourneyData'),
-                this.$store.dispatch('fetchUserProgress', 1) // userId: 1 for now
+                this.$store.dispatch('fetchJourneyData')
             ])
+                .then(() => this.$store.dispatch('fetchUserProgress', this.userId))
                 .then(() => {
                     if (this.categories.length === 0 || this.modules.length === 0) {
                         this.error = this.$t('components.journey.errors.empty')

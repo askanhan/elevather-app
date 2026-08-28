@@ -12,12 +12,14 @@ export default {
             recommendations: [],
             historyDays: [],
             streak: 0,
+            checkinMetrics: [],
         }
     },
 
     mounted() {
         this.fetchQuestions()
         this.fetchHistory()
+        this.fetchCheckinMetrics()
     },
 
     computed: {
@@ -96,6 +98,25 @@ export default {
             }
         },
 
+        async fetchCheckinMetrics() {
+            if (!this.userId) return
+            try {
+                const { data } = await api.get(`/user/${this.userId}/checkin-metrics/`)
+                this.checkinMetrics = data.metrics || []
+            } catch (e) {
+                console.error('Error fetching checkin metrics:', e)
+            }
+        },
+
+        // Same rising/stable/drained/empty tiers as the daily power score, so the
+        // color language stays consistent across the whole screen.
+        metricTier(score) {
+            if (score === null || score === undefined) return 'empty'
+            if (score >= 70) return 'rising'
+            if (score <= 45) return 'drained'
+            return 'stable'
+        },
+
         clamp(v) {
             const n = Math.round(v)
             return Math.max(0, Math.min(100, n))
@@ -113,6 +134,7 @@ export default {
                 setTimeout(() => {
                     this.fetchRecommendations()
                     this.fetchHistory()
+                    this.fetchCheckinMetrics()
                 }, 500)
             }
         },

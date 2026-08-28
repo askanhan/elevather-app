@@ -92,4 +92,27 @@
         </div>
     </section>
 
+    <!-- Per-metric breakdown, built up from check-in answers over time -->
+    <section class="metrics" v-if="checkinMetrics.length">
+        <div class="metrics-head">
+            <h2 class="h2">{{ $t('pages.home.powerCheck.metricsTitle') }}</h2>
+            <p class="metrics-hint">{{ $t('pages.home.powerCheck.metricsHint') }}</p>
+        </div>
+        <div class="metrics-grid">
+            <div v-for="m in checkinMetrics" :key="m.id" class="metric-card" :class="metricTier(m.average_score)">
+                <div class="metric-top">
+                    <span class="metric-name">{{ m.title }}</span>
+                    <span class="metric-value">{{ m.average_score !== null ? m.average_score : '—' }}</span>
+                </div>
+                <div class="metric-bar">
+                    <div class="metric-fill" :style="{ width: (m.average_score || 0) + '%' }"></div>
+                </div>
+                <p class="metric-desc">{{ m.description }}</p>
+                <span class="metric-meta">
+                    {{ m.response_count > 0 ? $t('pages.home.powerCheck.metricResponses', { n: m.response_count }) : $t('pages.home.powerCheck.metricNoData') }}
+                </span>
+            </div>
+        </div>
+    </section>
+
 </div>
