@@ -16,6 +16,8 @@ from src.database.repository import (
     seed_module_categories
 )
 from src.database.importer import import_all_courses, import_all_simulators
+from src.database.translation_importer import import_all_course_translations, import_all_simulator_translations
+from src.database.translation_coverage import print_coverage_report, save_coverage_csv
 from src.utils.file_discovery import discover_excel_files
 from src.utils.sql_generator import generate_sql_course, generate_sql_simulator
 from src.audio.audio_generator import generate_audio_files
@@ -140,6 +142,66 @@ def run_database_import(preserve_user_data=True):
         print("\n--- Connection closed ---")
 
 
+def run_translations_import(locale):
+    """
+    Import content translations for one locale from
+    data-sources/translations/<locale>/{days,simulators} into the
+    content_translation table. Additive/idempotent - does not clear or
+    touch any existing content, unlike run_database_import().
+    """
+    print("\n" + "="*60)
+    print(f"IMPORTING CONTENT TRANSLATIONS ('{locale}')...")
+    print("="*60)
+
+    conn = connect_to_database()
+    if not conn:
+        print("ERROR: Failed to connect to database")
+        return False
+
+    try:
+        courses_done = import_all_course_translations(locale)
+        simulators_done = import_all_simulator_translations(locale)
+
+        print("\n" + "="*60)
+        print("Translation import completed!")
+        print(f"   Course days translated: {courses_done}")
+        print(f"   Simulators translated: {simulators_done}")
+        print("="*60)
+
+        return True
+    finally:
+        conn.close()
+        print("\n--- Connection closed ---")
+
+
+def run_translations_coverage(locale):
+    """
+    Audit content_translation for one locale: walks every module, card,
+    component, MCQ option, simulator, metric and feedback tier that actually
+    has non-empty base content and reports which ones have no translation
+    row for `locale` - independent of import_course_translation()'s own
+    per-card WARNINGs, which only cover what it attempted, not what it
+    skipped or what was never in a translation file to begin with.
+    """
+    print("\n" + "="*60)
+    print(f"AUDITING TRANSLATION COVERAGE FOR '{locale}'...")
+    print("="*60)
+
+    conn = connect_to_database()
+    if not conn:
+        print("ERROR: Failed to connect to database")
+        return False
+
+    try:
+        missing = print_coverage_report(locale)
+        if missing:
+            save_coverage_csv(locale, missing)
+        return True
+    finally:
+        conn.close()
+        print("\n--- Connection closed ---")
+
+
 def main():
     """
     Main entry point - Orchestrates the entire process.
@@ -149,7 +211,26 @@ def main():
     - --run-only, -r: Run import only (no SQL generation)
     - --full-clear: Clear ALL data including user data (default: preserve user data)
     - --preserve-user-data: Preserve user data when clearing (default behavior)
+    - --translations <locale>: Import content translations for <locale> from
+      data-sources/translations/<locale>/ instead of running the normal
+      course/simulator import (e.g. --translations pl)
+    - --translations-coverage <locale>: Report every module/card/component
+      field that still has no translation for <locale>, without importing
+      anything (e.g. --translations-coverage pl)
     """
+    # Translations modes are handled separately - neither clears/reimports base content
+    if "--translations-coverage" in sys.argv:
+        idx = sys.argv.index("--translations-coverage")
+        locale = sys.argv[idx + 1] if idx + 1 < len(sys.argv) else "pl"
+        success = run_translations_coverage(locale)
+        sys.exit(0 if success else 1)
+
+    if "--translations" in sys.argv:
+        idx = sys.argv.index("--translations")
+        locale = sys.argv[idx + 1] if idx + 1 < len(sys.argv) else "pl"
+        success = run_translations_import(locale)
+        sys.exit(0 if success else 1)
+
     # Parse command line arguments
     generate_only = "--generate-only" in sys.argv or "-g" in sys.argv
     run_only = "--run-only" in sys.argv or "-r" in sys.argv

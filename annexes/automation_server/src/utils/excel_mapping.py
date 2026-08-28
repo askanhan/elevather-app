@@ -83,6 +83,33 @@ DAY_NUMBER_OVERRIDES = {
     "A Brief Use of AI: What You Can Actually Do With It": 30,
 }
 
+# Translation Excel files under data-sources/translations/<locale>/simulators/ don't
+# retain any English identifier (even "Simulator Title" is fully translated), so unlike
+# courses (matched via day number) each translated simulator file must be mapped by hand
+# to the exact title of the already-imported Simulator row it translates.
+SIMULATOR_TRANSLATION_TITLE_MAP = {
+    " Power Simulator_IKIGAI_PL_Zdenka.final.xlsx": "Find your IKIGAI: Purpose discovering challenge",
+    "Power_ Simulator_Public_Speaking_PL_BORIS..KasiaBxlsx.xlsx": "Public Speaking",
+    "Power_Simulator_AI_PL_Vision_Tree.xlsx": "AI in Your Hands: Healthy, Practical, Self-Sufficient Use",
+    "Power_Simulator_Networking_PL_VisionTree.xlsx": "Networking with Nerve: Assertive, Composed, Strategic, Kind",
+    "Power_Simulator_SelfCare_PL_final.Zdenka.xlsx": "Self-Care for Strong Leaders",
+    "Power_Simulator_UsingYourPowerAuthentically_PL_Fotini.xlsx": "Using Your Power Authentically",
+    "Power_simulator_RecognizingYourPower_PL_Fotini.xlsx": "Recognizing Your Power",
+    "The opportunity_Power_Simulator_PL_BORIS_Aga.xlsx": "The opportunity you didn't expect",
+
+    # be/ folder (Dutch/"nl" content, despite the country-code folder name)
+    "Power_Simulator_IKIGAI_CZ_final_NL.xlsx": "Find your IKIGAI: Purpose discovering challenge",
+    "Public_speaking_Power__Simulator_BORIS_NL.xlsx": "Public Speaking",
+    "VisionTree_Power_Simulator_AI_NL.xlsx": "AI in Your Hands: Healthy, Practical, Self-Sufficient Use",
+    "VisionTree_Power_Simulator_Networking_NL.xlsx": "Networking with Nerve: Assertive, Composed, Strategic, Kind",
+    "Power_Simulator_SelfCare_CZ_final_NL.xlsx": "Self-Care for Strong Leaders",
+    "Power_Simulator_UsingYourPowerAuthentically_NL.xlsx": "Using Your Power Authentically",
+    "Power_simulator_RecognizingYourPower_NL.xlsx": "Recognizing Your Power",
+    "The_opportunity_Power_Simulator_BORIS_NL.xlsx": "The opportunity you didn't expect",
+    "DAY_12__Digital_Courage____Power_Simulator_xlsx_NL.xlsx": "Your Voice, Your Space",
+    "Rewriting_your_power_narrative__Power_Simulator_NL.xlsx": "The Meeting That Changed Your Narrative",
+}
+
 # Fixed set of module categories as (title, description), in this exact order.
 # They're seeded into the database in this order before any course import runs,
 # so their auto-increment id (1-7) matches this list's position deterministically -

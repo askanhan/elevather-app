@@ -1,8 +1,12 @@
 
 import AppConfig from '@/config/app.config.js'
+import { authStore } from '@/store/auth.js'
 export default function getDefaultState() {
     return {
-        lang: 'en',
+        // Restored here (not only on the splash screen) so a reload from any
+        // route - e.g. after switching language mid-session - keeps using the
+        // persisted choice instead of resetting to English.
+        lang: authStore.getItem('lang') || 'en',
         //for modules (courses and journeys)
         courseCards: [],
         journeyStatuses: [],

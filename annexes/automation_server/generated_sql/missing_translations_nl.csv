@@ -1,0 +1,33 @@
+location,table_name,row_id,field_name,base_value_preview
+Simulator 'The opportunity you didn't expect',simulator,1,description,No description
+Simulator 'Public Speaking',simulator,2,description,No description
+"Simulator 'Networking with Nerve: Assertive, Composed, Strategic, Kind'",simulator,3,description,No description
+"Simulator 'AI in Your Hands: Healthy, Practical, Self-Sufficient Use'",simulator,4,description,No description
+Simulator 'Recognizing Your Power',simulator,5,description,No description
+Simulator 'Using Your Power Authentically',simulator,6,description,No description
+Simulator 'Find your IKIGAI: Purpose discovering challenge',simulator,7,description,No description
+Simulator 'Self-Care for Strong Leaders',simulator,8,description,No description
+"Simulator 'Your Voice, Your Space'",simulator,9,description,No description
+Simulator 'The Meeting That Changed Your Narrative',simulator,10,description,No description
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 5",component_list,351,content,Concrete steps to show up more safely:
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 5",component_list,352,content,Review your privacy settings on each platform you use.
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 5",component_list,353,content,Know how to report harassment on every platform where you ar
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 5",component_list,354,content,Build a small trusted circle you can consult before reacting
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 7",component_list,355,content,The online gender power gap is structural – not your fault.
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 7",component_list,356,content,"Digital boundaries are decisions, not walls."
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 7",component_list,357,content,Responding is more powerful than reacting.
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 4",multiple_choices_options,184,option_text,Delete the post – not worth it
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 4",multiple_choices_options,185,option_text,Reply immediately and defend myself.
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 4",multiple_choices_options,186,option_text,Take a breath and decide later if it's worth a response.
+"Module 'Unlocking Creativity & Vision' (day 8), card 7",multiple_choices_options,432,option_text,Music
+"Module 'Unlocking Creativity & Vision' (day 8), card 7",multiple_choices_options,433,option_text,Painting
+"Module 'Unlocking Creativity & Vision' (day 8), card 7",multiple_choices_options,434,option_text,Writing
+Simulator 'Public Speaking' feedback tier 143 (metric 4),simulator_feedback_tiers,143,recommendation_reason,"When assertiveness is low, the most valuable step is reducin"
+Simulator 'Public Speaking' feedback tier 144 (metric 4),simulator_feedback_tiers,144,recommendation_reason,"You have a working level of assertiveness, the next step is "
+Simulator 'Public Speaking' feedback tier 145 (metric 4),simulator_feedback_tiers,145,recommendation_reason,Confident assertiveness becomes most powerful when it is pai
+Simulator 'Public Speaking' feedback tier 146 (metric 5),simulator_feedback_tiers,146,recommendation_reason,"When composure is low, small social frictions carry outsized"
+Simulator 'Public Speaking' feedback tier 147 (metric 5),simulator_feedback_tiers,147,recommendation_reason,"You already have a working composure, the next step is prote"
+Simulator 'Public Speaking' feedback tier 148 (metric 5),simulator_feedback_tiers,148,recommendation_reason,Strong composure is one of the most valuable networking asse
+Simulator 'Public Speaking' feedback tier 149 (metric 6),simulator_feedback_tiers,149,recommendation_reason,"When strategic warmth is low, networking often collapses int"
+Simulator 'Public Speaking' feedback tier 150 (metric 6),simulator_feedback_tiers,150,recommendation_reason,"You have the harder half of strategic warmth already, genuin"
+Simulator 'Public Speaking' feedback tier 151 (metric 6),simulator_feedback_tiers,151,recommendation_reason,Strategic warmth at this level is a rare and valuable capaci

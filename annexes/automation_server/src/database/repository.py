@@ -333,7 +333,12 @@ def clear_content_only_data():
             'module_contains_tags',
             'module_tag',
 
-            # Simulator relationships and tags (NOT simulator_feedback_tiers - those are user responses)
+            # Simulator relationships, tags and feedback tiers - all authored content,
+            # not user data. simulator_feedback_tiers used to be left out of this list
+            # under the (incorrect) belief that it held user responses; since nothing
+            # ever cleared it, every content-refresh import silently piled up another
+            # copy of every tier on top of the last one.
+            'simulator_feedback_tiers',
             'simulator_contains_metric',
             'simulator_contains_tag',
             'simulator_metric',
@@ -525,7 +530,8 @@ def reset_content_only_auto_increment():
             'simulator_tag',
             'simulator_contains_tag',
             'simulator_metric',
-            'simulator_contains_metric'
+            'simulator_contains_metric',
+            'simulator_feedback_tiers'
         ]
 
         reset_count = 0

@@ -230,6 +230,12 @@ def import_simulator(file_info):
         feedback_sheet = sim_df.get("Metric Writing")
         if feedback_sheet is not None:
             print("   Processing feedback tiers...")
+            # Some templates merge the "Metric Name" cell across a metric's 3 score-range
+            # rows, so only the first row actually holds the name and the other two read
+            # as blank/NaN - forward-fill so every row keeps its metric.
+            feedback_sheet = feedback_sheet.copy()
+            feedback_sheet["Metric Name"] = feedback_sheet["Metric Name"].ffill()
+
             for _, row in feedback_sheet.iterrows():
                 metric_name = clean_content(row.get("Metric Name"))
                 if not metric_name:
@@ -241,7 +247,9 @@ def import_simulator(file_info):
                     continue
                 metric_id = res[0]['id']
 
-                range_str = str(row.get("Score Range (<50 / 50-85 / 85-100)"))
+                # Normalize en-dash/em-dash to a plain hyphen - some source files use
+                # "50–85" (en dash) instead of "50-85", which the checks below don't match.
+                range_str = str(row.get("Score Range (<50 / 50-85 / 85-100)")).replace("–", "-").replace("—", "-")
                 min_s, max_s = 0, 100
                 if "<" in range_str:
                     max_s = 49

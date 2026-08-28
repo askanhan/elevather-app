@@ -85,6 +85,8 @@ export default {
         },
 
         applyLang(code) {
+            const changed = code !== this.currentLang
+
             // Vuex
             this.$store.commit("CHANGE_LANGUAGE", code)
 
@@ -94,6 +96,13 @@ export default {
             // Moment locale
             const momentLocale = { en: "en", de: "de", nl: "nl-be", cs: "cs", pl: "pl" }[code] || "en"
             try { this.moment?.locale?.(momentLocale) } catch (e) { }
+
+            // Module/card/simulator content is fetched once per screen and cached
+            // in the store - a reload is the simplest way to make every already-
+            // loaded screen refetch it in the newly selected language.
+            if (changed) {
+                window.location.reload()
+            }
         },
 
         select(code) {

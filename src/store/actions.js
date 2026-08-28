@@ -1154,6 +1154,11 @@ api.interceptors.request.use(async (config) => {
     config.headers.Authorization = `Bearer ${window.__ACCESS_TOKEN__}`
   }
 
+  // Ask the backend for content (module/card/simulator text, etc.) translated
+  // into the app's current language; it falls back to the default (English)
+  // content whenever no translation exists for that locale.
+  config.params = { ...config.params, lang: store.state.lang }
+
   return config
 })
 

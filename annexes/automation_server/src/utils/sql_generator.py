@@ -705,12 +705,15 @@ def generate_sql_simulator(file_info, output_file=None):
             queries.append(f"-- Feedback Tiers")
             queries.append(f"-- ============================================")
 
+            feedback_sheet = feedback_sheet.copy()
+            feedback_sheet["Metric Name"] = feedback_sheet["Metric Name"].ffill()
+
             for _, row in feedback_sheet.iterrows():
                 metric_name = clean_content(row.get("Metric Name"))
                 if not metric_name:
                     continue
 
-                range_str = str(row.get("Score Range (<50 / 50-85 / 85-100)"))
+                range_str = str(row.get("Score Range (<50 / 50-85 / 85-100)")).replace("–", "-").replace("—", "-")
                 min_s, max_s = 0, 100
                 if "<" in range_str:
                     max_s = 49
