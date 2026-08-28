@@ -201,11 +201,11 @@
       "news": "Nieuws",
       "profile": "Profiel",
       "search": "Ontdekken",
-      "journey": "Journey",
+      "journey": "Reis",
       "loginRequired": "Log in om toegang te krijgen tot je profiel en je prestaties.",
       "newPostsAvailable": "{n} nieuwe berichten beschikbaar",
-      "powerCheck": "Power Check",
-      "powerSimulator": "Power Simulator",
+      "powerCheck": "Krachtcheck",
+      "powerSimulator": "Krachtsimulator",
       "stories": "Verhalen"
     },
     "newsTicker": {
@@ -303,7 +303,7 @@
       "footerHint": "Swipe naar links/rechts of gebruik Volgende/Vorige. Inhoud geladen uit de database.",
       "goBack": "Terug",
       "imageAlt": "Afbeelding",
-      "journeyUpdateNote": "Dit zou de UI van de Journey-pagina bijwerken.",
+      "journeyUpdateNote": "Dit zou de UI van de Reis-pagina bijwerken.",
       "loading": "Cursusinhoud wordt geladen…",
       "next": "Volgende",
       "prev": "Vorige",
@@ -348,7 +348,7 @@
         "inProgress": "Bezig",
         "notStarted": "Nog niet gestart"
       },
-      "title": "Journey",
+      "title": "Reis",
       "tryAgain": "Probeer opnieuw"
     },
     "kalender": {
@@ -391,7 +391,7 @@
             "Bouw zelfbewustzijn op",
             "Start je journey met intentie"
           ],
-          "title": "Dagelijkse Power Check"
+          "title": "Dagelijkse Krachtcheck"
         },
         "profile": {
           "description": "Visualiseer je groei in alle categorieën. Zie hoe ver je gekomen bent, volg je simulatiescores en vier je successen.",
@@ -518,7 +518,7 @@
         "tryAgain": "Probeer opnieuw",
         "yourPerformance": "Jouw prestatie"
       },
-      "title": "Power Simulator"
+      "title": "Krachtsimulator"
     },
     "stories": {
       "aboutLabel": "Over",
@@ -940,7 +940,7 @@
         },
         "2": {
           "sub": "Ontdek waar je vandaag staat.",
-          "text": "Doe de Power Simulator om je sterke punten en blinde vlekken te zien, en volg vervolgens een persoonlijk leertraject opgebouwd uit korte dagelijkse modules.",
+          "text": "Doe de Krachtsimulator om je sterke punten en blinde vlekken te zien, en volg vervolgens een persoonlijk leertraject opgebouwd uit korte dagelijkse modules.",
           "title": "Ken je kracht!"
         },
         "3": {

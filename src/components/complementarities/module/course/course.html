@@ -82,12 +82,14 @@
                                     </div>
                                     <!-- Video -->
                                     <div v-if="comp.type === 'video'" class="comp-video">
-                                        
+                                        <!-- {{$i18n.locale + '_' + comp.url.split('_')[1]}} -->
+                                        <!-- {{comp.url}} -->
+                                        <!-- {{comp.url.split('/en/').join('/' + $i18n.locale + '/')}} -->
                                         <video-player 
-                                        :source="comp.url"
+                                        :source="comp.url.split('/en/').join('/' + $i18n.locale + '/')"
                                             :play-now="false">
                                         </video-player>
-                                        <p v-if="comp.description" class="video-desc">{{ comp.description }}</p>
+                                        <!-- <p v-if="comp.description" class="video-desc">{{ comp.description }}</p> -->
                                     </div>
 
                                     <!-- MCQ -->

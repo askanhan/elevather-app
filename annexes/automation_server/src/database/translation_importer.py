@@ -16,7 +16,11 @@ from ..utils.excel_loader import (
     load_data, map_excel_to_db, extract_full_card_data, extract_simulator_cards,
     clean_content
 )
-from ..utils.excel_mapping import MODULE_TABLE_MAP, SIMULATOR_TABLE_MAP, SIMULATOR_TRANSLATION_TITLE_MAP
+from ..utils.excel_mapping import (
+    MODULE_TABLE_MAP, SIMULATOR_TABLE_MAP, SIMULATOR_TRANSLATION_TITLE_MAP, COURSE_TRANSLATION_DAY_OVERRIDES,
+    CZECH_SIMULATOR_OVERVIEW_HEADER_MAP, CZECH_SIMULATOR_CARDS_HEADER_MAP, CZECH_SIMULATOR_METRIC_WRITING_HEADER_MAP,
+    CZECH_COURSE_OVERVIEW_HEADER_MAP
+)
 from ..utils.sql_generator import find_overview_sheet, find_overview_row
 
 DAY_NUMBER_RE = re.compile(r'^(\d+)')
@@ -40,12 +44,18 @@ def resolve_day_number(filename):
     Some translation folders name files with a leading day number (the "pl"
     folder); others just reuse the original filename with a locale suffix
     appended (the "be"/nl folder, e.g. "VisionTree_Course06_AI_NL.xlsx"
-    against the original "VisionTree_Course06_AI.xlsx"). The normalized-name
-    match is tried first since it's the more specific/reliable signal - a
-    leading digit in a reused-name file (like the "1_AVITEUM_..." files,
-    where "1" is just part of that country's own filename convention, not a
-    day number) would otherwise be misread by the regex.
+    against the original "VisionTree_Course06_AI.xlsx"); one (cz) turned out
+    to have some files whose own leading number is simply wrong for the
+    content inside, verified by hand - see COURSE_TRANSLATION_DAY_OVERRIDES.
+    Checked in that order: explicit override first, then the normalized-name
+    match (a leading digit in a reused-name file like the "1_AVITEUM_..."
+    ones is just part of that country's filename convention, not a day
+    number, so it's more reliable than the regex), then the regex as a
+    last resort.
     """
+    if filename in COURSE_TRANSLATION_DAY_OVERRIDES:
+        return COURSE_TRANSLATION_DAY_OVERRIDES[filename]
+
     from .content_repair import resolve_day_to_file  # local import: avoids a circular import at module load time
     by_day = resolve_day_number._cache
     if by_day is None:
@@ -61,6 +71,58 @@ def resolve_day_number(filename):
 
 
 resolve_day_number._cache = None
+
+
+def _find_sheet_by_alias(df_dict, aliases):
+    """
+    Some cz/ translation files translate every sheet name, not just cell
+    content (e.g. "Cards" -> "Karty", "Metric Writing" -> "Texty k metrikám"),
+    so an exact-name lookup misses them. Falls back to a case-insensitive
+    substring match against known aliases for that sheet's role.
+    """
+    for name, df in df_dict.items():
+        lname = name.lower()
+        if any(alias in lname for alias in aliases):
+            return df
+    return None
+
+
+def normalize_czech_headers(excel_df):
+    """
+    A few cz/ translation files translate every column header too, not just
+    sheet names and cell content, which breaks the English-header-driven
+    parsing (map_excel_to_db, extract_simulator_cards, etc.) downstream.
+    Renames columns back to English wherever a sheet's columns match one of
+    the known Czech header sets - a no-op for every other file, where none
+    of these Czech names are present to match.
+    """
+    header_maps = (
+        CZECH_SIMULATOR_OVERVIEW_HEADER_MAP,
+        CZECH_SIMULATOR_CARDS_HEADER_MAP,
+        CZECH_SIMULATOR_METRIC_WRITING_HEADER_MAP,
+        CZECH_COURSE_OVERVIEW_HEADER_MAP,
+    )
+    renamed = {}
+    for sheet_name, df in excel_df.items():
+        # Some maps share a key (e.g. "Odhadovaná délka (minuty)" appears in
+        # both the simulator- and course-overview maps), so the first map
+        # with *any* overlap isn't necessarily the right one - pick whichever
+        # map matches the most of this sheet's columns instead.
+        best_map, best_score = None, 0
+        for header_map in header_maps:
+            score = sum(1 for col in header_map if col in df.columns)
+            if score > best_score:
+                best_map, best_score = header_map, score
+        if best_map:
+            df = df.rename(columns=best_map)
+        renamed[sheet_name] = df
+    return renamed
+
+
+def _is_card_sheet(sheet_name):
+    """"Card" in most templates; "Karta" in a Czech-named one."""
+    lname = sheet_name.lower()
+    return 'card' in lname or 'karta' in lname
 
 # Which fields of each component table are actual user-facing text - mirrors
 # exactly what api/services/translations.py reads back on the Django side.
@@ -96,7 +158,7 @@ def discover_translation_files(locale, kind, folder_name=None):
 
     files = []
     for name in sorted(os.listdir(folder)):
-        if name.endswith('.xlsx') and not name.startswith('~'):
+        if name.endswith(('.xlsx', '.xlsm')) and not name.startswith('~'):
             files.append({'filename': name, 'full_path': os.path.join(folder, name)})
     return files
 
@@ -240,6 +302,7 @@ def import_course_translation(file_info, locale):
     course_df = load_data(full_path=file_info['full_path'])
     if not course_df:
         return False
+    course_df = normalize_czech_headers(course_df)
 
     try:
         _, overview_df = find_overview_sheet(course_df, sheet_type="course")
@@ -258,7 +321,7 @@ def import_course_translation(file_info, locale):
 
     card_count = 1
     for sheet_name, df_sheet in course_df.items():
-        if "Card" not in sheet_name:
+        if not _is_card_sheet(sheet_name):
             continue
 
         card_attr, components = extract_full_card_data(df_sheet, card_count)
@@ -298,6 +361,7 @@ def import_simulator_translation(file_info, locale):
     sim_df = load_data(full_path=file_info['full_path'])
     if not sim_df:
         return False
+    sim_df = normalize_czech_headers(sim_df)
 
     try:
         _, overview_df = find_overview_sheet(sim_df, sheet_type="simulator")
@@ -315,6 +379,8 @@ def import_simulator_translation(file_info, locale):
 
     existing_cards = get_cards('simulator', simulator_id)
     cards_sheet = sim_df.get("Cards")
+    if cards_sheet is None:
+        cards_sheet = _find_sheet_by_alias(sim_df, ('cards', 'karty'))
 
     if cards_sheet is not None:
         for card_data in extract_simulator_cards(cards_sheet):
@@ -335,6 +401,8 @@ def import_simulator_translation(file_info, locale):
             _apply_units_to_card(units, links, locale, stats)
 
     feedback_sheet = sim_df.get("Metric Writing")
+    if feedback_sheet is None:
+        feedback_sheet = _find_sheet_by_alias(sim_df, ('metric writing', 'texty k metrik'))
     if feedback_sheet is not None:
         existing_tiers = get_feedback_tiers(simulator_id)
         rows = list(feedback_sheet.iterrows())

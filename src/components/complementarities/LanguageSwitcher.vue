@@ -19,7 +19,7 @@
 
                 <div class="list-group list-custom-small ps-1">
 
-                    <a v-for="lang in languages" :key="lang.code" @click="select(lang.code)">
+                    <a v-for="lang in visibleLanguages" :key="lang.code" @click="select(lang.code)">
                         <span class="lang-left">
                             <img class="me-3 mt-n1" width="20" :src="flagSrc(lang.code)" alt="">
                             <span>{{ lang.label }}</span>
@@ -56,12 +56,15 @@ export default {
     data() {
         return {
             isOpen: false,
+            // "hidden: true" keeps a language wired up (messages loaded, flag asset in place)
+            // without offering it as a choice yet - flip it off to bring it back.
             languages: [
                 { code: "en", label: "English" },
-                { code: "de", label: "Deutsch" },
                 { code: "nl", label: "Nederlands" },
+                { code: "pl", label: "Polski" },
                 { code: "cs", label: "Čeština" },
-                { code: "pl", label: "Polski" }
+                { code: "el", label: "Ελληνικά" },
+                { code: "de", label: "Deutsch", hidden: true }
             ]
         }
     },
@@ -69,6 +72,10 @@ export default {
     computed: {
         currentLang() {
             return this.$store?.state?.lang || "en"
+        },
+
+        visibleLanguages() {
+            return this.languages.filter(l => !l.hidden)
         }
     },
 
@@ -94,7 +101,7 @@ export default {
             try { authStore.setItem("lang", code) } catch (e) { }
 
             // Moment locale
-            const momentLocale = { en: "en", de: "de", nl: "nl-be", cs: "cs", pl: "pl" }[code] || "en"
+            const momentLocale = { en: "en", de: "de", nl: "nl-be", cs: "cs", pl: "pl", el: "el" }[code] || "en"
             try { this.moment?.locale?.(momentLocale) } catch (e) { }
 
             // Module/card/simulator content is fetched once per screen and cached

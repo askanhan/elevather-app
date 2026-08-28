@@ -93,7 +93,7 @@ export default {
       try { authStore.setItem('lang', code) } catch (e) { }
 
       // 3) Tarih/çeviri kütüphaneleri
-      const momentLocale = { en: 'en', de: 'de', nl: 'nl-be', cs: 'cs', pl: 'pl' }[code] || 'en'
+      const momentLocale = { en: 'en', nl: 'nl-be', pl: 'pl', cs: 'cs', el: 'el', de: 'de' }[code] || 'en'
       this.moment?.locale?.(momentLocale)
     },
 
@@ -150,7 +150,7 @@ export default {
     detectLang() {
       authStore.getItem('lang', (err, lang) => {
         if (lang == null) {
-          const supported = ['en', 'de', 'nl', 'cs', 'pl']
+          const supported = ['en', 'nl', 'pl', 'cs', 'el']
           const browserLang = navigator.language ? navigator.language.slice(0, 2).toLowerCase() : ''
           this.applyLang(supported.includes(browserLang) ? browserLang : 'en')
         } else {

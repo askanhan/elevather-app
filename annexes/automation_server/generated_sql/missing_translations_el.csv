@@ -1,0 +1,27 @@
+location,table_name,row_id,field_name,base_value_preview
+"Module 'Designing Your Growth Path' (day 17), card 4",component_image,26,image_alt,Woman focusing on the first step
+"Module 'Designing Your Growth Path' (day 17), card 4",component_image,26,image_description,A woman facing a larger path but concentrating on the first 
+"Module 'Story of me: Rewriting your power narrative' (day 4), card 1",component_image,61,image_alt,short description of what the image is
+"Module 'Story of me: Rewriting your power narrative' (day 4), card 1",component_image,61,image_description,"A woman opening a large book that emits soft light, pages tr"
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 1",component_image,62,image_alt,short description of what the image is
+"Module 'Digital Courage: Setting Boundaries & Showing Up Safely Online' (day 11), card 1",component_image,62,image_description,detailed explanation of what the image shows
+"Module 'Knowing Yourself as a Leader - Leading your own way' (day 14), card 7",component_open_questions,83,question,Think of a recent situation. How did you respond.
+"Module 'Knowing Yourself as a Leader - Leading your own way' (day 14), card 7",component_open_questions,84,question,What could you try differently next time?
+"Module 'Knowing Yourself as a Leader - Leading your own way' (day 14), card 4",component_list,278,content,Your values guide your decisions
+"Module 'Knowing Yourself as a Leader - Leading your own way' (day 14), card 4",component_list,279,content,Your experiences shape how you respond
+"Module 'Knowing Yourself as a Leader - Leading your own way' (day 14), card 4",component_list,280,content,Your personality influences how you connect with others
+"Module 'Knowing Yourself as a Leader - Leading your own way' (day 14), card 9",component_list,281,content,Leadership starts with knowing yourself
+"Module 'Knowing Yourself as a Leader - Leading your own way' (day 14), card 9",component_list,282,content,Your way of leading matters
+"Module 'Knowing Yourself as a Leader - Leading your own way' (day 14), card 9",component_list,283,content,Small actions build confidence over time
+"Module 'Unlocking Creativity & Vision' (day 8), card 7",multiple_choices_options,432,option_text,Music
+"Module 'Unlocking Creativity & Vision' (day 8), card 7",multiple_choices_options,433,option_text,Painting
+"Module 'Unlocking Creativity & Vision' (day 8), card 7",multiple_choices_options,434,option_text,Writing
+Simulator 'Public Speaking' feedback tier 143 (metric 4),simulator_feedback_tiers,143,recommendation_reason,"When assertiveness is low, the most valuable step is reducin"
+Simulator 'Public Speaking' feedback tier 144 (metric 4),simulator_feedback_tiers,144,recommendation_reason,"You have a working level of assertiveness, the next step is "
+Simulator 'Public Speaking' feedback tier 145 (metric 4),simulator_feedback_tiers,145,recommendation_reason,Confident assertiveness becomes most powerful when it is pai
+Simulator 'Public Speaking' feedback tier 146 (metric 5),simulator_feedback_tiers,146,recommendation_reason,"When composure is low, small social frictions carry outsized"
+Simulator 'Public Speaking' feedback tier 147 (metric 5),simulator_feedback_tiers,147,recommendation_reason,"You already have a working composure, the next step is prote"
+Simulator 'Public Speaking' feedback tier 148 (metric 5),simulator_feedback_tiers,148,recommendation_reason,Strong composure is one of the most valuable networking asse
+Simulator 'Public Speaking' feedback tier 149 (metric 6),simulator_feedback_tiers,149,recommendation_reason,"When strategic warmth is low, networking often collapses int"
+Simulator 'Public Speaking' feedback tier 150 (metric 6),simulator_feedback_tiers,150,recommendation_reason,"You have the harder half of strategic warmth already, genuin"
+Simulator 'Public Speaking' feedback tier 151 (metric 6),simulator_feedback_tiers,151,recommendation_reason,Strategic warmth at this level is a rare and valuable capaci

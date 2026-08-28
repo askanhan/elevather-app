@@ -46,6 +46,54 @@ TITLE_OVERRIDES = {
     "KANE_DAY14_LeadershipANDPersonal Growth.xlsx": "Knowing Yourself as a Leader - Leading your own way",
 }
 
+# Fixed day_number per translation file, keyed by filename - for locale folders
+# whose own file names are unreliable (a leading/embedded number that doesn't
+# match the canonical day, e.g. cz/days/"23_Day_BORIS_Course_Template..." is
+# actually day 21's content, verified by opening the file and reading its
+# Course Title / Card sheets). Checked before any automatic (regex or
+# normalized-filename) day resolution - see translation_importer.resolve_day_number().
+COURSE_TRANSLATION_DAY_OVERRIDES = {
+    # cz/days - verified against each file's actual Course Title / Card content,
+    # since this folder's filenames turned out not to reliably match the
+    # canonical day (either a reused generic "BORIS_Course_Template" name
+    # shared by days 1/2/21/24, or a day number local to that translator's
+    # own ordering rather than the platform's 1-30 sequence).
+    "1_AVITEUM_Course_Day_13_BRAND_CZ_OK.xlsx": 12,
+    "1_AVITEUM_Course_Day_6_SELF-CARE_CZ_OK.xlsx": 5,
+    "1_AVITEUM_Course_Day_7_BREATHWORK_CZ_OK.xlsx": 6,
+    "1_AVITEUM_Course_Day_8_MEDITATION_CZ_OK.xlsx": 7,
+    "1_AVITEUM_Course_Day_9_CREATIVITY_CZ_OK.xlsx": 8,
+    "1_AVITEUM_Course_Ikigai_CZ_OK.xlsx": 3,
+    "23_Day_BORIS_Course_Template_cs_translation OK.xlsx": 21,
+    "24_Day_BORIS_Course_Template_cs_translation OK.xlsx": 24,
+    "DAY_12__Digital_Courage__Setting_Boundaries___Showing_Up_Safely_Online_translation cz_OK.xlsx": 11,
+    "DE_1_cs_HANNAH_ARENDT_translation cz_OK.xlsx": 26,
+    "DE_2_cs_ADA_LOVELACE_translation cz_OK.xlsx": 27,
+    "Day_25_Power_translation cz_OK.xlsx": 25,
+    "Day_28_MOMO_cs_translation cz_OK.xlsx": 28,
+    "KANE_DAY15_LeadershipANDPersonal_Growth_translation cz_OK.xlsx": 14,
+    "KANE_DAY16_Proactive_Leadership_translation cz_OK.xlsx": 15,
+    "KANE_DAY17_Personal_Growth_translation cz_OK.xlsx": 16,
+    "KANE_DAY18_Designingyourownpath_translation cz_OK.xlsx": 17,
+    "KANE_DAY19_VisionConfidence_MovingForward_translation cz_OK.xlsx": 18,
+    "Motivational_Techniques_translation cz_OK.xlsx": 23,
+    "OK_10_Day_BORIS_Get_ready_to_public_speaking_cs_translation OK.xlsx": 9,
+    "OK_11_Day_BORIS_Public_speaking_cs_translation Ok.xlsx": 10,
+    "OK_1_Day_BORIS_Course_Template_cs_translation OK.xlsx": 1,
+    "OK_2_Day_BORIS_Course_Template_cs_translation OK.xlsx": 2,
+    "Smart_DAY_5__Story_of_Me__Rewriting_Your_Power_Narrative_translation cz_OK.xlsx": 4,
+    "VisionTree_Course01_SelfConfidence_translation cz_OK.xlsx": 13,
+    "VisionTree_Course03_Networking_translation cz_OK.xlsx": 19,
+    "VisionTree_Course04_Partnering_translation cz_OK.xlsx": 20,
+    "VisionTree_Course05_Thankfulness_translation cz_OK.xlsx": 22,
+    "VisionTree_Course06_AI_translation cz_OK.xlsx": 30,
+    "VisionTree_Course07_Day5_RebiyaKadeer_1_CZ.xlsm": 29,
+    # Deliberately NOT mapped: "KANE_sixth_contribution_translation cz_OK.xlsx"
+    # - its own Course Overview sheet has "Day: ?" (unresolved even in the
+    # source) and its title ("Growth through challenges") doesn't clearly
+    # match any of days 14-18's exact titles. Left unmatched rather than guessed.
+}
+
 # Fixed day_number per course, keyed by exact course title. Each country's Excel
 # "Day" column is numbered relative to its own local course order, not the combined
 # platform sequence, so it's overridden here to the canonical 1-30 order across all
@@ -108,6 +156,90 @@ SIMULATOR_TRANSLATION_TITLE_MAP = {
     "The_opportunity_Power_Simulator_BORIS_NL.xlsx": "The opportunity you didn't expect",
     "DAY_12__Digital_Courage____Power_Simulator_xlsx_NL.xlsx": "Your Voice, Your Space",
     "Rewriting_your_power_narrative__Power_Simulator_NL.xlsx": "The Meeting That Changed Your Narrative",
+
+    # cz/ folder (Czech/"cs" content)
+    "DAY_12__Digital_Courage__Power_Simulator_translation cz_OK.xlsx": "Your Voice, Your Space",
+    "Power_Simulator_IKIGAI_translation CZ_OK.xlsx": "Find your IKIGAI: Purpose discovering challenge",
+    "Power_Simulator_RecognizingYourPower_translation cz_OK.xlsx": "Recognizing Your Power",
+    "Power_Simulator_SelfCare_translation CZ_OK.xlsx": "Self-Care for Strong Leaders",
+    "Power_Simulator_UsingYourPowerAuthentically_translation cz_OK.xlsx": "Using Your Power Authentically",
+    "Public_speaking_Power_Simulator_BORIS_cs_translation OK.xlsx": "Public Speaking",
+    "Rewriting_your_power_narrative__Power_Simulator_translation cz_OK.xlsx": "The Meeting That Changed Your Narrative",
+    "The_opportunity_Power_Simulator_BORIS_cs_translation CZ.xlsx": "The opportunity you didn't expect",
+    "VisionTree_Power_Simulator_AI_CZ.xlsx": "AI in Your Hands: Healthy, Practical, Self-Sufficient Use",
+    "VisionTree_Power_Simulator_Networking_CZ.xlsx": "Networking with Nerve: Assertive, Composed, Strategic, Kind",
+
+    # gr/ folder (Greek/"el" content)
+    "Digital_Courage_Power_Simulator_GR.xlsx": "Your Voice, Your Space",
+    "Power_Simulator_IKIGAI_CZ_final_GR.xlsx": "Find your IKIGAI: Purpose discovering challenge",
+    "Power_Simulator_SelfCare_CZ_final_GR.xlsx": "Self-Care for Strong Leaders",
+    "Power_Simulator_UsingYourPowerAuthentically_GR.xlsx": "Using Your Power Authentically",
+    "Power_simulator_RecognizingYourPower_GR.xlsx": "Recognizing Your Power",
+    "Public_speaking_Power_Simulator_BORIS_GR.xlsx": "Public Speaking",
+    "Rewriting_your_power_narrative_Power_Simulator_GR.xlsx": "The Meeting That Changed Your Narrative",
+    "The_opportunity_Power_Simulator_BORIS_GR.xlsx": "The opportunity you didn't expect",
+    "VisionTree_Power_Simulator_AI_GR.xlsx": "AI in Your Hands: Healthy, Practical, Self-Sufficient Use",
+    "VisionTree_Power_Simulator_Networking_GR.xlsx": "Networking with Nerve: Assertive, Composed, Strategic, Kind",
+}
+
+# Two cz/simulators files (the AI and Networking ones) translate every sheet
+# AND column header, not just cell content - unlike every other translation
+# file seen so far, which keeps the English structural labels and only
+# translates the content. Column names are renamed back to English (see
+# translation_importer.normalize_czech_headers()) before those sheets go
+# through the normal English-header-driven parsing (map_excel_to_db,
+# extract_simulator_cards, etc.) - safe to apply to every file since it's a
+# no-op when the columns are already English.
+CZECH_SIMULATOR_OVERVIEW_HEADER_MAP = {
+    'Název simulátoru': 'Simulator Title',
+    'Úroveň (Úvodní/Základní/Pokročilá)': 'Level (Intro/Core/Advanced)',
+    'Odhadovaná délka (minuty)': 'Estimated Duration (minutes)',
+    'Prostředí (práce/domov/komunita)': 'Setting (work/home/community)',
+    'Štítky (oddělené čárkami)': 'Tags (comma separated)',
+    'Metriky (oddělené čárkami)': 'Metrics (comma separated)',
+}
+
+CZECH_SIMULATOR_CARDS_HEADER_MAP = {
+    'Pořadí karty': 'Card Order',
+    'Název': 'Title',
+    'Podnázev': 'Subtitle',
+    'Text situace': 'Situation Text',
+    'Popis vizuálu (odkaz) nebo jiné': 'Visual Description (link) or other',
+    'Alternativní text obrázku': 'Image Alt',
+    'Popis obrázku': 'Image Description',
+    'Odhadovaná délka videa': 'Video Duration Est',
+    'Alternativní text videa': 'Video Alt',
+    'Popis videa': 'Video Description',
+    'Text akce 1': 'Action 1 Text',
+    'Zpětná vazba k akci 1': 'Action 1 Feedback',
+    'Vliv akce 1 na metriky': 'Action 1 Metric Effects',
+    'Text akce 2': 'Action 2 Text',
+    'Zpětná vazba k akci 2': 'Action 2 Feedback',
+    'Vliv akce 2 na metriky': 'Action 2 Metric Effects',
+    'Text akce 3': 'Action 3 Text',
+    'Zpětná vazba k akci 3': 'Action 3 Feedback',
+    'Vliv akce 3 na metriky': 'Action 3 Metric Effects',
+    'Proč tato otázka': 'Why This Question',
+    'Závěrečný text': 'End_text',
+}
+
+CZECH_COURSE_OVERVIEW_HEADER_MAP = {
+    'Název kurzu': 'Course Title',
+    'Kategorie': 'Category',
+    'Den': 'Day',
+    'Cílová skupina': 'Target Audience',
+    'Odhadovaná délka (minuty)': 'Estimated Duration (minutes)',
+    'Cíl učení (1 věta)': 'Learning Goal (1 sentence)',
+}
+
+CZECH_SIMULATOR_METRIC_WRITING_HEADER_MAP = {
+    'Název metriky': 'Metric Name',
+    'Rozmezí skóre (<50 / 50–85 / 85–100)': 'Score Range (<50 / 50-85 / 85-100)',
+    'Text silné stránky': 'Strength Text',
+    'Text rizika': 'Risk Text',
+    'Doporučené mikrocvičení': 'Suggested Micro-Practice',
+    'Doporučený modul': 'Recommended Module',
+    'Důvod doporučení': 'Recommendation Reason',
 }
 
 # Fixed set of module categories as (title, description), in this exact order.

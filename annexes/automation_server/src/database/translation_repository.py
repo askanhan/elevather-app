@@ -14,8 +14,10 @@ def upsert_translation(table_name, row_id, field_name, locale, value):
     """
     if value is None:
         return False
+    if isinstance(value, float) and value != value:  # pandas/NaN never equals itself
+        return False
     value = str(value).strip()
-    if not value:
+    if not value or value.lower() in ("nan", "none", "nat"):
         return False
 
     sql = (
