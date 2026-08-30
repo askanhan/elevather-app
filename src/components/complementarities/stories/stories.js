@@ -39,13 +39,6 @@ export default {
                 tags: []
             },
 
-            storiesTab: 'inspire',           // ilk açılışta inspirational gösteriyor
-            inspireTopic: 'all',
-            inspireTopics: ['Career', 'Leadership', 'Resilience', 'Family', 'Mental Health', 'Tech', 'Entrepreneurship'],
-            expandedInspire: [],
-            savedInspire: [],
-            inspiredBy: [],
-
             sent: false,
 
             storySubmitError: '',
@@ -57,78 +50,6 @@ export default {
             // Delete confirmation modal
             showDeleteModal: false,
             storyToDelete: null,
-            inspirationalStories: [
-                {
-                    id: 'ins-1',
-                    name: 'Sarah Mendel',
-                    role: 'Senior Engineer, fintech',
-                    topic: 'Tech',
-                    title: 'Switching careers at 34, without apology',
-                    image: 'https://placehold.co/600x400/png?text=Sarah',
-                    excerpt: 'I left a stable HR job to learn to code. Everyone said it was reckless. Two years later I shipped my first production system.',
-                    story: [
-                        'For ten years I worked in HR. Comfortable, predictable, and slowly draining me. I kept opening DevTools on random websites just to see how things worked.',
-                        'At 34 I quit. I had eight months of savings and zero engineering background. The first six months were brutal — imposter syndrome wakes you up at 3am.',
-                        'What changed me was finding a community of late-career switchers. Suddenly my "weakness" (starting late) became context. I knew how teams actually fight, how managers think, how products fail because of people not code.',
-                        'I shipped my first production system two years in. Nothing about that journey was linear, and I would not change it.',
-                    ],
-                    quote: 'You are not late. You are exactly where your story needed you to be.',
-                    tags: ['#careerchange', '#tech', '#latebloomer'],
-                    inspired_count: 142,
-                    featured: true,
-                },
-                {
-                    id: 'ins-2',
-                    name: 'Amara K.',
-                    role: 'Founder, social enterprise',
-                    topic: 'Entrepreneurship',
-                    title: 'Building when no one believes you yet',
-                    image: 'https://placehold.co/600x400/png?text=Amara',
-                    excerpt: 'Eleven investor rejections in one month. The twelfth said yes. The difference was not my pitch — it was that I stopped apologizing for it.',
-                    story: [
-                        'I pitched a women-focused micro-lending platform. Eleven rejections in thirty days. One investor literally said "the market is too small" about half the population.',
-                        'I rewrote nothing about the deck. I changed how I walked into the room. I stopped over-explaining, stopped softening, stopped pre-empting their objections.',
-                        'The twelfth investor wrote our first check. We are now in three countries.',
-                    ],
-                    quote: 'Confidence is not the absence of doubt. It is refusing to let doubt do the talking.',
-                    tags: ['#startup', '#fundraising', '#womeninbusiness'],
-                    inspired_count: 98,
-                },
-                {
-                    id: 'ins-3',
-                    name: 'Leyla T.',
-                    role: 'Clinical psychologist',
-                    topic: 'Mental Health',
-                    title: 'I treat burnout for a living. I still got it.',
-                    image: 'https://placehold.co/600x400/png?text=Leyla',
-                    excerpt: 'I spent years telling clients to rest. It took collapsing in my own office to follow my own advice.',
-                    story: [
-                        'I was the therapist friends called when things broke. I was good at it. Too good — I never thought the rules applied to me.',
-                        'One Tuesday I could not get up from my chair between sessions. Not physically tired. Empty. The kind of empty you cannot caffeine your way out of.',
-                        'I took three months off. The hardest part was not the rest. It was learning that being unavailable did not make me less valuable.',
-                    ],
-                    quote: 'Rest is not a reward you earn. It is the ground you stand on.',
-                    tags: ['#burnout', '#selfcare', '#psychology'],
-                    inspired_count: 211,
-                },
-                {
-                    id: 'ins-4',
-                    name: 'Rania B.',
-                    role: 'Engineering manager',
-                    topic: 'Leadership',
-                    title: 'The first time I said no in a meeting',
-                    image: 'https://placehold.co/600x400/png?text=Rania',
-                    excerpt: 'I was the youngest woman in the room for years. I learned to nod. Then one Q4 I just stopped.',
-                    story: [
-                        'For four years I was the only woman on my leadership team, and the youngest by a decade. I nodded a lot. I "took it offline" a lot.',
-                        'In our Q4 planning my director proposed a deadline that would burn out my team for a feature no customer asked for. I said no. Not softly, not with five qualifiers. Just no, and here is why.',
-                        'The silence was loud. Then someone else said "I agree with Rania." Then another. The deadline moved.',
-                    ],
-                    quote: 'Your seat at the table only matters if you are willing to use your voice from it.',
-                    tags: ['#leadership', '#womenintech', '#boundaries'],
-                    inspired_count: 167,
-                },
-            ],
         }
     },
 
@@ -139,16 +60,6 @@ export default {
 
         isGuest() {
             return this.$store.state.guestMode || false
-        },
-
-        filteredInspire() {
-            if (this.inspireTopic === 'all') return this.inspirationalStories.filter(s => !s.featured);
-            return this.inspirationalStories.filter(
-                s => !s.featured && s.topic === this.inspireTopic
-            );
-        },
-        featuredInspire() {
-            return this.inspirationalStories.find(s => s.featured);
         },
 
         filteredPool() {
@@ -194,32 +105,6 @@ export default {
     },
 
     methods: {
-        toggleInspireExpand(id) {
-            const i = this.expandedInspire.indexOf(id);
-            if (i === -1) this.expandedInspire.push(id);
-            else this.expandedInspire.splice(i, 1);
-        },
-        toggleSaveInspire(id) {
-            const i = this.savedInspire.indexOf(id);
-            if (i === -1) this.savedInspire.push(id);
-            else this.savedInspire.splice(i, 1);
-        },
-        toggleInspiredBy(id) {
-            const story = this.inspirationalStories.find(s => s.id === id);
-            if (!story) return;
-            const i = this.inspiredBy.indexOf(id);
-            if (i === -1) {
-                this.inspiredBy.push(id);
-                story.inspired_count = (story.inspired_count || 0) + 1;
-            } else {
-                this.inspiredBy.splice(i, 1);
-                story.inspired_count = Math.max(0, (story.inspired_count || 1) - 1);
-            }
-        },
-        openInspireDetail(story) {
-            this.toggleInspireExpand(story.id);
-            // İsteğe bağlı: tam sayfa modal aç
-        },
         // Helper: convert localisation ID to text
         getContextText(localisationId) {
             const key = CONTEXT_KEY_MAP[localisationId] || CONTEXT_KEY_MAP[parseInt(localisationId)] || 'unknown'

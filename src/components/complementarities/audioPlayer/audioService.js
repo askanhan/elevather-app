@@ -66,7 +66,7 @@ class AudioService {
       
       // Fetch audio blob directly from backend endpoint
       const response = await fetch(
-        `${AppConfig.API_BASE_URL}/audio/fetch/${ownerType}/${ownerId}/`
+        `${AppConfig.API_BASE_URL}/media/audios/${$i18n.locale}_${ownerId}.mp3`
       )
       
       if (!response.ok) {

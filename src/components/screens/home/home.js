@@ -1,8 +1,13 @@
 import confetti from 'canvas-confetti'
 import { api } from '@/store/actions.js'
+import GuestLockCard from '@/components/complementarities/guest-lock/guest-lock-card.vue'
 
 export default {
     name: 'PowerCheck',
+
+    components: {
+        GuestLockCard
+    },
 
     data() {
         return {
@@ -30,6 +35,10 @@ export default {
 
         userId() {
             return this.$store.state.user?.id
+        },
+
+        isGuest() {
+            return this.$store.state.guestMode || false
         },
 
         powerScore() {
@@ -68,6 +77,7 @@ export default {
 
     methods: {
         fetchQuestions() {
+            if (this.isGuest || !this.userId) return
             this.$store.dispatch('fetchDailyCheckinQuestions', this.userId)
                 .then((response) => {
                     console.log('Daily checkin questions fetched:', response)

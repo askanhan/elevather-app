@@ -85,6 +85,9 @@
       "subtitleLoading": "Počkej prosím, přesměrováváme tě…",
       "titleError": "Přihlášení se nepodařilo dokončit",
       "titleLoading": "Přihlašování"
+    },
+    "guestGate": {
+      "locked": "Vytvoř si zdarma účet a odemkni kurzy a simulátory."
     }
   },
   "common": {
@@ -101,6 +104,9 @@
     "supportAssociation": "Podpoř sdružení"
   },
   "components": {
+    "guestLock": {
+      "cta": "Přihlásit se"
+    },
     "chat": {
       "emptySub": "Napiš první zprávu.",
       "emptyTitle": "Zatím žádné zprávy",
@@ -338,6 +344,8 @@
       "filterByTrackAriaLabel": "Filtrovat podle okruhu",
       "lede": "Každý okruh obsahuje sérii krátkých denních modulů. Otevři okruh a zobraz si jeho dny, pak pokračuj tam, kde jsi skončila.",
       "loginToOpenCourse": "Přihlas se, abys mohla otevřít obsah kurzu.",
+      "guestFreePreview": "Vyzkoušej modul zdarma",
+      "locked": "Přihlas se pro odemčení",
       "review": "Zopakovat",
       "scoreLabel": "{done} z {total} modulů hotovo",
       "searchAriaLabel": "Hledat moduly",
@@ -448,7 +456,12 @@
         "loginRequired": "Přihlas se prosím, abys měla přístup k obsahu kurzu.",
         "noResults": "Simulátory nenalezeny. Zkus upravit hledání nebo filtry.",
         "searchPlaceholder": "Hledej scénáře…",
-        "startSimulation": "Spustit simulaci →",
+        "startSimulation": "Spustit simulaci",
+        "continueSimulation": "Pokračovat",
+        "reviewSimulation": "Hrát znovu",
+        "progressSummary": "{done}/{total} dokončeno",
+        "locked": "Přihlas se pro odemčení",
+        "freeBadge": "Ukázka zdarma",
         "subtitle": "Procvič si vedoucí rozhodování bez skutečného rizika. Vyber si scénář a otestuj svůj přístup."
       },
       "levels": {
@@ -456,12 +469,19 @@
         "core": "Základní",
         "intro": "Úvod"
       },
+      "status": {
+        "done": "Dokončeno",
+        "inProgress": "Probíhá",
+        "notStarted": "Nezahájeno"
+      },
       "play": {
         "areaToDevelop": "Oblast k rozvoji",
         "debriefSubtitle": "Tady je, jak sis vedla v jednotlivých metrikách.",
         "debriefTitle": "Tvá zpětná vazba",
         "defaultCardTitle": "Karta",
         "defaultFeedback": "Dobrá volba.",
+        "guestLockedTitle": "Toto je ukázka",
+        "guestLocked": "Přihlas se zdarma a odpovídej se skutečným hodnocením v reálném čase.",
         "defaultScenarioTitle": "Simulátor",
         "errors": {
           "loadFailed": "Simulátor se nepodařilo načíst. Zkus to prosím znovu.",
@@ -522,7 +542,6 @@
     },
     "stories": {
       "aboutLabel": "O čem",
-      "allTopics": "Vše",
       "anonymous": "Anonymní",
       "context": {
         "community": "Komunita",
@@ -545,46 +564,37 @@
         "warn": "Tuto akci nelze vrátit zpět."
       },
       "deleteStoryTitle": "Smazat příběh",
-      "emptyTopic": {
-        "sub": "Zkus jiný filtr nebo se vrať později.",
-        "title": "V tomto tématu zatím nejsou žádné příběhy."
-      },
       "errorModal": {
         "understand": "Rozumím"
       },
-      "featured": "Doporučené",
-      "inspireHint": "Vybrané hlasy žen, které proměnily překážky v posun vpřed. Čti, přemýšlej a ulož si ty, které tě osloví.",
-      "inspiredMe": "Inspirovalo mě to",
       "oneLinerPlaceholder": "Sdílej krátký okamžik...",
       "pendingSection": {
         "badge": "⏳ Čeká na schválení",
         "emptySub": "Tvé odeslané příběhy se tu zobrazí, dokud čekají na zveřejnění.",
         "emptyTitle": "Nemáš žádné příběhy čekající na schválení.",
-        "hint": "Příběhy, které jsi odeslala a čekají na schválení moderátorem. Jakmile budou schváleny, objeví se ve feedu Skutečné příběhy.",
+        "hint": "Příběhy, které jsi odeslala a čekají na schválení moderátorem. Jakmile budou schváleny, objeví se ve feedu Příběhy komunity.",
         "title": "Tvé příběhy čekající na schválení"
       },
       "privacyDesc": "Všechny příběhy jsou zveřejněny anonymně. Můžeš je sdílet zcela bez obav. Vytváříme bezpečný prostor pro skutečné příběhy.",
       "privacyTitle": "Tvé soukromí je chráněné",
-      "readFullStory": "Přečíst celý příběh",
       "realSection": {
         "hint": "Anonymní krátké postřehy ze skutečného života. Žádné „lajky“. Jen „Ztotožňuji se“ a „Podpora“.",
-        "title": "Skutečné příběhy"
+        "title": "Příběhy komunity"
+      },
+      "emptyFeed": {
+        "title": "Zatím žádné příběhy.",
+        "sub": "Buď první, kdo se podělí o okamžik s komunitou."
       },
       "relate": "Ztotožňuji se",
-      "save": "Uložit",
-      "saveForLater": "Uložit na později",
-      "saved": "Uloženo",
       "searchPlaceholder": "Hledej příběhy, lidi, témata…",
       "selectTrack": "Vyber okruh",
       "shareAnonymously": "Sdílet anonymně",
       "shareHint": "Sdílej krátké, skutečné okamžiky ze svého života. Tvůj příběh se objeví ve feedu anonymně, aby se s ním komunita mohla ztotožnit a podpořit tě.",
-      "showLess": "Zobrazit méně",
-      "submittedMessage": "✅ Tvůj příběh byl odeslán! Nyní čeká na schválení moderátorem a po schválení se objeví ve feedu Skutečné příběhy.",
-      "subtitle1": "Inspirace a skutečné příběhy z naší komunity.",
+      "submittedMessage": "✅ Tvůj příběh byl odeslán! Nyní čeká na schválení moderátorem a po schválení se objeví ve feedu Příběhy komunity.",
+      "subtitle1": "Skutečné příběhy z naší komunity.",
       "subtitle2": "Sdílej svůj vlastní příběh a spoj se s ostatními, kteří se s tebou ztotožní a podpoří tě. Bezpečný, anonymní prostor pro vyjádření a sounáležitost.",
       "support": "Podpora",
       "tabs": {
-        "inspire": "Inspirativní příběhy",
         "real": "Příběhy komunity",
         "share": "Sdílej svůj příběh"
       },
@@ -689,6 +699,8 @@
         "noData": "Žádná data",
         "powerScoreLabel": "Skóre síly",
         "quickCheckin": "Rychlá kontrola",
+        "guestTitle": "Sleduj svou denní power",
+        "guestText": "Přihlas se zdarma a odpovídej na denní otázky, sleduj historii svého skóre a získávej osobní doporučení.",
         "reset": "Resetovat",
         "resetHint": "Potřebuješ aktualizovat úroveň své energie? Resetuj a začni znovu.",
         "scoreLabel": "Skóre: {score}",

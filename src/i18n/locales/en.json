@@ -85,6 +85,9 @@
       "subtitleLoading": "Please wait, redirecting…",
       "titleError": "Login could not be completed",
       "titleLoading": "Signing in"
+    },
+    "guestGate": {
+      "locked": "Create a free account to unlock courses and simulators."
     }
   },
   "common": {
@@ -101,6 +104,9 @@
     "supportAssociation": "Support the association"
   },
   "components": {
+    "guestLock": {
+      "cta": "Sign in"
+    },
     "chat": {
       "emptySub": "Write the first message.",
       "emptyTitle": "No messages yet",
@@ -346,6 +352,8 @@
       "defaultModuleSummary": "Module content",
       "defaultOutcome": "Learn and practice",
       "loginToOpenCourse": "Log in to open the course content.",
+      "guestFreePreview": "Try a module for free",
+      "locked": "Sign in to unlock",
       "errors": {
         "empty": "The journey data came back empty.",
         "connection": "Check your connection and try again."
@@ -443,6 +451,11 @@
         "core": "Core",
         "advanced": "Advanced"
       },
+      "status": {
+        "done": "Completed",
+        "inProgress": "In progress",
+        "notStarted": "Not started"
+      },
       "errors": {
         "noSimulatorId": "No simulator ID provided."
       },
@@ -452,7 +465,12 @@
         "allLevels": "All levels",
         "loading": "Loading simulators...",
         "focusSkills": "Focus skills",
-        "startSimulation": "Start simulation →",
+        "startSimulation": "Start simulation",
+        "continueSimulation": "Continue",
+        "reviewSimulation": "Replay",
+        "progressSummary": "{done}/{total} completed",
+        "locked": "Sign in to unlock",
+        "freeBadge": "Free preview",
         "noResults": "Simulators not found. Try adjusting your search or filters.",
         "loginRequired": "Please log in to access the course content.",
         "errors": {
@@ -484,6 +502,8 @@
         "defaultScenarioTitle": "Simulator",
         "defaultCardTitle": "Card",
         "defaultFeedback": "Good choice.",
+        "guestLockedTitle": "This is a preview",
+        "guestLocked": "Sign in for free to answer and see your real-time scoring.",
         "errors": {
           "noCards": "No cards found for this simulator.",
           "loadFailed": "Failed to load simulator. Please try again.",
@@ -525,30 +545,20 @@
     },
     "stories": {
       "title": "Stories",
-      "subtitle1": "Inspiration and real stories from our community.",
+      "subtitle1": "Real stories from our community.",
       "subtitle2": "Share your own story and connect with others who relate and support you. A safe, anonymous space to express and find solidarity.",
       "searchPlaceholder": "Search stories, people, topics…",
       "tabs": {
-        "inspire": "Inspirational Stories",
         "real": "Community Stories",
         "share": "Share your story"
       },
-      "inspireHint": "Curated voices from women who turned obstacles into momentum. Read, reflect, save the ones that resonate.",
-      "allTopics": "All",
-      "featured": "Featured",
-      "readFullStory": "Read full story",
-      "showLess": "Show less",
-      "saved": "Saved",
-      "saveForLater": "Save for later",
-      "save": "Save",
-      "inspiredMe": "Inspired me",
-      "emptyTopic": {
-        "title": "No stories in this topic yet.",
-        "sub": "Try another filter or check back soon."
-      },
       "realSection": {
-        "title": "Real Stories",
+        "title": "Community Stories",
         "hint": "Anonymous one-liners from real life. No \"likes\". Only \"I relate\" and \"Support\"."
+      },
+      "emptyFeed": {
+        "title": "No stories yet.",
+        "sub": "Be the first to share a moment with the community."
       },
       "anonymous": "Anonymous",
       "deleteStoryTitle": "Delete story",
@@ -563,10 +573,10 @@
       "aboutLabel": "About",
       "selectTrack": "Select a track",
       "shareAnonymously": "Share anonymously",
-      "submittedMessage": "✅ Your story has been submitted! It's now awaiting moderation and will appear in the Real Stories feed once approved.",
+      "submittedMessage": "✅ Your story has been submitted! It's now awaiting moderation and will appear in the Community Stories feed once approved.",
       "pendingSection": {
         "title": "Your Pending Stories",
-        "hint": "Stories you've submitted that are awaiting moderation approval. Once approved, they'll appear in the Real Stories feed.",
+        "hint": "Stories you've submitted that are awaiting moderation approval. Once approved, they'll appear in the Community Stories feed.",
         "emptyTitle": "You don't have any pending stories.",
         "emptySub": "Your submitted stories will appear here while they await publication.",
         "badge": "⏳ Pending"
@@ -683,6 +693,8 @@
         "todayPowerIs": "Today your power is",
         "powerScoreLabel": "Power score",
         "quickCheckin": "Quick check-in",
+        "guestTitle": "Track your daily power",
+        "guestText": "Sign in for free to answer daily check-in questions, see your score history, and get personal recommendations.",
         "whatNext": "What you can do next",
         "resetHint": "Need to update your energy levels? Reset to start over.",
         "reset": "Reset",

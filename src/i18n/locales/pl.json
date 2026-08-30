@@ -85,6 +85,9 @@
       "subtitleLoading": "Poczekaj chwilę, trwa przekierowanie…",
       "titleError": "Nie udało się dokończyć logowania",
       "titleLoading": "Logowanie"
+    },
+    "guestGate": {
+      "locked": "Załóż darmowe konto, aby odblokować kursy i symulatory."
     }
   },
   "common": {
@@ -101,6 +104,9 @@
     "supportAssociation": "Wesprzyj stowarzyszenie"
   },
   "components": {
+    "guestLock": {
+      "cta": "Zaloguj się"
+    },
     "chat": {
       "emptySub": "Napisz pierwszą wiadomość.",
       "emptyTitle": "Brak wiadomości",
@@ -338,6 +344,8 @@
       "filterByTrackAriaLabel": "Filtruj według ścieżki",
       "lede": "Każda ścieżka zawiera serię krótkich, codziennych modułów. Otwórz ścieżkę, aby zobaczyć jej dni, a następnie kontynuuj tam, gdzie skończyłaś.",
       "loginToOpenCourse": "Zaloguj się, aby otworzyć treść kursu.",
+      "guestFreePreview": "Wypróbuj moduł za darmo",
+      "locked": "Zaloguj się, aby odblokować",
       "review": "Przejrzyj",
       "scoreLabel": "{done} z {total} modułów ukończonych",
       "searchAriaLabel": "Szukaj modułów",
@@ -448,7 +456,12 @@
         "loginRequired": "Zaloguj się, aby uzyskać dostęp do treści kursu.",
         "noResults": "Nie znaleziono symulatorów. Spróbuj zmienić wyszukiwanie lub filtry.",
         "searchPlaceholder": "Szukaj scenariuszy…",
-        "startSimulation": "Rozpocznij symulację →",
+        "startSimulation": "Rozpocznij symulację",
+        "continueSimulation": "Kontynuuj",
+        "reviewSimulation": "Zagraj ponownie",
+        "progressSummary": "{done}/{total} ukończono",
+        "locked": "Zaloguj się, aby odblokować",
+        "freeBadge": "Darmowa wersja demo",
         "subtitle": "Ćwicz decyzje przywódcze bez ryzyka w prawdziwym świecie. Wybierz scenariusz i sprawdź swoje podejście."
       },
       "levels": {
@@ -456,12 +469,19 @@
         "core": "Podstawowy",
         "intro": "Wprowadzenie"
       },
+      "status": {
+        "done": "Ukończono",
+        "inProgress": "W trakcie",
+        "notStarted": "Nierozpoczęte"
+      },
       "play": {
         "areaToDevelop": "Obszar do rozwoju",
         "debriefSubtitle": "Oto jak poradziłaś sobie w każdym wskaźniku.",
         "debriefTitle": "Twoja informacja zwrotna",
         "defaultCardTitle": "Karta",
         "defaultFeedback": "Dobry wybór.",
+        "guestLockedTitle": "To jest podgląd",
+        "guestLocked": "Zaloguj się za darmo, aby odpowiadać i zobaczyć swój wynik w czasie rzeczywistym.",
         "defaultScenarioTitle": "Symulator",
         "errors": {
           "loadFailed": "Nie udało się wczytać symulatora. Spróbuj ponownie.",
@@ -522,7 +542,6 @@
     },
     "stories": {
       "aboutLabel": "O tym",
-      "allTopics": "Wszystkie",
       "anonymous": "Anonim",
       "context": {
         "community": "Społeczność",
@@ -545,46 +564,37 @@
         "warn": "Tej czynności nie można cofnąć."
       },
       "deleteStoryTitle": "Usuń historię",
-      "emptyTopic": {
-        "sub": "Spróbuj innego filtra lub zajrzyj tu wkrótce ponownie.",
-        "title": "Brak historii w tym temacie."
-      },
       "errorModal": {
         "understand": "Rozumiem"
       },
-      "featured": "Wyróżnione",
-      "inspireHint": "Starannie wybrane głosy kobiet, które zamieniły przeszkody w siłę napędową. Czytaj, refleksjonuj i zapisuj te, które do Ciebie przemawiają.",
-      "inspiredMe": "Zainspirowało mnie",
       "oneLinerPlaceholder": "Podziel się krótkim momentem...",
       "pendingSection": {
         "badge": "⏳ Oczekujące",
         "emptySub": "Twoje przesłane historie pojawią się tutaj, oczekując na publikację.",
         "emptyTitle": "Nie masz żadnych oczekujących historii.",
-        "hint": "Historie, które przesłałaś i które czekają na zatwierdzenie przez moderację. Po zatwierdzeniu pojawią się w kanale Prawdziwe historie.",
+        "hint": "Historie, które przesłałaś i które czekają na zatwierdzenie przez moderację. Po zatwierdzeniu pojawią się w kanale Historie społeczności.",
         "title": "Twoje oczekujące historie"
       },
       "privacyDesc": "Wszystkie historie są publikowane anonimowo. Możesz dzielić się nimi swobodnie, bez obaw. Tworzymy bezpieczną przestrzeń dla prawdziwych historii.",
       "privacyTitle": "Twoja prywatność jest chroniona",
-      "readFullStory": "Przeczytaj całą historię",
       "realSection": {
         "hint": "Anonimowe krótkie wpisy z prawdziwego życia. Bez „polubień”. Tylko „Też to znam” i „Wsparcie”.",
-        "title": "Prawdziwe historie"
+        "title": "Historie społeczności"
+      },
+      "emptyFeed": {
+        "title": "Jeszcze brak historii.",
+        "sub": "Bądź pierwsza, która podzieli się chwilą ze społecznością."
       },
       "relate": "Też to znam",
-      "save": "Zapisz",
-      "saveForLater": "Zapisz na później",
-      "saved": "Zapisano",
       "searchPlaceholder": "Szukaj historii, osób, tematów…",
       "selectTrack": "Wybierz ścieżkę",
       "shareAnonymously": "Udostępnij anonimowo",
       "shareHint": "Podziel się krótkimi, prawdziwymi chwilami ze swojego życia. Twoja historia pojawi się anonimowo w kanale, aby społeczność mogła się z nią utożsamić i Cię wesprzeć.",
-      "showLess": "Pokaż mniej",
-      "submittedMessage": "✅ Twoja historia została przesłana! Teraz oczekuje na moderację i pojawi się w kanale Prawdziwe historie po zatwierdzeniu.",
-      "subtitle1": "Inspiracja i prawdziwe historie naszej społeczności.",
+      "submittedMessage": "✅ Twoja historia została przesłana! Teraz oczekuje na moderację i pojawi się w kanale Historie społeczności po zatwierdzeniu.",
+      "subtitle1": "Prawdziwe historie naszej społeczności.",
       "subtitle2": "Podziel się swoją historią i połącz się z innymi, które Cię rozumieją i wspierają. Bezpieczna, anonimowa przestrzeń, by się wyrazić i znaleźć solidarność.",
       "support": "Wsparcie",
       "tabs": {
-        "inspire": "Inspirujące historie",
         "real": "Historie społeczności",
         "share": "Podziel się swoją historią"
       },
@@ -689,6 +699,8 @@
         "noData": "Brak danych",
         "powerScoreLabel": "Wynik mocy",
         "quickCheckin": "Szybki check-in",
+        "guestTitle": "Śledź swoją codzienną moc",
+        "guestText": "Zaloguj się za darmo, aby odpowiadać na codzienne pytania, śledzić historię wyników i otrzymywać spersonalizowane rekomendacje.",
         "reset": "Zresetuj",
         "resetHint": "Chcesz zaktualizować poziom swojej energii? Zresetuj, aby zacząć od nowa.",
         "scoreLabel": "Wynik: {score}",

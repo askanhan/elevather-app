@@ -33,7 +33,7 @@
     </section>
 
     <!-- Quick check-in questions -->
-    <section class="checkin" v-if="!isCompleted">
+    <section class="checkin" v-if="!isCompleted && !isGuest">
         <h2 class="h2">{{ $t('pages.home.powerCheck.quickCheckin') }}</h2>
         <div class="qgrid">
             <div v-for="q in questions" :key="q.id" class="qcard">
@@ -48,6 +48,13 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Guests can't have per-user check-ins - explain instead of showing a broken/empty grid -->
+    <section class="checkin" v-if="!isCompleted && isGuest">
+        <guest-lock-card
+            :title="$t('pages.home.powerCheck.guestTitle')"
+            :text="$t('pages.home.powerCheck.guestText')" />
     </section>
 
     <!-- After check-in: recommendations -->

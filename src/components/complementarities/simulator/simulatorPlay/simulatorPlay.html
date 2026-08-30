@@ -119,6 +119,15 @@
                     <p class="p">{{ feedback }}</p>
                 </div>
 
+                <div v-if="guestNotice" class="reveal reveal--feedback">
+                    <div class="revealTitle">
+                        <span class="revealIcon">🔒</span>
+                        {{ $t('components.simulator.play.guestLockedTitle') }}
+                    </div>
+                    <p class="p">{{ guestNotice }}</p>
+                    <button class="navBtn primary" @click="goSignIn">{{ $t('components.guestLock.cta') }}</button>
+                </div>
+
                 <details v-if="current.lens" class="lens">
                     <summary>{{ $t('components.simulator.play.powerLens') }}</summary>
                     <div class="whyBody">{{ current.lens }}</div>

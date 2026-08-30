@@ -21,6 +21,7 @@ import EmailLogin from '@/components/screens/email-login/email-login.vue'
 import EmailRegister from '@/components/screens/email-register/email-register.vue'
 import Goals from '@/components/complementarities/Goals.vue'
 import Reflections from '@/components/complementarities/Reflections.vue'
+import { i18n } from '@/i18n/index.js'
 
 const routes = [
   
@@ -267,6 +268,48 @@ const router = createRouter({
   }
 })
 
+
+// Visitor gate: guests may browse the app, but course content and
+// simulators require a real account, except for one free item of each kind
+// (mirrors the pick made in journey.js/simulatorHome.js: lowest id for
+// simulators, earliest day for modules). This is the enforcement point for
+// direct navigation (typed URL, deep link, browser back/forward) - the
+// in-page "sign in to continue" prompts on the journey/simulator lists
+// are just an earlier, friendlier warning for the same rule.
+function freeSimulatorId() {
+  const list = store.state.simulators || []
+  if (list.length === 0) return null
+  return list.slice().sort((a, b) => a.id - b.id)[0].id
+}
+
+function freeModuleId() {
+  const list = store.state.journeyModules || []
+  if (list.length === 0) return null
+  return list.slice().sort((a, b) => {
+    const dayA = a.day_number || 0
+    const dayB = b.day_number || 0
+    return dayA !== dayB ? dayA - dayB : a.id - b.id
+  })[0].id
+}
+
+const GUEST_BLOCKED_ROUTES = new Set(['course', 'simulatorplay'])
+
+router.beforeEach((to, from, next) => {
+  if (store.state.guestMode && GUEST_BLOCKED_ROUTES.has(to.name)) {
+    const targetId = to.query.id
+    const isFreeSimulator = to.name === 'simulatorplay' && String(targetId) === String(freeSimulatorId())
+    const isFreeModule = to.name === 'course' && String(targetId) === String(freeModuleId())
+
+    if (!isFreeSimulator && !isFreeModule) {
+      try {
+        store.commit(globalTypes.SHOW_MESSAGE, i18n.global.t('auth.guestGate.locked'))
+      } catch (e) { /* ignore */ }
+      next({ name: 'login' })
+      return
+    }
+  }
+  next()
+})
 
 const scrollPositions = new Map()
 

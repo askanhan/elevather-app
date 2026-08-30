@@ -84,6 +84,9 @@
       "subtitleLoading": "Lütfen bekleyin, yönlendiriyoruz…",
       "titleError": "Giriş tamamlanamadı",
       "titleLoading": "Giriş yapılıyor"
+    },
+    "guestGate": {
+      "locked": "Kursları ve simülatörleri açmak için ücretsiz bir hesap oluştur."
     }
   },
   "common": {
@@ -100,6 +103,9 @@
     "supportAssociation": "Derneği destekle"
   },
   "components": {
+    "guestLock": {
+      "cta": "Giriş yap"
+    },
     "chat": {
       "emptySub": "İlk mesajı sen yaz.",
       "emptyTitle": "Henüz mesaj yok",

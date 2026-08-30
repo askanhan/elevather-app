@@ -85,6 +85,9 @@
       "subtitleLoading": "Bitte warte, du wirst weitergeleitet…",
       "titleError": "Anmeldung konnte nicht abgeschlossen werden",
       "titleLoading": "Anmeldung läuft"
+    },
+    "guestGate": {
+      "locked": "Erstelle ein kostenloses Konto, um Kurse und Simulatoren freizuschalten."
     }
   },
   "common": {
@@ -101,6 +104,9 @@
     "supportAssociation": "Unterstütze den Verein"
   },
   "components": {
+    "guestLock": {
+      "cta": "Anmelden"
+    },
     "chat": {
       "emptySub": "Schreib die erste Nachricht.",
       "emptyTitle": "Noch keine Nachrichten",
@@ -338,6 +344,8 @@
       "filterByTrackAriaLabel": "Nach Bereich filtern",
       "lede": "Jeder Bereich enthält eine Reihe kurzer täglicher Module. Öffne einen Bereich, um seine Tage zu sehen, und mach dort weiter, wo du aufgehört hast.",
       "loginToOpenCourse": "Melde dich an, um den Kursinhalt zu öffnen.",
+      "guestFreePreview": "Teste ein Modul kostenlos",
+      "locked": "Zum Freischalten anmelden",
       "review": "Wiederholen",
       "scoreLabel": "{done} von {total} Modulen erledigt",
       "searchAriaLabel": "Module durchsuchen",
@@ -448,7 +456,12 @@
         "loginRequired": "Bitte melde dich an, um auf den Kursinhalt zuzugreifen.",
         "noResults": "Keine Simulatoren gefunden. Passe deine Suche oder Filter an.",
         "searchPlaceholder": "Szenarien durchsuchen…",
-        "startSimulation": "Simulation starten →",
+        "startSimulation": "Simulation starten",
+        "continueSimulation": "Fortsetzen",
+        "reviewSimulation": "Erneut spielen",
+        "progressSummary": "{done}/{total} abgeschlossen",
+        "locked": "Zum Freischalten anmelden",
+        "freeBadge": "Kostenlose Vorschau",
         "subtitle": "Übe Führungsentscheidungen ohne reales Risiko. Wähle ein Szenario und teste deinen Ansatz."
       },
       "levels": {
@@ -456,12 +469,19 @@
         "core": "Kern",
         "intro": "Einstieg"
       },
+      "status": {
+        "done": "Abgeschlossen",
+        "inProgress": "In Bearbeitung",
+        "notStarted": "Nicht begonnen"
+      },
       "play": {
         "areaToDevelop": "Entwicklungsbereich",
         "debriefSubtitle": "So hast du bei jeder Kennzahl abgeschnitten.",
         "debriefTitle": "Dein Feedback",
         "defaultCardTitle": "Karte",
         "defaultFeedback": "Gute Wahl.",
+        "guestLockedTitle": "Dies ist eine Vorschau",
+        "guestLocked": "Melde dich kostenlos an, um zu antworten und deine Echtzeit-Bewertung zu sehen.",
         "defaultScenarioTitle": "Simulator",
         "errors": {
           "loadFailed": "Simulator konnte nicht geladen werden. Bitte versuche es erneut.",
@@ -522,7 +542,6 @@
     },
     "stories": {
       "aboutLabel": "Über",
-      "allTopics": "Alle",
       "anonymous": "Anonym",
       "context": {
         "community": "Community",
@@ -545,46 +564,37 @@
         "warn": "Diese Aktion kann nicht rückgängig gemacht werden."
       },
       "deleteStoryTitle": "Geschichte löschen",
-      "emptyTopic": {
-        "sub": "Versuche einen anderen Filter oder schau später wieder vorbei.",
-        "title": "In diesem Thema gibt es noch keine Geschichten."
-      },
       "errorModal": {
         "understand": "Verstanden"
       },
-      "featured": "Hervorgehoben",
-      "inspireHint": "Ausgewählte Stimmen von Frauen, die Hindernisse in Schwung verwandelt haben. Lies, reflektiere und speichere die, die dich berühren.",
-      "inspiredMe": "Hat mich inspiriert",
       "oneLinerPlaceholder": "Teile einen kurzen Moment...",
       "pendingSection": {
         "badge": "⏳ Ausstehend",
         "emptySub": "Deine eingereichten Geschichten erscheinen hier, während sie auf die Veröffentlichung warten.",
         "emptyTitle": "Du hast keine ausstehenden Geschichten.",
-        "hint": "Von dir eingereichte Geschichten, die auf die Moderationsfreigabe warten. Nach der Freigabe erscheinen sie im Feed „Echte Geschichten“.",
+        "hint": "Von dir eingereichte Geschichten, die auf die Moderationsfreigabe warten. Nach der Freigabe erscheinen sie im Feed „Community-Geschichten“.",
         "title": "Deine ausstehenden Geschichten"
       },
       "privacyDesc": "Alle Geschichten werden anonym veröffentlicht. Du kannst frei teilen, ohne dir Sorgen zu machen. Wir schaffen einen sicheren Raum für echte Geschichten.",
       "privacyTitle": "Deine Privatsphäre wird geschützt",
-      "readFullStory": "Ganze Geschichte lesen",
       "realSection": {
         "hint": "Anonyme Kurzeinträge aus dem echten Leben. Keine „Likes“. Nur „Kann ich nachvollziehen“ und „Unterstützung“.",
-        "title": "Echte Geschichten"
+        "title": "Community-Geschichten"
+      },
+      "emptyFeed": {
+        "title": "Noch keine Geschichten.",
+        "sub": "Sei die Erste, die einen Moment mit der Community teilt."
       },
       "relate": "Kann ich nachvollziehen",
-      "save": "Speichern",
-      "saveForLater": "Für später speichern",
-      "saved": "Gespeichert",
       "searchPlaceholder": "Geschichten, Personen, Themen durchsuchen…",
       "selectTrack": "Wähle einen Bereich",
       "shareAnonymously": "Anonym teilen",
       "shareHint": "Teile kurze, echte Momente aus deinem Leben. Deine Geschichte erscheint anonym im Feed, damit die Community sich damit identifizieren und dich unterstützen kann.",
-      "showLess": "Weniger anzeigen",
-      "submittedMessage": "✅ Deine Geschichte wurde eingereicht! Sie wartet nun auf die Moderation und erscheint nach der Freigabe im Feed „Echte Geschichten“.",
-      "subtitle1": "Inspiration und echte Geschichten aus unserer Community.",
+      "submittedMessage": "✅ Deine Geschichte wurde eingereicht! Sie wartet nun auf die Moderation und erscheint nach der Freigabe im Feed „Community-Geschichten“.",
+      "subtitle1": "Echte Geschichten aus unserer Community.",
       "subtitle2": "Teile deine eigene Geschichte und vernetze dich mit anderen, die sich damit identifizieren und dich unterstützen. Ein sicherer, anonymer Raum, um dich auszudrücken und Solidarität zu finden.",
       "support": "Unterstützung",
       "tabs": {
-        "inspire": "Inspirierende Geschichten",
         "real": "Community-Geschichten",
         "share": "Teile deine Geschichte"
       },
@@ -689,6 +699,8 @@
         "noData": "Keine Daten",
         "powerScoreLabel": "Power-Score",
         "quickCheckin": "Schneller Check-in",
+        "guestTitle": "Behalte deine tägliche Power im Blick",
+        "guestText": "Melde dich kostenlos an, um tägliche Check-in-Fragen zu beantworten, deinen Punkteverlauf zu sehen und persönliche Empfehlungen zu erhalten.",
         "reset": "Zurücksetzen",
         "resetHint": "Musst du deine Energiewerte aktualisieren? Setze sie zurück, um neu zu beginnen.",
         "scoreLabel": "Punktzahl: {score}",

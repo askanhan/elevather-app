@@ -9,6 +9,7 @@ export const ADD_JOURNEY_MODULES = 'ADD_JOURNEY_MODULES'
 // ============ USER PROGRESS ============
 export const SET_USER_PROGRESS = 'SET_USER_PROGRESS'
 export const UPDATE_MODULE_STATUS = 'UPDATE_MODULE_STATUS'
+export const UPDATE_SIMULATOR_STATUS = 'UPDATE_SIMULATOR_STATUS'
 
 // ============ SIMULATOR ============
 export const SET_SIMULATORS = 'SET_SIMULATORS'

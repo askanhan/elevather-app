@@ -84,6 +84,9 @@
             "subtitleLoading": "Veuillez patienter, redirection…",
             "titleError": "La connexion n’a pas pu être finalisée",
             "titleLoading": "Connexion en cours"
+        },
+        "guestGate": {
+            "locked": "Créez un compte gratuit pour débloquer les cours et les simulateurs."
         }
     },
     "common": {
@@ -100,6 +103,9 @@
         "supportAssociation": "Soutenir l’association"
     },
     "components": {
+        "guestLock": {
+            "cta": "Se connecter"
+        },
         "chat": {
             "emptySub": "Écrivez le premier message.",
             "emptyTitle": "Aucun message pour l’instant",

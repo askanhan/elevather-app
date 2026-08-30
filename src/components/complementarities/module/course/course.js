@@ -131,7 +131,7 @@ export default {
                     }
 
                     this.loading = false
-                    if (this.$route.query.done != '1') {
+                    if (this.$route.query.done != '1' && this.userId) {
                         this.updateProgressToInProgress(moduleId)
                     }
                 })

@@ -112,6 +112,22 @@ export default {
                 null
         },
 
+        isGuest() {
+            return this.$store.state.guestMode || false
+        },
+
+        // Guests don't have real progress, so instead of guessing a "resume"
+        // module we always offer the same single free preview: the earliest
+        // day across all tracks.
+        freeModule() {
+            const all = this.allModules
+            if (all.length === 0) return null
+            return all.slice().sort((a, b) => {
+                if (a.dayNumber !== b.dayNumber) return a.dayNumber - b.dayNumber
+                return a.id - b.id
+            })[0]
+        },
+
         allOpen() {
             return this.tracks.length > 0 && this.openIds.length === this.tracks.length
         }
@@ -136,11 +152,17 @@ export default {
             // must not run until journeyModules is populated - otherwise the merge silently
             // no-ops and every module falls back to "Not started". Awaiting fetchJourneyData
             // first removes that ordering race regardless of relative network timing.
+            // Guests have no user id, so this step is skipped entirely for them instead of
+            // hitting /user/undefined/progress/ and surfacing a false "connection" error.
             Promise.all([
                 this.$store.dispatch('fetchJourneyProgressStatuses'),
                 this.$store.dispatch('fetchJourneyData')
             ])
-                .then(() => this.$store.dispatch('fetchUserProgress', this.userId))
+                .then(() => {
+                    if (!this.isGuest && this.userId) {
+                        return this.$store.dispatch('fetchUserProgress', this.userId)
+                    }
+                })
                 .then(() => {
                     if (this.categories.length === 0 || this.modules.length === 0) {
                         this.error = this.$t('components.journey.errors.empty')
@@ -249,8 +271,12 @@ export default {
             return 'is-todo'
         },
 
+        isLocked(module) {
+            return this.isGuest && (!this.freeModule || module.id !== this.freeModule.id)
+        },
+
         goToCourse(module) {
-            if (this.$store.state.guestMode) {
+            if (this.isLocked(module)) {
                 this.$message.success(this.$t('components.journey.loginToOpenCourse'))
                 return
             }

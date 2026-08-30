@@ -45,6 +45,12 @@ export const mutations = {
       module.status = status
     }
   },
+  [types.UPDATE_SIMULATOR_STATUS](state, { simulatorId, status }) {
+    const simulator = (state.simulators || []).find(s => s.id === simulatorId)
+    if (simulator) {
+      simulator.status = status
+    }
+  },
   //mutations for simulator
   [types.SET_SIMULATORS](state, simulators) {
     state.simulators = simulators || []

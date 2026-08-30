@@ -221,6 +221,8 @@ export const fetchUserProgress = async function ({ state }, userId) {
       data.forEach(item => {
         if (item.owner_type === 'module') {
           store.commit(types.UPDATE_MODULE_STATUS, { moduleId: item.owner_id, status: item.status })
+        } else if (item.owner_type === 'simulator') {
+          store.commit(types.UPDATE_SIMULATOR_STATUS, { simulatorId: item.owner_id, status: item.status })
         }
       })
     }
@@ -1066,7 +1068,7 @@ export const fetchAudioForCard = async function ({ state, commit }, { ownerType,
 
   try {
     const response = await api.get(
-      `/audio/fetch/${ownerType}/${ownerId}/`
+      `/media/audios/${$i18n.locale}_${ownerId}.mp3`
     )
 
     const audioUrl = response.data.audio_url || response.data.url

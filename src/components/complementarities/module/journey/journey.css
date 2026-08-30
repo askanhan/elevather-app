@@ -565,6 +565,15 @@
     border-color: var(--live-line);
 }
 
+.jModule.jLocked {
+    opacity: .72;
+}
+
+.jStatusLocked {
+    background: #ece9f5;
+    color: var(--ink-soft);
+}
+
 .jModuleTop {
     display: flex;
     align-items: center;

@@ -152,7 +152,7 @@ export default {
                 });
 
                 this.success = true;
-                this.$message?.success ? this.$message.success("Gönderildi.") : null;
+                // this.$message?.success ? this.$message.success("Gönderildi.") : null;
                 this.resetForm();
                 this.success = true;
             } catch (e) {

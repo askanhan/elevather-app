@@ -32,11 +32,16 @@ export default {
             showDebrief: false,
             debriefData: null,
             debriefLoading: false,
-            stageHeight: 'auto'
+            stageHeight: 'auto',
+            guestNotice: ''
         }
     },
 
     computed: {
+        isGuest() {
+            return this.$store.state.guestMode || false
+        },
+
         simulatorCards() {
             return this.$store.state.simulatorCards || []
         },
@@ -103,16 +108,20 @@ export default {
             }
 
             this.error = null
-            
-            // Update progress to "In progress" when starting simulator
-            const userId = this.$store.state.user.id
-            this.$store.dispatch('updateUserProgress', {
-                userId: userId,
-                ownerType: 'simulator',
-                ownerId: this.simulatorId,
-                status: 'In progress'
-            })
-                .catch(err => console.error('Error marking simulator as in progress:', err))
+
+            // Update progress to "In progress" when starting simulator.
+            // Guests have no user id to attach progress to - a preview shouldn't
+            // even try, since it would only fail against the backend.
+            const userId = this.$store.state.user?.id
+            if (userId) {
+                this.$store.dispatch('updateUserProgress', {
+                    userId: userId,
+                    ownerType: 'simulator',
+                    ownerId: this.simulatorId,
+                    status: 'In progress'
+                })
+                    .catch(err => console.error('Error marking simulator as in progress:', err))
+            }
 
             // If cards are already cached, display immediately
             const hasCache = this.simulatorCards.length > 0
@@ -196,7 +205,14 @@ export default {
 
         async choose(option, component) {
             if (!component || !component.options) return
-            
+
+            // Preview mode for guests: scoring is tied to a real user account
+            // server-side, so answering past this point requires signing in.
+            if (this.isGuest) {
+                this.guestNotice = this.$t('components.simulator.play.guestLocked')
+                return
+            }
+
             this.locked = true
             const previousAnswer = this.selectedAnswers[this.current.id]
             this.selectedAnswers[this.current.id] = option.id
@@ -325,6 +341,7 @@ export default {
             if (this.stepIndex < this.steps.length - 1) {
                 this.stepIndex += 1
                 this.feedback = ''
+                this.guestNotice = ''
                 this.updateStageHeight()
             } else {
                 this.done = true
@@ -346,16 +363,22 @@ export default {
             if (this.stepIndex > 0) {
                 this.stepIndex -= 1
                 this.feedback = ''
+                this.guestNotice = ''
                 this.updateStageHeight()
             }
-            
+
             this.goToTopOfThePage()
         },
 
         goTo(idx) {
             this.stepIndex = idx
             this.feedback = ''
+            this.guestNotice = ''
             this.updateStageHeight()
+        },
+
+        goSignIn() {
+            this.$router.push({ name: 'login' }).catch(() => { })
         },
 
         goToCourse() {
@@ -381,12 +404,16 @@ export default {
 
         // Show debrief with feedbacks
         async showResultsDebrief() {
+            const userId = this.$store.state.user?.id
+
+            if (!userId) {
+                this.feedback = this.$t('components.simulator.play.guestLocked')
+                return
+            }
+
             this.debriefLoading = true
-            
+
             try {
-                // Get user ID from store (or use default for testing)
-                const userId = this.$store.state.user?.id
-                
                 // Fetch results from API
                 const response = await this.$store.dispatch('fetchSimulatorResults', {
                     userId: userId,

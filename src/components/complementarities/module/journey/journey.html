@@ -45,13 +45,26 @@
     </div>
 
     <!-- ============ CONTINUE CARD ============ -->
-    <button v-if="!loading && resumeModule" class="jResume" @click="goToCourse(resumeModule)">
+    <button v-if="!loading && !isGuest && resumeModule" class="jResume" @click="goToCourse(resumeModule)">
       <span class="jResumeAccent" :style="{ background: resumeModule.trackColor }"></span>
       <span class="jResumeBody">
         <span class="jEyebrow">{{ $t('components.journey.continueWhereLeftOff') }}</span>
         <span class="jResumeTitle">{{ resumeModule.title }}</span>
         <span class="jResumeMeta">
           {{ resumeModule.trackTitle }} · {{ $t('components.journey.day', { n: resumeModule.dayNumber }) }}
+        </span>
+      </span>
+      <span class="jResumeGo" aria-hidden="true">→</span>
+    </button>
+
+    <!-- ============ GUEST FREE PREVIEW CARD ============ -->
+    <button v-if="!loading && isGuest && freeModule" class="jResume" @click="goToCourse(freeModule)">
+      <span class="jResumeAccent" :style="{ background: freeModule.trackColor }"></span>
+      <span class="jResumeBody">
+        <span class="jEyebrow">✨ {{ $t('components.journey.guestFreePreview') }}</span>
+        <span class="jResumeTitle">{{ freeModule.title }}</span>
+        <span class="jResumeMeta">
+          {{ freeModule.trackTitle }} · {{ $t('components.journey.day', { n: freeModule.dayNumber }) }}
         </span>
       </span>
       <span class="jResumeGo" aria-hidden="true">→</span>
@@ -145,10 +158,13 @@
               <span class="jNodeDay">{{ m.dayNumber }}</span>
             </span>
 
-            <button class="jModule" :class="statusKey(m.status)" @click="goToCourse(m)">
+            <button class="jModule" :class="[statusKey(m.status), { jLocked: isLocked(m) }]" @click="goToCourse(m)">
               <span class="jModuleTop">
                 <span class="jModuleDay">{{ $t('components.journey.day', { n: m.dayNumber }) }}</span>
-                <span class="jStatus" :class="statusKey(m.status)">
+                <span v-if="isLocked(m)" class="jStatus jStatusLocked">
+                  <span aria-hidden="true">🔒</span>{{ $t('components.journey.locked') }}
+                </span>
+                <span v-else class="jStatus" :class="statusKey(m.status)">
                   <span class="jStatusDot" aria-hidden="true"></span>{{ statusLabel(m.status) }}
                 </span>
               </span>
@@ -159,7 +175,7 @@
               <span class="jModuleFoot">
                 <span class="jTag">{{ m.outcomes.join(' · ') }}</span>
                 <span class="jOpen">
-                  {{ m.status === 'Done' ? $t('components.journey.review') : m.status === 'In progress' ? $t('components.journey.continueLabel') : $t('components.journey.start') }}
+                  {{ isLocked(m) ? $t('components.journey.locked') : (m.status === 'Done' ? $t('components.journey.review') : m.status === 'In progress' ? $t('components.journey.continueLabel') : $t('components.journey.start')) }}
                   <span class="jOpenArrow" aria-hidden="true">→</span>
                 </span>
               </span>

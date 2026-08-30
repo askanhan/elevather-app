@@ -85,6 +85,9 @@
       "subtitleLoading": "Even geduld, je wordt doorverwezen…",
       "titleError": "Inloggen kon niet worden voltooid",
       "titleLoading": "Bezig met inloggen"
+    },
+    "guestGate": {
+      "locked": "Maak een gratis account aan om cursussen en simulators te ontgrendelen."
     }
   },
   "common": {
@@ -101,6 +104,9 @@
     "supportAssociation": "Steun de vereniging"
   },
   "components": {
+    "guestLock": {
+      "cta": "Inloggen"
+    },
     "chat": {
       "emptySub": "Schrijf het eerste bericht.",
       "emptyTitle": "Nog geen berichten",
@@ -338,6 +344,8 @@
       "filterByTrackAriaLabel": "Filteren op traject",
       "lede": "Elk traject bevat een reeks korte dagelijkse modules. Open een traject om de dagen te zien en ga verder waar je gebleven was.",
       "loginToOpenCourse": "Log in om de cursusinhoud te openen.",
+      "guestFreePreview": "Probeer gratis een module",
+      "locked": "Log in om te ontgrendelen",
       "review": "Herbekijken",
       "scoreLabel": "{done} van {total} modules voltooid",
       "searchAriaLabel": "Modules zoeken",
@@ -448,7 +456,12 @@
         "loginRequired": "Log in om de cursusinhoud te openen.",
         "noResults": "Geen simulators gevonden. Probeer je zoekopdracht of filters aan te passen.",
         "searchPlaceholder": "Zoek scenario's…",
-        "startSimulation": "Start simulatie →",
+        "startSimulation": "Start simulatie",
+        "continueSimulation": "Verdergaan",
+        "reviewSimulation": "Opnieuw spelen",
+        "progressSummary": "{done}/{total} voltooid",
+        "locked": "Log in om te ontgrendelen",
+        "freeBadge": "Gratis preview",
         "subtitle": "Oefen leiderschapsbeslissingen zonder risico in de echte wereld. Kies een scenario en test je aanpak."
       },
       "levels": {
@@ -456,12 +469,19 @@
         "core": "Kern",
         "intro": "Intro"
       },
+      "status": {
+        "done": "Voltooid",
+        "inProgress": "Bezig",
+        "notStarted": "Niet gestart"
+      },
       "play": {
         "areaToDevelop": "Te ontwikkelen gebied",
         "debriefSubtitle": "Zo heb je gepresteerd op elke metric.",
         "debriefTitle": "Jouw feedback",
         "defaultCardTitle": "Kaart",
         "defaultFeedback": "Goede keuze.",
+        "guestLockedTitle": "Dit is een preview",
+        "guestLocked": "Log gratis in om te antwoorden en je live score te zien.",
         "defaultScenarioTitle": "Simulator",
         "errors": {
           "loadFailed": "Simulator laden mislukt. Probeer het opnieuw.",
@@ -522,7 +542,6 @@
     },
     "stories": {
       "aboutLabel": "Over",
-      "allTopics": "Alle",
       "anonymous": "Anoniem",
       "context": {
         "community": "Community",
@@ -545,46 +564,37 @@
         "warn": "Deze actie kan niet ongedaan worden gemaakt."
       },
       "deleteStoryTitle": "Verhaal verwijderen",
-      "emptyTopic": {
-        "sub": "Probeer een ander filter of kom later terug.",
-        "title": "Nog geen verhalen in dit onderwerp."
-      },
       "errorModal": {
         "understand": "Ik begrijp het"
       },
-      "featured": "Uitgelicht",
-      "inspireHint": "Zorgvuldig gekozen stemmen van vrouwen die obstakels omzetten in vooruitgang. Lees, reflecteer en bewaar wat je aanspreekt.",
-      "inspiredMe": "Inspireerde mij",
       "oneLinerPlaceholder": "Deel een kort moment...",
       "pendingSection": {
         "badge": "⏳ In behandeling",
         "emptySub": "Je ingediende verhalen verschijnen hier terwijl ze wachten op publicatie.",
         "emptyTitle": "Je hebt geen verhalen in behandeling.",
-        "hint": "Verhalen die je hebt ingediend en die wachten op moderatiegoedkeuring. Zodra ze goedgekeurd zijn, verschijnen ze in de feed Echte verhalen.",
+        "hint": "Verhalen die je hebt ingediend en die wachten op moderatiegoedkeuring. Zodra ze goedgekeurd zijn, verschijnen ze in de feed Verhalen uit de community.",
         "title": "Jouw verhalen in behandeling"
       },
       "privacyDesc": "Alle verhalen worden anoniem geplaatst. Je kunt vrijuit delen zonder je zorgen te maken. We creëren een veilige plek voor echte verhalen.",
       "privacyTitle": "Jouw privacy is beschermd",
-      "readFullStory": "Lees het volledige verhaal",
       "realSection": {
         "hint": "Anonieme korte verhalen uit het echte leven. Geen \"likes\". Alleen \"Herken ik\" en \"Steun\".",
-        "title": "Echte verhalen"
+        "title": "Verhalen uit de community"
+      },
+      "emptyFeed": {
+        "title": "Nog geen verhalen.",
+        "sub": "Wees de eerste die een moment deelt met de community."
       },
       "relate": "Herken ik",
-      "save": "Bewaren",
-      "saveForLater": "Bewaren voor later",
-      "saved": "Bewaard",
       "searchPlaceholder": "Zoek verhalen, mensen, onderwerpen…",
       "selectTrack": "Selecteer een traject",
       "shareAnonymously": "Anoniem delen",
       "shareHint": "Deel korte, echte momenten uit je leven. Je verhaal verschijnt anoniem in de feed, zodat de community zich ermee kan verbinden en je kan steunen.",
-      "showLess": "Minder tonen",
-      "submittedMessage": "✅ Je verhaal is ingediend! Het wacht nu op moderatie en verschijnt in de feed Echte verhalen zodra het is goedgekeurd.",
-      "subtitle1": "Inspiratie en echte verhalen van onze community.",
+      "submittedMessage": "✅ Je verhaal is ingediend! Het wacht nu op moderatie en verschijnt in de feed Verhalen uit de community zodra het is goedgekeurd.",
+      "subtitle1": "Echte verhalen van onze community.",
       "subtitle2": "Deel je eigen verhaal en maak contact met anderen die zich hierin herkennen en je steunen. Een veilige, anonieme plek om je te uiten en steun te vinden.",
       "support": "Steun",
       "tabs": {
-        "inspire": "Inspirerende verhalen",
         "real": "Verhalen uit de community",
         "share": "Deel je verhaal"
       },
@@ -689,6 +699,8 @@
         "noData": "Geen gegevens",
         "powerScoreLabel": "Powerscore",
         "quickCheckin": "Snelle check-in",
+        "guestTitle": "Volg je dagelijkse power",
+        "guestText": "Log gratis in om dagelijkse check-invragen te beantwoorden, je scoregeschiedenis te zien en persoonlijke aanbevelingen te krijgen.",
         "reset": "Resetten",
         "resetHint": "Wil je je energieniveaus bijwerken? Reset om opnieuw te beginnen.",
         "scoreLabel": "Score: {score}",

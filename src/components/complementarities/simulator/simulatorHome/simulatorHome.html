@@ -1,41 +1,67 @@
 <template>
     <div class="simHome">
         <header class="head">
-            <div>
+            <div class="headText">
                 <h1 class="h1">{{ $t('components.simulator.title') }}</h1>
-                <p class="sub">
-                    {{ $t('components.simulator.home.subtitle') }}
-                </p>
+                <p class="sub">{{ $t('components.simulator.home.subtitle') }}</p>
             </div>
 
-            <div class="tools">
-                <input v-model="query" class="search" type="search" :placeholder="$t('components.simulator.home.searchPlaceholder')" />
-                <select v-model="level" class="select">
-                    <option value="all">{{ $t('components.simulator.home.allLevels') }}</option>
-                    <option v-for="lvl in levels" :key="lvl.value" :value="lvl.value">
-                        {{ lvl.label }}
-                    </option>
-                </select>
+            <div v-if="!loading && progressCounts.total" class="scoreCard">
+                <div class="scoreTop">
+                    <strong class="scoreValue">{{ progressCounts.done }}/{{ progressCounts.total }}</strong>
+                    <span class="scoreLabel">{{ $t('components.simulator.status.done') }}</span>
+                </div>
+                <div class="scoreBar" aria-hidden="true">
+                    <div class="scoreBarFill" :style="{ width: (progressCounts.total ? (progressCounts.done / progressCounts.total * 100) : 0) + '%' }"></div>
+                </div>
             </div>
         </header>
 
-        
+        <div class="toolbar">
+            <div class="search">
+                <span class="searchIcon" aria-hidden="true">⌕</span>
+                <input v-model="query" type="search" class="searchInput"
+                    :placeholder="$t('components.simulator.home.searchPlaceholder')" />
+                <button v-if="query" class="searchClear" @click="query = ''" aria-label="Clear">×</button>
+            </div>
+
+            <select v-model="level" class="select">
+                <option value="all">{{ $t('components.simulator.home.allLevels') }}</option>
+                <option v-for="lvl in levels" :key="lvl.value" :value="lvl.value">
+                    {{ lvl.label }}
+                </option>
+            </select>
+        </div>
+
         <div v-if="error" class="error-message">
             ⚠️ {{ error }}
         </div>
 
-        
-        <div v-if="loading" class="loading">
-            {{ $t('components.simulator.home.loading') }}
+        <!-- ============ LOADING ============ -->
+        <div v-if="loading" class="grid" aria-live="polite">
+            <div v-for="n in 4" :key="'sk' + n" class="skeletonCard">
+                <span class="skeleton skeletonIcon"></span>
+                <span class="skeleton skeletonLine"></span>
+                <span class="skeleton skeletonLine short"></span>
+            </div>
         </div>
 
-        
         <section v-if="!loading" class="grid">
-            <article v-for="s in filtered" :key="s.id" class="card" @click="goPlay(s)">
+            <article v-for="s in filtered" :key="s.id" class="card" :class="[statusKey(s), { locked: isLocked(s) }]" @click="goPlay(s)">
+                <span v-if="s.status === 'Done'" class="doneRibbon" aria-hidden="true">✓</span>
+
                 <div class="top">
                     <div class="icon">{{ s.icon }}</div>
                     <div class="meta">
-                        <div class="title">{{ s.title }}</div>
+                        <div class="titleRow">
+                            <span class="title">{{ s.title }}</span>
+                            <span v-if="isGuest && freeSimulator && s.id === freeSimulator.id" class="freeBadge">{{ $t('components.simulator.home.freeBadge') }}</span>
+                        </div>
+
+                        <span class="status" :class="statusKey(s)">
+                            <span class="statusDot" aria-hidden="true"></span>{{ statusLabel(s) }}
+                        </span>
+
                         <div class="desc">{{ s.description }}</div>
 
                         <div class="chips">
@@ -43,18 +69,22 @@
                             <span class="chip">{{ s.duration }}</span>
                             <span class="chip">{{ s.domain }}</span>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="tags">
-                            <p class="label">{{ $t('components.simulator.home.focusSkills') }}</p>
-                            <div class="tags-list">
-                                <span v-for="t in s.tags" :key="t" class="tag">{{ t }}</span>
-                            </div>
-                        </div>
+                <div class="tags">
+                    <p class="label">{{ $t('components.simulator.home.focusSkills') }}</p>
+                    <div class="tags-list">
+                        <span v-for="t in s.tags" :key="t" class="tag">{{ t }}</span>
                     </div>
                 </div>
 
                 <div class="bottom">
-                    <button class="btn">{{ $t('components.simulator.home.startSimulation') }}</button>
+                    <button class="btn" :class="{ ghost: s.status === 'Done' }">
+                        <span v-if="isLocked(s)" aria-hidden="true">🔒</span>
+                        {{ buttonLabel(s) }}
+                        <span aria-hidden="true">→</span>
+                    </button>
                 </div>
             </article>
         </section>

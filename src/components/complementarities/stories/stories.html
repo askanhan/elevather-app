@@ -24,118 +24,14 @@
 
         <section class="section" v-if="!isGuest">
 
-            <!-- Community tabs: Real Stories / Share your story / Pending Stories -->
-            <!-- Community tabs: Inspirational / Real / Share / Pending -->
+            <!-- Community tabs: Community Stories / Share your story -->
             <div class="subtabs">
-                <button class="subtab" :class="{ on: storiesTab === 'inspire' }" @click="storiesTab = 'inspire'">
-                    {{ $t('components.stories.tabs.inspire') }}
-                </button>
                 <button class="subtab" :class="{ on: storiesTab === 'real' }" @click="storiesTab = 'real'">
                     {{ $t('components.stories.tabs.real') }}
                 </button>
                 <button class="subtab" :class="{ on: storiesTab === 'share' }" @click="storiesTab = 'share'">
                     {{ $t('components.stories.tabs.share') }}
                 </button>
-            </div>
-            <!-- Inspirational Stories feed -->
-            <div v-if="storiesTab === 'inspire'" class="inspireStories">
-
-                <div class="sectionHead">
-                    <h2 class="h2">{{ $t('components.stories.tabs.inspire') }}</h2>
-                    <p class="hint">{{ $t('components.stories.inspireHint') }}</p>
-                </div>
-
-                <!-- Topic filter -->
-                <div class="topicFilter">
-                    <button class="topicChip" :class="{ on: inspireTopic === 'all' }" @click="inspireTopic = 'all'">
-                        {{ $t('components.stories.allTopics') }}
-                    </button>
-                    <button v-for="topic in inspireTopics" :key="topic" class="topicChip"
-                        :class="{ on: inspireTopic === topic }" @click="inspireTopic = topic">
-                        {{ topic }}
-                    </button>
-                </div>
-
-                <!-- Featured story (big card) -->
-                <article v-if="featuredInspire" class="inspireFeatured">
-                    <div class="inspireFeaturedMedia">
-                        <img :src="featuredInspire.image" :alt="featuredInspire.name" />
-                        <span class="featuredBadge">⭐ {{ $t('components.stories.featured') }}</span>
-                    </div>
-                    <div class="inspireFeaturedBody">
-                        <span class="inspireTopic">{{ featuredInspire.topic }}</span>
-                        <h3 class="inspireFeaturedTitle">{{ featuredInspire.title }}</h3>
-                        <div class="inspirePerson">
-                            <div class="inspireName">{{ featuredInspire.name }}</div>
-                            <div class="inspireRole">{{ featuredInspire.role }}</div>
-                        </div>
-                        <p class="inspireExcerpt">{{ featuredInspire.excerpt }}</p>
-                        <button class="readMore" @click="openInspireDetail(featuredInspire)">
-                            {{ $t('components.stories.readFullStory') }} →
-                        </button>
-                    </div>
-                </article>
-
-                <!-- Grid of stories -->
-                <div class="inspireGrid">
-                    <article v-for="s in filteredInspire" :key="s.id" class="inspireCard">
-                        <div class="inspireMedia">
-                            <img :src="s.image" :alt="s.name" />
-                            <span class="inspireTopic">{{ s.topic }}</span>
-                        </div>
-
-                        <div class="inspireBody">
-                            <div class="inspirePerson">
-                                <div class="inspireName">{{ s.name }}</div>
-                                <div class="inspireRole">{{ s.role }}</div>
-                            </div>
-
-                            <h3 class="inspireTitle">{{ s.title }}</h3>
-
-                            <p v-if="!expandedInspire.includes(s.id)" class="inspireExcerpt">
-                                {{ s.excerpt }}
-                            </p>
-
-                            <div v-else class="inspireFull">
-                                <p v-for="(para, i) in s.story" :key="i">{{ para }}</p>
-                                <blockquote v-if="s.quote" class="inspireQuote">
-                                    "{{ s.quote }}"
-                                </blockquote>
-                            </div>
-
-                            <div class="inspireTags">
-                                <span v-for="t in s.tags" :key="t" class="tag">{{ t }}</span>
-                            </div>
-
-                            <div class="inspireActions">
-                                <button class="readMore" @click="toggleInspireExpand(s.id)">
-                                    {{ expandedInspire.includes(s.id) ? '↑ ' + $t('components.stories.showLess') : '↓ ' + $t('components.stories.readFullStory') }}
-                                </button>
-
-                                <div class="inspireActionRight">
-                                    <button class="pillBtn" :class="{ on: savedInspire.includes(s.id) }"
-                                        @click="toggleSaveInspire(s.id)"
-                                        :title="savedInspire.includes(s.id) ? $t('components.stories.saved') : $t('components.stories.saveForLater')">
-                                        <span class="ic">{{ savedInspire.includes(s.id) ? '🔖' : '📑' }}</span>
-                                        <span>{{ savedInspire.includes(s.id) ? $t('components.stories.saved') : $t('components.stories.save') }}</span>
-                                    </button>
-
-                                    <button class="pillBtn" :class="{ on: inspiredBy.includes(s.id) }"
-                                        @click="toggleInspiredBy(s.id)">
-                                        <span class="ic">✨</span>
-                                        <span>{{ $t('components.stories.inspiredMe') }}</span>
-                                        <span class="count">{{ s.inspired_count || 0 }}</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-
-                <div v-if="filteredInspire.length === 0" class="noPendingStories">
-                    <p>{{ $t('components.stories.emptyTopic.title') }}</p>
-                    <p class="sub">{{ $t('components.stories.emptyTopic.sub') }}</p>
-                </div>
             </div>
             <!-- Real Stories feed -->
             <div v-if="storiesTab === 'real'" class="realStories">
@@ -145,7 +41,12 @@
                   <p class="hint">{{ $t('components.stories.realSection.hint') }}</p>
                 </div>
               
-                <div class="feed">
+                <div v-if="filteredPool.length === 0" class="noPendingStories">
+                    <p>{{ $t('components.stories.emptyFeed.title') }}</p>
+                    <p class="sub">{{ $t('components.stories.emptyFeed.sub') }}</p>
+                </div>
+
+                <div v-else class="feed">
                   <article v-for="p in filteredPool" :key="p.id" class="post">
               
                     <!-- Story = hero -->
