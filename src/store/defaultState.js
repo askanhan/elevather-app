@@ -7,6 +7,10 @@ export default function getDefaultState() {
         // route - e.g. after switching language mid-session - keeps using the
         // persisted choice instead of resetting to English.
         lang: authStore.getItem('lang') || 'en',
+        // Server-driven list of enabled language codes (global_settings.available_languages).
+        // Seeded from the last successful fetch so the app isn't stuck with every
+        // locale visible while offline; refreshed on every startup in main.js.
+        availableLanguages: (authStore.getItem('availableLanguages') || 'en,nl,fr,tr,de,cs,el,pl').split(','),
         //for modules (courses and journeys)
         courseCards: [],
         journeyStatuses: [],

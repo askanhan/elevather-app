@@ -406,7 +406,13 @@ window.mainVueApp = {
     await restoreAuthenticationFromLocalStorage()
         // ✅ auto-login’i geri getirir (prod’da da çalışır)
     await __ensureSessionFromStoredRefresh()
-  
+
+    // ✅ Refresh the server-driven list of enabled languages on every startup;
+    // silently keep the cached/default list if the request fails (e.g. offline)
+    store.dispatch('fetchAvailableLanguages').catch((e) => {
+      console.log('[available-languages] fetch failed, keeping cached list', e)
+    })
+
     app.mount("#app");
   
     setTimeout(() => {

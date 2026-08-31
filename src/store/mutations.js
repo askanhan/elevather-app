@@ -382,6 +382,9 @@ export const mutations = {
   [types.CHANGE_LANGUAGE](state, language) {
     state.lang = language
   },
+  [types.SET_AVAILABLE_LANGUAGES](state, languages) {
+    state.availableLanguages = languages
+  },
   [types.SET_MY_PROFILE](state, profileObj) {
     state.myProfile = profileObj
   },

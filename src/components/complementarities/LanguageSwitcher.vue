@@ -64,7 +64,7 @@ export default {
                 { code: "pl", label: "Polski" },
                 { code: "cs", label: "Čeština" },
                 { code: "el", label: "Ελληνικά" },
-                { code: "de", label: "Deutsch", hidden: true }
+                { code: "de", label: "Deutsch" }
             ]
         }
     },
@@ -75,7 +75,8 @@ export default {
         },
 
         visibleLanguages() {
-            return this.languages.filter(l => !l.hidden)
+            const available = this.$store?.state?.availableLanguages
+            return this.languages.filter(l => !l.hidden && (!Array.isArray(available) || available.includes(l.code)))
         }
     },
 

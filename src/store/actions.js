@@ -44,6 +44,25 @@ let cachedSimulatorCardsSimulatorId = null
 
 // -------------------- ACTIONS --------------------
 
+// fetching the server-driven list of enabled languages (global_settings.available_languages)
+// called on every app startup so removing a code from the DB removes it from the app
+export const fetchAvailableLanguages = async function ({ state }) {
+  const { data } = await api.get('/global-settings/available-languages/', { timeout: 8000 })
+  const languages = Array.isArray(data?.languages) ? data.languages.filter(Boolean) : []
+  if (!languages.length) return false
+
+  store.commit(types.SET_AVAILABLE_LANGUAGES, languages)
+  authStore.setItem('availableLanguages', languages.join(','))
+
+  // If the currently selected/persisted language was removed, fall back to the first available one
+  if (!languages.includes(state.lang)) {
+    const fallback = languages.includes('en') ? 'en' : languages[0]
+    store.commit(types.CHANGE_LANGUAGE, fallback)
+    authStore.setItem('lang', fallback)
+  }
+  return true
+}
+
 //fetching cards for a module
 export const fetchCourseCards = async function ({ state }, moduleId) {
   // Return cached cards if already loaded for THIS moduleId

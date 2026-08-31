@@ -150,7 +150,7 @@ export default {
     detectLang() {
       authStore.getItem('lang', (err, lang) => {
         if (lang == null) {
-          const supported = ['en', 'nl', 'pl', 'cs', 'el']
+          const supported = this.$store.state.availableLanguages
           const browserLang = navigator.language ? navigator.language.slice(0, 2).toLowerCase() : ''
           this.applyLang(supported.includes(browserLang) ? browserLang : 'en')
         } else {
