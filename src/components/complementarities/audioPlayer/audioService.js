@@ -6,6 +6,7 @@
 import axios from 'axios'
 import AppConfig from '@/config/app.config.js'
 import AudioConfig from '@/config/audio.config.js'
+import { i18n } from '@/i18n'
 
 const audioCache = new Map() // Cache: `${ownerType}-${ownerId}` -> { url, timestamp }
 let currentAudioElement = null
@@ -44,8 +45,9 @@ class AudioService {
    * @returns {Promise<string>} Object URL for the audio blob
    */
   async loadAudio(ownerType, ownerId) {
-    const key = `${ownerType}-${ownerId}`
-    
+    const lang = i18n.global.locale.value
+    const key = `${ownerType}-${ownerId}-${lang}`
+
     // Check cache first
     if (audioCache.has(key)) {
       const cached = audioCache.get(key)
@@ -63,10 +65,11 @@ class AudioService {
 
     try {
       currentAudioState = 'loading'
-      
+
       // Fetch audio blob directly from backend endpoint
+      // Layout: media/audios/<lang>/<lang>_<ownerId>.mp3 (one subfolder per language)
       const response = await fetch(
-        `${AppConfig.API_BASE_URL}/media/audios/${$i18n.locale}_${ownerId}.mp3`
+        `${AppConfig.API_BASE_URL}/media/audios/${lang}/${lang}_${ownerId}.mp3`
       )
       
       if (!response.ok) {

@@ -44,7 +44,7 @@ export default {
       return titles[this.state] || 'Play audio'
     },
     key() {
-      return `${this.ownerType}-${this.ownerId}`
+      return `${this.ownerType}-${this.ownerId}-${this.$i18n.locale}`
     }, currentIcon() {
       const icons = {
         idle: '🔊',      // Or standard '🔊'

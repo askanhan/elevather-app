@@ -158,9 +158,13 @@ export default {
   methods: {
     async loadData() {
       try {
+        // Ask the backend for goal titles/descriptions translated into the
+        // app's current language (resolved server-side via content_translation),
+        // matching the same `lang` param convention used by the shared api client.
+        const lang = this.$store.state.lang
         const [goalsRes, myGoalsRes, missionRes] = await Promise.all([
-          api.get('/goals/'),
-          api.get(`/user/${this.userId}/goals/`),
+          api.get('/goals/', { params: { lang } }),
+          api.get(`/user/${this.userId}/goals/`, { params: { lang } }),
           api.get(`/user/${this.userId}/mission/`),
         ])
         this.allGoals = goalsRes.data

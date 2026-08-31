@@ -382,10 +382,13 @@ def generate_audio_for_card(cursor, card, voice, language, exclude_feedback, out
 
     segment = text_to_segment(text, voice)
 
-    # suffix = "" if language == DEFAULT_LANGUAGE else f"_{language}"
+    # Zelfde layout als generate_audios_google_translations.py:
+    # media/audios/<lang>/<lang>_<card_id>.mp3 - de frontend (audioService.js)
+    # verwacht altijd deze per-taal submap, ook voor Engels.
     filename = f"{language}_{card['id']}.mp3"
-    output_dir.mkdir(parents=True, exist_ok=True)
-    segment.export(output_dir / filename, format="mp3", bitrate="192k")
+    lang_output_dir = output_dir / language
+    lang_output_dir.mkdir(parents=True, exist_ok=True)
+    segment.export(lang_output_dir / filename, format="mp3", bitrate="192k")
     return filename
 
 

@@ -25,6 +25,7 @@ const serverTypeConstants = new ST()
 import axios from 'axios'
 import { authStore } from "@/store/auth.js"
 import AppConfig from '@/config/app.config.js'
+import { i18n } from '@/i18n'
 // --- AXIOS İNSTANSI ---
 export const api = axios.create({
   baseURL: AppConfig.API_BASE_URL, // this.$store yok; import edilen store kullan
@@ -1078,8 +1079,9 @@ export const unhideConversation = async function ({ state }, otherProfileId) {
 
 // ============ AUDIO ============
 export const fetchAudioForCard = async function ({ state, commit }, { ownerType, ownerId }) {
-  const key = `${ownerType}-${ownerId}`
-  
+  const lang = i18n.global.locale.value
+  const key = `${ownerType}-${ownerId}-${lang}`
+
   // Check cache first
   if (state.audioCache[key]) {
     return state.audioCache[key].url
@@ -1087,7 +1089,7 @@ export const fetchAudioForCard = async function ({ state, commit }, { ownerType,
 
   try {
     const response = await api.get(
-      `/media/audios/${$i18n.locale}_${ownerId}.mp3`
+      `/media/audios/${lang}/${lang}_${ownerId}.mp3`
     )
 
     const audioUrl = response.data.audio_url || response.data.url
