@@ -141,13 +141,46 @@ def chunk_text(text, max_bytes=MAX_CHUNK_BYTES):
     return chunks
 
 
+def split_in_half(text):
+    """Splitst tekst in 2 stukken, zo dicht mogelijk bij het midden en op een
+    spatie (nooit midden in een woord)."""
+    mid = len(text) // 2
+    left = text.rfind(" ", 0, mid)
+    right = text.find(" ", mid)
+    candidates = [i for i in (left, right) if i != -1]
+    if not candidates:
+        return [text[:mid], text[mid:]]
+    split_at = min(candidates, key=lambda i: abs(i - mid))
+    return [text[:split_at].strip(), text[split_at:].strip()]
+
+
+def synth_segment(text, voice, depth=0):
+    """Synthetiseert 1 stuk tekst. Google's Chirp3-HD heeft een eigen (niet
+    gedocumenteerde) limiet per "zin" - los van onze MAX_CHUNK_BYTES - die kan
+    falen op lange zinnen zonder punctuatie (bv. lange bijzinnen, of
+    stijlfiguren zoals herhaalde symbolen). Bij die specifieke fout wordt het
+    stuk automatisch in tweeën gesplitst en apart geprobeerd, tot Google het
+    accepteert."""
+    audio_bytes, err = synth(text, voice)
+    if audio_bytes:
+        return AudioSegment.from_file(BytesIO(audio_bytes), format="mp3")
+
+    if err and "too long" in err.lower() and depth < 8:
+        parts = [p for p in split_in_half(text) if p]
+        if len(parts) == 2:
+            segment = AudioSegment.empty()
+            for part in parts:
+                segment += synth_segment(part, voice, depth + 1)
+                time.sleep(0.12)
+            return segment
+
+    raise RuntimeError(f"Google TTS failed: {err}")
+
+
 def text_to_segment(text, voice):
     segment = AudioSegment.empty()
     for chunk in chunk_text(text):
-        audio_bytes, err = synth(chunk, voice)
-        if not audio_bytes:
-            raise RuntimeError(f"Google TTS failed: {err}")
-        segment += AudioSegment.from_file(BytesIO(audio_bytes), format="mp3")
+        segment += synth_segment(chunk, voice)
         time.sleep(0.12)
     return segment
 
