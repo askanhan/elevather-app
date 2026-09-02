@@ -185,7 +185,9 @@ export default {
           user_id: this.userId,
           goal_id: goalId,
         })
-        const { data } = await api.get(`/user/${this.userId}/goals/`)
+        const { data } = await api.get(`/user/${this.userId}/goals/`, {
+          params: { lang: this.$store.state.lang },
+        })
         this.myGoals = data
       } catch (e) {
         console.error('Error toggling goal:', e)
