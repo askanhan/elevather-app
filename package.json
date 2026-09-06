@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "webpack --config build/webpack.prod.conf.js",
+    "build": "rimraf dist && webpack --config build/webpack.prod.conf.js",
     "lint": "eslint --ext .js,.vue src test/unit",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
