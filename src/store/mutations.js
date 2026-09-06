@@ -20,7 +20,7 @@ export const mutations = {
     state.guestMode = true
   },
   [types.USER_LOGGED_OUT_AS_GUEST](state, statuses) {
-    state.guestMode = true
+    state.guestMode = false
   },
   [types.SET_JOURNEY_STATUSES](state, statuses) {
     state.journeyStatuses = statuses
@@ -248,6 +248,7 @@ export const mutations = {
   USER_LOGGED_IN(state, user) {
     state.user = user
     state.flags.loggedIn = true
+    state.guestMode = false
   },
   SET_CATEGORIES(state, categories) {
     state.categories = categories.results
