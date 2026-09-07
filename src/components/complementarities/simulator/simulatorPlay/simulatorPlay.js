@@ -54,6 +54,11 @@ export default {
             return this.$store.state.simulatorMetrics || []
         },
 
+        simulatorMeta() {
+            const simulators = this.$store.state.simulators || []
+            return simulators.find(s => String(s.id) === String(this.simulatorId)) || null
+        },
+
         steps() {
             return this.transformCardsToSteps(this.simulatorCards)
         },
@@ -123,29 +128,24 @@ export default {
                     .catch(err => console.error('Error marking simulator as in progress:', err))
             }
 
-            // If cards are already cached, display immediately
-            const hasCache = this.simulatorCards.length > 0
-            if (hasCache) {
-                this.loading = false
-                this.scenario.title = this.simulatorCards[0].title || this.$t('components.simulator.play.defaultScenarioTitle')
-                this.scenario.level = this.simulatorCards[0].level || 'intro'
-            } else {
-                this.loading = true
-            }
+            this.loading = true
 
-            // Fetch fresh data in background (always refresh tags/metrics, fetch cards only if not cached)
-            const cardsPromise = hasCache 
-                ? Promise.resolve(true)
-                : this.$store.dispatch('fetchSimulatorCards', this.simulatorId)
+            // Always dispatch: the store action itself caches per simulatorId
+            // correctly, so it will skip the network call when the cards for
+            // THIS simulatorId are already loaded, and fetch fresh ones when not.
+            const cardsPromise = this.$store.dispatch('fetchSimulatorCards', this.simulatorId)
 
             Promise.all([
                 cardsPromise,
                 this.$store.dispatch('fetchSimulatorTags', this.simulatorId),
-                this.$store.dispatch('fetchSimulatorMetrics', this.simulatorId)
+                this.$store.dispatch('fetchSimulatorMetrics', this.simulatorId),
+                this.$store.dispatch('fetchSimulators')
             ])
                 .then(([cardsSuccess]) => {
+                    // Header shows the module's own name, not the first card's title
+                    this.scenario.title = (this.simulatorMeta && this.simulatorMeta.title) || this.$t('components.simulator.play.defaultScenarioTitle')
+
                     if (cardsSuccess && this.simulatorCards.length > 0) {
-                        this.scenario.title = this.simulatorCards[0].title || this.$t('components.simulator.play.defaultScenarioTitle')
                         this.scenario.level = this.simulatorCards[0].level || 'intro'
                     } else if (!cardsSuccess) {
                         this.error = this.$t('components.simulator.play.errors.noCards')
@@ -443,6 +443,31 @@ export default {
             }
         },
 
+        // (Re)load the simulator for the current route's ?id= query,
+        // resetting per-attempt state so a previous simulator's progress
+        // doesn't leak into the newly selected one.
+        loadFromRoute() {
+            const simulatorId = this.$route.query.id
+            if (simulatorId) {
+                this.simulatorId = simulatorId
+                this.stepIndex = 0
+                this.locked = false
+                this.feedback = ''
+                this.done = false
+                this.totalScore = 0
+                this.selectedAnswers = {}
+                this.showResults = false
+                this.showDebrief = false
+                this.debriefData = null
+                this.guestNotice = ''
+                this.error = null
+                this.fetchSimulator()
+            } else {
+                this.error = this.$t('components.simulator.errors.noSimulatorId')
+                this.loading = false
+            }
+        },
+
         // Finish and redirect to simulators
         finishAndNavigate() {
             // Update progress to "Done" before navigating
@@ -479,16 +504,19 @@ export default {
 
     
 
-    mounted() {
-        // Get simulator ID from route query
-        const simulatorId = this.$route.query.id
-        if (simulatorId) {
-            this.simulatorId = simulatorId
-            this.fetchSimulator()
-        } else {
-            this.error = this.$t('components.simulator.errors.noSimulatorId')
-            this.loading = false
+    watch: {
+        // Vue Router reuses this component instance when only the query
+        // string changes (path stays '/simulator/play'), so mounted() alone
+        // never re-fires when the user picks a different simulator.
+        '$route.query.id'(newId, oldId) {
+            if (newId !== oldId) {
+                this.loadFromRoute()
+            }
         }
+    },
+
+    mounted() {
+        this.loadFromRoute()
     },
 
     beforeDestroy() {
