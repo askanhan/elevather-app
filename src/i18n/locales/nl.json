@@ -255,7 +255,7 @@
         "conversations": "Bekijk je berichten!",
         "default": "Alles is Hier {name}"
       },
-      "altyaziGreeting": "Hoi, {name}.",
+      "altyaziGreeting": "Hoi {name}.",
       "altyaziGuest": "Log in om alle functies te gebruiken.",
       "riseTogether": "Samen staan we sterker!"
     },

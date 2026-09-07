@@ -255,7 +255,7 @@
         "conversations": "Zkontroluj své zprávy!",
         "default": "Tady najdeš vše, {name}"
       },
-      "altyaziGreeting": "Ahoj, {name}.",
+      "altyaziGreeting": "Ahoj {name}.",
       "altyaziGuest": "Přihlas se, abys měla přístup ke všem funkcím.",
       "riseTogether": "Rosteme společně!"
     },

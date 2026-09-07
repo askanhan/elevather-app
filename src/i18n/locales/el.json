@@ -257,7 +257,7 @@
       },
       "riseTogether": "Ανερχόμαστε Μαζί!",
       "altyaziGuest": "Συνδέσου για να αποκτήσεις πρόσβαση σε όλες τις λειτουργίες.",
-      "altyaziGreeting": "Γεια σου, {name}."
+      "altyaziGreeting": "Γεια σου {name}."
     },
     "postCard": {
       "comments": {

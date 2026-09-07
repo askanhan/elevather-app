@@ -255,7 +255,7 @@
         "conversations": "Sprawdź swoje wiadomości!",
         "default": "Wszystko jest tutaj {name}"
       },
-      "altyaziGreeting": "Cześć, {name}.",
+      "altyaziGreeting": "Cześć {name}.",
       "altyaziGuest": "Zaloguj się, aby uzyskać dostęp do wszystkich funkcji.",
       "riseTogether": "Wznosimy się razem!"
     },

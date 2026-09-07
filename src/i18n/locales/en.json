@@ -257,7 +257,7 @@
       },
       "riseTogether": "We Rise Together!",
       "altyaziGuest": "Log in to access all features.",
-      "altyaziGreeting": "Hi, {name}."
+      "altyaziGreeting": "Hi {name}."
     },
     "postCard": {
       "comments": {
