@@ -37,6 +37,18 @@ h1.splash {
     z-index: 1;
     background-position: center center;
     background-size: cover !important;
+    /* Force the video onto its own compositor layer so it can't get
+       promoted above the overlay once autoplay settles after a slide switch. */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+.bg-img-container .card-overlay {
+    /* Must stay above .bg-img-class's video layer at all times, including
+       right after a Swiper slide transition finishes (video re-promotion bug). */
+    z-index: 2;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 .bg-gradient-fade {

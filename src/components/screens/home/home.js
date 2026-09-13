@@ -1,4 +1,3 @@
-import confetti from 'canvas-confetti'
 import { api } from '@/store/actions.js'
 import GuestLockCard from '@/components/complementarities/guest-lock/guest-lock-card.vue'
 
@@ -14,6 +13,7 @@ export default {
             selectedAnswers: {},
             selectedScores: {},
             isCompleted: false,
+            celebrate: false,
             recommendations: [],
             historyDays: [],
             streak: 0,
@@ -139,7 +139,7 @@ export default {
             if (Object.keys(this.selectedAnswers).length === 3) {
                 this.submitCheckin()
                 this.isCompleted = true
-                this.triggerConfetti()
+                this.triggerCelebration()
                 // Fetch recommendations after submission
                 setTimeout(() => {
                     this.fetchRecommendations()
@@ -161,26 +161,14 @@ export default {
             })
         },
 
-        triggerConfetti() {
-            const scalar = 7
-            const emoji = confetti.shapeFromText({ text: this.stateEmoji, scalar })
-            const duration = 1000
-            const animationEnd = Date.now() + duration
-
-            const frame = () => {
-                confetti({
-                    particleCount: 3, angle: 60, spread: 55,
-                    origin: { x: 0 }, shapes: [emoji],
-                    ticks: 200, gravity: 1.2, scalar
-                })
-                confetti({
-                    particleCount: 3, angle: 120, spread: 55,
-                    origin: { x: 1 }, shapes: [emoji],
-                    ticks: 200, gravity: 1.2, scalar
-                })
-                if (Date.now() < animationEnd) requestAnimationFrame(frame)
-            }
-            frame()
+        triggerCelebration() {
+            // Lightweight CSS-driven burst instead of canvas-confetti's per-frame
+            // physics simulation, which was janky on lower-end phones.
+            this.celebrate = false
+            requestAnimationFrame(() => {
+                this.celebrate = true
+                setTimeout(() => { this.celebrate = false }, 900)
+            })
         },
 
         resetToday() {

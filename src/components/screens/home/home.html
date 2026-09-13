@@ -13,10 +13,13 @@
     <!-- Hero badge -->
     <section class="hero">
         <div class="heroCenter">
-            <div class="badge" :class="stateClass">
+            <div class="badge" :class="[stateClass, { celebrate: celebrate }]">
                 <span class="emoji">{{ stateEmoji }}</span>
                 <span class="label">{{ $t('pages.home.powerCheck.todayPowerIs') }}</span>
                 <span class="value">{{ stateLabel }}</span>
+                <span class="burst" v-if="celebrate">
+                    <span class="spark" v-for="n in 8" :key="n">{{ stateEmoji }}</span>
+                </span>
             </div>
         </div>
         <div class="heroRight">
