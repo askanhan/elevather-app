@@ -999,7 +999,7 @@
     "emailLogin": {
       "createOne": "Utwórz je",
       "emailLabel": "E-mail",
-      "emailPlaceholder": "ty@przyklad.pl",
+      "emailPlaceholder": "ty{'@'}przyklad.pl",
       "errors": {
         "emailRequired": "Podaj swój adres e-mail.",
         "invalidCredentials": "Nieprawidłowy e-mail lub hasło.",
@@ -1019,7 +1019,7 @@
       "confirmPasswordPlaceholder": "Powtórz hasło",
       "creating": "Tworzenie konta…",
       "email": "E-mail",
-      "emailPlaceholder": "ty@przyklad.pl",
+      "emailPlaceholder": "ty{'@'}przyklad.pl",
       "errors": {
         "emailRequired": "Podaj swój adres e-mail.",
         "emailTaken": "Ten adres e-mail jest już zarejestrowany. Zaloguj się zamiast tego.",

@@ -999,7 +999,7 @@
     "emailLogin": {
       "createOne": "Vytvořit účet",
       "emailLabel": "E-mail",
-      "emailPlaceholder": "ty@priklad.cz",
+      "emailPlaceholder": "ty{'@'}priklad.cz",
       "errors": {
         "emailRequired": "Zadej prosím svůj e-mail.",
         "invalidCredentials": "Nesprávný e-mail nebo heslo.",
@@ -1019,7 +1019,7 @@
       "confirmPasswordPlaceholder": "Zopakuj své heslo",
       "creating": "Vytváření účtu…",
       "email": "E-mail",
-      "emailPlaceholder": "ty@priklad.cz",
+      "emailPlaceholder": "ty{'@'}priklad.cz",
       "errors": {
         "emailRequired": "Zadej prosím svůj e-mail.",
         "emailTaken": "Tento e-mail je již zaregistrován. Zkus se místo toho přihlásit.",

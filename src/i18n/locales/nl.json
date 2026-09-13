@@ -999,7 +999,7 @@
     "emailLogin": {
       "createOne": "Maak er een aan",
       "emailLabel": "E-mail",
-      "emailPlaceholder": "jij@voorbeeld.com",
+      "emailPlaceholder": "jij{'@'}voorbeeld.com",
       "errors": {
         "emailRequired": "Vul je e-mailadres in.",
         "invalidCredentials": "Onjuist e-mailadres of wachtwoord.",
@@ -1019,7 +1019,7 @@
       "confirmPasswordPlaceholder": "Herhaal je wachtwoord",
       "creating": "Account wordt aangemaakt…",
       "email": "E-mail",
-      "emailPlaceholder": "jij@voorbeeld.com",
+      "emailPlaceholder": "jij{'@'}voorbeeld.com",
       "errors": {
         "emailRequired": "Vul je e-mailadres in.",
         "emailTaken": "Dit e-mailadres is al geregistreerd. Log in plaats daarvan in.",
