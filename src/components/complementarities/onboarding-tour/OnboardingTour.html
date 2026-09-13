@@ -23,7 +23,7 @@
           <ul v-if="currentStepData.highlights" class="onboarding-highlights">
             <li v-for="highlight in currentStepData.highlights" :key="highlight">
               <span class="highlight-dot"></span>
-              {{ highlight }}
+              <span class="highlight-text">{{ highlight }}</span>
             </li>
           </ul>
         </div>

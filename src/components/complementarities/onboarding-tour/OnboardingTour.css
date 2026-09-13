@@ -108,6 +108,11 @@
   margin-top: 6px;
 }
 
+.highlight-text {
+  flex: 1;
+  text-align: left;
+}
+
 /* Pagination dots */
 .onboarding-pagination {
   display: flex;
