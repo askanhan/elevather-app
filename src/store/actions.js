@@ -233,6 +233,7 @@ export const updateUserProgress = async function ({ state, dispatch }, { userId,
 
 //fetching user progress for a specific user
 export const fetchUserProgress = async function ({ state }, userId) {
+  if (!userId) return false
   try {
     const { data } = await api.get(`/user/${userId}/progress/`)
     store.commit(types.SET_USER_PROGRESS, data)
@@ -773,7 +774,7 @@ export const logout = async function () {
   } catch (e) { }
 
   // son olarak yönlendir
-  router.replace({ name: "splash" })
+  router.replace({ name: "splashscreen" })
 
   return true
 }
@@ -781,6 +782,7 @@ export const logout = async function () {
 export const getMyProfile = async function ({ state }, user_id) {
   const { data: profile } = await api.get('profile/by-user/' + user_id) // Authorization header interceptor’da ekleniyor
   store.commit('SET_MY_PROFILE', profile)
+  await authStore.setItem('myProfile', JSON.stringify(profile))
   return true
 }
 
@@ -1133,14 +1135,17 @@ export const updateProfile = async function ({ state }, { id, payload }) {
 }
 
 export const updateUserName = async function ({ state }, firstName) {
-  const { data: updatedUser } = await api.put('/auth/me/update', { first_name: firstName }, {
+  // Persisted on user_profile.name, not user.first_name: the latter gets
+  // overwritten by the Google/Apple account name on every re-login.
+  const userId = state.user?.id
+  const { data: updatedProfile } = await api.put(`/profile/by-user/${userId}/update`, { name: firstName }, {
     headers: {
       'Content-Type': 'application/json'
     }
   })
 
-  store.commit('USER_LOGGED_IN', updatedUser)
-  await authStore.setItem('user', JSON.stringify(updatedUser))
+  store.commit('SET_MY_PROFILE', updatedProfile)
+  await authStore.setItem('myProfile', JSON.stringify(updatedProfile))
 
   return true
 }

@@ -63,7 +63,44 @@ export default {
   created() {
     this.id = 'video-' + this.uniqueID;
   },
+  mounted() {
+    this.primeThumbnail();
+  },
   methods: {
+    // iOS WKWebView often leaves the <video> blank with preload="metadata"
+    // instead of painting the first frame like desktop/Android browsers do.
+    // Briefly muting + play/pause forces it to decode and paint a frame.
+    primeThumbnail() {
+      if (this.isYouTube) return;
+      const video = this.$refs.myDiv;
+      if (!video) return;
+
+      const forcePaint = () => {
+        const wasMuted = video.muted;
+        video.muted = true;
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise
+            .then(() => {
+              video.pause();
+              video.currentTime = 0;
+              video.muted = wasMuted;
+            })
+            .catch(() => {
+              video.muted = wasMuted;
+            });
+        } else {
+          video.pause();
+          video.muted = wasMuted;
+        }
+      };
+
+      if (video.readyState >= 2) {
+        forcePaint();
+      } else {
+        video.addEventListener('loadeddata', forcePaint, { once: true });
+      }
+    },
     getExtension(url) {
       if (!url) return '';
       return url.split('.').pop().split(/\#|\?/)[0];

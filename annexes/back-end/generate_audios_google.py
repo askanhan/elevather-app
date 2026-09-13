@@ -10,7 +10,10 @@ GEBRUIK
   python3 generate_audios_google.py                    # alle modules, Engels
   python3 generate_audios_google.py --day 1             # enkel module dag 1
   python3 generate_audios_google.py --day 1 --language fr
-  python3 generate_audios_google.py --owner-type simulator --owner-id 2
+  python3 generate_audios_google.py --language en,fr,nl # meerdere talen na elkaar
+  python3 generate_audios_google.py --simulators        # alle simulators (ipv modules)
+  python3 generate_audios_google.py --simulators --language en,fr,nl
+  python3 generate_audios_google.py --owner-type simulator --owner-id 2   # 1 specifieke simulator
   python3 generate_audios_google.py --stemmen --language fr   # beschikbare stemmen tonen
 
 Databaseconfig (default = lokale dev DB, zoals automation_server/config/database.py):
@@ -403,6 +406,11 @@ def get_cards_for_owner(cursor, owner_type, owner_id):
     return cursor.fetchall()
 
 
+def get_simulators(cursor):
+    cursor.execute("SELECT * FROM simulator ORDER BY id")
+    return cursor.fetchall()
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -431,10 +439,14 @@ def main():
                          help="Enkel de module met dit day_number. Zonder deze flag: alle modules.")
     parser.add_argument("--owner-type", type=str, default="module",
                          help="'module' (default) of 'simulator'.")
+    parser.add_argument("--simulators", action="store_true",
+                         help="Kortere manier voor --owner-type simulator: genereert audio voor alle simulators "
+                              "(tenzij --owner-id een specifieke simulator aanduidt).")
     parser.add_argument("--owner-id", type=int, default=None,
                          help="Specifieke owner_id (overschrijft --day, enkel die ene owner).")
     parser.add_argument("--language", type=str, default=DEFAULT_LANGUAGE,
-                         help=f"Taalcode (default: {DEFAULT_LANGUAGE}). De tekst zelf komt nog altijd uit de DB.")
+                         help=f"Een of meer taalcodes, komma-gescheiden (bv. en,fr,nl). Default: {DEFAULT_LANGUAGE}. "
+                              "De tekst zelf komt nog altijd uit de DB.")
     parser.add_argument("--voice", type=str, default=None, help="Google TTS stem (default: afgeleid van --language).")
     parser.add_argument("--include-feedback", action="store_true", help="MCQ-feedback ook voorlezen (default: nee).")
     parser.add_argument("--output-dir", type=str, default=None, help=f"Default: {OUTPUT_DIR}")
@@ -451,7 +463,13 @@ def main():
     if not KEY:
         sys.exit("Zet eerst GOOGLE_TTS_KEY: export GOOGLE_TTS_KEY=\"...\"")
 
-    voice = args.voice or VOICES.get(args.language, VOICES[DEFAULT_LANGUAGE])
+    owner_type = "simulator" if args.simulators else args.owner_type
+    languages = [lang.strip() for lang in args.language.split(",") if lang.strip()]
+    if not languages:
+        sys.exit("Geen geldige taalcode opgegeven via --language.")
+    if args.voice and len(languages) > 1:
+        sys.exit("--voice kan niet samen met meerdere --language codes gebruikt worden.")
+
     output_dir = Path(args.output_dir) if args.output_dir else OUTPUT_DIR
     exclude_feedback = not args.include_feedback
 
@@ -460,7 +478,13 @@ def main():
 
     try:
         if args.owner_id is not None:
-            owners = [{"owner_type": args.owner_type, "owner_id": args.owner_id, "label": f"{args.owner_type} {args.owner_id}"}]
+            owners = [{"owner_type": owner_type, "owner_id": args.owner_id, "label": f"{owner_type} {args.owner_id}"}]
+        elif owner_type == "simulator":
+            simulators = get_simulators(cursor)
+            if not simulators:
+                sys.exit("Geen simulators gevonden in de database.")
+            owners = [{"owner_type": "simulator", "owner_id": s["id"], "label": f"simulator {s['id']} - {s['title']}"}
+                      for s in simulators]
         else:
             modules = get_modules(cursor, args.day)
             if args.day is not None and not modules:
@@ -470,21 +494,24 @@ def main():
 
         generated = skipped = failed = 0
 
-        for owner in owners:
-            cards = get_cards_for_owner(cursor, owner["owner_type"], owner["owner_id"])
-            print(f"\n{owner['label']}: {len(cards)} cards")
-            for card in cards:
-                try:
-                    filename = generate_audio_for_card(cursor, card, voice, args.language, exclude_feedback, output_dir)
-                    if filename:
-                        print(f"  [ok] {filename}")
-                        generated += 1
-                    else:
-                        print(f"  [skip] card {card['id']} - geen tekst")
-                        skipped += 1
-                except Exception as e:
-                    print(f"  [FOUT] card {card['id']}: {e}")
-                    failed += 1
+        for language in languages:
+            voice = args.voice or VOICES.get(language, VOICES[DEFAULT_LANGUAGE])
+            print(f"\n=== Taal: {language} (stem: {voice}) ===")
+            for owner in owners:
+                cards = get_cards_for_owner(cursor, owner["owner_type"], owner["owner_id"])
+                print(f"\n{owner['label']}: {len(cards)} cards")
+                for card in cards:
+                    try:
+                        filename = generate_audio_for_card(cursor, card, voice, language, exclude_feedback, output_dir)
+                        if filename:
+                            print(f"  [ok] {filename}")
+                            generated += 1
+                        else:
+                            print(f"  [skip] card {card['id']} - geen tekst")
+                            skipped += 1
+                    except Exception as e:
+                        print(f"  [FOUT] card {card['id']}: {e}")
+                        failed += 1
 
         print("-" * 60)
         print(f"Klaar: {generated} gegenereerd, {skipped} overgeslagen, {failed} fout(en). -> {output_dir}")

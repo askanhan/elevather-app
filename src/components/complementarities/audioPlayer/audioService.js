@@ -63,30 +63,21 @@ class AudioService {
       this.stop()
     }
 
-    try {
-      currentAudioState = 'loading'
+    // Use the backend URL directly as the audio element source, the same way
+    // VideoPlayer plays videos straight off their URL. Playing media this way
+    // never triggers a CORS check (unlike fetch()/blob), which is what caused
+    // "blocked by CORS policy" errors when loading audio in the simulator.
+    // Layout: media/audios/<lang>/<lang>_<ownerId>.mp3 (one subfolder per language)
+    const audioUrl = `${AppConfig.API_BASE_URL}/media/audios/${lang}/${lang}_${ownerId}.mp3`
 
-      // Use the backend URL directly as the <audio> source instead of fetching
-      // it with fetch()/blob(): the media files aren't served with CORS headers,
-      // so fetch() gets blocked cross-origin, but an <audio> element can still
-      // load and play a cross-origin URL without CORS.
-      // Layout: media/audios/<lang>/<lang>_<ownerId>.mp3 (one subfolder per language)
-      const audioUrl = `${AppConfig.API_BASE_URL}/media/audios/${lang}/${lang}_${ownerId}.mp3`
+    audioCache.set(key, {
+      url: audioUrl,
+      timestamp: Date.now()
+    })
 
-      // Cache it
-      audioCache.set(key, {
-        url: audioUrl,
-        timestamp: Date.now()
-      })
-
-      currentKey = key
-      console.log(`[AudioService] Loaded audio for ${key}:`, audioUrl)
-      return audioUrl
-    } catch (error) {
-      console.error(`[AudioService] Failed to load audio for ${key}:`, error)
-      currentAudioState = 'idle'
-      throw error
-    }
+    currentKey = key
+    console.log(`[AudioService] Loaded audio for ${key}:`, audioUrl)
+    return audioUrl
   }
 
   /**

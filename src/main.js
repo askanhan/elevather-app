@@ -286,7 +286,7 @@ async function restoreAuthenticationFromLocalStorage() {
         console.log('[auto-restore] Tokens trouvés, loggedIn activé')
       }
       
-      // Restaurer le profil s'il existe
+      // Restaurer le profil s'il existe (évite un "Hi ." le temps du fetch réseau)
       if (myProfile) {
         try {
           const profile = JSON.parse(myProfile)
@@ -295,6 +295,16 @@ async function restoreAuthenticationFromLocalStorage() {
         } catch (e) {
           console.warn('[auto-restore] Erreur parsing myProfile', e)
         }
+      }
+
+      // Rafraîchir depuis le serveur pour avoir le nom à jour (user_profile.name)
+      if (userJson) {
+        try {
+          const user = JSON.parse(userJson)
+          if (user?.id) {
+            store.dispatch('getMyProfile', user.id).catch(e => console.warn('[auto-restore] getMyProfile a échoué', e))
+          }
+        } catch (e) { /* déjà loggé plus haut */ }
       }
     }
   } catch (e) {
@@ -414,7 +424,16 @@ window.mainVueApp = {
     })
 
     app.mount("#app");
-  
+
+    // ✅ Session restauree avec succes (tokens/user valides) : sauter le
+    // splashscreen/login et aller directement a l'ecran d'accueil. Un deep
+    // link "afterlogin" en cours (cold start) prendra le dessus plus tard
+    // via son propre router.replace, donc aucun conflit ici.
+    await router.isReady()
+    if (router.currentRoute.value.name === 'splashscreen' && store.state.flags.loggedIn) {
+      router.replace({ name: 'home' })
+    }
+
     setTimeout(() => {
       SplashScreen.hide().catch(() => { })
     }, 2000)

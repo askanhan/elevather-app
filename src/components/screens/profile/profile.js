@@ -84,7 +84,7 @@ export default {
         ...mapState(['journeyCategories', 'userProgress', 'simulatorResults', 'myProfile']),
 
         userName() {
-            return this.$store.getters.userFirstName || this.$t('pages.profile.defaultUserName')
+            return this.$store.getters.userDisplayName || this.$t('pages.profile.defaultUserName')
         },
 
         userId() {
@@ -340,7 +340,7 @@ export default {
         },
 
         startEditName() {
-            this.nameInput = this.$store.getters.userFirstName || ''
+            this.nameInput = this.$store.getters.userDisplayName || ''
             this.editingName = true
             this.$nextTick(() => this.$refs.nameInput && this.$refs.nameInput.focus())
         },

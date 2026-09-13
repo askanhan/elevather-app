@@ -1,10 +1,15 @@
 import DO from '@/mixins/date-operations.js'
 const dateOperations = DO.methods
 
-export const userFirstName = (state) => {
+// user_profile.name is the permanent, user-editable display name; it isn't
+// overwritten by a Google/Apple re-login the way user.first_name is.
+export const userDisplayName = (state) => {
   const user = state.user
-  if (!user) return ''
-  let name = user.first_name || user.firstName || user.name || user.username || ''
+  return state.myProfile?.name || user?.first_name || user?.firstName || user?.name || user?.username || ''
+}
+
+export const userFirstName = (state, getters) => {
+  let name = getters.userDisplayName
   if (name && name.includes(' ')) {
     name = name.split(' ')[0]
   }

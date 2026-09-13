@@ -312,10 +312,13 @@ def extract_simulator_cards(df_cards):
             action_num += 1
 
         # Only add MCQ component if at least one action was found
+        # Note: no "content"/question text here - the situation is already
+        # rendered above via the "text" component, so reusing it as the MCQ's
+        # question duplicated it on screen.
         if options:
             card_data["components"].append({
                 "type": "mcq",
-                "content": situation,
+                "content": "",
                 "options": options
             })
 

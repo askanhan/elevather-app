@@ -33,8 +33,8 @@ export default {
       if (this.$store.state.guestMode) {
         return this.$t('components.menubar.altyaziGuest')
       }
-      const firstName = this.$store.getters.userFirstName || this.$t('pages.profile.defaultUserName')
-      return this.$t('components.menubar.altyaziGreeting', { name: firstName })
+      const name = this.$store.getters.userDisplayName || this.$t('pages.profile.defaultUserName')
+      return this.$t('components.menubar.altyaziGreeting', { name })
     },
 
     allConversations() {

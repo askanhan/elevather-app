@@ -81,6 +81,11 @@ export default {
       if (data.user) {
         try { this.$store.commit("USER_LOGGED_IN", data.user) } catch (_) { }
         try { this.$store.commit("SET_MY_PROFILE", data.user) } catch (_) { }
+        // data.user, Google/Apple'dan gelen geçici bir tahmin; gerçek
+        // user_profile.name (kullanıcı tarafından düzenlenebilir) ile üzerine yaz
+        if (data.user.id) {
+          try { await this.$store.dispatch("getMyProfile", data.user.id) } catch (_) { }
+        }
       }
 
       await Preferences.remove({ key: "session" })
