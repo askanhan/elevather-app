@@ -162,12 +162,12 @@ export default {
         },
 
         triggerCelebration() {
-            // Lightweight CSS-driven burst instead of canvas-confetti's per-frame
+            // Single CSS pulse+glow instead of canvas-confetti's per-frame
             // physics simulation, which was janky on lower-end phones.
+            // Resets itself via the badge's @animationend handler.
             this.celebrate = false
-            requestAnimationFrame(() => {
+            this.$nextTick(() => {
                 this.celebrate = true
-                setTimeout(() => { this.celebrate = false }, 900)
             })
         },
 

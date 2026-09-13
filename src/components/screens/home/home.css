@@ -134,51 +134,28 @@
 }
 
 .badge.celebrate {
-  animation: badgePulse 0.6s ease-out;
+  animation: badgePulse 0.7s ease-out;
+}
+
+.badge.celebrate::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid currentColor;
+  animation: badgeRing 0.7s ease-out;
+  pointer-events: none;
 }
 
 @keyframes badgePulse {
   0% { transform: scale(1); }
-  35% { transform: scale(1.08); }
+  30% { transform: scale(1.08); }
   100% { transform: scale(1); }
 }
 
-.badge .burst {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.badge .spark {
-  --spark-angle: 0deg;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 18px;
-  opacity: 0;
-  will-change: transform, opacity;
-  animation: sparkOut 0.9s ease-out forwards;
-}
-
-.badge .spark:nth-child(1) { --spark-angle: 0deg;   animation-delay: 0ms; }
-.badge .spark:nth-child(2) { --spark-angle: 45deg;  animation-delay: 20ms; }
-.badge .spark:nth-child(3) { --spark-angle: 90deg;  animation-delay: 40ms; }
-.badge .spark:nth-child(4) { --spark-angle: 135deg; animation-delay: 60ms; }
-.badge .spark:nth-child(5) { --spark-angle: 180deg; animation-delay: 80ms; }
-.badge .spark:nth-child(6) { --spark-angle: 225deg; animation-delay: 100ms; }
-.badge .spark:nth-child(7) { --spark-angle: 270deg; animation-delay: 120ms; }
-.badge .spark:nth-child(8) { --spark-angle: 315deg; animation-delay: 140ms; }
-
-@keyframes sparkOut {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) rotate(var(--spark-angle)) translateY(-8px) scale(0.6);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) rotate(var(--spark-angle)) translateY(-70px) scale(1.1);
-  }
+@keyframes badgeRing {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.25); }
 }
 
 .badge.rising {
