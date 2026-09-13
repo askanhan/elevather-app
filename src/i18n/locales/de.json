@@ -874,6 +874,11 @@
         "trend": "Trend:"
       },
       "defaultUserName": "Benutzerin",
+      "editName": {
+        "placeholder": "Gib deinen Namen ein",
+        "save": "Speichern",
+        "error": "Name konnte nicht aktualisiert werden. Bitte versuche es erneut."
+      },
       "goals": {
         "chooseGoals": "Wähle deine Ziele",
         "emptyText": "Du hast noch keine Ziele festgelegt.",

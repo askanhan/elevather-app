@@ -765,6 +765,13 @@ export const logout = async function () {
   // vuex state'i temizle (persist varsa burada durduracak şekilde)
   store.commit('LOGGED_OUT')
 
+  // module-level caches that live outside Vuex state and survive LOGGED_OUT
+  cachedCourseCardsModuleId = null
+  cachedSimulatorCardsSimulatorId = null
+  try {
+    require('@/components/complementarities/audioPlayer/audioService.js').default.clearCache()
+  } catch (e) { }
+
   // son olarak yönlendir
   router.replace({ name: "splash" })
 
@@ -1123,6 +1130,19 @@ export const updateProfile = async function ({ state }, { id, payload }) {
     console.error('updateProfile error:', err)
     throw err
   }
+}
+
+export const updateUserName = async function ({ state }, firstName) {
+  const { data: updatedUser } = await api.put('/auth/me/update', { first_name: firstName }, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
+  store.commit('USER_LOGGED_IN', updatedUser)
+  await authStore.setItem('user', JSON.stringify(updatedUser))
+
+  return true
 }
 
 // -------------------- İNTERCEPTORLAR --------------------

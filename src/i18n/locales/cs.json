@@ -874,6 +874,11 @@
         "trend": "Trend:"
       },
       "defaultUserName": "Uživatelka",
+      "editName": {
+        "placeholder": "Zadejte své jméno",
+        "save": "Uložit",
+        "error": "Jméno se nepodařilo aktualizovat. Zkuste to prosím znovu."
+      },
       "goals": {
         "chooseGoals": "Vyber si své cíle",
         "emptyText": "Zatím jsi nenastavila žádné cíle.",

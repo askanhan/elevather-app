@@ -98,6 +98,11 @@ export default function getDefaultState() {
         lastActiveDialog: '',
         selectedStory: null,
         audioCache: {},
-        
+        myBusinesses: [],
+        comingUps: [],
+        followings: [],
+        blockedProfiles: [],
+        hiddenConversations: [],
+        specialButton: null,
     }
 }

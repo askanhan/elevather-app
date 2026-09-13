@@ -34,7 +34,7 @@
   height: 52px;
   border-radius: 18px;
   border: 1px solid #e6eef7;
-  background: linear-gradient(135deg, rgba(45, 108, 223, 0.10), rgba(255, 45, 122, 0.10));
+  background: linear-gradient(135deg, rgb(0 255 247 / 10%), rgb(255 0 93 / 10%));
   box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
   display: grid;
   place-items: center;
@@ -55,6 +55,84 @@
   line-height: 1.1;
 }
 
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.editNameBtn {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.editNameBtn:hover {
+  opacity: 1;
+}
+
+.nameEdit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nameInput {
+  font-weight: 900;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #e6eef7;
+  min-width: 0;
+  max-width: 140px;
+}
+
+.nameSaveBtn {
+  border: 1px solid #2d6cdf;
+  background: #2d6cdf;
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.nameSaveBtn:hover:not(:disabled) {
+  background: #2559ba;
+  border-color: #2559ba;
+}
+
+.nameSaveBtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.nameCancelBtn {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #475569;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.nameCancelBtn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
 .motto {
   margin-top: 4px;
   color: #64748b;
@@ -66,15 +144,22 @@
 }
 
 .cta {
-  border: 0;
-  background: linear-gradient(90deg, #2d6cdf, #ff2d7a);
+  border: 1px solid #2d6cdf;
+  background: #2d6cdf;
   color: #fff;
-  border-radius: 14px;
-  padding: 10px 12px;
-  font-weight: 900;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
   cursor: pointer;
-  box-shadow: 0 14px 28px rgba(45, 108, 223, 0.18);
+  box-shadow: 0 4px 10px rgba(45, 108, 223, 0.16);
   white-space: nowrap;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cta:hover {
+  background: #2559ba;
+  box-shadow: 0 6px 14px rgba(45, 108, 223, 0.2);
 }
 
 /* ===== CHIPS ===== */
@@ -87,36 +172,50 @@
 
 .chip {
   font-size: 12px;
-  font-weight: 900;
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid #e6eef7;
-  background: rgba(230, 238, 247, 0.55);
-  color: #0f172a;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #475569;
+  letter-spacing: -0.005em;
 }
 
 .chip.strong {
-  background: linear-gradient(135deg, rgba(45, 108, 223, 0.12), rgba(255, 45, 122, 0.10));
-  border-color: rgba(45, 108, 223, 0.22);
+  background: #eef2ff;
+  border-color: #dde3fb;
+  color: #364fc7;
 }
 
 .chip b {
-  font-weight: 900;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .trendRising {
-  border-color: rgba(255, 45, 122, 0.30);
-  background: rgba(255, 45, 122, 0.08);
+  border-color: #bbf0d4;
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.trendRising b {
+  color: #047857;
 }
 
 .trendStable {
-  border-color: rgba(45, 108, 223, 0.25);
-  background: rgba(45, 108, 223, 0.08);
+  border-color: #dde3fb;
+  background: #eef2ff;
+  color: #364fc7;
+}
+
+.trendStable b {
+  color: #364fc7;
 }
 
 .trendDrained {
-  border-color: rgba(230, 238, 247, 1);
-  background: rgba(230, 238, 247, 0.65);
+  border-color: #e2e8f0;
+  background: #f8fafc;
+  color: #64748b;
 }
 
 /* ===== CARDS ===== */

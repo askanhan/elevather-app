@@ -7,7 +7,24 @@
                 <span class="avEmoji">👤</span>
             </div>
             <div class="who">
-                <div class="name">{{ userName }}</div>
+                <div class="nameRow" v-if="!editingName">
+                    <div class="name">{{ userName }}</div>
+                    <button class="editNameBtn" @click="startEditName" :aria-label="$t('pages.profile.edit')">✏️</button>
+                </div>
+                <div class="nameEdit" v-else>
+                    <input
+                        ref="nameInput"
+                        v-model="nameInput"
+                        class="nameInput"
+                        type="text"
+                        :placeholder="$t('pages.profile.editName.placeholder')"
+                        maxlength="60"
+                        @keyup.enter="saveName"
+                        @keyup.esc="cancelEditName"
+                    />
+                    <button class="nameSaveBtn" @click="saveName" :disabled="savingName || !nameInput.trim()">{{ $t('pages.profile.editName.save') }}</button>
+                    <button class="nameCancelBtn" @click="cancelEditName">{{ $t('common.cancel') }}</button>
+                </div>
                 <div class="motto">{{ user.motto }}</div>
             </div>
         </div>

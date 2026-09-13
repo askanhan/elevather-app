@@ -1,6 +1,16 @@
 import DO from '@/mixins/date-operations.js'
 const dateOperations = DO.methods
 
+export const userFirstName = (state) => {
+  const user = state.user
+  if (!user) return ''
+  let name = user.first_name || user.firstName || user.name || user.username || ''
+  if (name && name.includes(' ')) {
+    name = name.split(' ')[0]
+  }
+  return name
+}
+
 export const getConnectionWithID = (state, getters) => (id) => {
   let connectionObject = state.listOfConnections.find(conn => conn.ID + '' === id)
   connectionObject.connectionTypes = JSON.parse(JSON.stringify(state.allConnectionTypes))

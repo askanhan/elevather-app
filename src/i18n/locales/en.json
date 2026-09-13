@@ -868,6 +868,11 @@
       "viewProfile": "View profile",
       "views": "Views",
       "defaultUserName": "User",
+      "editName": {
+        "placeholder": "Enter your name",
+        "save": "Save",
+        "error": "Could not update your name. Please try again."
+      },
       "chips": {
         "focus": "Focus:",
         "streak": "Streak:",

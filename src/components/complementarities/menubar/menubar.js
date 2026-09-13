@@ -33,7 +33,7 @@ export default {
       if (this.$store.state.guestMode) {
         return this.$t('components.menubar.altyaziGuest')
       }
-      const firstName = this.$store?.state?.user?.first_name || ''
+      const firstName = this.$store.getters.userFirstName || this.$t('pages.profile.defaultUserName')
       return this.$t('components.menubar.altyaziGreeting', { name: firstName })
     },
 
@@ -98,9 +98,8 @@ export default {
   },
 
   methods: {
-    logoutAsGuest() {
-      try { this.$store.commit('USER_LOGGED_OUT_AS_GUEST') } catch (e) { }
-      this.$router.push({ name: 'login' })
+    async logoutAsGuest() {
+      await this.$store.dispatch('logout')
     },
 
     goToMessages() {

@@ -13,6 +13,9 @@ export default {
             latestReflections: [],
             mission: '',
             myGoals: [],
+            editingName: false,
+            nameInput: '',
+            savingName: false,
             user: {
                 streakDays: 4,
                 trend: 'Rising',
@@ -81,15 +84,7 @@ export default {
         ...mapState(['journeyCategories', 'userProgress', 'simulatorResults', 'myProfile']),
 
         userName() {
-            const user = this.$store.state.user
-            if (user) {
-                let name = user.first_name || user.firstName || user.name || user.username || this.$t('pages.profile.defaultUserName')
-                // If it contains a space, take only first name
-                if (name && name.includes(' ')) {
-                    name = name.split(' ')[0]
-                }
-                return name
-            }
+            return this.$store.getters.userFirstName || this.$t('pages.profile.defaultUserName')
         },
 
         userId() {
@@ -344,6 +339,31 @@ export default {
             this.$router.push('/mission')
         },
 
+        startEditName() {
+            this.nameInput = this.$store.getters.userFirstName || ''
+            this.editingName = true
+            this.$nextTick(() => this.$refs.nameInput && this.$refs.nameInput.focus())
+        },
+
+        cancelEditName() {
+            this.editingName = false
+        },
+
+        async saveName() {
+            const name = this.nameInput.trim()
+            if (!name || this.savingName) return
+            this.savingName = true
+            try {
+                await this.$store.dispatch('updateUserName', name)
+                this.editingName = false
+            } catch (e) {
+                console.error('Error updating name:', e)
+                alert(this.$t('pages.profile.editName.error'))
+            } finally {
+                this.savingName = false
+            }
+        },
+
         goJourney() {
             this.$router.push('/journey')
         },
@@ -396,8 +416,8 @@ export default {
             this.$router.push('/notifications')
         },
 
-        logout() {
-            this.$router.push('/login')
+        async logout() {
+            await this.$store.dispatch('logout')
         }
     }
 }

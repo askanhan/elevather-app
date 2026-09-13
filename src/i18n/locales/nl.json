@@ -874,6 +874,11 @@
         "trend": "Trend:"
       },
       "defaultUserName": "Gebruiker",
+      "editName": {
+        "placeholder": "Vul je naam in",
+        "save": "Opslaan",
+        "error": "Je naam kon niet worden bijgewerkt. Probeer het opnieuw."
+      },
       "goals": {
         "chooseGoals": "Kies je doelen",
         "emptyText": "Je hebt nog geen doelen ingesteld.",
