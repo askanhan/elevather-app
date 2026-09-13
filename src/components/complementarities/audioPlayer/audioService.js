@@ -66,24 +66,12 @@ class AudioService {
     try {
       currentAudioState = 'loading'
 
-      // Fetch audio blob directly from backend endpoint
+      // Use the backend URL directly as the <audio> source instead of fetching
+      // it with fetch()/blob(): the media files aren't served with CORS headers,
+      // so fetch() gets blocked cross-origin, but an <audio> element can still
+      // load and play a cross-origin URL without CORS.
       // Layout: media/audios/<lang>/<lang>_<ownerId>.mp3 (one subfolder per language)
-      const response = await fetch(
-        `${AppConfig.API_BASE_URL}/media/audios/${lang}/${lang}_${ownerId}.mp3`
-      )
-      
-      if (!response.ok) {
-        throw new Error(`Backend error: ${response.status} ${response.statusText}`)
-      }
-
-      // Get the blob directly from response
-      const blob = await response.blob()
-      if (!blob) {
-        throw new Error('No audio blob in response')
-      }
-
-      // Create Object URL for the blob
-      const audioUrl = URL.createObjectURL(blob)
+      const audioUrl = `${AppConfig.API_BASE_URL}/media/audios/${lang}/${lang}_${ownerId}.mp3`
 
       // Cache it
       audioCache.set(key, {
