@@ -146,8 +146,12 @@ export default {
                 // Guests have no user id to reset metrics against - the free
                 // simulator just starts fresh every time.
                 this.$router.push({ path: '/simulator/play', query: { id: s.id } })
+            } else if (s.status === 'In progress') {
+                // Resuming a simulator already underway - keep the meters as they
+                // are so they stay consistent with the step position being restored.
+                this.$router.push({ path: '/simulator/play', query: { id: s.id } })
             } else {
-                // Reset all metrics to 50 before entering simulator
+                // Starting fresh (or replaying a finished one) - reset all metrics to 50
                 this.$store.dispatch('resetSimulatorMetrics', s.id)
                     .then(() => {
                         // Navigate to simulator after metrics are reset

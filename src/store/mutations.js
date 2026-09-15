@@ -39,16 +39,22 @@ export const mutations = {
   [types.SET_USER_PROGRESS](state, progress) {
     state.userProgress = progress || []
   },
-  [types.UPDATE_MODULE_STATUS](state, { moduleId, status }) {
+  [types.UPDATE_MODULE_STATUS](state, { moduleId, status, currentStepIndex }) {
     const module = (state.journeyModules || []).find(m => m.id === moduleId)
     if (module) {
       module.status = status
+      if (currentStepIndex !== undefined) {
+        module.currentStepIndex = currentStepIndex
+      }
     }
   },
-  [types.UPDATE_SIMULATOR_STATUS](state, { simulatorId, status }) {
+  [types.UPDATE_SIMULATOR_STATUS](state, { simulatorId, status, currentStepIndex }) {
     const simulator = (state.simulators || []).find(s => s.id === simulatorId)
     if (simulator) {
       simulator.status = status
+      if (currentStepIndex !== undefined) {
+        simulator.currentStepIndex = currentStepIndex
+      }
     }
   },
   //mutations for simulator

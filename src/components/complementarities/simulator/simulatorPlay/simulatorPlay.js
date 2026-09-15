@@ -33,7 +33,8 @@ export default {
             debriefData: null,
             debriefLoading: false,
             stageHeight: 'auto',
-            guestNotice: ''
+            guestNotice: '',
+            saveStepTimer: null
         }
     },
 
@@ -151,6 +152,8 @@ export default {
                         this.error = this.$t('components.simulator.play.errors.noCards')
                     }
                     
+                    this.restoreSavedStep()
+
                     // Initialize metrics with default values if empty
                     if ((!this.simulatorMetrics || this.simulatorMetrics.length === 0)) {
                         console.log('⚠️ No metrics from backend, initializing with defaults...')
@@ -173,6 +176,40 @@ export default {
                 })
         },
 
+        // Resume where the user left off, if this simulator is still in progress
+        restoreSavedStep() {
+            if (this.done) return
+            const savedIndex = this.simulatorMeta && this.simulatorMeta.currentStepIndex
+            if (typeof savedIndex !== 'number' || savedIndex <= 0) return
+
+            const maxIndex = this.steps.length - 1
+            this.stepIndex = Math.min(savedIndex, Math.max(maxIndex, 0))
+        },
+
+        // Persist the current step position so "Continue" can resume here later.
+        // Debounced by default since this fires on every step change.
+        persistStepProgress(immediate) {
+            const userId = this.$store.state.user?.id
+            if (!userId || !this.simulatorId || this.done || this.isGuest) return
+
+            const save = () => {
+                this.$store.dispatch('updateUserProgress', {
+                    userId: userId,
+                    ownerType: 'simulator',
+                    ownerId: this.simulatorId,
+                    status: 'In progress',
+                    currentStepIndex: this.stepIndex
+                }).catch(err => console.warn('Failed to save simulator step progress:', err))
+            }
+
+            clearTimeout(this.saveStepTimer)
+            if (immediate) {
+                save()
+            } else {
+                this.saveStepTimer = setTimeout(save, 600)
+            }
+        },
+
         // Transform cards into simulator steps
         transformCardsToSteps(cards) {
             return cards.map((card) => {
@@ -191,6 +228,7 @@ export default {
         },
 
         goBack() {
+            this.persistStepProgress(true)
             this.$router.push('/simulator')
         },
 
@@ -201,6 +239,7 @@ export default {
             this.locked = false
             this.totalScore = 0
             this.selectedAnswers = {}
+            this.persistStepProgress(true)
         },
 
         async choose(option, component) {
@@ -343,6 +382,7 @@ export default {
                 this.feedback = ''
                 this.guestNotice = ''
                 this.updateStageHeight()
+                this.persistStepProgress()
             } else {
                 this.done = true
                 this.finishContent()
@@ -365,6 +405,7 @@ export default {
                 this.feedback = ''
                 this.guestNotice = ''
                 this.updateStageHeight()
+                this.persistStepProgress()
             }
 
             this.goToTopOfThePage()
@@ -375,6 +416,7 @@ export default {
             this.feedback = ''
             this.guestNotice = ''
             this.updateStageHeight()
+            this.persistStepProgress()
         },
 
         goSignIn() {
@@ -447,6 +489,7 @@ export default {
         // resetting per-attempt state so a previous simulator's progress
         // doesn't leak into the newly selected one.
         loadFromRoute() {
+            clearTimeout(this.saveStepTimer)
             const simulatorId = this.$route.query.id
             if (simulatorId) {
                 this.simulatorId = simulatorId
@@ -520,6 +563,8 @@ export default {
     },
 
     beforeDestroy() {
+        clearTimeout(this.saveStepTimer)
+        this.persistStepProgress(true)
         // Stop audio when navigating away
         const audioService = require('@/components/complementarities/audioPlayer/audioService.js').default
         audioService.stop()

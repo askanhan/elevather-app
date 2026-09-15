@@ -35,7 +35,8 @@ export default {
             loading: false,
             stageHeight: 'auto',
             resizeObserver: null,
-            stageHeightReleaseTimer: null
+            stageHeightReleaseTimer: null,
+            saveStepTimer: null
         }
     },
 
@@ -131,6 +132,7 @@ export default {
                     }
 
                     this.loading = false
+                    this.restoreSavedStep()
                     if (this.$route.query.done != '1' && this.userId) {
                         this.updateProgressToInProgress(moduleId)
                     }
@@ -161,6 +163,40 @@ export default {
                 ownerId: moduleId,
                 status: 'In progress'
             })
+        },
+
+        // Resume where the user left off, unless they're revisiting a finished lesson
+        restoreSavedStep() {
+            if (this.$route.query.done == '1') return
+            const savedIndex = this.courseModule && this.courseModule.currentStepIndex
+            if (typeof savedIndex !== 'number' || savedIndex <= 0) return
+
+            const maxIndex = this.slides.length - 1
+            this.currentIndex = Math.min(savedIndex, Math.max(maxIndex, 0))
+        },
+
+        // Persist the current slide position so "Continue" can resume here later.
+        // Debounced by default since this fires on every slide change.
+        persistStepProgress(immediate) {
+            if (!this.userId || !this.moduleId) return
+            if (this.$route.query.done == '1') return
+
+            const save = () => {
+                this.$store.dispatch('updateUserProgress', {
+                    userId: this.userId,
+                    ownerType: 'module',
+                    ownerId: this.moduleId,
+                    status: 'In progress',
+                    currentStepIndex: this.currentIndex
+                }).catch(err => console.warn('Failed to save step progress:', err))
+            }
+
+            clearTimeout(this.saveStepTimer)
+            if (immediate) {
+                save()
+            } else {
+                this.saveStepTimer = setTimeout(save, 600)
+            }
         },
 
         // Transform cards data into slides format
@@ -214,6 +250,7 @@ export default {
         },
 
         goBack() {
+            this.persistStepProgress(true)
             this.$router.go(-1)
         },
 
@@ -222,6 +259,7 @@ export default {
             this.reading = false
             this.readingProgress = 0
             this.stopReadingTimer()
+            this.persistStepProgress(true)
         },
         updateStageHeight() {
             this.$nextTick(() => {
@@ -299,6 +337,7 @@ export default {
                 this.currentIndex += 1
                 this.syncReadingToSlide()
                 this.observeActiveSlide();
+                this.persistStepProgress()
             } else {
                 // Last slide - finish the course
                 this.reading = false
@@ -315,6 +354,7 @@ export default {
                 this.currentIndex -= 1
                 this.syncReadingToSlide()
                 this.observeActiveSlide();
+                this.persistStepProgress()
             }
             this.goToTopOfThePage()
         },
@@ -336,6 +376,7 @@ export default {
             this.currentIndex = idx
             this.syncReadingToSlide()
             this.observeActiveSlide();
+            this.persistStepProgress()
         },
 
         toggleReading() {
@@ -465,6 +506,8 @@ export default {
 
     beforeDestroy() {
         this.stopReadingTimer()
+        clearTimeout(this.saveStepTimer)
+        this.persistStepProgress(true)
         // ---> ADD THIS LINE <---
         window.removeEventListener('keydown', this.handleKeydown)
 

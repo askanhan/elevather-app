@@ -210,7 +210,7 @@ export const fetchDailyCheckinQuestions = async function ({ state }, userId) {
 }
 
 //updating user progress for a module/simulator
-export const updateUserProgress = async function ({ state, dispatch }, { userId, ownerType, ownerId, status }) {
+export const updateUserProgress = async function ({ state, dispatch }, { userId, ownerType, ownerId, status, currentStepIndex }) {
   try {
     const payload = {
       user_id: userId,
@@ -218,10 +218,13 @@ export const updateUserProgress = async function ({ state, dispatch }, { userId,
       owner_id: ownerId,
       status: status
     }
+    if (currentStepIndex !== undefined && currentStepIndex !== null) {
+      payload.current_step_index = currentStepIndex
+    }
     console.log('Sending progress update:', payload)
     const { data } = await api.post('/user/progress/update/', payload)
     // Update local state with new status
-    store.commit(types.UPDATE_MODULE_STATUS, { moduleId: ownerId, status: status })
+    store.commit(types.UPDATE_MODULE_STATUS, { moduleId: ownerId, status: status, currentStepIndex: status === 'Done' ? null : currentStepIndex })
     // Reload user progress to ensure profile page sees the update
     await dispatch('fetchUserProgress', userId)
     return true
@@ -241,9 +244,9 @@ export const fetchUserProgress = async function ({ state }, userId) {
     if (Array.isArray(data)) {
       data.forEach(item => {
         if (item.owner_type === 'module') {
-          store.commit(types.UPDATE_MODULE_STATUS, { moduleId: item.owner_id, status: item.status })
+          store.commit(types.UPDATE_MODULE_STATUS, { moduleId: item.owner_id, status: item.status, currentStepIndex: item.current_step_index })
         } else if (item.owner_type === 'simulator') {
-          store.commit(types.UPDATE_SIMULATOR_STATUS, { simulatorId: item.owner_id, status: item.status })
+          store.commit(types.UPDATE_SIMULATOR_STATUS, { simulatorId: item.owner_id, status: item.status, currentStepIndex: item.current_step_index })
         }
       })
     }

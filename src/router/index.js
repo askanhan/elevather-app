@@ -232,7 +232,7 @@ const routes = [
     }
   }
 ]
-const PERSIST_SCROLL_ROUTES = new Set(['home', 'search', 'newslist', 'journey'])
+const PERSIST_SCROLL_ROUTES = new Set(['home', 'search', 'newslist', 'journey', 'simulator'])
 
 const router = createRouter({
   history: createWebHashHistory(),
