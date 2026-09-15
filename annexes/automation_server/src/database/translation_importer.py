@@ -19,7 +19,7 @@ from ..utils.excel_loader import (
 from ..utils.excel_mapping import (
     MODULE_TABLE_MAP, SIMULATOR_TABLE_MAP, SIMULATOR_TRANSLATION_TITLE_MAP, COURSE_TRANSLATION_DAY_OVERRIDES,
     CZECH_SIMULATOR_OVERVIEW_HEADER_MAP, CZECH_SIMULATOR_CARDS_HEADER_MAP, CZECH_SIMULATOR_METRIC_WRITING_HEADER_MAP,
-    CZECH_COURSE_OVERVIEW_HEADER_MAP
+    CZECH_COURSE_OVERVIEW_HEADER_MAP, GERMAN_COURSE_CARDS_HEADER_MAP, GERMAN_FIELD_VALUE_MAP
 )
 from ..utils.sql_generator import find_overview_sheet, find_overview_row
 
@@ -89,18 +89,19 @@ def _find_sheet_by_alias(df_dict, aliases):
 
 def normalize_czech_headers(excel_df):
     """
-    A few cz/ translation files translate every column header too, not just
-    sheet names and cell content, which breaks the English-header-driven
-    parsing (map_excel_to_db, extract_simulator_cards, etc.) downstream.
-    Renames columns back to English wherever a sheet's columns match one of
-    the known Czech header sets - a no-op for every other file, where none
-    of these Czech names are present to match.
+    A few cz/ (and one de/) translation file(s) translate every column header
+    too, not just sheet names and cell content, which breaks the
+    English-header-driven parsing (map_excel_to_db, extract_simulator_cards,
+    etc.) downstream. Renames columns back to English wherever a sheet's
+    columns match one of the known header sets - a no-op for every other
+    file, where none of these translated names are present to match.
     """
     header_maps = (
         CZECH_SIMULATOR_OVERVIEW_HEADER_MAP,
         CZECH_SIMULATOR_CARDS_HEADER_MAP,
         CZECH_SIMULATOR_METRIC_WRITING_HEADER_MAP,
         CZECH_COURSE_OVERVIEW_HEADER_MAP,
+        GERMAN_COURSE_CARDS_HEADER_MAP,
     )
     renamed = {}
     for sheet_name, df in excel_df.items():
@@ -119,10 +120,27 @@ def normalize_czech_headers(excel_df):
     return renamed
 
 
+def normalize_german_field_values(df_card):
+    """
+    Some de/days card sheets keep the "Field" column header in English but
+    translate its row values (the field-type labels extract_full_card_data()
+    switches on, e.g. "Title" -> "Titel") - see GERMAN_FIELD_VALUE_MAP for
+    why each mapping was picked. A no-op when there's no "Field" column or
+    nothing in it needs translating.
+    """
+    if 'Field' not in df_card.columns:
+        return df_card
+    df_card = df_card.copy()
+    df_card['Field'] = df_card['Field'].apply(
+        lambda v: GERMAN_FIELD_VALUE_MAP.get(str(v).strip(), v)
+    )
+    return df_card
+
+
 def _is_card_sheet(sheet_name):
-    """"Card" in most templates; "Karta" in a Czech-named one."""
+    """"Card" in most templates; "Karta" in a Czech-named one; "Karte" in a German-named one."""
     lname = sheet_name.lower()
-    return 'card' in lname or 'karta' in lname
+    return 'card' in lname or 'karta' in lname or 'karte' in lname
 
 # Which fields of each component table are actual user-facing text - mirrors
 # exactly what api/services/translations.py reads back on the Django side.
@@ -324,6 +342,7 @@ def import_course_translation(file_info, locale):
         if not _is_card_sheet(sheet_name):
             continue
 
+        df_sheet = normalize_german_field_values(df_sheet)
         card_attr, components = extract_full_card_data(df_sheet, card_count)
 
         db_card = next((c for c in existing_cards if c['card_order_index'] == card_count), None)

@@ -90,6 +90,13 @@ def load_data(data_type=None, filename=None, full_path=None):
 
     try:
         df = pd.read_excel(file_path, sheet_name=None)
+        # A stray leading/trailing space on a header (e.g. " Field" instead of
+        # "Field") is an easy manual-editing slip in a translated workbook and
+        # breaks every exact-name column lookup downstream (map_excel_to_db,
+        # extract_full_card_data, ...) with an opaque KeyError - strip it here
+        # once, rather than in each of those call sites.
+        for sheet_name, sheet_df in df.items():
+            sheet_df.columns = [c.strip() if isinstance(c, str) else c for c in sheet_df.columns]
         print(f"Data loaded - {len(df)} sheet(s) found")
         # print(df.head()) # to show a part of the content
         print(f"   Sheets: {list(df.keys())}")

@@ -762,6 +762,34 @@
       "backToMain": "Ga terug",
       "everywhere": "Overal"
     },
+    "goals": {
+      "back": "Terug",
+      "title": "Mijn Doelen",
+      "mission": {
+        "title": "Mijn Missie",
+        "placeholder": "Schrijf je persoonlijke missie in één zin…",
+        "hint": "Dit bepaalt jouw ervaring in de app."
+      },
+      "myGoals": {
+        "title": "Mijn Doelen",
+        "selected": "{count} geselecteerd"
+      },
+      "browse": {
+        "title": "Doelen verkennen",
+        "all": "Alle"
+      },
+      "status": {
+        "workingOnIt": "Mee bezig",
+        "almostDone": "Bijna klaar",
+        "finished": "Voltooid"
+      },
+      "categories": {
+        "Empowerment": "Empowerment",
+        "Leadership": "Leiderschap",
+        "Wellbeing": "Welzijn",
+        "Community": "Gemeenschap"
+      }
+    },
     "profile": {
       "addBusiness": "Voeg je bedrijf of werkplek toe",
       "businessSidebar": {

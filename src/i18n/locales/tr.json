@@ -382,6 +382,34 @@
       "backToMain": "Geri dön",
       "everywhere": "Her yer"
     },
+    "goals": {
+      "back": "Geri",
+      "title": "Hedeflerim",
+      "mission": {
+        "title": "Misyonum",
+        "placeholder": "Kişisel misyonunu tek cümleyle yaz…",
+        "hint": "Bu, uygulamadaki deneyimini şekillendirir."
+      },
+      "myGoals": {
+        "title": "Hedeflerim",
+        "selected": "{count} seçildi"
+      },
+      "browse": {
+        "title": "Hedeflere Göz At",
+        "all": "Tümü"
+      },
+      "status": {
+        "workingOnIt": "Üzerinde çalışıyorum",
+        "almostDone": "Neredeyse bitti",
+        "finished": "Tamamlandı"
+      },
+      "categories": {
+        "Empowerment": "Güçlenme",
+        "Leadership": "Liderlik",
+        "Wellbeing": "İyi Oluş",
+        "Community": "Topluluk"
+      }
+    },
     "profile": {
       "addBusiness": "Şirketini ya da işyerini ekle",
       "businessSidebar": {

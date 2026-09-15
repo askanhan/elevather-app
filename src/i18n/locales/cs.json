@@ -762,6 +762,34 @@
       "backToMain": "Zpět",
       "everywhere": "Všude"
     },
+    "goals": {
+      "back": "Zpět",
+      "title": "Moje cíle",
+      "mission": {
+        "title": "Moje mise",
+        "placeholder": "Napiš svou osobní misi v jedné větě…",
+        "hint": "Tohle utváří tvůj zážitek z aplikace."
+      },
+      "myGoals": {
+        "title": "Moje cíle",
+        "selected": "vybráno: {count}"
+      },
+      "browse": {
+        "title": "Procházet cíle",
+        "all": "Vše"
+      },
+      "status": {
+        "workingOnIt": "Pracuje se na tom",
+        "almostDone": "Skoro hotovo",
+        "finished": "Dokončeno"
+      },
+      "categories": {
+        "Empowerment": "Sebeprosazení",
+        "Leadership": "Vedení",
+        "Wellbeing": "Well-being",
+        "Community": "Komunita"
+      }
+    },
     "profile": {
       "addBusiness": "Přidej svou firmu nebo pracoviště",
       "businessSidebar": {

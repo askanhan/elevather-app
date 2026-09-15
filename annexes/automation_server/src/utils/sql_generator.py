@@ -24,9 +24,9 @@ def find_overview_sheet(df_dict, sheet_type="course"):
     # files translate every sheet name (not just cell content), so "přehled"
     # ("overview" in Czech) is included too.
     if sheet_type == "course":
-        patterns = ["overview", "course overview", "module", "přehled"]
+        patterns = ["overview", "course overview", "module", "přehled", "kursübersicht", "übersicht"]
     else:  # simulator
-        patterns = ["overview", "simulator overview", "přehled"]
+        patterns = ["overview", "simulator overview", "přehled", "übersicht"]
 
     # Look for sheets matching patterns (case insensitive)
     for pattern in patterns:

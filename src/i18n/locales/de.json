@@ -762,6 +762,34 @@
       "backToMain": "Zurück",
       "everywhere": "Überall"
     },
+    "goals": {
+      "back": "Zurück",
+      "title": "Meine Ziele",
+      "mission": {
+        "title": "Meine Mission",
+        "placeholder": "Schreibe deine persönliche Mission in einem Satz…",
+        "hint": "Dies prägt deine Erfahrung in der App."
+      },
+      "myGoals": {
+        "title": "Meine Ziele",
+        "selected": "{count} ausgewählt"
+      },
+      "browse": {
+        "title": "Ziele durchsuchen",
+        "all": "Alle"
+      },
+      "status": {
+        "workingOnIt": "In Arbeit",
+        "almostDone": "Fast fertig",
+        "finished": "Abgeschlossen"
+      },
+      "categories": {
+        "Empowerment": "Empowerment",
+        "Leadership": "Führung",
+        "Wellbeing": "Wohlbefinden",
+        "Community": "Gemeinschaft"
+      }
+    },
     "profile": {
       "addBusiness": "Füge dein Unternehmen oder deinen Arbeitsplatz hinzu",
       "businessSidebar": {

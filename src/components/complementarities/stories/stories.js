@@ -22,8 +22,6 @@ export default {
 
             openIds: new Set(),
 
-            currentUserId: 1,
-
             showUserStoriesOnly: false,
 
             // Track stories created/owned by current user
@@ -54,6 +52,11 @@ export default {
     },
 
     computed: {
+        currentUserId() {
+            const u = this.$store.state.user
+            return u?.id || this.$store.state.myProfile?.fk_user_id || 1
+        },
+
         q() {
             return (this.query || '').trim().toLowerCase()
         },

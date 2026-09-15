@@ -241,7 +241,7 @@
       },
       "like": "Polub",
       "share": "Udostępnij",
-      "testUser": "Użytkownik testowy"
+      "testUser": "Użytkowniczka testowa"
     },
     "menubar": {
       "subtitle": {
@@ -520,7 +520,7 @@
           "invalidResponse": "Nieprawidłowy format odpowiedzi z serwera.",
           "loadFailed": "Nie udało się wczytać wyników. Spróbuj ponownie.",
           "noFeedbackData": "Brak dostępnych danych informacji zwrotnej.",
-          "notAuthenticated": "Użytkownik nie jest zalogowany.",
+          "notAuthenticated": "Użytkowniczka nie jest zalogowana.",
           "saveFailed": "Nie udało się zapisać wyników. Spróbuj ponownie."
         },
         "feedback": {
@@ -761,6 +761,34 @@
     "postList": {
       "backToMain": "Wróć",
       "everywhere": "Wszędzie"
+    },
+    "goals": {
+      "back": "Wstecz",
+      "title": "Moje cele",
+      "mission": {
+        "title": "Moja misja",
+        "placeholder": "Napisz swoją osobistą misję w jednym zdaniu…",
+        "hint": "To kształtuje Twoje doświadczenie w aplikacji."
+      },
+      "myGoals": {
+        "title": "Moje cele",
+        "selected": "wybrano: {count}"
+      },
+      "browse": {
+        "title": "Przeglądaj cele",
+        "all": "Wszystkie"
+      },
+      "status": {
+        "workingOnIt": "W trakcie realizacji",
+        "almostDone": "Prawie gotowe",
+        "finished": "Ukończone"
+      },
+      "categories": {
+        "Empowerment": "Wzmocnienie",
+        "Leadership": "Przywództwo",
+        "Wellbeing": "Dobre samopoczucie",
+        "Community": "Społeczność"
+      }
     },
     "profile": {
       "addBusiness": "Dodaj swoją firmę lub miejsce pracy",

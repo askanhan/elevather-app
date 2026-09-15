@@ -762,6 +762,34 @@
       "backToMain": "Go back",
       "everywhere": "Everywhere"
     },
+    "goals": {
+      "back": "Back",
+      "title": "My Goals",
+      "mission": {
+        "title": "My Mission",
+        "placeholder": "Write your personal mission in one sentence…",
+        "hint": "This shapes your experience in the app."
+      },
+      "myGoals": {
+        "title": "My Goals",
+        "selected": "{count} selected"
+      },
+      "browse": {
+        "title": "Browse Goals",
+        "all": "All"
+      },
+      "status": {
+        "workingOnIt": "Working on it",
+        "almostDone": "Almost done",
+        "finished": "Finished"
+      },
+      "categories": {
+        "Empowerment": "Empowerment",
+        "Leadership": "Leadership",
+        "Wellbeing": "Wellbeing",
+        "Community": "Community"
+      }
+    },
     "profile": {
       "addBusiness": "Add your company or workplace",
       "businessSidebar": {

@@ -92,6 +92,20 @@ COURSE_TRANSLATION_DAY_OVERRIDES = {
     # - its own Course Overview sheet has "Day: ?" (unresolved even in the
     # source) and its title ("Growth through challenges") doesn't clearly
     # match any of days 14-18's exact titles. Left unmatched rather than guessed.
+
+    # de/days - these reuse the "<Day N> <Title> de fin.xlsx" naming of the
+    # original "en fin" reference files, but the locale token sits mid-name
+    # ("de fin" vs "en fin") rather than as a trailing suffix, so the generic
+    # normalized-filename match doesn't fire. Verified against each file's
+    # sheet names/content (e.g. "Karte 1 - Biography" etc. for Ada Lovelace).
+    "DAY 27 Ada Lovelace de fin.xlsx": 27,
+    "Day 25 Power de fin.xlsx": 25,
+    "Day 26 Hannah Arendt de fin.xlsx": 26,
+    "Day 28 MOMO de fin.xlsx": 28,
+    # Original reference file is named "DAY 12_ Digital Courage...", but the
+    # real day number is 11 (same mismatch already seen for the cz override
+    # above) - this DE file is correctly named "DAY_11_..." already.
+    "DAY_11_Digital_Courage_Setting_Boundaries_DE.xlsx": 11,
 }
 
 # Fixed day_number per course, keyed by exact course title. Each country's Excel
@@ -180,6 +194,23 @@ SIMULATOR_TRANSLATION_TITLE_MAP = {
     "The_opportunity_Power_Simulator_BORIS_GR.xlsx": "The opportunity you didn't expect",
     "VisionTree_Power_Simulator_AI_GR.xlsx": "AI in Your Hands: Healthy, Practical, Self-Sufficient Use",
     "VisionTree_Power_Simulator_Networking_GR.xlsx": "Networking with Nerve: Assertive, Composed, Strategic, Kind",
+
+    # de/ folder (German/"de" content) - titles verified by reading each
+    # file's actual Simulator Overview sheet, not guessed from the filename.
+    # NOTE: simulators 9 ("Your Voice, Your Space") and 10 ("The Meeting That
+    # Changed Your Narrative") are deliberately NOT mapped here - the two
+    # files received for them ("EN DAY 11_...YOUR VOICE..." and "EN
+    # Rewriting your power narrative...") are English content with, at most,
+    # a translated title cell; running them through this importer would write
+    # English text into content_translation mislabeled as German.
+    "Power_Simulator_IKIGAI_DE_final.xlsx": "Find your IKIGAI: Purpose discovering challenge",
+    "Power_Simulator_SelfCare_DE_final.xlsx": "Self-Care for Strong Leaders",
+    "Power_Simulator_UsingYourPowerAuthentically_DE.xlsx": "Using Your Power Authentically",
+    "Power_simulator_RecognizingYourPower_DE.xlsx": "Recognizing Your Power",
+    "Public.speaking.-Power_Simulator_BORIS_DE.xlsx": "Public Speaking",
+    "The opportunity_Power_Simulator_BORIS_DE.xlsx": "The opportunity you didn't expect",
+    "VisionTree_Power_Simulator_AI_DE.xlsx": "AI in Your Hands: Healthy, Practical, Self-Sufficient Use",
+    "VisionTree_Power_Simulator_Networking_DE.xlsx": "Networking with Nerve: Assertive, Composed, Strategic, Kind",
 }
 
 # Two cz/simulators files (the AI and Networking ones) translate every sheet
@@ -230,6 +261,41 @@ CZECH_COURSE_OVERVIEW_HEADER_MAP = {
     'Cílová skupina': 'Target Audience',
     'Odhadovaná délka (minuty)': 'Estimated Duration (minutes)',
     'Cíl učení (1 věta)': 'Learning Goal (1 sentence)',
+}
+
+# One de/days file ("Day 25 Power de fin.xlsx", sheet "Karte 6 - Women and
+# power posi...") translated this long-format course-card sheet's column
+# headers too, not just cell content - column names, not the "Field"-column
+# row values (see GERMAN_FIELD_VALUE_MAP for those).
+GERMAN_COURSE_CARDS_HEADER_MAP = {
+    'Feld': 'Field',
+    'Beispielinhalt': 'Example content',
+    'Autor': 'Author',
+    'Bild-Alternativ': 'Image Alt',
+    'Bildbeschreibung': 'Image Description',
+    'Geschätzte Videodauer': 'Video Duration Est',
+    'Videobeschreibung': 'Video Description',
+}
+
+# Several de/days files keep the "Field" column header in English but
+# translate its row VALUES (the field-type labels themselves, e.g. "Title" ->
+# "Titel") - these aren't free-form content, they're what extract_full_card_data()
+# switches on to route each row to the right component table, so an
+# untranslated lookup silently drops that row. Verified against each file's
+# actual "Example content" to disambiguate the two closing-row labels
+# ("Abschließende Botschaft" reads as a per-card wrap-up line -> End_text,
+# not the distinct "Last message" component type).
+GERMAN_FIELD_VALUE_MAP = {
+    'Titel': 'Title',
+    'Untertitel': 'Subtitle',
+    'Zitat': 'Quote',
+    'Bild': 'Image',
+    'Liste': 'List',
+    'Offene Frage': 'Open question',
+    'Multiple-Choice question': 'Multiple choice question',
+    'Multiple-Choice-Frage': 'Multiple choice question',
+    'Letzte Nachricht': 'Last message',
+    'Abschließende Botschaft': 'End_text',
 }
 
 CZECH_SIMULATOR_METRIC_WRITING_HEADER_MAP = {

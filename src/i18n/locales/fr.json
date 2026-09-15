@@ -382,6 +382,34 @@
             "backToMain": "Retour",
             "everywhere": "Partout"
         },
+        "goals": {
+            "back": "Retour",
+            "title": "Mes objectifs",
+            "mission": {
+                "title": "Ma mission",
+                "placeholder": "Écrivez votre mission personnelle en une phrase…",
+                "hint": "Cela façonne votre expérience dans l'application."
+            },
+            "myGoals": {
+                "title": "Mes objectifs",
+                "selected": "{count} sélectionné(s)"
+            },
+            "browse": {
+                "title": "Parcourir les objectifs",
+                "all": "Tous"
+            },
+            "status": {
+                "workingOnIt": "En cours",
+                "almostDone": "Presque terminé",
+                "finished": "Terminé"
+            },
+            "categories": {
+                "Empowerment": "Autonomisation",
+                "Leadership": "Leadership",
+                "Wellbeing": "Bien-être",
+                "Community": "Communauté"
+            }
+        },
         "profile": {
             "addBusiness": "Ajoutez votre entreprise",
             "businessSidebar": {

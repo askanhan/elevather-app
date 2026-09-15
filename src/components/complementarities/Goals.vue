@@ -3,31 +3,31 @@
 
 <!-- Back button -->
 <header class="goals-header">
-  <button class="goals-back" @click="goBack">← Back</button>
-  <h1 class="goals-title">My Goals</h1>
+  <button class="goals-back" @click="goBack">← {{ $t('pages.goals.back') }}</button>
+  <h1 class="goals-title">{{ $t('pages.goals.title') }}</h1>
 </header>
 
 <!-- Mission -->
 <section class="goals-card">
   <div class="goals-card-head">
-    <span class="goals-h2">My Mission</span>
+    <span class="goals-h2">{{ $t('pages.goals.mission.title') }}</span>
   </div>
   <textarea
     v-model="mission"
     class="goals-mission-input"
-    placeholder="Write your personal mission in one sentence…"
+    :placeholder="$t('pages.goals.mission.placeholder')"
     rows="3"
     maxlength="500"
     @blur="saveMission"
   ></textarea>
-  <div class="goals-mission-hint">This shapes your experience in the app.</div>
+  <div class="goals-mission-hint">{{ $t('pages.goals.mission.hint') }}</div>
 </section>
 
 <!-- Selected goals -->
 <section v-if="myGoals.length" class="goals-card">
   <div class="goals-card-head">
-    <span class="goals-h2">My Goals</span>
-    <span class="goals-count">{{ myGoals.length }} selected</span>
+    <span class="goals-h2">{{ $t('pages.goals.myGoals.title') }}</span>
+    <span class="goals-count">{{ $t('pages.goals.myGoals.selected', { count: myGoals.length }) }}</span>
   </div>
 
   <div class="goals-my-list">
@@ -45,7 +45,7 @@
           :class="{ active: g.status === s.value, [s.value]: true }"
           @click="changeStatus(g.id, s.value)"
         >
-          {{ s.label }}
+          {{ $t(s.labelKey) }}
         </button>
       </div>
     </div>
@@ -55,7 +55,7 @@
 <!-- Browse goals -->
 <section class="goals-card">
   <div class="goals-card-head">
-    <span class="goals-h2">Browse Goals</span>
+    <span class="goals-h2">{{ $t('pages.goals.browse.title') }}</span>
   </div>
 
   <!-- Category filter -->
@@ -64,14 +64,14 @@
       class="goals-cat-btn"
       :class="{ active: selectedCategory === 'all' }"
       @click="selectedCategory = 'all'"
-    >All</button>
+    >{{ $t('pages.goals.browse.all') }}</button>
     <button
       v-for="cat in categories"
       :key="cat"
       class="goals-cat-btn"
       :class="{ active: selectedCategory === cat }"
       @click="selectedCategory = cat"
-    >{{ cat }}</button>
+    >{{ categoryLabel(cat) }}</button>
   </div>
 
   <!-- Goals list -->
@@ -123,9 +123,9 @@ export default {
       myGoals: [],
       selectedCategory: 'all',
       statuses: [
-        { value: 'working_on_it', label: 'Working on it' },
-        { value: 'almost_done', label: 'Almost done' },
-        { value: 'finished', label: 'Finished' },
+        { value: 'working_on_it', labelKey: 'pages.goals.status.workingOnIt' },
+        { value: 'almost_done', labelKey: 'pages.goals.status.almostDone' },
+        { value: 'finished', labelKey: 'pages.goals.status.finished' },
       ],
     }
   },
@@ -177,6 +177,11 @@ export default {
 
     isSelected(goalId) {
       return this.selectedGoalIds.has(goalId)
+    },
+
+    categoryLabel(cat) {
+      const known = ['Empowerment', 'Leadership', 'Wellbeing', 'Community']
+      return known.includes(cat) ? this.$t(`pages.goals.categories.${cat}`) : cat
     },
 
     async toggleGoal(goalId) {

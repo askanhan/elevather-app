@@ -762,6 +762,34 @@
       "backToMain": "Επιστροφή",
       "everywhere": "Παντού"
     },
+    "goals": {
+      "back": "Πίσω",
+      "title": "Οι στόχοι μου",
+      "mission": {
+        "title": "Η αποστολή μου",
+        "placeholder": "Γράψε την προσωπική σου αποστολή σε μία πρόταση…",
+        "hint": "Αυτό διαμορφώνει την εμπειρία σου στην εφαρμογή."
+      },
+      "myGoals": {
+        "title": "Οι στόχοι μου",
+        "selected": "{count} επιλεγμένοι"
+      },
+      "browse": {
+        "title": "Περιήγηση στόχων",
+        "all": "Όλοι"
+      },
+      "status": {
+        "workingOnIt": "Σε εξέλιξη",
+        "almostDone": "Σχεδόν έτοιμο",
+        "finished": "Ολοκληρώθηκε"
+      },
+      "categories": {
+        "Empowerment": "Ενδυνάμωση",
+        "Leadership": "Ηγεσία",
+        "Wellbeing": "Ευεξία",
+        "Community": "Κοινότητα"
+      }
+    },
     "profile": {
       "addBusiness": "Πρόσθεσε την εταιρεία ή τον χώρο εργασίας σου",
       "businessSidebar": {
